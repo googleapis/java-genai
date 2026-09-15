@@ -34,12 +34,6 @@ import java.lang.SuppressWarnings;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * CreateModelInteractionResponseFormat
- * 
- * <p>Enforces that the generated response is a JSON object that complies with the JSON schema specified
- * in this field.
- */
 @JsonDeserialize(using = CreateModelInteractionResponseFormat._Deserializer.class)
 public class CreateModelInteractionResponseFormat {
 

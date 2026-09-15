@@ -30,7 +30,7 @@ import java.lang.String;
 /**
  * UnknownInteractionAgentConfig
  * 
- * <p>Configuration parameters for the agent interaction.
+ * <p>Parameters for the agent interaction.
  */
 public class UnknownInteractionAgentConfig extends UnknownType implements InteractionAgentConfig {
 

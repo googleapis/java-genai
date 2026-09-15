@@ -31,15 +31,16 @@ import java.util.Optional;
 
 public class DeleteInteractionRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * The unique identifier of the interaction to delete.
+     * Part of `name`. Required. The name of the interaction to delete.
+     * Format: interactions/{interaction}
      */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=interactionsId")
     private String id;
 
     @JsonCreator
@@ -57,14 +58,15 @@ public class DeleteInteractionRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * The unique identifier of the interaction to delete.
+     * Part of `name`. Required. The name of the interaction to delete.
+     * Format: interactions/{interaction}
      */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
@@ -76,7 +78,7 @@ public class DeleteInteractionRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public DeleteInteractionRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -85,7 +87,8 @@ public class DeleteInteractionRequest {
 
 
     /**
-     * The unique identifier of the interaction to delete.
+     * Part of `name`. Required. The name of the interaction to delete.
+     * Format: interactions/{interaction}
      */
     public DeleteInteractionRequest withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
@@ -132,7 +135,7 @@ public class DeleteInteractionRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -140,7 +143,8 @@ public class DeleteInteractionRequest {
         }
 
         /**
-         * The unique identifier of the interaction to delete.
+         * Part of `name`. Required. The name of the interaction to delete.
+         * Format: interactions/{interaction}
          */
         public Builder id(@Nonnull String id) {
             this.id = Utils.checkNotNull(id, "id");

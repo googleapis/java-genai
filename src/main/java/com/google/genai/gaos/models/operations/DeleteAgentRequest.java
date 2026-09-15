@@ -31,13 +31,15 @@ import java.util.Optional;
 
 public class DeleteAgentRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
-
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
+    /**
+     * Part of `name`.
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=agentsId")
     private String id;
 
     @JsonCreator
@@ -55,12 +57,15 @@ public class DeleteAgentRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
+    /**
+     * Part of `name`.
+     */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
     }
@@ -71,7 +76,7 @@ public class DeleteAgentRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public DeleteAgentRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -79,6 +84,9 @@ public class DeleteAgentRequest {
     }
 
 
+    /**
+     * Part of `name`.
+     */
     public DeleteAgentRequest withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
         return this;
@@ -124,13 +132,16 @@ public class DeleteAgentRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
             return this;
         }
 
+        /**
+         * Part of `name`.
+         */
         public Builder id(@Nonnull String id) {
             this.id = Utils.checkNotNull(id, "id");
             return this;

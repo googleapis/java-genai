@@ -71,7 +71,7 @@ public class Environments {
     }
 
     /**
-     * Lists environments.
+     * Lists environments (HTTP endpoint).
      * 
      * @return The call builder
      */
@@ -80,7 +80,7 @@ public class Environments {
     }
 
     /**
-     * Lists environments.
+     * Lists environments (HTTP endpoint).
      * 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -91,11 +91,12 @@ public class Environments {
     }
 
     /**
-     * Lists environments.
+     * Lists environments (HTTP endpoint).
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param pageSize Optional. Maximum number of environments to return.\nIf unspecified, defaults to 50. Maximum is 1000.
-     * @param pageToken Optional. Pagination token.
+     * @param apiVersion API version for request routing.
+     * @param pageSize Maximum number of environments to return.
+     *         If unspecified, defaults to 50. Maximum is 1000.
+     * @param pageToken Pagination token.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -110,7 +111,7 @@ public class Environments {
     }
 
     /**
-     * Creates an environment.
+     * Creates an environment (HTTP endpoint).
      * 
      * @return The call builder
      */
@@ -119,7 +120,7 @@ public class Environments {
     }
 
     /**
-     * Creates an environment.
+     * Creates an environment (HTTP endpoint).
      * 
      * @param body Request for `CreateEnvironment`.
      * @return The response from the API call
@@ -130,9 +131,9 @@ public class Environments {
     }
 
     /**
-     * Creates an environment.
+     * Creates an environment (HTTP endpoint).
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body Request for `CreateEnvironment`.
      * @param options additional options
      * @return The response from the API call
@@ -148,7 +149,7 @@ public class Environments {
     }
 
     /**
-     * Deletes an environment.
+     * Deletes an environment (HTTP endpoint).
      * 
      * @return The call builder
      */
@@ -157,9 +158,9 @@ public class Environments {
     }
 
     /**
-     * Deletes an environment.
+     * Deletes an environment (HTTP endpoint).
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. The identifier of the environment to delete.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -168,10 +169,10 @@ public class Environments {
     }
 
     /**
-     * Deletes an environment.
+     * Deletes an environment (HTTP endpoint).
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. The identifier of the environment to delete.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -186,7 +187,7 @@ public class Environments {
     }
 
     /**
-     * Gets an environment.
+     * Gets an environment (HTTP endpoint).
      * 
      * @return The call builder
      */
@@ -195,9 +196,9 @@ public class Environments {
     }
 
     /**
-     * Gets an environment.
+     * Gets an environment (HTTP endpoint).
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. The identifier of the environment to retrieve.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -206,10 +207,10 @@ public class Environments {
     }
 
     /**
-     * Gets an environment.
+     * Gets an environment (HTTP endpoint).
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. The identifier of the environment to retrieve.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails

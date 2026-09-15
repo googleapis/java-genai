@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.genai.gaos.utils.SpeakeasyMetadata;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
-import java.lang.Long;
+import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
@@ -31,25 +31,28 @@ import java.util.Optional;
 
 public class ListTriggersRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Optional. Filter expression (e.g., by state).
+     * Optional. Filter expression (e.g. `agent="agents/my-agent-id"`).
+     * 
+     * <p>Only
+     * equality filtering on the `agent` field is currently supported.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=filter")
     private String filter;
 
     /**
-     * Optional. The maximum number of triggers to return per page.
+     * The maximum number of triggers to return per page.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_size")
-    private Long pageSize;
+    private Integer pageSize;
 
     /**
-     * Optional. A page token from a previous ListTriggers call.
+     * A page token from a previous ListTriggers call.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_token")
     private String pageToken;
@@ -58,7 +61,7 @@ public class ListTriggersRequest {
     public ListTriggersRequest(
             @Nullable String apiVersion,
             @Nullable String filter,
-            @Nullable Long pageSize,
+            @Nullable Integer pageSize,
             @Nullable String pageToken) {
         this.apiVersion = apiVersion;
         this.filter = filter;
@@ -72,28 +75,31 @@ public class ListTriggersRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Optional. Filter expression (e.g., by state).
+     * Optional. Filter expression (e.g. `agent="agents/my-agent-id"`).
+     * 
+     * <p>Only
+     * equality filtering on the `agent` field is currently supported.
      */
     public Optional<String> filter() {
         return Optional.ofNullable(this.filter);
     }
 
     /**
-     * Optional. The maximum number of triggers to return per page.
+     * The maximum number of triggers to return per page.
      */
-    public Optional<Long> pageSize() {
+    public Optional<Integer> pageSize() {
         return Optional.ofNullable(this.pageSize);
     }
 
     /**
-     * Optional. A page token from a previous ListTriggers call.
+     * A page token from a previous ListTriggers call.
      */
     public Optional<String> pageToken() {
         return Optional.ofNullable(this.pageToken);
@@ -105,7 +111,7 @@ public class ListTriggersRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public ListTriggersRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -114,7 +120,10 @@ public class ListTriggersRequest {
 
 
     /**
-     * Optional. Filter expression (e.g., by state).
+     * Optional. Filter expression (e.g. `agent="agents/my-agent-id"`).
+     * 
+     * <p>Only
+     * equality filtering on the `agent` field is currently supported.
      */
     public ListTriggersRequest withFilter(@Nullable String filter) {
         this.filter = filter;
@@ -123,16 +132,16 @@ public class ListTriggersRequest {
 
 
     /**
-     * Optional. The maximum number of triggers to return per page.
+     * The maximum number of triggers to return per page.
      */
-    public ListTriggersRequest withPageSize(@Nullable Long pageSize) {
+    public ListTriggersRequest withPageSize(@Nullable Integer pageSize) {
         this.pageSize = pageSize;
         return this;
     }
 
 
     /**
-     * Optional. A page token from a previous ListTriggers call.
+     * A page token from a previous ListTriggers call.
      */
     public ListTriggersRequest withPageToken(@Nullable String pageToken) {
         this.pageToken = pageToken;
@@ -179,7 +188,7 @@ public class ListTriggersRequest {
 
         private String filter;
 
-        private Long pageSize;
+        private Integer pageSize;
 
         private String pageToken;
 
@@ -188,7 +197,7 @@ public class ListTriggersRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -196,7 +205,10 @@ public class ListTriggersRequest {
         }
 
         /**
-         * Optional. Filter expression (e.g., by state).
+         * Optional. Filter expression (e.g. `agent="agents/my-agent-id"`).
+         * 
+         * <p>Only
+         * equality filtering on the `agent` field is currently supported.
          */
         public Builder filter(@Nullable String filter) {
             this.filter = filter;
@@ -204,15 +216,15 @@ public class ListTriggersRequest {
         }
 
         /**
-         * Optional. The maximum number of triggers to return per page.
+         * The maximum number of triggers to return per page.
          */
-        public Builder pageSize(@Nullable Long pageSize) {
+        public Builder pageSize(@Nullable Integer pageSize) {
             this.pageSize = pageSize;
             return this;
         }
 
         /**
-         * Optional. A page token from a previous ListTriggers call.
+         * A page token from a previous ListTriggers call.
          */
         public Builder pageToken(@Nullable String pageToken) {
             this.pageToken = pageToken;

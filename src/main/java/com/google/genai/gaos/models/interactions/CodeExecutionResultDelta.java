@@ -35,6 +35,13 @@ import java.util.Optional;
 
 
 public class CodeExecutionResultDelta implements StepDeltaData {
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("call_id")
+    private String callId;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("is_error")
@@ -57,9 +64,11 @@ public class CodeExecutionResultDelta implements StepDeltaData {
 
     @JsonCreator
     public CodeExecutionResultDelta(
+            @JsonProperty("call_id") @Nullable String callId,
             @JsonProperty("is_error") @Nullable Boolean isError,
             @JsonProperty("result") @Nonnull String result,
             @JsonProperty("signature") @Nullable String signature) {
+        this.callId = callId;
         this.isError = isError;
         this.result = Optional.ofNullable(result)
             .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
@@ -69,7 +78,15 @@ public class CodeExecutionResultDelta implements StepDeltaData {
     
     public CodeExecutionResultDelta(
             @Nonnull String result) {
-        this(null, result, null);
+        this(null, null, result,
+            null);
+    }
+
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    public Optional<String> callId() {
+        return Optional.ofNullable(this.callId);
     }
 
     public Optional<Boolean> isError() {
@@ -94,6 +111,15 @@ public class CodeExecutionResultDelta implements StepDeltaData {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    public CodeExecutionResultDelta withCallId(@Nullable String callId) {
+        this.callId = callId;
+        return this;
     }
 
 
@@ -128,6 +154,7 @@ public class CodeExecutionResultDelta implements StepDeltaData {
         }
         CodeExecutionResultDelta other = (CodeExecutionResultDelta) o;
         return 
+            Utils.enhancedDeepEquals(this.callId, other.callId) &&
             Utils.enhancedDeepEquals(this.isError, other.isError) &&
             Utils.enhancedDeepEquals(this.result, other.result) &&
             Utils.enhancedDeepEquals(this.signature, other.signature) &&
@@ -137,13 +164,14 @@ public class CodeExecutionResultDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            isError, result, signature,
-            type);
+            callId, isError, result,
+            signature, type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CodeExecutionResultDelta.class,
+                "callId", callId,
                 "isError", isError,
                 "result", result,
                 "signature", signature,
@@ -153,6 +181,8 @@ public class CodeExecutionResultDelta implements StepDeltaData {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String callId;
+
         private Boolean isError;
 
         private String result;
@@ -161,6 +191,14 @@ public class CodeExecutionResultDelta implements StepDeltaData {
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Required. ID to match the ID from the function call block.
+         */
+        public Builder callId(@Nullable String callId) {
+            this.callId = callId;
+            return this;
         }
 
         public Builder isError(@Nullable Boolean isError) {
@@ -183,7 +221,8 @@ public class CodeExecutionResultDelta implements StepDeltaData {
 
         public CodeExecutionResultDelta build() {
             return new CodeExecutionResultDelta(
-                isError, result, signature);
+                callId, isError, result,
+                signature);
         }
 
 

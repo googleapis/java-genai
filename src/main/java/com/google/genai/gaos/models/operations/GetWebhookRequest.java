@@ -31,7 +31,7 @@ import java.util.Optional;
 
 public class GetWebhookRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
@@ -57,7 +57,7 @@ public class GetWebhookRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
@@ -76,7 +76,7 @@ public class GetWebhookRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public GetWebhookRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -132,7 +132,7 @@ public class GetWebhookRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;

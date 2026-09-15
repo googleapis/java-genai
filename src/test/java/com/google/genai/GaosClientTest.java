@@ -284,11 +284,7 @@ public final class GaosClientTest {
     assertNotNull(req);
     assertEquals("GET", req.method());
     assertEquals(
-        URI.create(
-            expectedUrlPrefix
-                + "/interactions/"
-                + interactionId
-                + "?include_input=false&stream=false"),
+        URI.create(expectedUrlPrefix + "/interactions/" + interactionId),
         req.uri());
 
     // 2. Test Cancel

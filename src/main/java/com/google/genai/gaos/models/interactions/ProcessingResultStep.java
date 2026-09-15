@@ -26,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
@@ -41,6 +40,7 @@ public class ProcessingResultStep implements Step {
     /**
      * Required. ID to match the ID from the function call block.
      */
+    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("call_id")
     private String callId;
 
@@ -57,17 +57,15 @@ public class ProcessingResultStep implements Step {
 
     @JsonCreator
     public ProcessingResultStep(
-            @JsonProperty("call_id") @Nonnull String callId,
+            @JsonProperty("call_id") @Nullable String callId,
             @JsonProperty("signature") @Nullable String signature) {
-        this.callId = Optional.ofNullable(callId)
-            .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
+        this.callId = callId;
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
-    public ProcessingResultStep(
-            @Nonnull String callId) {
-        this(callId, null);
+    public ProcessingResultStep() {
+        this(null, null);
     }
 
     /**
@@ -97,8 +95,8 @@ public class ProcessingResultStep implements Step {
     /**
      * Required. ID to match the ID from the function call block.
      */
-    public ProcessingResultStep withCallId(@Nonnull String callId) {
-        this.callId = Utils.checkNotNull(callId, "callId");
+    public ProcessingResultStep withCallId(@Nullable String callId) {
+        this.callId = callId;
         return this;
     }
 
@@ -155,8 +153,8 @@ public class ProcessingResultStep implements Step {
         /**
          * Required. ID to match the ID from the function call block.
          */
-        public Builder callId(@Nonnull String callId) {
-            this.callId = Utils.checkNotNull(callId, "callId");
+        public Builder callId(@Nullable String callId) {
+            this.callId = callId;
             return this;
         }
 

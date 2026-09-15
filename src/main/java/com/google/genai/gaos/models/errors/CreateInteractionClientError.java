@@ -89,7 +89,7 @@ public class CreateInteractionClientError extends GaosClientException {
     /**
      * Data
      * 
-     * <p>Error creating interaction
+     * <p>Client Error
      */
     public static class Data {
         /**

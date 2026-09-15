@@ -66,7 +66,7 @@ public class Agents {
     }
 
     /**
-     * Lists all Agents.
+     * Lists agents.
      * 
      * @return The call builder
      */
@@ -75,7 +75,7 @@ public class Agents {
     }
 
     /**
-     * Lists all Agents.
+     * Lists agents.
      * 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -86,9 +86,9 @@ public class Agents {
     }
 
     /**
-     * Lists all Agents.
+     * Lists agents.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param pageSize 
      * @param pageToken 
      * @param parent 
@@ -109,7 +109,7 @@ public class Agents {
     }
 
     /**
-     * Creates a new Agent (Typed version for SDK).
+     * Creates or updates an agent (upsert by name).
      * 
      * @return The call builder
      */
@@ -118,7 +118,7 @@ public class Agents {
     }
 
     /**
-     * Creates a new Agent (Typed version for SDK).
+     * Creates or updates an agent (upsert by name).
      * 
      * @param body An agent definition for the CreateAgent API.
      *         This message is the target for annotation-parser-based JSON parsing.
@@ -138,9 +138,9 @@ public class Agents {
     }
 
     /**
-     * Creates a new Agent (Typed version for SDK).
+     * Creates or updates an agent (upsert by name).
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body An agent definition for the CreateAgent API.
      *         This message is the target for annotation-parser-based JSON parsing.
      *         New format:
@@ -165,7 +165,7 @@ public class Agents {
     }
 
     /**
-     * Deletes an Agent.
+     * Deletes an agent and all its versions.
      * 
      * @return The call builder
      */
@@ -174,9 +174,9 @@ public class Agents {
     }
 
     /**
-     * Deletes an Agent.
+     * Deletes an agent and all its versions.
      * 
-     * @param id 
+     * @param id Part of `name`. 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -185,10 +185,10 @@ public class Agents {
     }
 
     /**
-     * Deletes an Agent.
+     * Deletes an agent and all its versions.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param apiVersion API version for request routing.
+     * @param id Part of `name`. 
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -203,7 +203,7 @@ public class Agents {
     }
 
     /**
-     * Gets a specific Agent.
+     * Gets an agent (latest version).
      * 
      * @return The call builder
      */
@@ -212,9 +212,9 @@ public class Agents {
     }
 
     /**
-     * Gets a specific Agent.
+     * Gets an agent (latest version).
      * 
-     * @param id 
+     * @param id Part of `name`. 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -223,10 +223,10 @@ public class Agents {
     }
 
     /**
-     * Gets a specific Agent.
+     * Gets an agent (latest version).
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param apiVersion API version for request routing.
+     * @param id Part of `name`. 
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails

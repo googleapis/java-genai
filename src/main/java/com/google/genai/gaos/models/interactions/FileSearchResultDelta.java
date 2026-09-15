@@ -35,6 +35,13 @@ import java.util.Optional;
 
 
 public class FileSearchResultDelta implements StepDeltaData {
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("call_id")
+    private String callId;
+
 
     @JsonProperty("result")
     private List<FileSearchResult> result;
@@ -52,8 +59,10 @@ public class FileSearchResultDelta implements StepDeltaData {
 
     @JsonCreator
     public FileSearchResultDelta(
+            @JsonProperty("call_id") @Nullable String callId,
             @JsonProperty("result") @Nonnull List<FileSearchResult> result,
             @JsonProperty("signature") @Nullable String signature) {
+        this.callId = callId;
         this.result = Optional.ofNullable(result)
             .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.signature = signature;
@@ -62,7 +71,14 @@ public class FileSearchResultDelta implements StepDeltaData {
     
     public FileSearchResultDelta(
             @Nonnull List<FileSearchResult> result) {
-        this(result, null);
+        this(null, result, null);
+    }
+
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    public Optional<String> callId() {
+        return Optional.ofNullable(this.callId);
     }
 
     public Optional<List<FileSearchResult>> result() {
@@ -83,6 +99,15 @@ public class FileSearchResultDelta implements StepDeltaData {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    public FileSearchResultDelta withCallId(@Nullable String callId) {
+        this.callId = callId;
+        return this;
     }
 
 
@@ -111,6 +136,7 @@ public class FileSearchResultDelta implements StepDeltaData {
         }
         FileSearchResultDelta other = (FileSearchResultDelta) o;
         return 
+            Utils.enhancedDeepEquals(this.callId, other.callId) &&
             Utils.enhancedDeepEquals(this.result, other.result) &&
             Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
@@ -119,12 +145,14 @@ public class FileSearchResultDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            result, signature, type);
+            callId, result, signature,
+            type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(FileSearchResultDelta.class,
+                "callId", callId,
                 "result", result,
                 "signature", signature,
                 "type", type);
@@ -133,12 +161,22 @@ public class FileSearchResultDelta implements StepDeltaData {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String callId;
+
         private List<FileSearchResult> result;
 
         private String signature;
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Required. ID to match the ID from the function call block.
+         */
+        public Builder callId(@Nullable String callId) {
+            this.callId = callId;
+            return this;
         }
 
         public Builder result(@Nonnull List<FileSearchResult> result) {
@@ -156,7 +194,7 @@ public class FileSearchResultDelta implements StepDeltaData {
 
         public FileSearchResultDelta build() {
             return new FileSearchResultDelta(
-                result, signature);
+                callId, result, signature);
         }
 
 

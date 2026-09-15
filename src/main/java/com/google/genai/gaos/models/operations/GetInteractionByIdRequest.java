@@ -20,14 +20,11 @@
 package com.google.genai.gaos.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.SpeakeasyMetadata;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.lang.Boolean;
-import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
@@ -35,35 +32,33 @@ import java.util.Optional;
 
 public class GetInteractionByIdRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * The unique identifier of the interaction to retrieve.
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
-    private String id;
-
-    /**
-     * If set to true, includes the input in the response.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     * If true, includes the input in the response.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=include_input")
-    @Deprecated
     private Boolean includeInput;
 
     /**
-     * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
-     * event id. Can only be used if `stream` is true.
+     * Part of `name`. Required. The name of the interaction to retrieve.
+     * Format: interactions/{interaction}
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=interactionsId")
+    private String id;
+
+    /**
+     * If set, resumes the interaction stream from the chunk after the event
+     * marked by the event id. Can only be used if `stream` is true.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=last_event_id")
     private String lastEventId;
 
     /**
-     * If set to true, the generated content will be streamed incrementally.
+     * If true, streams the interaction events as Server-Sent Events.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=stream")
     private Boolean stream;
@@ -71,60 +66,56 @@ public class GetInteractionByIdRequest {
     @JsonCreator
     public GetInteractionByIdRequest(
             @Nullable String apiVersion,
-            @Nonnull String id,
             @Nullable Boolean includeInput,
+            @Nonnull String id,
             @Nullable String lastEventId,
             @Nullable Boolean stream) {
         this.apiVersion = apiVersion;
+        this.includeInput = includeInput;
         this.id = Optional.ofNullable(id)
             .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
-        this.includeInput = Optional.ofNullable(includeInput)
-            .orElse(Builder._SINGLETON_VALUE_IncludeInput.value());
         this.lastEventId = lastEventId;
-        this.stream = Optional.ofNullable(stream)
-            .orElse(Builder._SINGLETON_VALUE_Stream.value());
+        this.stream = stream;
     }
     
     public GetInteractionByIdRequest(
             @Nonnull String id) {
-        this(null, id, null,
+        this(null, null, id,
             null, null);
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * The unique identifier of the interaction to retrieve.
+     * If true, includes the input in the response.
+     */
+    public Optional<Boolean> includeInput() {
+        return Optional.ofNullable(this.includeInput);
+    }
+
+    /**
+     * Part of `name`. Required. The name of the interaction to retrieve.
+     * Format: interactions/{interaction}
      */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
     }
 
     /**
-     * If set to true, includes the input in the response.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public Optional<Boolean> includeInput() {
-        return Optional.ofNullable(this.includeInput);
-    }
-
-    /**
-     * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
-     * event id. Can only be used if `stream` is true.
+     * If set, resumes the interaction stream from the chunk after the event
+     * marked by the event id. Can only be used if `stream` is true.
      */
     public Optional<String> lastEventId() {
         return Optional.ofNullable(this.lastEventId);
     }
 
     /**
-     * If set to true, the generated content will be streamed incrementally.
+     * If true, streams the interaction events as Server-Sent Events.
      */
     public Optional<Boolean> stream() {
         return Optional.ofNullable(this.stream);
@@ -136,7 +127,7 @@ public class GetInteractionByIdRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public GetInteractionByIdRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -145,7 +136,17 @@ public class GetInteractionByIdRequest {
 
 
     /**
-     * The unique identifier of the interaction to retrieve.
+     * If true, includes the input in the response.
+     */
+    public GetInteractionByIdRequest withIncludeInput(@Nullable Boolean includeInput) {
+        this.includeInput = includeInput;
+        return this;
+    }
+
+
+    /**
+     * Part of `name`. Required. The name of the interaction to retrieve.
+     * Format: interactions/{interaction}
      */
     public GetInteractionByIdRequest withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
@@ -154,20 +155,8 @@ public class GetInteractionByIdRequest {
 
 
     /**
-     * If set to true, includes the input in the response.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public GetInteractionByIdRequest withIncludeInput(@Nullable Boolean includeInput) {
-        this.includeInput = includeInput;
-        return this;
-    }
-
-
-    /**
-     * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
-     * event id. Can only be used if `stream` is true.
+     * If set, resumes the interaction stream from the chunk after the event
+     * marked by the event id. Can only be used if `stream` is true.
      */
     public GetInteractionByIdRequest withLastEventId(@Nullable String lastEventId) {
         this.lastEventId = lastEventId;
@@ -176,7 +165,7 @@ public class GetInteractionByIdRequest {
 
 
     /**
-     * If set to true, the generated content will be streamed incrementally.
+     * If true, streams the interaction events as Server-Sent Events.
      */
     public GetInteractionByIdRequest withStream(@Nullable Boolean stream) {
         this.stream = stream;
@@ -195,8 +184,8 @@ public class GetInteractionByIdRequest {
         GetInteractionByIdRequest other = (GetInteractionByIdRequest) o;
         return 
             Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.includeInput, other.includeInput) &&
+            Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.lastEventId, other.lastEventId) &&
             Utils.enhancedDeepEquals(this.stream, other.stream);
     }
@@ -204,7 +193,7 @@ public class GetInteractionByIdRequest {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            apiVersion, id, includeInput,
+            apiVersion, includeInput, id,
             lastEventId, stream);
     }
     
@@ -212,8 +201,8 @@ public class GetInteractionByIdRequest {
     public String toString() {
         return Utils.toString(GetInteractionByIdRequest.class,
                 "apiVersion", apiVersion,
-                "id", id,
                 "includeInput", includeInput,
+                "id", id,
                 "lastEventId", lastEventId,
                 "stream", stream);
     }
@@ -223,10 +212,9 @@ public class GetInteractionByIdRequest {
 
         private String apiVersion;
 
-        private String id;
-
-        @Deprecated
         private Boolean includeInput;
+
+        private String id;
 
         private String lastEventId;
 
@@ -237,7 +225,7 @@ public class GetInteractionByIdRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -245,7 +233,16 @@ public class GetInteractionByIdRequest {
         }
 
         /**
-         * The unique identifier of the interaction to retrieve.
+         * If true, includes the input in the response.
+         */
+        public Builder includeInput(@Nullable Boolean includeInput) {
+            this.includeInput = includeInput;
+            return this;
+        }
+
+        /**
+         * Part of `name`. Required. The name of the interaction to retrieve.
+         * Format: interactions/{interaction}
          */
         public Builder id(@Nonnull String id) {
             this.id = Utils.checkNotNull(id, "id");
@@ -253,19 +250,8 @@ public class GetInteractionByIdRequest {
         }
 
         /**
-         * If set to true, includes the input in the response.
-         * 
-         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-         */
-        @Deprecated
-        public Builder includeInput(@Nullable Boolean includeInput) {
-            this.includeInput = includeInput;
-            return this;
-        }
-
-        /**
-         * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
-         * event id. Can only be used if `stream` is true.
+         * If set, resumes the interaction stream from the chunk after the event
+         * marked by the event id. Can only be used if `stream` is true.
          */
         public Builder lastEventId(@Nullable String lastEventId) {
             this.lastEventId = lastEventId;
@@ -273,7 +259,7 @@ public class GetInteractionByIdRequest {
         }
 
         /**
-         * If set to true, the generated content will be streamed incrementally.
+         * If true, streams the interaction events as Server-Sent Events.
          */
         public Builder stream(@Nullable Boolean stream) {
             this.stream = stream;
@@ -282,21 +268,9 @@ public class GetInteractionByIdRequest {
 
         public GetInteractionByIdRequest build() {
             return new GetInteractionByIdRequest(
-                apiVersion, id, includeInput,
+                apiVersion, includeInput, id,
                 lastEventId, stream);
         }
 
-
-        private static final LazySingletonValue<Boolean> _SINGLETON_VALUE_IncludeInput =
-                new LazySingletonValue<>(
-                        "include_input",
-                        "false",
-                        new TypeReference<Boolean>() {});
-
-        private static final LazySingletonValue<Boolean> _SINGLETON_VALUE_Stream =
-                new LazySingletonValue<>(
-                        "stream",
-                        "false",
-                        new TypeReference<Boolean>() {});
     }
 }

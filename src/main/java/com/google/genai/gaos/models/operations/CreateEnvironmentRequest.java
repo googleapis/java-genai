@@ -31,13 +31,13 @@ import java.util.Optional;
 
 public class CreateEnvironmentRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Required. The environment to create.
+     * Required. The environment to create (HTTP request body).
      */
     @SpeakeasyMetadata("request:mediaType=application/json")
     private com.google.genai.gaos.models.environments.CreateEnvironmentRequest body;
@@ -57,14 +57,14 @@ public class CreateEnvironmentRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Required. The environment to create.
+     * Required. The environment to create (HTTP request body).
      */
     public Optional<com.google.genai.gaos.models.environments.CreateEnvironmentRequest> body() {
         return Optional.ofNullable(this.body);
@@ -76,7 +76,7 @@ public class CreateEnvironmentRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public CreateEnvironmentRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -85,7 +85,7 @@ public class CreateEnvironmentRequest {
 
 
     /**
-     * Required. The environment to create.
+     * Required. The environment to create (HTTP request body).
      */
     public CreateEnvironmentRequest withBody(@Nonnull com.google.genai.gaos.models.environments.CreateEnvironmentRequest body) {
         this.body = Utils.checkNotNull(body, "body");
@@ -132,7 +132,7 @@ public class CreateEnvironmentRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -140,7 +140,7 @@ public class CreateEnvironmentRequest {
         }
 
         /**
-         * Required. The environment to create.
+         * Required. The environment to create (HTTP request body).
          */
         public Builder body(@Nonnull com.google.genai.gaos.models.environments.CreateEnvironmentRequest body) {
             this.body = Utils.checkNotNull(body, "body");

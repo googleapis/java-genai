@@ -32,18 +32,20 @@ import java.util.Optional;
 
 public class UpdateTriggerRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Resource name of the trigger.
+     * Required. The ID of the trigger to update.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
     private String id;
 
-
+    /**
+     * Required. The trigger with updated fields.
+     */
     @SpeakeasyMetadata("request:mediaType=application/json")
     private TriggerUpdate body;
 
@@ -66,19 +68,22 @@ public class UpdateTriggerRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Resource name of the trigger.
+     * Required. The ID of the trigger to update.
      */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
     }
 
+    /**
+     * Required. The trigger with updated fields.
+     */
     public Optional<TriggerUpdate> body() {
         return Optional.ofNullable(this.body);
     }
@@ -89,7 +94,7 @@ public class UpdateTriggerRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public UpdateTriggerRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -98,7 +103,7 @@ public class UpdateTriggerRequest {
 
 
     /**
-     * Resource name of the trigger.
+     * Required. The ID of the trigger to update.
      */
     public UpdateTriggerRequest withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
@@ -106,6 +111,9 @@ public class UpdateTriggerRequest {
     }
 
 
+    /**
+     * Required. The trigger with updated fields.
+     */
     public UpdateTriggerRequest withBody(@Nonnull TriggerUpdate body) {
         this.body = Utils.checkNotNull(body, "body");
         return this;
@@ -155,7 +163,7 @@ public class UpdateTriggerRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -163,13 +171,16 @@ public class UpdateTriggerRequest {
         }
 
         /**
-         * Resource name of the trigger.
+         * Required. The ID of the trigger to update.
          */
         public Builder id(@Nonnull String id) {
             this.id = Utils.checkNotNull(id, "id");
             return this;
         }
 
+        /**
+         * Required. The trigger with updated fields.
+         */
         public Builder body(@Nonnull TriggerUpdate body) {
             this.body = Utils.checkNotNull(body, "body");
             return this;
