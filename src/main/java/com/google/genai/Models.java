@@ -7245,7 +7245,12 @@ public final class Models {
       logger.info(String.format("Automatic function calling remote call %d is done", i));
       remainingRemoteCalls--;
       if (remainingRemoteCalls == 0) {
+        /*
+         * No request is left to send a result with, so the functions are not called at all. The
+         * turn ends on the model's function call, which the caller can run and answer themselves.
+         */
         logger.info("Reached max remote calls for automatic function calling.");
+        break;
       }
       if (!response.candidates().isPresent()
           || response.candidates().get().isEmpty()
