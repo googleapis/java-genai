@@ -32,12 +32,16 @@ import java.util.Optional;
 
 
 public class AgentListResponse {
-
+    /**
+     * The list of agents.
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("agents")
     private List<Agent> agents;
 
-
+    /**
+     * A token to retrieve the next page of results.
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("next_page_token")
     private String nextPageToken;
@@ -54,10 +58,16 @@ public class AgentListResponse {
         this(null, null);
     }
 
+    /**
+     * The list of agents.
+     */
     public Optional<List<Agent>> agents() {
         return Optional.ofNullable(this.agents);
     }
 
+    /**
+     * A token to retrieve the next page of results.
+     */
     public Optional<String> nextPageToken() {
         return Optional.ofNullable(this.nextPageToken);
     }
@@ -67,12 +77,18 @@ public class AgentListResponse {
     }
 
 
+    /**
+     * The list of agents.
+     */
     public AgentListResponse withAgents(@Nullable List<Agent> agents) {
         this.agents = agents;
         return this;
     }
 
 
+    /**
+     * A token to retrieve the next page of results.
+     */
     public AgentListResponse withNextPageToken(@Nullable String nextPageToken) {
         this.nextPageToken = nextPageToken;
         return this;
@@ -117,11 +133,17 @@ public class AgentListResponse {
           // force use of static builder() method
         }
 
+        /**
+         * The list of agents.
+         */
         public Builder agents(@Nullable List<Agent> agents) {
             this.agents = agents;
             return this;
         }
 
+        /**
+         * A token to retrieve the next page of results.
+         */
         public Builder nextPageToken(@Nullable String nextPageToken) {
             this.nextPageToken = nextPageToken;
             return this;
