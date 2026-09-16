@@ -3,6 +3,7 @@ com.google.genai.errors
 com.google.genai.gaos
 com.google.genai.gaos.hooks
 com.google.genai.gaos.models.agents
+com.google.genai.gaos.models.credentials
 com.google.genai.gaos.models.environments
 com.google.genai.gaos.models.errors
 com.google.genai.gaos.models.interactions
