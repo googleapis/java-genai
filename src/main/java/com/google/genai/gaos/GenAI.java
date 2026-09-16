@@ -56,6 +56,9 @@ public class GenAI implements java.lang.AutoCloseable {
     private final Agents agents;
 
 
+    private final Credentials credentials;
+
+
     private final Environments environments;
 
 
@@ -70,6 +73,11 @@ public class GenAI implements java.lang.AutoCloseable {
 
     public Agents agents() {
         return agents;
+    }
+
+
+    public Credentials credentials() {
+        return credentials;
     }
 
 
@@ -273,6 +281,7 @@ public class GenAI implements java.lang.AutoCloseable {
         sdkConfiguration.initialize();
         sdkConfiguration = sdkConfiguration.hooks().sdkInit(sdkConfiguration);
         this.agents = new Agents(sdkConfiguration);
+        this.credentials = new Credentials(sdkConfiguration);
         this.environments = new Environments(sdkConfiguration);
         this.interactions = new Interactions(sdkConfiguration);
         this.triggers = new Triggers(sdkConfiguration);

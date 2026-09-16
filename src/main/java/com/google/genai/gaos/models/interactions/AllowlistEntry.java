@@ -37,6 +37,13 @@ import java.util.Optional;
  */
 public class AllowlistEntry {
     /**
+     * Optional. Reference to a server-managed Credential resource by ID.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("credential")
+    private String credential;
+
+    /**
      * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
      * 
      * <p>Use '*' to allow all domains.
@@ -54,8 +61,10 @@ public class AllowlistEntry {
 
     @JsonCreator
     public AllowlistEntry(
+            @JsonProperty("credential") @Nullable String credential,
             @JsonProperty("domain") @Nonnull String domain,
             @JsonProperty("transform") @Nullable Transform transform) {
+        this.credential = credential;
         this.domain = Optional.ofNullable(domain)
             .orElseThrow(() -> new IllegalArgumentException("domain cannot be null"));
         this.transform = transform;
@@ -63,7 +72,14 @@ public class AllowlistEntry {
     
     public AllowlistEntry(
             @Nonnull String domain) {
-        this(domain, null);
+        this(null, domain, null);
+    }
+
+    /**
+     * Optional. Reference to a server-managed Credential resource by ID.
+     */
+    public Optional<String> credential() {
+        return Optional.ofNullable(this.credential);
     }
 
     /**
@@ -85,6 +101,15 @@ public class AllowlistEntry {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Optional. Reference to a server-managed Credential resource by ID.
+     */
+    public AllowlistEntry withCredential(@Nullable String credential) {
+        this.credential = credential;
+        return this;
     }
 
 
@@ -119,6 +144,7 @@ public class AllowlistEntry {
         }
         AllowlistEntry other = (AllowlistEntry) o;
         return 
+            Utils.enhancedDeepEquals(this.credential, other.credential) &&
             Utils.enhancedDeepEquals(this.domain, other.domain) &&
             Utils.enhancedDeepEquals(this.transform, other.transform);
     }
@@ -126,12 +152,13 @@ public class AllowlistEntry {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            domain, transform);
+            credential, domain, transform);
     }
     
     @Override
     public String toString() {
         return Utils.toString(AllowlistEntry.class,
+                "credential", credential,
                 "domain", domain,
                 "transform", transform);
     }
@@ -139,12 +166,22 @@ public class AllowlistEntry {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String credential;
+
         private String domain;
 
         private Transform transform;
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Optional. Reference to a server-managed Credential resource by ID.
+         */
+        public Builder credential(@Nullable String credential) {
+            this.credential = credential;
+            return this;
         }
 
         /**
@@ -168,7 +205,7 @@ public class AllowlistEntry {
 
         public AllowlistEntry build() {
             return new AllowlistEntry(
-                domain, transform);
+                credential, domain, transform);
         }
 
     }

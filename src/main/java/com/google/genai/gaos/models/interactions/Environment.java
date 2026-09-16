@@ -39,6 +39,13 @@ import java.util.Optional;
  */
 public class Environment {
     /**
+     * Environment variables to set in the sandbox environment.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("env")
+    private Env env;
+
+    /**
      * Optional. The environment ID for the interaction. If specified, the request will
      * update the existing environment instead of creating a new one.
      */
@@ -64,9 +71,11 @@ public class Environment {
 
     @JsonCreator
     public Environment(
+            @JsonProperty("env") @Nullable Env env,
             @JsonProperty("environment_id") @Nullable String environmentId,
             @JsonProperty("network") @Nullable Network network,
             @JsonProperty("sources") @Nullable List<Source> sources) {
+        this.env = env;
         this.environmentId = environmentId;
         this.network = network;
         this.sources = sources;
@@ -74,7 +83,15 @@ public class Environment {
     }
     
     public Environment() {
-        this(null, null, null);
+        this(null, null, null,
+            null);
+    }
+
+    /**
+     * Environment variables to set in the sandbox environment.
+     */
+    public Optional<Env> env() {
+        return Optional.ofNullable(this.env);
     }
 
     /**
@@ -102,6 +119,15 @@ public class Environment {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Environment variables to set in the sandbox environment.
+     */
+    public Environment withEnv(@Nullable Env env) {
+        this.env = env;
+        return this;
     }
 
 
@@ -140,6 +166,7 @@ public class Environment {
         }
         Environment other = (Environment) o;
         return 
+            Utils.enhancedDeepEquals(this.env, other.env) &&
             Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
             Utils.enhancedDeepEquals(this.network, other.network) &&
             Utils.enhancedDeepEquals(this.sources, other.sources) &&
@@ -149,13 +176,14 @@ public class Environment {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            environmentId, network, sources,
-            type);
+            env, environmentId, network,
+            sources, type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Environment.class,
+                "env", env,
                 "environmentId", environmentId,
                 "network", network,
                 "sources", sources,
@@ -165,6 +193,8 @@ public class Environment {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private Env env;
+
         private String environmentId;
 
         private Network network;
@@ -173,6 +203,14 @@ public class Environment {
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Environment variables to set in the sandbox environment.
+         */
+        public Builder env(@Nullable Env env) {
+            this.env = env;
+            return this;
         }
 
         /**
@@ -199,7 +237,8 @@ public class Environment {
 
         public Environment build() {
             return new Environment(
-                environmentId, network, sources);
+                env, environmentId, network,
+                sources);
         }
 
 

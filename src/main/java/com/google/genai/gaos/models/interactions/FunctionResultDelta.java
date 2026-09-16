@@ -35,12 +35,6 @@ import java.util.Optional;
 
 
 public class FunctionResultDelta implements StepDeltaData {
-    /**
-     * Required. ID to match the ID from the function call block.
-     */
-    @JsonProperty("call_id")
-    private String callId;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("is_error")
@@ -61,12 +55,9 @@ public class FunctionResultDelta implements StepDeltaData {
 
     @JsonCreator
     public FunctionResultDelta(
-            @JsonProperty("call_id") @Nonnull String callId,
             @JsonProperty("is_error") @Nullable Boolean isError,
             @JsonProperty("name") @Nullable String name,
             @JsonProperty("result") @Nonnull FunctionResultDeltaResultUnion result) {
-        this.callId = Optional.ofNullable(callId)
-            .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
         this.isError = isError;
         this.name = name;
         this.result = Optional.ofNullable(result)
@@ -75,17 +66,8 @@ public class FunctionResultDelta implements StepDeltaData {
     }
     
     public FunctionResultDelta(
-            @Nonnull String callId,
             @Nonnull FunctionResultDeltaResultUnion result) {
-        this(callId, null, null,
-            result);
-    }
-
-    /**
-     * Required. ID to match the ID from the function call block.
-     */
-    public Optional<String> callId() {
-        return Optional.ofNullable(this.callId);
+        this(null, null, result);
     }
 
     public Optional<Boolean> isError() {
@@ -107,15 +89,6 @@ public class FunctionResultDelta implements StepDeltaData {
 
     public static Builder builder() {
         return new Builder();
-    }
-
-
-    /**
-     * Required. ID to match the ID from the function call block.
-     */
-    public FunctionResultDelta withCallId(@Nonnull String callId) {
-        this.callId = Utils.checkNotNull(callId, "callId");
-        return this;
     }
 
 
@@ -147,7 +120,6 @@ public class FunctionResultDelta implements StepDeltaData {
         }
         FunctionResultDelta other = (FunctionResultDelta) o;
         return 
-            Utils.enhancedDeepEquals(this.callId, other.callId) &&
             Utils.enhancedDeepEquals(this.isError, other.isError) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.result, other.result) &&
@@ -157,14 +129,13 @@ public class FunctionResultDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            callId, isError, name,
-            result, type);
+            isError, name, result,
+            type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(FunctionResultDelta.class,
-                "callId", callId,
                 "isError", isError,
                 "name", name,
                 "result", result,
@@ -174,8 +145,6 @@ public class FunctionResultDelta implements StepDeltaData {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private String callId;
-
         private Boolean isError;
 
         private String name;
@@ -184,14 +153,6 @@ public class FunctionResultDelta implements StepDeltaData {
 
         private Builder() {
           // force use of static builder() method
-        }
-
-        /**
-         * Required. ID to match the ID from the function call block.
-         */
-        public Builder callId(@Nonnull String callId) {
-            this.callId = Utils.checkNotNull(callId, "callId");
-            return this;
         }
 
         public Builder isError(@Nullable Boolean isError) {
@@ -211,8 +172,7 @@ public class FunctionResultDelta implements StepDeltaData {
 
         public FunctionResultDelta build() {
             return new FunctionResultDelta(
-                callId, isError, name,
-                result);
+                isError, name, result);
         }
 
 

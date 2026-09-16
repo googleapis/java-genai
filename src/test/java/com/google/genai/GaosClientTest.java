@@ -397,6 +397,54 @@ public final class GaosClientTest {
   }
 
   @Test
+  public void testCredentialsAndTriggersPaths_gemini() throws Exception {
+    Client client = Client.builder().apiKey("test-api-key").vertexAI(false).build();
+
+    AtomicReference<HttpRequest> capturedRequest = new AtomicReference<>();
+    HTTPClient mockClient =
+        new HTTPClient() {
+          @Override
+          public HttpResponse<InputStream> send(HttpRequest request) {
+            capturedRequest.set(request);
+            if (request.uri().getPath().contains("/triggers/")) {
+              return createMockResponse(
+                  request,
+                  200,
+                  "{\"id\": \"test-trigger-id\", \"interaction\": {\"id\": \"int-1\","
+                      + " \"status\": \"completed\"}, \"schedule\": \"0 * * * *\","
+                      + " \"time_zone\": \"UTC\"}");
+            }
+            return createMockResponse(request, 200, "{\"id\": \"test-credential-id\"}");
+          }
+
+          @Override
+          public CompletableFuture<HttpResponse<InputStream>> sendAsync(HttpRequest request) {
+            return CompletableFuture.completedFuture(send(request));
+          }
+        };
+    setMockGaosClient(client, mockClient);
+
+    String credentialId = "test-credential-id";
+    String triggerId = "test-trigger-id";
+    String expectedUrlPrefix = "https://generativelanguage.googleapis.com/v1beta";
+
+    // 1. Test Get Credential
+    client.credentials.get(credentialId);
+    HttpRequest req = capturedRequest.get();
+    assertNotNull(req);
+    assertEquals("GET", req.method());
+    assertEquals(URI.create(expectedUrlPrefix + "/credentials/" + credentialId), req.uri());
+
+    // 2. Test Get Trigger
+    capturedRequest.set(null);
+    client.triggers.get(triggerId);
+    req = capturedRequest.get();
+    assertNotNull(req);
+    assertEquals("GET", req.method());
+    assertEquals(URI.create(expectedUrlPrefix + "/triggers/" + triggerId), req.uri());
+  }
+
+  @Test
   public void testGaosClientRetryConfigIsNoRetries() throws Exception {
     Client client = Client.builder().apiKey("test-api-key").vertexAI(false).build();
     Field sdkConfigField = client.interactions.getClass().getDeclaredField("sdkConfiguration");

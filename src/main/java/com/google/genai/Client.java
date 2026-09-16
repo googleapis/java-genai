@@ -24,13 +24,17 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 // android:strip_begin
 import com.google.genai.gaos.Agents;
 import com.google.genai.gaos.AsyncAgents;
+import com.google.genai.gaos.AsyncCredentials;
 import com.google.genai.gaos.AsyncEnvironments;
 import com.google.genai.gaos.AsyncGenAI;
 import com.google.genai.gaos.AsyncInteractions;
+import com.google.genai.gaos.AsyncTriggers;
 import com.google.genai.gaos.AsyncWebhooks;
+import com.google.genai.gaos.Credentials;
 import com.google.genai.gaos.Environments;
 import com.google.genai.gaos.GenAI;
 import com.google.genai.gaos.Interactions;
+import com.google.genai.gaos.Triggers;
 import com.google.genai.gaos.Webhooks;
 import com.google.genai.gaos.utils.HTTPClient;
 import com.google.genai.gaos.utils.Headers;
@@ -82,6 +86,8 @@ public final class Client implements AutoCloseable {
     public final AsyncAgents agents;
     public final AsyncWebhooks webhooks;
     public final AsyncEnvironments environments;
+    public final AsyncTriggers triggers;
+    public final AsyncCredentials credentials;
     // android:strip_end
 
     public Async(ApiClient apiClient) {
@@ -101,6 +107,8 @@ public final class Client implements AutoCloseable {
       this.agents = asyncGaos.agents();
       this.webhooks = asyncGaos.webhooks();
       this.environments = asyncGaos.environments();
+      this.triggers = asyncGaos.triggers();
+      this.credentials = asyncGaos.credentials();
       // android:strip_end
     }
   }
@@ -123,6 +131,8 @@ public final class Client implements AutoCloseable {
   public final Agents agents;
   public final Webhooks webhooks;
   public final Environments environments;
+  public final Triggers triggers;
+  public final Credentials credentials;
   // android:strip_end
 
   /** Builder for {@link Client}. */
@@ -432,6 +442,8 @@ public final class Client implements AutoCloseable {
     this.agents = gaosClient.agents();
     this.webhooks = gaosClient.webhooks();
     this.environments = gaosClient.environments();
+    this.triggers = gaosClient.triggers();
+    this.credentials = gaosClient.credentials();
     // android:strip_end
 
     async = new Async(this.apiClient);

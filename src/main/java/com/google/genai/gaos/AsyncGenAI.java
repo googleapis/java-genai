@@ -32,6 +32,8 @@ public class AsyncGenAI implements java.lang.AutoCloseable {
 
     private final AsyncAgents agents;
 
+    private final AsyncCredentials credentials;
+
     private final AsyncEnvironments environments;
 
     private final AsyncInteractions interactions;
@@ -42,6 +44,10 @@ public class AsyncGenAI implements java.lang.AutoCloseable {
 
     public AsyncAgents agents() {
         return agents;
+    }
+
+    public AsyncCredentials credentials() {
+        return credentials;
     }
 
     public AsyncEnvironments environments() {
@@ -67,6 +73,7 @@ public class AsyncGenAI implements java.lang.AutoCloseable {
         this.syncSDK = syncSDK;
         this.sdkConfiguration = sdkConfiguration;
         this.agents = new AsyncAgents(syncSDK.agents(), sdkConfiguration);
+        this.credentials = new AsyncCredentials(syncSDK.credentials(), sdkConfiguration);
         this.environments = new AsyncEnvironments(syncSDK.environments(), sdkConfiguration);
         this.interactions = new AsyncInteractions(syncSDK.interactions(), sdkConfiguration);
         this.triggers = new AsyncTriggers(syncSDK.triggers(), sdkConfiguration);
