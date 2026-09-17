@@ -223,7 +223,7 @@ public abstract class GenerationConfig extends JsonSerializable {
   @JsonProperty("responseFormat")
   public abstract Optional<List<ResponseFormat>> responseFormat();
 
-  /** Optional. Config for translation. This field is not supported in Vertex AI. */
+  /** Optional. Config for translation. */
   @JsonProperty("translationConfig")
   public abstract Optional<TranslationConfig> translationConfig();
 
@@ -925,8 +925,7 @@ public abstract class GenerationConfig extends JsonSerializable {
     /**
      * Setter for translationConfig.
      *
-     * <p>translationConfig: Optional. Config for translation. This field is not supported in Vertex
-     * AI.
+     * <p>translationConfig: Optional. Config for translation.
      */
     @JsonProperty("translationConfig")
     public abstract Builder translationConfig(TranslationConfig translationConfig);
@@ -934,8 +933,7 @@ public abstract class GenerationConfig extends JsonSerializable {
     /**
      * Setter for translationConfig builder.
      *
-     * <p>translationConfig: Optional. Config for translation. This field is not supported in Vertex
-     * AI.
+     * <p>translationConfig: Optional. Config for translation.
      */
     @CanIgnoreReturnValue
     public Builder translationConfig(TranslationConfig.Builder translationConfigBuilder) {

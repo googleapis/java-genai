@@ -555,32 +555,6 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"data"},
-          Common.getValueByPath(fromObject, new String[] {"data"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException(
-          "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelBatchJobParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -1095,32 +1069,6 @@ public final class Batches {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"inlinedRequests"})),
               toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileDataToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException(
-          "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileUri"},
-          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
     }
 
     return toObject;
@@ -1898,10 +1846,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"fileData"},
-          fileDataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"fileData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
@@ -1925,10 +1870,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"inlineData"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {

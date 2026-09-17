@@ -40,6 +40,9 @@ public class TrafficType {
     /** Type for Flex traffic. */
     ON_DEMAND_FLEX,
 
+    /** Type for Off-Peak Pay-As-You-Go traffic. */
+    ON_DEMAND_OFFPEAK,
+
     /** Type for Provisioned Throughput traffic. */
     PROVISIONED_THROUGHPUT
   }

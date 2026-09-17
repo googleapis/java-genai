@@ -172,32 +172,6 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"data"},
-          Common.getValueByPath(fromObject, new String[] {"data"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException(
-          "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode candidateFromMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"content"}) != null) {
@@ -1337,32 +1311,6 @@ public final class Models {
           toObject,
           new String[] {"deployedModelId"},
           Common.getValueByPath(fromObject, new String[] {"deployedModelId"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileDataToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException(
-          "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileUri"},
-          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
     }
 
     return toObject;
@@ -3280,10 +3228,11 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"translationConfig"}))) {
-      throw new IllegalArgumentException(
-          "translationConfig parameter is only supported in Gemini Developer API mode, not in"
-              + " Gemini Enterprise Agent Platform mode.");
+    if (Common.getValueByPath(fromObject, new String[] {"translationConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"translationConfig"},
+          Common.getValueByPath(fromObject, new String[] {"translationConfig"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
@@ -4025,11 +3974,7 @@ public final class Models {
       Common.setValueByPath(
           toObject,
           new String[] {"fileData"},
-          fileDataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject,
-              rootObject));
+          Common.getValueByPath(fromObject, new String[] {"fileData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
@@ -4054,11 +3999,7 @@ public final class Models {
       Common.setValueByPath(
           toObject,
           new String[] {"inlineData"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject,
-              rootObject));
+          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
