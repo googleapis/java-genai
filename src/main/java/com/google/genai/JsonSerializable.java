@@ -78,8 +78,15 @@ public abstract class JsonSerializable {
       if (value.endsWith("s")) {
         String secondsPart = value.substring(0, value.length() - 1);
         try {
-          long seconds = Long.parseLong(secondsPart);
-          return java.time.Duration.ofSeconds(seconds);
+          // proto3 JSON encodes google.protobuf.Duration with FRACTIONAL
+          // seconds (e.g. "7.280s", up to 9 fractional digits), which the Live
+          // API streams. BigDecimal keeps full nanosecond precision and sign
+          // without floating-point error; plain integer parsing rejected them.
+          java.math.BigDecimal seconds = new java.math.BigDecimal(secondsPart);
+          long wholeSeconds = seconds.longValue();
+          long nanoAdjustment =
+              seconds.subtract(java.math.BigDecimal.valueOf(wholeSeconds)).movePointRight(9).longValue();
+          return java.time.Duration.ofSeconds(wholeSeconds, nanoAdjustment);
         } catch (NumberFormatException e) {
           throw ctxt.weirdStringException(
               value,
