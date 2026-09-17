@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.72.0](https://github.com/googleapis/java-genai/compare/v1.71.0...v1.72.0) (2026-09-17)
+
+
+### Features
+
+* Add credentials resource for java. ([5765829](https://github.com/googleapis/java-genai/commit/57658298ee9befd3104fb8d73eae05fe8c2d4c13))
+* implement environments files upload and download in Java SDK ([6da6c06](https://github.com/googleapis/java-genai/commit/6da6c06d5ea25c0b14169332cc06de6d5b1f33cf))
+* Support instance methods for automatic function calling in Google GenAI Java SDK. ([a372539](https://github.com/googleapis/java-genai/commit/a37253910516da0ccd4073f3ff677c8eb2224eff))
+
+
+### Bug Fixes
+
+* do not run functions once the automatic function calling budget is spent ([9da4d6c](https://github.com/googleapis/java-genai/commit/9da4d6cc8fb1d3ce55dc403b0e2e2283245aadce))
+
+
+### Documentation
+
+* update GenAI SDK README files to use gemini-flash-latest ([b3a1896](https://github.com/googleapis/java-genai/commit/b3a18963d7b6426fd21b760db9ef5dc3df1bddba))
+
 ## [1.71.0](https://github.com/googleapis/java-genai/compare/v1.70.0...v1.71.0) (2026-09-10)
 
 
