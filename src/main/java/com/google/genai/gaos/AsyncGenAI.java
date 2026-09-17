@@ -30,11 +30,11 @@ package com.google.genai.gaos;
  */
 public class AsyncGenAI implements java.lang.AutoCloseable {
 
+    private final AsyncEnvironments environments;
+
     private final AsyncAgents agents;
 
     private final AsyncCredentials credentials;
-
-    private final AsyncEnvironments environments;
 
     private final AsyncInteractions interactions;
 
@@ -42,16 +42,16 @@ public class AsyncGenAI implements java.lang.AutoCloseable {
 
     private final AsyncWebhooks webhooks;
 
+    public AsyncEnvironments environments() {
+        return environments;
+    }
+
     public AsyncAgents agents() {
         return agents;
     }
 
     public AsyncCredentials credentials() {
         return credentials;
-    }
-
-    public AsyncEnvironments environments() {
-        return environments;
     }
 
     public AsyncInteractions interactions() {
@@ -72,9 +72,9 @@ public class AsyncGenAI implements java.lang.AutoCloseable {
     AsyncGenAI(GenAI syncSDK, SDKConfiguration sdkConfiguration) {
         this.syncSDK = syncSDK;
         this.sdkConfiguration = sdkConfiguration;
+        this.environments = new AsyncEnvironments(syncSDK.environments(), sdkConfiguration);
         this.agents = new AsyncAgents(syncSDK.agents(), sdkConfiguration);
         this.credentials = new AsyncCredentials(syncSDK.credentials(), sdkConfiguration);
-        this.environments = new AsyncEnvironments(syncSDK.environments(), sdkConfiguration);
         this.interactions = new AsyncInteractions(syncSDK.interactions(), sdkConfiguration);
         this.triggers = new AsyncTriggers(syncSDK.triggers(), sdkConfiguration);
         this.webhooks = new AsyncWebhooks(syncSDK.webhooks(), sdkConfiguration);

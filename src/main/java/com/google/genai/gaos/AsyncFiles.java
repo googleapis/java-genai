@@ -30,6 +30,22 @@ import com.google.genai.gaos.utils.Headers;
 import com.google.genai.gaos.utils.Options;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import com.google.genai.gaos.models.errors.GaosApiException;
+import com.google.genai.gaos.models.operations.StartEnvironmentFileUploadRequest;
+import com.google.genai.gaos.models.operations.UploadEnvironmentFileRequest;
+import com.google.genai.gaos.models.operations.UploadEnvironmentFileResponse;
+import com.google.genai.gaos.operations.StartEnvironmentFileUpload;
+import com.google.genai.gaos.utils.transport.HttpBody;
+import com.google.genai.gaos.utils.transport.HttpRequest;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -89,6 +105,330 @@ public class AsyncFiles {
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
             operation::handleResponse), operation);
+    }
+
+    /**
+     * Downloads binary file content from an environment workspace.
+     *
+     * @param environment The environment ID or resource name.
+     * @param path The relative file path to download.
+     * @return CompletableFuture containing the binary file content as a byte array.
+     */
+    public CompletableFuture<byte[]> download(@Nonnull String environment, @Nonnull String path) {
+        return download(environment, path, null);
+    }
+
+    /**
+     * Downloads binary file content from an environment workspace with custom options.
+     *
+     * @param environment The environment ID or resource name.
+     * @param path The relative file path to download.
+     * @param options Additional request options.
+     * @return CompletableFuture containing the binary file content as a byte array.
+     */
+    public CompletableFuture<byte[]> download(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nullable Options options) {
+        String url = syncSDK.buildDownloadUrl(environment, path, options);
+        HttpRequest.Builder requestBuilder = HttpRequest.builder()
+                .method("GET")
+                .uri(URI.create(url))
+                .setHeader("Accept", "application/octet-stream")
+                .setHeader("user-agent", SDKConfiguration.USER_AGENT);
+        _headers.forEach((k, list) -> list.forEach(v -> requestBuilder.header(k, v)));
+
+        return this.sdkConfiguration.client().sendAsync(requestBuilder.build())
+                .thenApply(response -> {
+                    if (response.statusCode() >= 400) {
+                        throw GaosApiException.from("Download failed with status: " + response.statusCode(), response);
+                    }
+                    try (InputStream in = response.body()) {
+                        ByteArrayOutputStream out = new ByteArrayOutputStream();
+                        byte[] buffer = new byte[4096];
+                        int read;
+                        while ((read = in.read(buffer)) != -1) {
+                            out.write(buffer, 0, read);
+                        }
+                        return out.toByteArray();
+                    } catch (IOException e) {
+                        throw new RuntimeException("Failed to read downloaded content", e);
+                    }
+                });
+    }
+
+    /**
+     * Downloads binary file content as an InputStream.
+     *
+     * @param environment The environment ID or resource name.
+     * @param path The relative file path to download.
+     * @return CompletableFuture containing an InputStream of the downloaded file content.
+     */
+    public CompletableFuture<InputStream> downloadStream(@Nonnull String environment, @Nonnull String path) {
+        return download(environment, path).thenApply(ByteArrayInputStream::new);
+    }
+
+    /**
+     * Downloads a file from an environment workspace and saves it to a local destination file.
+     *
+     * @param environment The environment ID or resource name.
+     * @param path The relative file path to download.
+     * @param destination The local File to write to.
+     * @return CompletableFuture that completes when writing completes.
+     */
+    public CompletableFuture<Void> downloadToFile(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull File destination) {
+        return download(environment, path).thenAccept(data -> {
+            try {
+                if (destination.getParentFile() != null) {
+                    destination.getParentFile().mkdirs();
+                }
+                java.nio.file.Files.write(destination.toPath(), data);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to write downloaded file to " + destination.getAbsolutePath(), e);
+            }
+        });
+    }
+
+    /**
+     * Downloads a file from an environment workspace and saves it to a local destination Path.
+     *
+     * @param environment The environment ID or resource name.
+     * @param path The relative file path to download.
+     * @param destination The local Path to write to.
+     * @return CompletableFuture that completes when writing completes.
+     */
+    public CompletableFuture<Void> downloadToFile(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull Path destination) {
+        return downloadToFile(environment, path, destination.toFile());
+    }
+
+    /**
+     * Uploads a file or extracts an archive inside an environment workspace asynchronously.
+     *
+     * @param request The upload request containing environment, path, content, and options.
+     * @return CompletableFuture containing the response.
+     */
+    public CompletableFuture<UploadEnvironmentFileResponse> upload(@Nonnull UploadEnvironmentFileRequest request) {
+        return upload(request, null);
+    }
+
+    /**
+     * Uploads a file or extracts an archive inside an environment workspace asynchronously with custom options.
+     *
+     * @param request The upload request.
+     * @param options Additional request options.
+     * @return CompletableFuture containing the response.
+     */
+    public CompletableFuture<UploadEnvironmentFileResponse> upload(
+            @Nonnull UploadEnvironmentFileRequest request,
+            @Nullable Options options) {
+        byte[] inMemoryBytes = null;
+        File file = request.file().orElse(null);
+        long sizeBytes;
+        if (request.bytes().isPresent()) {
+            inMemoryBytes = request.bytes().get();
+            sizeBytes = inMemoryBytes.length;
+        } else if (file != null) {
+            sizeBytes = file.length();
+        } else if (request.sizeBytes().isPresent()) {
+            sizeBytes = request.sizeBytes().get();
+        } else {
+            CompletableFuture<UploadEnvironmentFileResponse> failed = new CompletableFuture<>();
+            failed.completeExceptionally(new IllegalArgumentException(
+                    "One of file, bytes, or stream with sizeBytes must be provided for upload."));
+            return failed;
+        }
+
+        String mimeType = request.mimeType().orElseGet(() -> Files.inferMimeType(request.path()));
+        StartEnvironmentFileUploadRequest handshakeRequest =
+                Files.buildStartUploadRequest(request, sizeBytes, mimeType);
+        final byte[] finalInMemoryBytes = inMemoryBytes;
+        final File finalFile = file;
+        final long finalSizeBytes = sizeBytes;
+
+        AsyncRequestOperation<StartEnvironmentFileUploadRequest, com.google.genai.gaos.models.operations.async.StartEnvironmentFileUploadResponse> handshakeOp =
+                new StartEnvironmentFileUpload.Async(this.sdkConfiguration, options, this.sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(handshakeOp.doRequest(handshakeRequest), handshakeOp::handleResponse),
+                handshakeOp)
+                .thenCompose(handshakeResponse -> {
+                    String uploadUrl = Files.getUploadUrl(handshakeResponse.rawResponse());
+
+                    if (finalSizeBytes == 0) {
+                        HttpRequest uploadReq = HttpRequest.builder()
+                                .method("POST")
+                                .uri(URI.create(uploadUrl))
+                                .setHeader("X-Goog-Upload-Command", "upload, finalize")
+                                .setHeader("X-Goog-Upload-Offset", "0")
+                                .setHeader("user-agent", SDKConfiguration.USER_AGENT)
+                                .body(HttpBody.empty())
+                                .build();
+                        return this.sdkConfiguration.client().sendAsync(uploadReq)
+                                .thenApply(uploadResponse -> {
+                                    if (uploadResponse.statusCode() >= 400) {
+                                        throw GaosApiException.from(
+                                                "Upload chunk failed with status: " + uploadResponse.statusCode(),
+                                                uploadResponse);
+                                    }
+                                    return Files.parseUploadResponse(uploadResponse);
+                                });
+                    }
+
+                    InputStream inputStream;
+                    try {
+                        if (finalInMemoryBytes != null) {
+                            inputStream = new ByteArrayInputStream(finalInMemoryBytes);
+                        } else if (finalFile != null) {
+                            inputStream = new FileInputStream(finalFile);
+                        } else {
+                            inputStream = request.stream().get();
+                        }
+                    } catch (IOException e) {
+                        CompletableFuture<UploadEnvironmentFileResponse> failed = new CompletableFuture<>();
+                        failed.completeExceptionally(e);
+                        return failed;
+                    }
+
+                    return uploadChunksAsync(uploadUrl, inputStream, 0, finalSizeBytes)
+                            .whenComplete((response, error) -> {
+                                if (finalFile != null) {
+                                    try {
+                                        inputStream.close();
+                                    } catch (IOException ignored) {
+                                        // Nothing to do.
+                                    }
+                                }
+                            });
+                });
+    }
+
+    private CompletableFuture<UploadEnvironmentFileResponse> uploadChunksAsync(
+            String uploadUrl,
+            InputStream inputStream,
+            long offset,
+            long totalSize) {
+        final int chunkSize = 8 * 1024 * 1024;
+        int toRead = (int) Math.min(chunkSize, totalSize - offset);
+        byte[] buffer = new byte[toRead];
+        int bytesRead = 0;
+        try {
+            while (bytesRead < toRead) {
+                int read = inputStream.read(buffer, bytesRead, toRead - bytesRead);
+                if (read == -1) {
+                    break;
+                }
+                bytesRead += read;
+            }
+        } catch (IOException e) {
+            CompletableFuture<UploadEnvironmentFileResponse> failed = new CompletableFuture<>();
+            failed.completeExceptionally(e);
+            return failed;
+        }
+
+        if (bytesRead == 0) {
+            CompletableFuture<UploadEnvironmentFileResponse> failed = new CompletableFuture<>();
+            failed.completeExceptionally(new IllegalStateException("Unexpected end of stream at offset " + offset));
+            return failed;
+        }
+
+        long nextOffset = offset + bytesRead;
+        boolean isFinal = nextOffset >= totalSize;
+        String uploadCommand = isFinal ? "upload, finalize" : "upload";
+
+        byte[] chunk = bytesRead == buffer.length ? buffer : Arrays.copyOf(buffer, bytesRead);
+        HttpRequest uploadReq = HttpRequest.builder()
+                .method("POST")
+                .uri(URI.create(uploadUrl))
+                .setHeader("X-Goog-Upload-Command", uploadCommand)
+                .setHeader("X-Goog-Upload-Offset", String.valueOf(offset))
+                .setHeader("user-agent", SDKConfiguration.USER_AGENT)
+                .body(HttpBody.of(chunk))
+                .build();
+
+        return this.sdkConfiguration.client().sendAsync(uploadReq)
+                .thenCompose(response -> {
+                    if (response.statusCode() >= 400) {
+                        throw GaosApiException.from("Upload chunk failed with status: " + response.statusCode(), response);
+                    }
+                    if (isFinal) {
+                        return CompletableFuture.completedFuture(Files.parseUploadResponse(response));
+                    }
+                    return uploadChunksAsync(uploadUrl, inputStream, nextOffset, totalSize);
+                });
+    }
+
+    public CompletableFuture<UploadEnvironmentFileResponse> upload(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull File file) {
+        return upload(environment, path, file, null, null, null);
+    }
+
+    public CompletableFuture<UploadEnvironmentFileResponse> upload(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull File file,
+            @Nullable String mimeType,
+            @Nullable Boolean overwrite,
+            @Nullable Boolean extract) {
+        return upload(
+                UploadEnvironmentFileRequest.builder()
+                        .environment(environment)
+                        .path(path)
+                        .file(file)
+                        .mimeType(mimeType)
+                        .overwrite(overwrite)
+                        .extract(extract)
+                        .build());
+    }
+
+    public CompletableFuture<UploadEnvironmentFileResponse> upload(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull byte[] bytes) {
+        return upload(environment, path, bytes, null, null, null);
+    }
+
+    public CompletableFuture<UploadEnvironmentFileResponse> upload(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull byte[] bytes,
+            @Nullable String mimeType,
+            @Nullable Boolean overwrite,
+            @Nullable Boolean extract) {
+        return upload(
+                UploadEnvironmentFileRequest.builder()
+                        .environment(environment)
+                        .path(path)
+                        .bytes(bytes)
+                        .mimeType(mimeType)
+                        .overwrite(overwrite)
+                        .extract(extract)
+                        .build());
+    }
+
+    public CompletableFuture<UploadEnvironmentFileResponse> upload(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull InputStream stream,
+            long sizeBytes,
+            @Nullable String mimeType,
+            @Nullable Boolean overwrite,
+            @Nullable Boolean extract) {
+        return upload(
+                UploadEnvironmentFileRequest.builder()
+                        .environment(environment)
+                        .path(path)
+                        .stream(stream, sizeBytes)
+                        .mimeType(mimeType)
+                        .overwrite(overwrite)
+                        .extract(extract)
+                        .build());
     }
 
 }

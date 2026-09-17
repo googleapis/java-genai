@@ -33,7 +33,7 @@ import java.lang.String;
  * 
  * <p>A tool that can be used by the model to execute code.
  */
-public class CodeExecution implements AgentTool, Tool {
+public class CodeExecution implements Tool, AgentTool {
 
     @JsonProperty("type")
     private String type;

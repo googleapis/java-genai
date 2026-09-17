@@ -38,7 +38,7 @@ import java.util.Optional;
  * 
  * <p>A tool that can be used by the model to search Google.
  */
-public class GoogleSearch implements AgentTool, Tool {
+public class GoogleSearch implements Tool, AgentTool {
     /**
      * The types of search grounding to enable.
      */

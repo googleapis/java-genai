@@ -43,7 +43,7 @@ public class GetEnvironmentFilesRequest {
     private String environment;
 
 
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=path")
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,allowReserved=true,name=path")
     private String path;
 
     /**
