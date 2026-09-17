@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.73.0](https://github.com/googleapis/java-genai/compare/v1.72.0...v1.73.0) (2026-09-17)
+
+
+### Features
+
+* update discovery doc ([7af0777](https://github.com/googleapis/java-genai/commit/7af0777878476d8b84442583446c65d4c4ab1b57))
+
 ## [1.72.0](https://github.com/googleapis/java-genai/compare/v1.71.0...v1.72.0) (2026-09-17)
 
 
