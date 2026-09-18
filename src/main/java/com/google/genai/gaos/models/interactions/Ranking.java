@@ -34,7 +34,7 @@ import java.util.Optional;
 /**
  * Ranking
  * 
- * <p>Config for Rank Service.
+ * <p>Config for ranking and reranking.
  */
 public class Ranking {
     /**
@@ -44,19 +44,28 @@ public class Ranking {
     @JsonProperty("model_name")
     private String modelName;
 
+    /**
+     * Config for Rank Service.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("rank_service")
+    private RankService rankService;
+
 
     @JsonProperty("ranking_config")
     private String rankingConfig;
 
     @JsonCreator
     public Ranking(
-            @JsonProperty("model_name") @Nullable String modelName) {
+            @JsonProperty("model_name") @Nullable String modelName,
+            @JsonProperty("rank_service") @Nullable RankService rankService) {
         this.modelName = modelName;
+        this.rankService = rankService;
         this.rankingConfig = Builder._SINGLETON_VALUE_RankingConfig.value();
     }
     
     public Ranking() {
-        this(null);
+        this(null, null);
     }
 
     /**
@@ -64,6 +73,13 @@ public class Ranking {
      */
     public Optional<String> modelName() {
         return Optional.ofNullable(this.modelName);
+    }
+
+    /**
+     * Config for Rank Service.
+     */
+    public Optional<RankService> rankService() {
+        return Optional.ofNullable(this.rankService);
     }
 
     public Optional<String> rankingConfig() {
@@ -84,6 +100,15 @@ public class Ranking {
     }
 
 
+    /**
+     * Config for Rank Service.
+     */
+    public Ranking withRankService(@Nullable RankService rankService) {
+        this.rankService = rankService;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -95,19 +120,21 @@ public class Ranking {
         Ranking other = (Ranking) o;
         return 
             Utils.enhancedDeepEquals(this.modelName, other.modelName) &&
+            Utils.enhancedDeepEquals(this.rankService, other.rankService) &&
             Utils.enhancedDeepEquals(this.rankingConfig, other.rankingConfig);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            modelName, rankingConfig);
+            modelName, rankService, rankingConfig);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Ranking.class,
                 "modelName", modelName,
+                "rankService", rankService,
                 "rankingConfig", rankingConfig);
     }
 
@@ -115,6 +142,8 @@ public class Ranking {
     public final static class Builder {
 
         private String modelName;
+
+        private RankService rankService;
 
         private Builder() {
           // force use of static builder() method
@@ -128,9 +157,17 @@ public class Ranking {
             return this;
         }
 
+        /**
+         * Config for Rank Service.
+         */
+        public Builder rankService(@Nullable RankService rankService) {
+            this.rankService = rankService;
+            return this;
+        }
+
         public Ranking build() {
             return new Ranking(
-                modelName);
+                modelName, rankService);
         }
 
 

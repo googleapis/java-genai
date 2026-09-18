@@ -31,20 +31,19 @@ import java.util.Optional;
 
 public class RotateSigningSecretRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
      * Required. The ID of the webhook for which to generate a signing secret.
-     * Format: `{webhook_id}`
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
     private String id;
 
     /**
-     * The request body.
+     * Required. The request body.
      */
     @SpeakeasyMetadata("request:mediaType=application/json")
     private com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body;
@@ -66,7 +65,7 @@ public class RotateSigningSecretRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
@@ -74,14 +73,13 @@ public class RotateSigningSecretRequest {
 
     /**
      * Required. The ID of the webhook for which to generate a signing secret.
-     * Format: `{webhook_id}`
      */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
     }
 
     /**
-     * The request body.
+     * Required. The request body.
      */
     public Optional<com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest> body() {
         return Optional.ofNullable(this.body);
@@ -93,7 +91,7 @@ public class RotateSigningSecretRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public RotateSigningSecretRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -103,7 +101,6 @@ public class RotateSigningSecretRequest {
 
     /**
      * Required. The ID of the webhook for which to generate a signing secret.
-     * Format: `{webhook_id}`
      */
     public RotateSigningSecretRequest withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
@@ -112,7 +109,7 @@ public class RotateSigningSecretRequest {
 
 
     /**
-     * The request body.
+     * Required. The request body.
      */
     public RotateSigningSecretRequest withBody(@Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
         this.body = body;
@@ -163,7 +160,7 @@ public class RotateSigningSecretRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -172,7 +169,6 @@ public class RotateSigningSecretRequest {
 
         /**
          * Required. The ID of the webhook for which to generate a signing secret.
-         * Format: `{webhook_id}`
          */
         public Builder id(@Nonnull String id) {
             this.id = Utils.checkNotNull(id, "id");
@@ -180,7 +176,7 @@ public class RotateSigningSecretRequest {
         }
 
         /**
-         * The request body.
+         * Required. The request body.
          */
         public Builder body(@Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
             this.body = body;

@@ -88,10 +88,11 @@ public class Agents {
     /**
      * Lists all Agents.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param pageSize 
      * @param pageToken 
-     * @param parent 
+     * @param parent Required. The parent resource to list agents from.
+     *         Format: `projects/{project}/locations/{location}`
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -140,7 +141,7 @@ public class Agents {
     /**
      * Creates a new Agent (Typed version for SDK).
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body An agent definition for the CreateAgent API.
      *         This message is the target for annotation-parser-based JSON parsing.
      *         New format:
@@ -176,7 +177,7 @@ public class Agents {
     /**
      * Deletes an Agent.
      * 
-     * @param id 
+     * @param id Required. The name of the agent to delete.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -187,8 +188,8 @@ public class Agents {
     /**
      * Deletes an Agent.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param apiVersion API version for request routing.
+     * @param id Required. The name of the agent to delete.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -214,7 +215,7 @@ public class Agents {
     /**
      * Gets a specific Agent.
      * 
-     * @param id 
+     * @param id Required. The name of the agent to retrieve.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -225,8 +226,8 @@ public class Agents {
     /**
      * Gets a specific Agent.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param apiVersion API version for request routing.
+     * @param id Required. The name of the agent to retrieve.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails

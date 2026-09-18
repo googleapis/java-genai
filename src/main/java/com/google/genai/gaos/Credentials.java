@@ -71,7 +71,7 @@ public class Credentials {
     }
 
     /**
-     * Lists credentials for a project.
+     * Lists credentials.
      * 
      * @return The call builder
      */
@@ -80,7 +80,7 @@ public class Credentials {
     }
 
     /**
-     * Lists credentials for a project.
+     * Lists credentials.
      * 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -91,11 +91,10 @@ public class Credentials {
     }
 
     /**
-     * Lists credentials for a project.
+     * Lists credentials.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param pageSize Optional. Maximum number of credentials to return.
-     *         If unspecified, defaults to 50. Maximum is 1000.
      * @param pageToken Optional. Pagination token.
      * @param options additional options
      * @return The response from the API call
@@ -111,7 +110,7 @@ public class Credentials {
     }
 
     /**
-     * Creates a credential.
+     * Creates a new credential.
      * 
      * @return The call builder
      */
@@ -120,7 +119,7 @@ public class Credentials {
     }
 
     /**
-     * Creates a credential.
+     * Creates a new credential.
      * 
      * @param body Represents the fields of a Credential provided on creation.
      * @return The response from the API call
@@ -131,9 +130,9 @@ public class Credentials {
     }
 
     /**
-     * Creates a credential.
+     * Creates a new credential.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body Represents the fields of a Credential provided on creation.
      * @param options additional options
      * @return The response from the API call
@@ -149,7 +148,7 @@ public class Credentials {
     }
 
     /**
-     * Deletes a credential. Fails if referenced by active triggers.
+     * Deletes a credential.
      * 
      * @return The call builder
      */
@@ -158,9 +157,10 @@ public class Credentials {
     }
 
     /**
-     * Deletes a credential. Fails if referenced by active triggers.
+     * Deletes a credential.
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -169,10 +169,11 @@ public class Credentials {
     }
 
     /**
-     * Deletes a credential. Fails if referenced by active triggers.
+     * Deletes a credential.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -187,7 +188,7 @@ public class Credentials {
     }
 
     /**
-     * Gets metadata of a single credential (no secret fields).
+     * Gets a credential by ID.
      * 
      * @return The call builder
      */
@@ -196,9 +197,10 @@ public class Credentials {
     }
 
     /**
-     * Gets metadata of a single credential (no secret fields).
+     * Gets a credential by ID.
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -207,10 +209,11 @@ public class Credentials {
     }
 
     /**
-     * Gets metadata of a single credential (no secret fields).
+     * Gets a credential by ID.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -236,7 +239,8 @@ public class Credentials {
     /**
      * Updates a credential.
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @param body Represents the fields of a Credential that can be updated.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -249,8 +253,9 @@ public class Credentials {
     /**
      * Updates a credential.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @param updateMask Optional. The list of fields to update.
      * @param body Represents the fields of a Credential that can be updated.
      * @param options additional options
