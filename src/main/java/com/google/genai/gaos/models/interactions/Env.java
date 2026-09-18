@@ -49,14 +49,27 @@ public class Env {
         this.value = value;
     }
 
+    public static Env of(EnvVar value) {
+        Utils.checkNotNull(value, "value");
+        return new Env(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<EnvVar>(){}));
+    }
+
     public static Env of(Map<String, EnvVar> value) {
         Utils.checkNotNull(value, "value");
         return new Env(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Map<String, EnvVar>>(){}));
     }
-
-    public static Env of(String value) {
-        Utils.checkNotNull(value, "value");
-        return new Env(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code EnvVar},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code EnvVar} value, or empty if not of this type
+     */
+    public Optional<EnvVar> envVar() {
+        if (value.value() instanceof EnvVar) {
+            return Optional.of((EnvVar) value.value());
+        }
+        return Optional.empty();
     }
     
     /**
@@ -69,19 +82,6 @@ public class Env {
     public Optional<Map<String, EnvVar>> mapOfEnvVar() {
         if (value.value() instanceof Map) {
             return Optional.of((Map<String, EnvVar>) value.value());
-        }
-        return Optional.empty();
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code String},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code String} value, or empty if not of this type
-     */
-    public Optional<String> string() {
-        if (value.value() instanceof String) {
-            return Optional.of((String) value.value());
         }
         return Optional.empty();
     }
@@ -120,8 +120,8 @@ public class Env {
 
         public _Deserializer() {
             super(Env.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<Map<String, EnvVar>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<EnvVar>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<Map<String, EnvVar>>() {}, JsonShape.DEFAULT));
         }
     }
     
