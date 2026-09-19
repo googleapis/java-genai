@@ -130,6 +130,13 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("mediaProcessing")
   public abstract Optional<MediaProcessing> mediaProcessing();
 
+  /**
+   * Extra metadata associated with the part for speech synthesis, such as speaker and style. Only
+   * valid when `Part.data` is set to `text`.
+   */
+  @JsonProperty("speechMetadata")
+  public abstract Optional<SpeechMetadata> speechMetadata();
+
   /** Instantiates a builder for Part. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -587,6 +594,36 @@ public abstract class Part extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder mediaProcessing(String mediaProcessing) {
       return mediaProcessing(new MediaProcessing(mediaProcessing));
+    }
+
+    /**
+     * Setter for speechMetadata.
+     *
+     * <p>speechMetadata: Extra metadata associated with the part for speech synthesis, such as
+     * speaker and style. Only valid when `Part.data` is set to `text`.
+     */
+    @JsonProperty("speechMetadata")
+    public abstract Builder speechMetadata(SpeechMetadata speechMetadata);
+
+    /**
+     * Setter for speechMetadata builder.
+     *
+     * <p>speechMetadata: Extra metadata associated with the part for speech synthesis, such as
+     * speaker and style. Only valid when `Part.data` is set to `text`.
+     */
+    @CanIgnoreReturnValue
+    public Builder speechMetadata(SpeechMetadata.Builder speechMetadataBuilder) {
+      return speechMetadata(speechMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder speechMetadata(Optional<SpeechMetadata> speechMetadata);
+
+    /** Clears the value of speechMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSpeechMetadata() {
+      return speechMetadata(Optional.empty());
     }
 
     public abstract Part build();
