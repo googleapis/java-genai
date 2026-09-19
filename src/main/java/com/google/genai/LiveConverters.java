@@ -777,6 +777,13 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"historyConfig"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"labels"},
+          Common.getValueByPath(fromObject, new String[] {"labels"}));
+    }
+
     return toObject;
   }
 
@@ -892,6 +899,12 @@ final class LiveConverters {
           toObject,
           new String[] {"historyConfig"},
           Common.getValueByPath(fromObject, new String[] {"historyConfig"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
+      throw new IllegalArgumentException(
+          "labels parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     return toObject;

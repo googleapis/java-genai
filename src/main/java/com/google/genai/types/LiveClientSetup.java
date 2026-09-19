@@ -28,6 +28,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /** Message contains configuration that will apply for the duration of the streaming session. */
@@ -113,6 +114,17 @@ public abstract class LiveClientSetup extends JsonSerializable {
   /** Configures the exchange of history between the client and the server. */
   @JsonProperty("historyConfig")
   public abstract Optional<HistoryConfig> historyConfig();
+
+  /**
+   * Optional. Labels with user-defined metadata for the request. Optional. Labels must follow
+   * standard unified Cloud label requirements: - Label keys must start with a letter. - Label keys
+   * and values can be no longer than 63 characters (Unicode codepoints) and can only contain
+   * lowercase letters, numeric characters, underscores, and dashes. - International characters are
+   * allowed. Usage: - Safety identifiers from aggregators: Use the key `safety_identifier` (e.g.
+   * `{"safety_identifier": "user_session_123"}`)
+   */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
 
   /** Instantiates a builder for LiveClientSetup. */
   @ExcludeFromGeneratedCoverageReport
@@ -566,6 +578,29 @@ public abstract class LiveClientSetup extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearHistoryConfig() {
       return historyConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: Optional. Labels with user-defined metadata for the request. Optional. Labels must
+     * follow standard unified Cloud label requirements: - Label keys must start with a letter. -
+     * Label keys and values can be no longer than 63 characters (Unicode codepoints) and can only
+     * contain lowercase letters, numeric characters, underscores, and dashes. - International
+     * characters are allowed. Usage: - Safety identifiers from aggregators: Use the key
+     * `safety_identifier` (e.g. `{"safety_identifier": "user_session_123"}`)
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder labels(Optional<Map<String, String>> labels);
+
+    /** Clears the value of labels field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLabels() {
+      return labels(Optional.empty());
     }
 
     public abstract LiveClientSetup build();
