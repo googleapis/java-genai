@@ -1713,6 +1713,13 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"speechMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"speechMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"speechMetadata"}));
+    }
+
     return toObject;
   }
 
@@ -1826,6 +1833,13 @@ final class LiveConverters {
           toObject,
           new String[] {"mediaProcessing"},
           Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"speechMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"speechMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"speechMetadata"}));
     }
 
     return toObject;
@@ -2308,6 +2322,13 @@ final class LiveConverters {
           toObject,
           new String[] {"prebuiltVoiceConfig"},
           Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"voice"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voice"},
+          Common.getValueByPath(fromObject, new String[] {"voice"}));
     }
 
     return toObject;
