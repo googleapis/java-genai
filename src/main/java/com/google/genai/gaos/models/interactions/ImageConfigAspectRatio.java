@@ -34,6 +34,15 @@ import java.util.Optional;
  * without runtime errors. Instances are immutable singletons with reference equality.
  * Use {@code asEnum()} for switch expressions.
  */
+/**
+ * ImageConfigAspectRatio
+ * 
+ * <p>The aspect ratio of the image to generate. Supported aspect ratios: 1:1,
+ * 2:3, 3:2, 3:4, 4:3, 9:16, 16:9, 21:9.
+ * 
+ * <p>If not specified, the model will choose a default aspect ratio based on any
+ * reference images provided.
+ */
 public class ImageConfigAspectRatio {
 
     public static final ImageConfigAspectRatio ELEVEN = new ImageConfigAspectRatio("1:1");

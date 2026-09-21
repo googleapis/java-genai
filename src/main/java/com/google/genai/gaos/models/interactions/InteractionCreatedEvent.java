@@ -32,7 +32,11 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
+/**
+ * InteractionCreatedEvent
+ * 
+ * <p>Server response confirming that a new interaction was created.
+ */
 public class InteractionCreatedEvent implements InteractionSSEEvent {
     /**
      * The event_id token to be used to resume the interaction stream, from

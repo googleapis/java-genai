@@ -73,9 +73,7 @@ public class AsyncInteractions {
 
 
     /**
-     * Creating an interaction
-     * 
-     * <p>Creates a new interaction.
+     * Creates a new interaction.
      * 
      * @return The async call builder
      */
@@ -84,9 +82,7 @@ public class AsyncInteractions {
     }
 
     /**
-     * Creating an interaction
-     * 
-     * <p>Creates a new interaction.
+     * Creates a new interaction.
      * 
      * @param body The request body.
      * @return {@code CompletableFuture<EventStream<InteractionSSEStreamEvent>}&gt; - The async response
@@ -96,11 +92,9 @@ public class AsyncInteractions {
     }
 
     /**
-     * Creating an interaction
+     * Creates a new interaction.
      * 
-     * <p>Creates a new interaction.
-     * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body The request body.
      * @param options additional options
      * @return A CompletableFuture that completes with a blocking event stream once response headers are received.
@@ -126,9 +120,7 @@ public class AsyncInteractions {
 
 
     /**
-     * Deleting an interaction
-     * 
-     * <p>Deletes the interaction by id.
+     * Deletes the interaction by id.
      * 
      * @return The async call builder
      */
@@ -137,11 +129,9 @@ public class AsyncInteractions {
     }
 
     /**
-     * Deleting an interaction
+     * Deletes the interaction by id.
      * 
-     * <p>Deletes the interaction by id.
-     * 
-     * @param id The unique identifier of the interaction to delete.
+     * @param id Required. The name of the interaction to delete.
      * @return {@code CompletableFuture<DeleteInteractionResponse>} - The async response
      */
     public CompletableFuture<DeleteInteractionResponse> delete(@Nonnull String id) {
@@ -149,12 +139,10 @@ public class AsyncInteractions {
     }
 
     /**
-     * Deleting an interaction
+     * Deletes the interaction by id.
      * 
-     * <p>Deletes the interaction by id.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param id The unique identifier of the interaction to delete.
+     * @param apiVersion API version for request routing.
+     * @param id Required. The name of the interaction to delete.
      * @param options additional options
      * @return {@code CompletableFuture<DeleteInteractionResponse>} - The async response
      */
@@ -172,9 +160,8 @@ public class AsyncInteractions {
 
 
     /**
-     * Retrieving an interaction
-     * 
-     * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
+     * Retrieves the full details of a single interaction based on its
+     * `Interaction.id`.
      * 
      * @return The async call builder
      */
@@ -183,9 +170,8 @@ public class AsyncInteractions {
     }
 
     /**
-     * Retrieving an interaction
-     * 
-     * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
+     * Retrieves the full details of a single interaction based on its
+     * `Interaction.id`.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return {@code CompletableFuture<EventStream<InteractionSSEStreamEvent>}&gt; - The async response
@@ -195,9 +181,8 @@ public class AsyncInteractions {
     }
 
     /**
-     * Retrieving an interaction
-     * 
-     * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
+     * Retrieves the full details of a single interaction based on its
+     * `Interaction.id`.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param options additional options
@@ -221,9 +206,8 @@ public class AsyncInteractions {
 
 
     /**
-     * Canceling an interaction
-     * 
-     * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
+     * Cancels an interaction by id. This only applies to background interactions
+     * that are still running.
      * 
      * @return The async call builder
      */
@@ -232,11 +216,10 @@ public class AsyncInteractions {
     }
 
     /**
-     * Canceling an interaction
+     * Cancels an interaction by id. This only applies to background interactions
+     * that are still running.
      * 
-     * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
-     * 
-     * @param id The unique identifier of the interaction to cancel.
+     * @param id Required. The name of the interaction to cancel.
      * @return {@code CompletableFuture<CancelInteractionByIdResponse>} - The async response
      */
     public CompletableFuture<CancelInteractionByIdResponse> cancel(@Nonnull String id) {
@@ -244,12 +227,11 @@ public class AsyncInteractions {
     }
 
     /**
-     * Canceling an interaction
+     * Cancels an interaction by id. This only applies to background interactions
+     * that are still running.
      * 
-     * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param id The unique identifier of the interaction to cancel.
+     * @param apiVersion API version for request routing.
+     * @param id Required. The name of the interaction to cancel.
      * @param options additional options
      * @return {@code CompletableFuture<CancelInteractionByIdResponse>} - The async response
      */

@@ -135,7 +135,7 @@ public class GetInteractionById {
             String url = Utils.generateURL(
                     klass,
                     this.baseUrl,
-                    "/{api_version}/interactions/{id}",
+                    "/{api_version}/interactions/{interactionsId}",
                     request, this.operationGlobals);
             HTTPRequest req = new HTTPRequest(url, "GET");
             req.addHeader("Accept", "application/json;q=1, text/event-stream;q=0")

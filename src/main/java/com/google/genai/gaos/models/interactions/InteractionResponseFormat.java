@@ -37,8 +37,8 @@ import java.util.Optional;
 /**
  * InteractionResponseFormat
  * 
- * <p>Enforces that the generated response is a JSON object that complies with the JSON schema specified
- * in this field.
+ * <p>Enforces that the generated response is a JSON object that complies with
+ * the JSON schema specified in this field.
  */
 @JsonDeserialize(using = InteractionResponseFormat._Deserializer.class)
 public class InteractionResponseFormat {

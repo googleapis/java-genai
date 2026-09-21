@@ -31,14 +31,13 @@ import java.util.Optional;
 
 public class ListCredentialsRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
      * Optional. Maximum number of credentials to return.
-     * If unspecified, defaults to 50. Maximum is 1000.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_size")
     private Integer pageSize;
@@ -64,7 +63,7 @@ public class ListCredentialsRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
@@ -72,7 +71,6 @@ public class ListCredentialsRequest {
 
     /**
      * Optional. Maximum number of credentials to return.
-     * If unspecified, defaults to 50. Maximum is 1000.
      */
     public Optional<Integer> pageSize() {
         return Optional.ofNullable(this.pageSize);
@@ -91,7 +89,7 @@ public class ListCredentialsRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public ListCredentialsRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -101,7 +99,6 @@ public class ListCredentialsRequest {
 
     /**
      * Optional. Maximum number of credentials to return.
-     * If unspecified, defaults to 50. Maximum is 1000.
      */
     public ListCredentialsRequest withPageSize(@Nullable Integer pageSize) {
         this.pageSize = pageSize;
@@ -161,7 +158,7 @@ public class ListCredentialsRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -170,7 +167,6 @@ public class ListCredentialsRequest {
 
         /**
          * Optional. Maximum number of credentials to return.
-         * If unspecified, defaults to 50. Maximum is 1000.
          */
         public Builder pageSize(@Nullable Integer pageSize) {
             this.pageSize = pageSize;

@@ -42,6 +42,7 @@ public class AnnotationTypeIdResolver extends GenericTypeIdResolver<Annotation> 
     private void initializeTypeMap() {
         registerType("file_citation", FileCitation.class);
         registerType("place_citation", PlaceCitation.class);
+        registerType("speech_metadata", SpeechAnnotation.class);
         registerType("url_citation", URLCitation.class);
         registerType("word_info", WordInfo.class);
     }

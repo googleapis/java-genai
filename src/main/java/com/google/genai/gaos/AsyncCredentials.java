@@ -74,7 +74,7 @@ public class AsyncCredentials {
 
 
     /**
-     * Lists credentials for a project.
+     * Lists credentials.
      * 
      * @return The async call builder
      */
@@ -83,7 +83,7 @@ public class AsyncCredentials {
     }
 
     /**
-     * Lists credentials for a project.
+     * Lists credentials.
      * 
      * @return {@code CompletableFuture<ListCredentialsResponse>} - The async response
      */
@@ -94,11 +94,10 @@ public class AsyncCredentials {
     }
 
     /**
-     * Lists credentials for a project.
+     * Lists credentials.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param pageSize Optional. Maximum number of credentials to return.
-     *         If unspecified, defaults to 50. Maximum is 1000.
      * @param pageToken Optional. Pagination token.
      * @param options additional options
      * @return {@code CompletableFuture<ListCredentialsResponse>} - The async response
@@ -117,7 +116,7 @@ public class AsyncCredentials {
 
 
     /**
-     * Creates a credential.
+     * Creates a new credential.
      * 
      * @return The async call builder
      */
@@ -126,7 +125,7 @@ public class AsyncCredentials {
     }
 
     /**
-     * Creates a credential.
+     * Creates a new credential.
      * 
      * @param body Represents the fields of a Credential provided on creation.
      * @return {@code CompletableFuture<CreateCredentialResponse>} - The async response
@@ -136,9 +135,9 @@ public class AsyncCredentials {
     }
 
     /**
-     * Creates a credential.
+     * Creates a new credential.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body Represents the fields of a Credential provided on creation.
      * @param options additional options
      * @return {@code CompletableFuture<CreateCredentialResponse>} - The async response
@@ -157,7 +156,7 @@ public class AsyncCredentials {
 
 
     /**
-     * Deletes a credential. Fails if referenced by active triggers.
+     * Deletes a credential.
      * 
      * @return The async call builder
      */
@@ -166,9 +165,10 @@ public class AsyncCredentials {
     }
 
     /**
-     * Deletes a credential. Fails if referenced by active triggers.
+     * Deletes a credential.
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @return {@code CompletableFuture<DeleteCredentialResponse>} - The async response
      */
     public CompletableFuture<DeleteCredentialResponse> delete(@Nonnull String id) {
@@ -176,10 +176,11 @@ public class AsyncCredentials {
     }
 
     /**
-     * Deletes a credential. Fails if referenced by active triggers.
+     * Deletes a credential.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @param options additional options
      * @return {@code CompletableFuture<DeleteCredentialResponse>} - The async response
      */
@@ -197,7 +198,7 @@ public class AsyncCredentials {
 
 
     /**
-     * Gets metadata of a single credential (no secret fields).
+     * Gets a credential by ID.
      * 
      * @return The async call builder
      */
@@ -206,9 +207,10 @@ public class AsyncCredentials {
     }
 
     /**
-     * Gets metadata of a single credential (no secret fields).
+     * Gets a credential by ID.
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @return {@code CompletableFuture<GetCredentialResponse>} - The async response
      */
     public CompletableFuture<GetCredentialResponse> get(@Nonnull String id) {
@@ -216,10 +218,11 @@ public class AsyncCredentials {
     }
 
     /**
-     * Gets metadata of a single credential (no secret fields).
+     * Gets a credential by ID.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @param options additional options
      * @return {@code CompletableFuture<GetCredentialResponse>} - The async response
      */
@@ -248,7 +251,8 @@ public class AsyncCredentials {
     /**
      * Updates a credential.
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @param body Represents the fields of a Credential that can be updated.
      * @return {@code CompletableFuture<UpdateCredentialResponse>} - The async response
      */
@@ -261,8 +265,9 @@ public class AsyncCredentials {
     /**
      * Updates a credential.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @param updateMask Optional. The list of fields to update.
      * @param body Represents the fields of a Credential that can be updated.
      * @param options additional options

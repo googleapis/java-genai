@@ -91,10 +91,11 @@ public class AsyncAgents {
     /**
      * Lists all Agents.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param pageSize 
      * @param pageToken 
-     * @param parent 
+     * @param parent Required. The parent resource to list agents from.
+     *         Format: `projects/{project}/locations/{location}`
      * @param options additional options
      * @return {@code CompletableFuture<ListAgentsResponse>} - The async response
      */
@@ -145,7 +146,7 @@ public class AsyncAgents {
     /**
      * Creates a new Agent (Typed version for SDK).
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body An agent definition for the CreateAgent API.
      *         This message is the target for annotation-parser-based JSON parsing.
      *         New format:
@@ -184,7 +185,7 @@ public class AsyncAgents {
     /**
      * Deletes an Agent.
      * 
-     * @param id 
+     * @param id Required. The name of the agent to delete.
      * @return {@code CompletableFuture<DeleteAgentResponse>} - The async response
      */
     public CompletableFuture<DeleteAgentResponse> delete(@Nonnull String id) {
@@ -194,8 +195,8 @@ public class AsyncAgents {
     /**
      * Deletes an Agent.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param apiVersion API version for request routing.
+     * @param id Required. The name of the agent to delete.
      * @param options additional options
      * @return {@code CompletableFuture<DeleteAgentResponse>} - The async response
      */
@@ -224,7 +225,7 @@ public class AsyncAgents {
     /**
      * Gets a specific Agent.
      * 
-     * @param id 
+     * @param id Required. The name of the agent to retrieve.
      * @return {@code CompletableFuture<GetAgentResponse>} - The async response
      */
     public CompletableFuture<GetAgentResponse> get(@Nonnull String id) {
@@ -234,8 +235,8 @@ public class AsyncAgents {
     /**
      * Gets a specific Agent.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param apiVersion API version for request routing.
+     * @param id Required. The name of the agent to retrieve.
      * @param options additional options
      * @return {@code CompletableFuture<GetAgentResponse>} - The async response
      */

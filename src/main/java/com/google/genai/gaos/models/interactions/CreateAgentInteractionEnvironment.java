@@ -36,8 +36,9 @@ import java.util.Optional;
 /**
  * CreateAgentInteractionEnvironment
  * 
- * <p>The environment configuration for the interaction. Can be an object specifying remote environment
- * sources or a string referencing an existing environment ID.
+ * <p>The environment configuration for the interaction. Can be an object
+ * specifying remote environment sources or a string referencing an existing
+ * environment ID.
  */
 @JsonDeserialize(using = CreateAgentInteractionEnvironment._Deserializer.class)
 public class CreateAgentInteractionEnvironment {

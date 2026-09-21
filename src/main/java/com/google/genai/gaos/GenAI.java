@@ -68,6 +68,9 @@ public class GenAI implements java.lang.AutoCloseable {
     private final Triggers triggers;
 
 
+    private final Voices voices;
+
+
     private final Webhooks webhooks;
 
 
@@ -93,6 +96,11 @@ public class GenAI implements java.lang.AutoCloseable {
 
     public Triggers triggers() {
         return triggers;
+    }
+
+
+    public Voices voices() {
+        return voices;
     }
 
 
@@ -285,6 +293,7 @@ public class GenAI implements java.lang.AutoCloseable {
         this.credentials = new Credentials(sdkConfiguration);
         this.interactions = new Interactions(sdkConfiguration);
         this.triggers = new Triggers(sdkConfiguration);
+        this.voices = new Voices(sdkConfiguration);
         this.webhooks = new Webhooks(sdkConfiguration);
         this.asyncSDK = new AsyncGenAI(this, sdkConfiguration);
         this.sdkConfiguration = sdkConfiguration;

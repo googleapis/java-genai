@@ -94,7 +94,7 @@ public class CancelInteractionByIdServerError extends GaosServerException {
     /**
      * Data
      * 
-     * <p>Error cancelling interaction
+     * <p>Server Error
      */
     public static class Data {
         /**

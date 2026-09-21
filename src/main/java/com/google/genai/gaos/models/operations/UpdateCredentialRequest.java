@@ -32,14 +32,14 @@ import java.util.Optional;
 
 public class UpdateCredentialRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Resource ID segment making up resource `name`. It identifies the resource within its parent
-     * collection as described in https://google.aip.dev/122.
+     * Required. Resource ID segment making up resource `name`. It identifies the resource
+     * within its parent collection as described in https://google.aip.dev/122.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
     private String id;
@@ -50,7 +50,9 @@ public class UpdateCredentialRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=update_mask")
     private String updateMask;
 
-
+    /**
+     * Required. The request body.
+     */
     @SpeakeasyMetadata("request:mediaType=application/json")
     private CredentialUpdate body;
 
@@ -76,15 +78,15 @@ public class UpdateCredentialRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Resource ID segment making up resource `name`. It identifies the resource within its parent
-     * collection as described in https://google.aip.dev/122.
+     * Required. Resource ID segment making up resource `name`. It identifies the resource
+     * within its parent collection as described in https://google.aip.dev/122.
      */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
@@ -97,6 +99,9 @@ public class UpdateCredentialRequest {
         return Optional.ofNullable(this.updateMask);
     }
 
+    /**
+     * Required. The request body.
+     */
     public Optional<CredentialUpdate> body() {
         return Optional.ofNullable(this.body);
     }
@@ -107,7 +112,7 @@ public class UpdateCredentialRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public UpdateCredentialRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -116,8 +121,8 @@ public class UpdateCredentialRequest {
 
 
     /**
-     * Resource ID segment making up resource `name`. It identifies the resource within its parent
-     * collection as described in https://google.aip.dev/122.
+     * Required. Resource ID segment making up resource `name`. It identifies the resource
+     * within its parent collection as described in https://google.aip.dev/122.
      */
     public UpdateCredentialRequest withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
@@ -134,6 +139,9 @@ public class UpdateCredentialRequest {
     }
 
 
+    /**
+     * Required. The request body.
+     */
     public UpdateCredentialRequest withBody(@Nonnull CredentialUpdate body) {
         this.body = Utils.checkNotNull(body, "body");
         return this;
@@ -188,7 +196,7 @@ public class UpdateCredentialRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -196,8 +204,8 @@ public class UpdateCredentialRequest {
         }
 
         /**
-         * Resource ID segment making up resource `name`. It identifies the resource within its parent
-         * collection as described in https://google.aip.dev/122.
+         * Required. Resource ID segment making up resource `name`. It identifies the resource
+         * within its parent collection as described in https://google.aip.dev/122.
          */
         public Builder id(@Nonnull String id) {
             this.id = Utils.checkNotNull(id, "id");
@@ -212,6 +220,9 @@ public class UpdateCredentialRequest {
             return this;
         }
 
+        /**
+         * Required. The request body.
+         */
         public Builder body(@Nonnull CredentialUpdate body) {
             this.body = Utils.checkNotNull(body, "body");
             return this;
