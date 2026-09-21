@@ -40,6 +40,8 @@ public class AsyncGenAI implements java.lang.AutoCloseable {
 
     private final AsyncTriggers triggers;
 
+    private final AsyncVoices voices;
+
     private final AsyncWebhooks webhooks;
 
     public AsyncEnvironments environments() {
@@ -62,6 +64,10 @@ public class AsyncGenAI implements java.lang.AutoCloseable {
         return triggers;
     }
 
+    public AsyncVoices voices() {
+        return voices;
+    }
+
     public AsyncWebhooks webhooks() {
         return webhooks;
     }
@@ -77,6 +83,7 @@ public class AsyncGenAI implements java.lang.AutoCloseable {
         this.credentials = new AsyncCredentials(syncSDK.credentials(), sdkConfiguration);
         this.interactions = new AsyncInteractions(syncSDK.interactions(), sdkConfiguration);
         this.triggers = new AsyncTriggers(syncSDK.triggers(), sdkConfiguration);
+        this.voices = new AsyncVoices(syncSDK.voices(), sdkConfiguration);
         this.webhooks = new AsyncWebhooks(syncSDK.webhooks(), sdkConfiguration);
     }
 

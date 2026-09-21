@@ -32,13 +32,13 @@ import java.util.Optional;
 
 public class CreateAgentRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * The request body.
+     * Required. The request body.
      */
     @SpeakeasyMetadata("request:mediaType=application/json")
     private Agent body;
@@ -58,14 +58,14 @@ public class CreateAgentRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * The request body.
+     * Required. The request body.
      */
     public Optional<Agent> body() {
         return Optional.ofNullable(this.body);
@@ -77,7 +77,7 @@ public class CreateAgentRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public CreateAgentRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -86,7 +86,7 @@ public class CreateAgentRequest {
 
 
     /**
-     * The request body.
+     * Required. The request body.
      */
     public CreateAgentRequest withBody(@Nonnull Agent body) {
         this.body = Utils.checkNotNull(body, "body");
@@ -133,7 +133,7 @@ public class CreateAgentRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -141,7 +141,7 @@ public class CreateAgentRequest {
         }
 
         /**
-         * The request body.
+         * Required. The request body.
          */
         public Builder body(@Nonnull Agent body) {
             this.body = Utils.checkNotNull(body, "body");

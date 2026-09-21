@@ -31,14 +31,14 @@ import java.util.Optional;
 
 public class ListEnvironmentsRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Optional. Maximum number of environments to return.\nIf unspecified, defaults to 50. Maximum is
-     * 1000.
+     * Optional. Maximum number of environments to return.
+     * If unspecified, defaults to 50. Maximum is 1000.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_size")
     private Integer pageSize;
@@ -64,15 +64,15 @@ public class ListEnvironmentsRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Optional. Maximum number of environments to return.\nIf unspecified, defaults to 50. Maximum is
-     * 1000.
+     * Optional. Maximum number of environments to return.
+     * If unspecified, defaults to 50. Maximum is 1000.
      */
     public Optional<Integer> pageSize() {
         return Optional.ofNullable(this.pageSize);
@@ -91,7 +91,7 @@ public class ListEnvironmentsRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public ListEnvironmentsRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -100,8 +100,8 @@ public class ListEnvironmentsRequest {
 
 
     /**
-     * Optional. Maximum number of environments to return.\nIf unspecified, defaults to 50. Maximum is
-     * 1000.
+     * Optional. Maximum number of environments to return.
+     * If unspecified, defaults to 50. Maximum is 1000.
      */
     public ListEnvironmentsRequest withPageSize(@Nullable Integer pageSize) {
         this.pageSize = pageSize;
@@ -161,7 +161,7 @@ public class ListEnvironmentsRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -169,8 +169,8 @@ public class ListEnvironmentsRequest {
         }
 
         /**
-         * Optional. Maximum number of environments to return.\nIf unspecified, defaults to 50. Maximum is
-         * 1000.
+         * Optional. Maximum number of environments to return.
+         * If unspecified, defaults to 50. Maximum is 1000.
          */
         public Builder pageSize(@Nullable Integer pageSize) {
             this.pageSize = pageSize;

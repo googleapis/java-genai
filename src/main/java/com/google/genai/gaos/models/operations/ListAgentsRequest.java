@@ -31,7 +31,7 @@ import java.util.Optional;
 
 public class ListAgentsRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
@@ -44,7 +44,10 @@ public class ListAgentsRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_token")
     private String pageToken;
 
-
+    /**
+     * Required. The parent resource to list agents from.
+     * Format: `projects/{project}/locations/{location}`
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=parent")
     private String parent;
 
@@ -66,7 +69,7 @@ public class ListAgentsRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
@@ -80,6 +83,10 @@ public class ListAgentsRequest {
         return Optional.ofNullable(this.pageToken);
     }
 
+    /**
+     * Required. The parent resource to list agents from.
+     * Format: `projects/{project}/locations/{location}`
+     */
     public Optional<String> parent() {
         return Optional.ofNullable(this.parent);
     }
@@ -90,7 +97,7 @@ public class ListAgentsRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public ListAgentsRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -110,6 +117,10 @@ public class ListAgentsRequest {
     }
 
 
+    /**
+     * Required. The parent resource to list agents from.
+     * Format: `projects/{project}/locations/{location}`
+     */
     public ListAgentsRequest withParent(@Nullable String parent) {
         this.parent = parent;
         return this;
@@ -164,7 +175,7 @@ public class ListAgentsRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -181,6 +192,10 @@ public class ListAgentsRequest {
             return this;
         }
 
+        /**
+         * Required. The parent resource to list agents from.
+         * Format: `projects/{project}/locations/{location}`
+         */
         public Builder parent(@Nullable String parent) {
             this.parent = parent;
             return this;

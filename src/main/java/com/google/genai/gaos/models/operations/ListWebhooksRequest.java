@@ -31,15 +31,15 @@ import java.util.Optional;
 
 public class ListWebhooksRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Optional. The maximum number of webhooks to return. The service may return fewer than
-     * this value. If unspecified, at most 50 webhooks will be returned.
-     * The maximum value is 1000.
+     * Optional. The maximum number of webhooks to return. The service may return
+     * fewer than this value. If unspecified, at most 50 webhooks will be
+     * returned. The maximum value is 1000.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_size")
     private Integer pageSize;
@@ -66,16 +66,16 @@ public class ListWebhooksRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Optional. The maximum number of webhooks to return. The service may return fewer than
-     * this value. If unspecified, at most 50 webhooks will be returned.
-     * The maximum value is 1000.
+     * Optional. The maximum number of webhooks to return. The service may return
+     * fewer than this value. If unspecified, at most 50 webhooks will be
+     * returned. The maximum value is 1000.
      */
     public Optional<Integer> pageSize() {
         return Optional.ofNullable(this.pageSize);
@@ -95,7 +95,7 @@ public class ListWebhooksRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public ListWebhooksRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -104,9 +104,9 @@ public class ListWebhooksRequest {
 
 
     /**
-     * Optional. The maximum number of webhooks to return. The service may return fewer than
-     * this value. If unspecified, at most 50 webhooks will be returned.
-     * The maximum value is 1000.
+     * Optional. The maximum number of webhooks to return. The service may return
+     * fewer than this value. If unspecified, at most 50 webhooks will be
+     * returned. The maximum value is 1000.
      */
     public ListWebhooksRequest withPageSize(@Nullable Integer pageSize) {
         this.pageSize = pageSize;
@@ -167,7 +167,7 @@ public class ListWebhooksRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -175,9 +175,9 @@ public class ListWebhooksRequest {
         }
 
         /**
-         * Optional. The maximum number of webhooks to return. The service may return fewer than
-         * this value. If unspecified, at most 50 webhooks will be returned.
-         * The maximum value is 1000.
+         * Optional. The maximum number of webhooks to return. The service may return
+         * fewer than this value. If unspecified, at most 50 webhooks will be
+         * returned. The maximum value is 1000.
          */
         public Builder pageSize(@Nullable Integer pageSize) {
             this.pageSize = pageSize;
