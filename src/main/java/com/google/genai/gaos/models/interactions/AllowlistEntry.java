@@ -44,9 +44,8 @@ public class AllowlistEntry {
     private String credential;
 
     /**
-     * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-     * 
-     * <p>Use '*' to allow all domains.
+     * Domain to allow outbound requests to. Supports wildcards (e.g.
+     * '*.googleapis.com'). Use '*' to allow all domains.
      */
     @JsonProperty("domain")
     private String domain;
@@ -83,9 +82,8 @@ public class AllowlistEntry {
     }
 
     /**
-     * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-     * 
-     * <p>Use '*' to allow all domains.
+     * Domain to allow outbound requests to. Supports wildcards (e.g.
+     * '*.googleapis.com'). Use '*' to allow all domains.
      */
     public Optional<String> domain() {
         return Optional.ofNullable(this.domain);
@@ -114,9 +112,8 @@ public class AllowlistEntry {
 
 
     /**
-     * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-     * 
-     * <p>Use '*' to allow all domains.
+     * Domain to allow outbound requests to. Supports wildcards (e.g.
+     * '*.googleapis.com'). Use '*' to allow all domains.
      */
     public AllowlistEntry withDomain(@Nonnull String domain) {
         this.domain = Utils.checkNotNull(domain, "domain");
@@ -185,9 +182,8 @@ public class AllowlistEntry {
         }
 
         /**
-         * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-         * 
-         * <p>Use '*' to allow all domains.
+         * Domain to allow outbound requests to. Supports wildcards (e.g.
+         * '*.googleapis.com'). Use '*' to allow all domains.
          */
         public Builder domain(@Nonnull String domain) {
             this.domain = Utils.checkNotNull(domain, "domain");

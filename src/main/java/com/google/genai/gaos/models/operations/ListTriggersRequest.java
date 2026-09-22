@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.genai.gaos.utils.SpeakeasyMetadata;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
-import java.lang.Long;
+import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 public class ListTriggersRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
@@ -46,7 +46,7 @@ public class ListTriggersRequest {
      * Optional. The maximum number of triggers to return per page.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_size")
-    private Long pageSize;
+    private Integer pageSize;
 
     /**
      * Optional. A page token from a previous ListTriggers call.
@@ -58,7 +58,7 @@ public class ListTriggersRequest {
     public ListTriggersRequest(
             @Nullable String apiVersion,
             @Nullable String filter,
-            @Nullable Long pageSize,
+            @Nullable Integer pageSize,
             @Nullable String pageToken) {
         this.apiVersion = apiVersion;
         this.filter = filter;
@@ -72,7 +72,7 @@ public class ListTriggersRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
@@ -88,7 +88,7 @@ public class ListTriggersRequest {
     /**
      * Optional. The maximum number of triggers to return per page.
      */
-    public Optional<Long> pageSize() {
+    public Optional<Integer> pageSize() {
         return Optional.ofNullable(this.pageSize);
     }
 
@@ -105,7 +105,7 @@ public class ListTriggersRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public ListTriggersRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -125,7 +125,7 @@ public class ListTriggersRequest {
     /**
      * Optional. The maximum number of triggers to return per page.
      */
-    public ListTriggersRequest withPageSize(@Nullable Long pageSize) {
+    public ListTriggersRequest withPageSize(@Nullable Integer pageSize) {
         this.pageSize = pageSize;
         return this;
     }
@@ -179,7 +179,7 @@ public class ListTriggersRequest {
 
         private String filter;
 
-        private Long pageSize;
+        private Integer pageSize;
 
         private String pageToken;
 
@@ -188,7 +188,7 @@ public class ListTriggersRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -206,7 +206,7 @@ public class ListTriggersRequest {
         /**
          * Optional. The maximum number of triggers to return per page.
          */
-        public Builder pageSize(@Nullable Long pageSize) {
+        public Builder pageSize(@Nullable Integer pageSize) {
             this.pageSize = pageSize;
             return this;
         }

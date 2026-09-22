@@ -58,6 +58,7 @@ public class Model {
     public static final Model GEMINI3_PRO_IMAGE = new Model("gemini-3-pro-image");
     public static final Model NANO_BANANA_PRO_PREVIEW = new Model("nano-banana-pro-preview");
     public static final Model GEMINI31_FLASH_IMAGE = new Model("gemini-3.1-flash-image");
+    public static final Model GEMINI31_FLASH_TTS_PREVIEW = new Model("gemini-3.1-flash-tts-preview");
     public static final Model GEMINI35_FLASH = new Model("gemini-3.5-flash");
     public static final Model GEMINI36_FLASH = new Model("gemini-3.6-flash");
     public static final Model GEMINI37_FLASH = new Model("gemini-3.7-flash");
@@ -155,6 +156,7 @@ public class Model {
         map.put("gemini-3-pro-image", GEMINI3_PRO_IMAGE);
         map.put("nano-banana-pro-preview", NANO_BANANA_PRO_PREVIEW);
         map.put("gemini-3.1-flash-image", GEMINI31_FLASH_IMAGE);
+        map.put("gemini-3.1-flash-tts-preview", GEMINI31_FLASH_TTS_PREVIEW);
         map.put("gemini-3.5-flash", GEMINI35_FLASH);
         map.put("gemini-3.6-flash", GEMINI36_FLASH);
         map.put("gemini-3.7-flash", GEMINI37_FLASH);
@@ -184,6 +186,7 @@ public class Model {
         map.put("gemini-3-pro-image", ModelEnum.GEMINI3_PRO_IMAGE);
         map.put("nano-banana-pro-preview", ModelEnum.NANO_BANANA_PRO_PREVIEW);
         map.put("gemini-3.1-flash-image", ModelEnum.GEMINI31_FLASH_IMAGE);
+        map.put("gemini-3.1-flash-tts-preview", ModelEnum.GEMINI31_FLASH_TTS_PREVIEW);
         map.put("gemini-3.5-flash", ModelEnum.GEMINI35_FLASH);
         map.put("gemini-3.6-flash", ModelEnum.GEMINI36_FLASH);
         map.put("gemini-3.7-flash", ModelEnum.GEMINI37_FLASH);
@@ -214,6 +217,7 @@ public class Model {
         GEMINI3_PRO_IMAGE("gemini-3-pro-image"),
         NANO_BANANA_PRO_PREVIEW("nano-banana-pro-preview"),
         GEMINI31_FLASH_IMAGE("gemini-3.1-flash-image"),
+        GEMINI31_FLASH_TTS_PREVIEW("gemini-3.1-flash-tts-preview"),
         GEMINI35_FLASH("gemini-3.5-flash"),
         GEMINI36_FLASH("gemini-3.6-flash"),
         GEMINI37_FLASH("gemini-3.7-flash"),

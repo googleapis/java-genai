@@ -94,7 +94,7 @@ public class DeleteInteractionClientError extends GaosClientException {
     /**
      * Data
      * 
-     * <p>Error deleting interaction
+     * <p>Client Error
      */
     public static class Data {
         /**

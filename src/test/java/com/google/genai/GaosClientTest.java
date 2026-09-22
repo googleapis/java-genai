@@ -283,13 +283,7 @@ public final class GaosClientTest {
     HttpRequest req = capturedRequest.get();
     assertNotNull(req);
     assertEquals("GET", req.method());
-    assertEquals(
-        URI.create(
-            expectedUrlPrefix
-                + "/interactions/"
-                + interactionId
-                + "?include_input=false&stream=false"),
-        req.uri());
+    assertEquals(URI.create(expectedUrlPrefix + "/interactions/" + interactionId), req.uri());
 
     // 2. Test Cancel
     capturedRequest.set(null);
@@ -455,5 +449,47 @@ public final class GaosClientTest {
     assertEquals(
         com.google.genai.gaos.utils.RetryConfig.Strategy.NONE,
         sdkConfig.retryConfig().get().strategy());
+  }
+
+  @Test
+  public void testVoicesWiring() {
+    Client client = Client.builder().apiKey("test-api-key").vertexAI(false).build();
+    assertNotNull(client.voices);
+    assertNotNull(client.async.voices);
+  }
+
+  @Test
+  public void testVoicesGetPath_gemini() throws Exception {
+    Client client = Client.builder().apiKey("test-api-key").vertexAI(false).build();
+
+    AtomicReference<HttpRequest> capturedRequest = new AtomicReference<>();
+    HTTPClient mockClient =
+        new HTTPClient() {
+          @Override
+          public HttpResponse<InputStream> send(HttpRequest request) {
+            capturedRequest.set(request);
+            return createMockResponse(
+                request,
+                200,
+                "{\"name\": \"voices/test-voice-id\", \"id\": \"test-voice-id\","
+                    + " \"type\": \"prompted\"}");
+          }
+
+          @Override
+          public CompletableFuture<HttpResponse<InputStream>> sendAsync(HttpRequest request) {
+            return CompletableFuture.completedFuture(send(request));
+          }
+        };
+    setMockGaosClient(client, mockClient);
+
+    String voiceId = "test-voice-id";
+    client.voices.get(voiceId);
+
+    HttpRequest req = capturedRequest.get();
+    assertNotNull(req);
+    assertEquals("GET", req.method());
+    assertEquals(
+        URI.create("https://generativelanguage.googleapis.com/v1beta/voices/" + voiceId), req.uri());
+    assertEquals("test-api-key", req.headers().firstValue("x-goog-api-key").orElse(null));
   }
 }

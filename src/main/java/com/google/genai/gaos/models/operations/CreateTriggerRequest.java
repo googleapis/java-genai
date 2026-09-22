@@ -32,12 +32,14 @@ import java.util.Optional;
 
 public class CreateTriggerRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
-
+    /**
+     * Required. The trigger configuration to create.
+     */
     @SpeakeasyMetadata("request:mediaType=application/json")
     private TriggerCreateParams body;
 
@@ -56,12 +58,15 @@ public class CreateTriggerRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
+    /**
+     * Required. The trigger configuration to create.
+     */
     public Optional<TriggerCreateParams> body() {
         return Optional.ofNullable(this.body);
     }
@@ -72,7 +77,7 @@ public class CreateTriggerRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public CreateTriggerRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -80,6 +85,9 @@ public class CreateTriggerRequest {
     }
 
 
+    /**
+     * Required. The trigger configuration to create.
+     */
     public CreateTriggerRequest withBody(@Nonnull TriggerCreateParams body) {
         this.body = Utils.checkNotNull(body, "body");
         return this;
@@ -125,13 +133,16 @@ public class CreateTriggerRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
             return this;
         }
 
+        /**
+         * Required. The trigger configuration to create.
+         */
         public Builder body(@Nonnull TriggerCreateParams body) {
             this.body = Utils.checkNotNull(body, "body");
             return this;

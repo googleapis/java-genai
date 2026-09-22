@@ -102,8 +102,9 @@ public class AsyncEnvironments {
     /**
      * Lists environments.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param pageSize Optional. Maximum number of environments to return.\nIf unspecified, defaults to 50. Maximum is 1000.
+     * @param apiVersion API version for request routing.
+     * @param pageSize Optional. Maximum number of environments to return.
+     *         If unspecified, defaults to 50. Maximum is 1000.
      * @param pageToken Optional. Pagination token.
      * @param options additional options
      * @return {@code CompletableFuture<ListEnvironmentsResponse>} - The async response
@@ -143,7 +144,7 @@ public class AsyncEnvironments {
     /**
      * Creates an environment.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body Request for `CreateEnvironment`.
      * @param options additional options
      * @return {@code CompletableFuture<CreateEnvironmentResponse>} - The async response
@@ -173,7 +174,8 @@ public class AsyncEnvironments {
     /**
      * Deletes an environment.
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @return {@code CompletableFuture<DeleteEnvironmentResponse>} - The async response
      */
     public CompletableFuture<DeleteEnvironmentResponse> deleteEnvironment(@Nonnull String id) {
@@ -183,8 +185,9 @@ public class AsyncEnvironments {
     /**
      * Deletes an environment.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @param options additional options
      * @return {@code CompletableFuture<DeleteEnvironmentResponse>} - The async response
      */
@@ -213,7 +216,8 @@ public class AsyncEnvironments {
     /**
      * Gets an environment.
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @return {@code CompletableFuture<GetEnvironmentResponse>} - The async response
      */
     public CompletableFuture<GetEnvironmentResponse> getEnvironment(@Nonnull String id) {
@@ -223,8 +227,9 @@ public class AsyncEnvironments {
     /**
      * Gets an environment.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. Resource ID segment making up resource `name`. It identifies the resource
+     *         within its parent collection as described in https://google.aip.dev/122.
      * @param options additional options
      * @return {@code CompletableFuture<GetEnvironmentResponse>} - The async response
      */

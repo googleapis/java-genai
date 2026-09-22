@@ -94,7 +94,7 @@ public class GetInteractionByIdClientError extends GaosClientException {
     /**
      * Data
      * 
-     * <p>Error getting interaction
+     * <p>Client Error
      */
     public static class Data {
         /**

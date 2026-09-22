@@ -212,13 +212,6 @@ public class GetCredential {
 
             GetCredentialResponse res = resBuilder.build();
             
-            if (Utils.statusCodeMatches(response.statusCode(), "200")) {
-                if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return res.withCredential(Utils.unmarshal(response, new TypeReference<Credential>() {}));
-                } else {
-                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
-                }
-            }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
@@ -226,6 +219,13 @@ public class GetCredential {
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
+            }
+            if (Utils.statusCodeMatches(response.statusCode(), "default")) {
+                if (Utils.contentTypeMatches(contentType, "application/json")) {
+                    return res.withCredential(Utils.unmarshal(response, new TypeReference<Credential>() {}));
+                } else {
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
+                }
             }
             throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
@@ -299,13 +299,6 @@ public class GetCredential {
 
             com.google.genai.gaos.models.operations.async.GetCredentialResponse res = resBuilder.build();
             
-            if (Utils.statusCodeMatches(response.statusCode(), "200")) {
-                if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return res.withCredential(Utils.unmarshal(response, new TypeReference<Credential>() {}));
-                } else {
-                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
-                }
-            }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
@@ -313,6 +306,13 @@ public class GetCredential {
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
+            }
+            if (Utils.statusCodeMatches(response.statusCode(), "default")) {
+                if (Utils.contentTypeMatches(contentType, "application/json")) {
+                    return res.withCredential(Utils.unmarshal(response, new TypeReference<Credential>() {}));
+                } else {
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
+                }
             }
             throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
