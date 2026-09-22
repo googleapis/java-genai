@@ -11,6 +11,7 @@ com.google.genai.gaos.models.operations
 com.google.genai.gaos.models.operations.async
 com.google.genai.gaos.models.shared
 com.google.genai.gaos.models.triggers
+com.google.genai.gaos.models.voices
 com.google.genai.gaos.models.webhooks
 com.google.genai.gaos.operations
 com.google.genai.gaos.utils
