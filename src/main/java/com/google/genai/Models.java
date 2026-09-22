@@ -1548,10 +1548,11 @@ public final class Models {
               rootObject));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
-      throw new IllegalArgumentException(
-          "labels parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"labels"},
+          Common.getValueByPath(fromObject, new String[] {"labels"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"cachedContent"}) != null) {
