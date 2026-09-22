@@ -1936,6 +1936,13 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"speechMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"speechMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"speechMetadata"}));
+    }
+
     return toObject;
   }
 

@@ -869,6 +869,13 @@ public final class Caches {
           Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"speechMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"speechMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"speechMetadata"}));
+    }
+
     return toObject;
   }
 
@@ -982,6 +989,13 @@ public final class Caches {
           toObject,
           new String[] {"mediaProcessing"},
           Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"speechMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"speechMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"speechMetadata"}));
     }
 
     return toObject;

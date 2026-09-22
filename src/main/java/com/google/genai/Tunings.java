@@ -2210,6 +2210,13 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"voice"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voice"},
+          Common.getValueByPath(fromObject, new String[] {"voice"}));
+    }
+
     return toObject;
   }
 

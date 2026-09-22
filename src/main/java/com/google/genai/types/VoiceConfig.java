@@ -41,6 +41,10 @@ public abstract class VoiceConfig extends JsonSerializable {
   @JsonProperty("prebuiltVoiceConfig")
   public abstract Optional<PrebuiltVoiceConfig> prebuiltVoiceConfig();
 
+  /** The speaker identifier for synthesis. */
+  @JsonProperty("voice")
+  public abstract Optional<String> voice();
+
   /** Instantiates a builder for VoiceConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -118,6 +122,24 @@ public abstract class VoiceConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearPrebuiltVoiceConfig() {
       return prebuiltVoiceConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for voice.
+     *
+     * <p>voice: The speaker identifier for synthesis.
+     */
+    @JsonProperty("voice")
+    public abstract Builder voice(String voice);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder voice(Optional<String> voice);
+
+    /** Clears the value of voice field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVoice() {
+      return voice(Optional.empty());
     }
 
     public abstract VoiceConfig build();
