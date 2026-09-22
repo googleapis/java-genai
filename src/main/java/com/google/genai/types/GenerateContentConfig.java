@@ -186,7 +186,7 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("toolConfig")
   public abstract Optional<ToolConfig> toolConfig();
 
-  /** Labels with user-defined metadata to break down billed charges. */
+  /** Labels with user-defined metadata for the request. */
   @JsonProperty("labels")
   public abstract Optional<Map<String, String>> labels();
 
@@ -828,7 +828,7 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     /**
      * Setter for labels.
      *
-     * <p>labels: Labels with user-defined metadata to break down billed charges.
+     * <p>labels: Labels with user-defined metadata for the request.
      */
     @JsonProperty("labels")
     public abstract Builder labels(Map<String, String> labels);
