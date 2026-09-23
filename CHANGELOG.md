@@ -5,6 +5,7 @@
 
 ### Features
 
+* add voice resources to java ([c44b05a](https://github.com/googleapis/java-genai/commit/c44b05a0009749092cbfd9a894df35a0e49d5571))
 * expose SpeechMetadata, VoiceConfig.voice, and SpeechAnnotation in public GenAI SDKs ([c229a62](https://github.com/googleapis/java-genai/commit/c229a62034f1f195fa662fde617da1a1761b5950))
 * support labels for Gemini API GenerateContent ([5984322](https://github.com/googleapis/java-genai/commit/598432286370ab6d0381886ccc175d52a5791d35))
 * update discovery doc ([7af0777](https://github.com/googleapis/java-genai/commit/7af0777878476d8b84442583446c65d4c4ab1b57))
