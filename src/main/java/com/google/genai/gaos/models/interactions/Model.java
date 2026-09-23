@@ -63,6 +63,8 @@ public class Model {
     public static final Model GEMINI36_FLASH = new Model("gemini-3.6-flash");
     public static final Model GEMINI37_FLASH = new Model("gemini-3.7-flash");
     public static final Model GEMINI38_FLASH = new Model("gemini-3.8-flash");
+    public static final Model GEMINI38_FLASH_TTS = new Model("gemini-3.8-flash-tts");
+    public static final Model GEMINI38_FLASH_LITE_TTS = new Model("gemini-3.8-flash-lite-tts");
     public static final Model LYRIA3_CLIP_PREVIEW = new Model("lyria-3-clip-preview");
     public static final Model LYRIA3_PRO_PREVIEW = new Model("lyria-3-pro-preview");
     public static final Model GEMINI_ROBOTICS_ER16_PREVIEW = new Model("gemini-robotics-er-1.6-preview");
@@ -161,6 +163,8 @@ public class Model {
         map.put("gemini-3.6-flash", GEMINI36_FLASH);
         map.put("gemini-3.7-flash", GEMINI37_FLASH);
         map.put("gemini-3.8-flash", GEMINI38_FLASH);
+        map.put("gemini-3.8-flash-tts", GEMINI38_FLASH_TTS);
+        map.put("gemini-3.8-flash-lite-tts", GEMINI38_FLASH_LITE_TTS);
         map.put("lyria-3-clip-preview", LYRIA3_CLIP_PREVIEW);
         map.put("lyria-3-pro-preview", LYRIA3_PRO_PREVIEW);
         map.put("gemini-robotics-er-1.6-preview", GEMINI_ROBOTICS_ER16_PREVIEW);
@@ -191,6 +195,8 @@ public class Model {
         map.put("gemini-3.6-flash", ModelEnum.GEMINI36_FLASH);
         map.put("gemini-3.7-flash", ModelEnum.GEMINI37_FLASH);
         map.put("gemini-3.8-flash", ModelEnum.GEMINI38_FLASH);
+        map.put("gemini-3.8-flash-tts", ModelEnum.GEMINI38_FLASH_TTS);
+        map.put("gemini-3.8-flash-lite-tts", ModelEnum.GEMINI38_FLASH_LITE_TTS);
         map.put("lyria-3-clip-preview", ModelEnum.LYRIA3_CLIP_PREVIEW);
         map.put("lyria-3-pro-preview", ModelEnum.LYRIA3_PRO_PREVIEW);
         map.put("gemini-robotics-er-1.6-preview", ModelEnum.GEMINI_ROBOTICS_ER16_PREVIEW);
@@ -222,6 +228,8 @@ public class Model {
         GEMINI36_FLASH("gemini-3.6-flash"),
         GEMINI37_FLASH("gemini-3.7-flash"),
         GEMINI38_FLASH("gemini-3.8-flash"),
+        GEMINI38_FLASH_TTS("gemini-3.8-flash-tts"),
+        GEMINI38_FLASH_LITE_TTS("gemini-3.8-flash-lite-tts"),
         LYRIA3_CLIP_PREVIEW("lyria-3-clip-preview"),
         LYRIA3_PRO_PREVIEW("lyria-3-pro-preview"),
         GEMINI_ROBOTICS_ER16_PREVIEW("gemini-robotics-er-1.6-preview"),
