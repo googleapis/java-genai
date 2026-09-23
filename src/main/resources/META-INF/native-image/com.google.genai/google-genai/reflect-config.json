@@ -86,7 +86,7 @@
       {
         "name": "setAuthorization",
         "parameterTypes": [
-          "java.lang.String"
+          "java.util.List"
         ]
       },
       {
@@ -1465,6 +1465,7 @@
           "com.google.genai.gaos.models.interactions.AgentOption",
           "com.google.genai.gaos.models.interactions.InteractionAgentConfig",
           "java.lang.String",
+          "java.lang.String",
           "com.google.genai.gaos.models.interactions.InteractionEnvironment",
           "java.lang.String",
           "java.util.List",
@@ -1843,6 +1844,10 @@
     "allDeclaredFields": true
   },
   {
+    "name": "com.google.genai.gaos.models.operations.GetVoiceRequest",
+    "allDeclaredFields": true
+  },
+  {
     "name": "com.google.genai.gaos.models.operations.GetWebhookRequest",
     "allDeclaredFields": true
   },
@@ -1897,6 +1902,68 @@
     "allDeclaredFields": true,
     "queryAllDeclaredMethods": true,
     "queryAllDeclaredConstructors": true
+  },
+  {
+    "name": "com.google.genai.gaos.models.voices.AudioData",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true
+  },
+  {
+    "name": "com.google.genai.gaos.models.voices.Pitch",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true
+  },
+  {
+    "name": "com.google.genai.gaos.models.voices.PromptedVoice",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true
+  },
+  {
+    "name": "com.google.genai.gaos.models.voices.VoiceOutput",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.String",
+          "java.lang.String",
+          "java.lang.String",
+          "java.lang.String",
+          "java.time.OffsetDateTime",
+          "java.lang.String",
+          "java.lang.String",
+          "java.lang.String",
+          "java.lang.String",
+          "java.lang.String",
+          "java.lang.String",
+          "com.google.genai.gaos.models.voices.Pitch",
+          "com.google.genai.gaos.models.voices.PromptedVoice",
+          "java.lang.String",
+          "com.google.genai.gaos.models.voices.AudioData",
+          "com.google.genai.gaos.models.voices.VoiceType",
+          "com.google.genai.gaos.models.interactions.Usage"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "com.google.genai.gaos.models.voices.VoiceType",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
+      {
+        "name": "of",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ]
   },
   {
     "name": "com.google.genai.gaos.models.webhooks.SigningSecret",
@@ -5200,26 +5267,6 @@
     ]
   },
   {
-    "name": "com.google.genai.types.AutoValue_JobError",
-    "allDeclaredFields": true,
-    "queryAllDeclaredMethods": true,
-    "queryAllDeclaredConstructors": true,
-    "methods": [
-      {
-        "name": "code",
-        "parameterTypes": []
-      },
-      {
-        "name": "details",
-        "parameterTypes": []
-      },
-      {
-        "name": "message",
-        "parameterTypes": []
-      }
-    ]
-  },
-  {
     "name": "com.google.genai.types.AutoValue_LatLng",
     "allDeclaredFields": true,
     "queryAllDeclaredMethods": true,
@@ -6067,6 +6114,10 @@
       },
       {
         "name": "partMetadata",
+        "parameterTypes": []
+      },
+      {
+        "name": "speechMetadata",
         "parameterTypes": []
       },
       {
@@ -7872,6 +7923,10 @@
       {
         "name": "replicatedVoiceConfig",
         "parameterTypes": []
+      },
+      {
+        "name": "voice",
+        "parameterTypes": []
       }
     ]
   },
@@ -8025,12 +8080,6 @@
         "name": "endTime",
         "parameterTypes": [
           "java.time.Instant"
-        ]
-      },
-      {
-        "name": "error",
-        "parameterTypes": [
-          "com.google.genai.types.JobError"
         ]
       },
       {
@@ -13447,37 +13496,10 @@
     ]
   },
   {
-    "name": "com.google.genai.types.JobError",
-    "allDeclaredFields": true,
-    "queryAllDeclaredMethods": true
-  },
-  {
     "name": "com.google.genai.types.JobError$Builder",
     "allDeclaredFields": true,
     "queryAllDeclaredMethods": true,
-    "queryAllDeclaredConstructors": true,
-    "methods": [
-      {
-        "name": "build",
-        "parameterTypes": []
-      },
-      {
-        "name": "code",
-        "parameterTypes": [
-          "java.lang.Integer"
-        ]
-      },
-      {
-        "name": "create",
-        "parameterTypes": []
-      },
-      {
-        "name": "message",
-        "parameterTypes": [
-          "java.lang.String"
-        ]
-      }
-    ]
+    "queryAllDeclaredConstructors": true
   },
   {
     "name": "com.google.genai.types.JobState",
@@ -17001,6 +17023,12 @@
         ]
       }
     ]
+  },
+  {
+    "name": "com.google.genai.types.SpeechMetadata$Builder",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true
   },
   {
     "name": "com.google.genai.types.StartSensitivity",
