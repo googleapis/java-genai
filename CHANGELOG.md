@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.74.0](https://github.com/googleapis/java-genai/compare/v1.73.0...v1.74.0) (2026-09-24)
+
+
+### Features
+
+* Add Gemini 3.8 Flash TTS and Gemini 3.8 Flash Lite TTS models to SDKs ([f9196ae](https://github.com/googleapis/java-genai/commit/f9196aec861c89926ccf9549a40b80548e3cfced))
+* include labels for LiveClientSetup ([a789c08](https://github.com/googleapis/java-genai/commit/a789c087db454e426fa135cb8a85bd6a2145efe9))
+
 ## [1.73.0](https://github.com/googleapis/java-genai/compare/v1.72.0...v1.73.0) (2026-09-23)
 
 
