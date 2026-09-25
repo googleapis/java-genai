@@ -2122,6 +2122,13 @@ public final class Tunings {
               rootObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"gcsMetricsUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"gcsMetricsUri"},
+          Common.getValueByPath(fromObject, new String[] {"gcsMetricsUri"}));
+    }
+
     return toObject;
   }
 
