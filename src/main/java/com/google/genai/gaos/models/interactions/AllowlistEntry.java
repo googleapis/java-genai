@@ -51,6 +51,15 @@ public class AllowlistEntry {
     private String domain;
 
     /**
+     * Network egress mode. Set via the `"allowlist": "disabled"` short form;
+     * must be the only rule in the allowlist and cannot be combined with
+     * `domain`, `transform` or `credential`.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mode")
+    private AllowlistEntryMode mode;
+
+    /**
      * Headers to inject on all outbound requests matching this domain. Accepts a single dict or a list of
      * dicts. The egress proxy injects these automatically.
      */
@@ -62,16 +71,19 @@ public class AllowlistEntry {
     public AllowlistEntry(
             @JsonProperty("credential") @Nullable String credential,
             @JsonProperty("domain") @Nonnull String domain,
+            @JsonProperty("mode") @Nullable AllowlistEntryMode mode,
             @JsonProperty("transform") @Nullable Transform transform) {
         this.credential = credential;
         this.domain = Optional.ofNullable(domain)
             .orElseThrow(() -> new IllegalArgumentException("domain cannot be null"));
+        this.mode = mode;
         this.transform = transform;
     }
     
     public AllowlistEntry(
             @Nonnull String domain) {
-        this(null, domain, null);
+        this(null, domain, null,
+            null);
     }
 
     /**
@@ -87,6 +99,15 @@ public class AllowlistEntry {
      */
     public Optional<String> domain() {
         return Optional.ofNullable(this.domain);
+    }
+
+    /**
+     * Network egress mode. Set via the `"allowlist": "disabled"` short form;
+     * must be the only rule in the allowlist and cannot be combined with
+     * `domain`, `transform` or `credential`.
+     */
+    public Optional<AllowlistEntryMode> mode() {
+        return Optional.ofNullable(this.mode);
     }
 
     /**
@@ -122,6 +143,17 @@ public class AllowlistEntry {
 
 
     /**
+     * Network egress mode. Set via the `"allowlist": "disabled"` short form;
+     * must be the only rule in the allowlist and cannot be combined with
+     * `domain`, `transform` or `credential`.
+     */
+    public AllowlistEntry withMode(@Nullable AllowlistEntryMode mode) {
+        this.mode = mode;
+        return this;
+    }
+
+
+    /**
      * Headers to inject on all outbound requests matching this domain. Accepts a single dict or a list of
      * dicts. The egress proxy injects these automatically.
      */
@@ -143,13 +175,15 @@ public class AllowlistEntry {
         return 
             Utils.enhancedDeepEquals(this.credential, other.credential) &&
             Utils.enhancedDeepEquals(this.domain, other.domain) &&
+            Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.transform, other.transform);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            credential, domain, transform);
+            credential, domain, mode,
+            transform);
     }
     
     @Override
@@ -157,6 +191,7 @@ public class AllowlistEntry {
         return Utils.toString(AllowlistEntry.class,
                 "credential", credential,
                 "domain", domain,
+                "mode", mode,
                 "transform", transform);
     }
 
@@ -166,6 +201,8 @@ public class AllowlistEntry {
         private String credential;
 
         private String domain;
+
+        private AllowlistEntryMode mode;
 
         private Transform transform;
 
@@ -191,6 +228,16 @@ public class AllowlistEntry {
         }
 
         /**
+         * Network egress mode. Set via the `"allowlist": "disabled"` short form;
+         * must be the only rule in the allowlist and cannot be combined with
+         * `domain`, `transform` or `credential`.
+         */
+        public Builder mode(@Nullable AllowlistEntryMode mode) {
+            this.mode = mode;
+            return this;
+        }
+
+        /**
          * Headers to inject on all outbound requests matching this domain. Accepts a single dict or a list of
          * dicts. The egress proxy injects these automatically.
          */
@@ -201,7 +248,8 @@ public class AllowlistEntry {
 
         public AllowlistEntry build() {
             return new AllowlistEntry(
-                credential, domain, transform);
+                credential, domain, mode,
+                transform);
         }
 
     }
