@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.74.0](https://github.com/googleapis/java-genai/compare/v1.73.0...v1.74.0) (2026-09-30)
+
+
+### Features
+
+* add gcs_metrics_uri for exporting tuning job metrics. ([6a7eaee](https://github.com/googleapis/java-genai/commit/6a7eaee263d3d8ab6d8a8fbe4ce22584ef7e442e))
+* Add Gemini 3.8 Flash TTS and Gemini 3.8 Flash Lite TTS models to SDKs ([f9196ae](https://github.com/googleapis/java-genai/commit/f9196aec861c89926ccf9549a40b80548e3cfced))
+* include labels for LiveClientSetup ([a789c08](https://github.com/googleapis/java-genai/commit/a789c087db454e426fa135cb8a85bd6a2145efe9))
+
+
+### Bug Fixes
+
+* use `CreateAgentInteraction` for `Trigger.interaction` and `TriggerCreateParams.interaction` ([9a53e77](https://github.com/googleapis/java-genai/commit/9a53e77a46736af5f5c7b4e02cf951d1a55a713f))
+
+
+### Documentation
+
+* clarify Voice expire_time and store TTL behavior in GAOS SDK ([0e17254](https://github.com/googleapis/java-genai/commit/0e17254f19d30fc4b3136bc2348a77389bf38df3))
+* **overlays:** describe `environment` and `path` on GetEnvironmentFiles and pin environment ID in `environments` get/delete examples ([4290342](https://github.com/googleapis/java-genai/commit/4290342077fa242d52634ebdc53059ce789ee988))
+
 ## [1.73.0](https://github.com/googleapis/java-genai/compare/v1.72.0...v1.73.0) (2026-09-23)
 
 
