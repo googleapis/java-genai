@@ -23,7 +23,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Represents how much to think for the tuning job. */
+/**
+ * Indicates the maximum thinking depth during tuning. Starting from Gemini 3.5 models, the old
+ * thinking_budget will no longer be supported and will result in a user error if set. Instead,
+ * users should use the thinking_level parameter to control the maximum thinking depth. This enum is
+ * not supported in Gemini API.
+ */
 public class ReinforcementTuningThinkingLevel {
 
   /** Enum representing the known values for ReinforcementTuningThinkingLevel. */
@@ -33,6 +38,12 @@ public class ReinforcementTuningThinkingLevel {
 
     /** Little to no thinking. */
     MINIMAL,
+
+    /** Low thinking level. */
+    LOW,
+
+    /** Medium thinking level. */
+    MEDIUM,
 
     /** High thinking level. */
     HIGH

@@ -62,8 +62,8 @@ public class JobState {
     JOB_STATE_EXPIRED,
 
     /**
-     * The job is being updated. Only jobs in the `JOB_STATE_RUNNING` state can be updated. After
-     * updating, the job goes back to the `JOB_STATE_RUNNING` state.
+     * The job is being updated. Only jobs in the `RUNNING` state can be updated. After updating,
+     * the job goes back to the `RUNNING` state.
      */
     JOB_STATE_UPDATING,
 
