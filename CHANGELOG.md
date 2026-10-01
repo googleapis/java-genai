@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.75.0](https://github.com/googleapis/java-genai/compare/v1.74.0...v1.75.0) (2026-10-01)
+
+
+### Features
+
+* support continuation_token in GenerateContent ([818b356](https://github.com/googleapis/java-genai/commit/818b3563915cb7e9239433fcc990e3948974c1a0))
+
 ## [1.74.0](https://github.com/googleapis/java-genai/compare/v1.73.0...v1.74.0) (2026-09-30)
 
 
