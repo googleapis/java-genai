@@ -37,6 +37,14 @@ import java.util.Optional;
  */
 public class SpeakerConfig {
     /**
+     * Optional speech mode. `VERBATIM` is default. `CONVERSATIONAL` is only
+     * supported for multi-speaker.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mode")
+    private SpeakerConfigMode mode;
+
+    /**
      * Individual speaker configurations.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -45,12 +53,22 @@ public class SpeakerConfig {
 
     @JsonCreator
     public SpeakerConfig(
+            @JsonProperty("mode") @Nullable SpeakerConfigMode mode,
             @JsonProperty("speakers") @Nullable List<SpeechConfig> speakers) {
+        this.mode = mode;
         this.speakers = speakers;
     }
     
     public SpeakerConfig() {
-        this(null);
+        this(null, null);
+    }
+
+    /**
+     * Optional speech mode. `VERBATIM` is default. `CONVERSATIONAL` is only
+     * supported for multi-speaker.
+     */
+    public Optional<SpeakerConfigMode> mode() {
+        return Optional.ofNullable(this.mode);
     }
 
     /**
@@ -62,6 +80,16 @@ public class SpeakerConfig {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Optional speech mode. `VERBATIM` is default. `CONVERSATIONAL` is only
+     * supported for multi-speaker.
+     */
+    public SpeakerConfig withMode(@Nullable SpeakerConfigMode mode) {
+        this.mode = mode;
+        return this;
     }
 
 
@@ -84,28 +112,41 @@ public class SpeakerConfig {
         }
         SpeakerConfig other = (SpeakerConfig) o;
         return 
+            Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.speakers, other.speakers);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            speakers);
+            mode, speakers);
     }
     
     @Override
     public String toString() {
         return Utils.toString(SpeakerConfig.class,
+                "mode", mode,
                 "speakers", speakers);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private SpeakerConfigMode mode;
+
         private List<SpeechConfig> speakers;
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Optional speech mode. `VERBATIM` is default. `CONVERSATIONAL` is only
+         * supported for multi-speaker.
+         */
+        public Builder mode(@Nullable SpeakerConfigMode mode) {
+            this.mode = mode;
+            return this;
         }
 
         /**
@@ -118,7 +159,7 @@ public class SpeakerConfig {
 
         public SpeakerConfig build() {
             return new SpeakerConfig(
-                speakers);
+                mode, speakers);
         }
 
     }
