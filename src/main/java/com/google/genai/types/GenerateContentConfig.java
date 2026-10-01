@@ -247,13 +247,6 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("audioTranscriptionConfig")
   public abstract Optional<AudioTranscriptionConfig> audioTranscriptionConfig();
 
-  /**
-   * An opaque continuation token used to resume generation from a previous response that stopped
-   * with `finish_reason` set to `CONTINUATION`.
-   */
-  @JsonProperty("continuationToken")
-  public abstract Optional<byte[]> continuationToken();
-
   /** Instantiates a builder for GenerateContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -1187,25 +1180,6 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearAudioTranscriptionConfig() {
       return audioTranscriptionConfig(Optional.empty());
-    }
-
-    /**
-     * Setter for continuationToken.
-     *
-     * <p>continuationToken: An opaque continuation token used to resume generation from a previous
-     * response that stopped with `finish_reason` set to `CONTINUATION`.
-     */
-    @JsonProperty("continuationToken")
-    public abstract Builder continuationToken(byte[] continuationToken);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder continuationToken(Optional<byte[]> continuationToken);
-
-    /** Clears the value of continuationToken field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearContinuationToken() {
-      return continuationToken(Optional.empty());
     }
 
     public abstract GenerateContentConfig build();
