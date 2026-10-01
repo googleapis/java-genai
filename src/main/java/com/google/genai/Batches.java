@@ -1401,6 +1401,16 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"continuationToken"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseFormat"},
+          responseFormatToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"responseFormat"})),
+              toObject));
+    }
+
     return toObject;
   }
 
@@ -1956,6 +1966,39 @@ public final class Batches {
           toObject,
           new String[] {"speechMetadata"},
           Common.getValueByPath(fromObject, new String[] {"speechMetadata"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode responseFormatToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audio"},
+          Common.getValueByPath(fromObject, new String[] {"audio"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"image"},
+          Common.getValueByPath(fromObject, new String[] {"image"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"video"}))) {
+      throw new IllegalArgumentException(
+          "video parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     return toObject;
