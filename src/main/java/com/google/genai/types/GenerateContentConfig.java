@@ -254,6 +254,13 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("continuationToken")
   public abstract Optional<byte[]> continuationToken();
 
+  /**
+   * Optional. Configuration for the response output format. Allows specifying output configuration
+   * per modality (text, audio, image) in a flat structure.
+   */
+  @JsonProperty("responseFormat")
+  public abstract Optional<ResponseFormat> responseFormat();
+
   /** Instantiates a builder for GenerateContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -1206,6 +1213,36 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearContinuationToken() {
       return continuationToken(Optional.empty());
+    }
+
+    /**
+     * Setter for responseFormat.
+     *
+     * <p>responseFormat: Optional. Configuration for the response output format. Allows specifying
+     * output configuration per modality (text, audio, image) in a flat structure.
+     */
+    @JsonProperty("responseFormat")
+    public abstract Builder responseFormat(ResponseFormat responseFormat);
+
+    /**
+     * Setter for responseFormat builder.
+     *
+     * <p>responseFormat: Optional. Configuration for the response output format. Allows specifying
+     * output configuration per modality (text, audio, image) in a flat structure.
+     */
+    @CanIgnoreReturnValue
+    public Builder responseFormat(ResponseFormat.Builder responseFormatBuilder) {
+      return responseFormat(responseFormatBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder responseFormat(Optional<ResponseFormat> responseFormat);
+
+    /** Clears the value of responseFormat field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResponseFormat() {
+      return responseFormat(Optional.empty());
     }
 
     public abstract GenerateContentConfig build();
