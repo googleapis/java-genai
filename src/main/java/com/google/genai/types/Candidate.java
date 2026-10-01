@@ -101,13 +101,6 @@ public abstract class Candidate extends JsonSerializable {
   @JsonProperty("urlContextMetadata")
   public abstract Optional<UrlContextMetadata> urlContextMetadata();
 
-  /**
-   * An opaque continuation token returned when `finish_reason` is `CONTINUATION`. Pass it in a
-   * subsequent request to continue generation.
-   */
-  @JsonProperty("continuationToken")
-  public abstract Optional<byte[]> continuationToken();
-
   /** Instantiates a builder for Candidate. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -434,25 +427,6 @@ public abstract class Candidate extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearUrlContextMetadata() {
       return urlContextMetadata(Optional.empty());
-    }
-
-    /**
-     * Setter for continuationToken.
-     *
-     * <p>continuationToken: An opaque continuation token returned when `finish_reason` is
-     * `CONTINUATION`. Pass it in a subsequent request to continue generation.
-     */
-    @JsonProperty("continuationToken")
-    public abstract Builder continuationToken(byte[] continuationToken);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder continuationToken(Optional<byte[]> continuationToken);
-
-    /** Clears the value of continuationToken field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearContinuationToken() {
-      return continuationToken(Optional.empty());
     }
 
     public abstract Candidate build();

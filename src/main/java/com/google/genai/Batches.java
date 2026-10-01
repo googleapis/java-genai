@@ -660,13 +660,6 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"continuationToken"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"continuationToken"},
-          Common.getValueByPath(fromObject, new String[] {"continuationToken"}));
-    }
-
     return toObject;
   }
 
@@ -1392,13 +1385,6 @@ public final class Batches {
           toObject,
           new String[] {"audioTranscriptionConfig"},
           Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"continuationToken"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"continuationToken"},
-          Common.getValueByPath(fromObject, new String[] {"continuationToken"}));
     }
 
     return toObject;
