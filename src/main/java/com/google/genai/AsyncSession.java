@@ -128,7 +128,33 @@ public final class AsyncSession {
    *     *registration* of the callback.
    */
   public CompletableFuture<Void> receive(Consumer<LiveServerMessage> onMessage) {
+    return receive(onMessage, null, null);
+  }
+
+  /**
+   * Registers callbacks to receive messages and lifecycle events from the live session. Only one set
+   * of callbacks can be registered at a time; a later call replaces the previous one.
+   *
+   * <p>After the session is established, {@code onError} is invoked if the connection fails and
+   * {@code onClose} is invoked when the server closes the connection. These two are terminal and
+   * mutually exclusive (a failed connection reports {@code onError}, a normal close reports {@code
+   * onClose}); either may be {@code null} if not needed.
+   *
+   * @param onMessage A {@link Consumer} that will be called for each {@link LiveServerMessage}
+   *     received.
+   * @param onError A {@link Consumer} that will be called with the error if the connection fails
+   *     after the session is established, or {@code null}.
+   * @param onClose A {@link Runnable} that will be called when the server closes the connection after
+   *     the session is established, or {@code null}.
+   * @return A {@link CompletableFuture} that completes when the callbacks have been registered. Note:
+   *     This future doesn't represent the entire lifecycle of receiving messages, just the
+   *     *registration* of the callbacks.
+   */
+  public CompletableFuture<Void> receive(
+      Consumer<LiveServerMessage> onMessage, Consumer<Throwable> onError, Runnable onClose) {
     websocket.setMessageCallback(onMessage);
+    websocket.setErrorCallback(onError);
+    websocket.setCloseCallback(onClose);
     return CompletableFuture.completedFuture(null);
   }
 
