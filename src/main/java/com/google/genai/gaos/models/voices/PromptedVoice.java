@@ -20,9 +20,12 @@
 package com.google.genai.gaos.models.voices;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
@@ -36,6 +39,18 @@ import java.util.Optional;
  */
 public class PromptedVoice {
     /**
+     * Optional. The name or ID of an existing base voice to edit or remix.
+     * Use the voice name for prebuilt voices (e.g., `Puck`) or the voice ID for
+     * previously created voices (e.g., `voice_abc123`). This can be any
+     * prompted or replicated voice that the user has access to.
+     * When present, `input` describes relative alterations to make to the base
+     * voice.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("base_voice")
+    private String baseVoice;
+
+    /**
      * Required. The natural-language prompt describing the desired voice, e.g.
      * "A deep, booming male voice of a massive evil ogre in his middle years."
      */
@@ -44,9 +59,28 @@ public class PromptedVoice {
 
     @JsonCreator
     public PromptedVoice(
+            @JsonProperty("base_voice") @Nullable String baseVoice,
             @JsonProperty("input") @Nonnull String input) {
+        this.baseVoice = baseVoice;
         this.input = Optional.ofNullable(input)
             .orElseThrow(() -> new IllegalArgumentException("input cannot be null"));
+    }
+    
+    public PromptedVoice(
+            @Nonnull String input) {
+        this(null, input);
+    }
+
+    /**
+     * Optional. The name or ID of an existing base voice to edit or remix.
+     * Use the voice name for prebuilt voices (e.g., `Puck`) or the voice ID for
+     * previously created voices (e.g., `voice_abc123`). This can be any
+     * prompted or replicated voice that the user has access to.
+     * When present, `input` describes relative alterations to make to the base
+     * voice.
+     */
+    public Optional<String> baseVoice() {
+        return Optional.ofNullable(this.baseVoice);
     }
 
     /**
@@ -59,6 +93,20 @@ public class PromptedVoice {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Optional. The name or ID of an existing base voice to edit or remix.
+     * Use the voice name for prebuilt voices (e.g., `Puck`) or the voice ID for
+     * previously created voices (e.g., `voice_abc123`). This can be any
+     * prompted or replicated voice that the user has access to.
+     * When present, `input` describes relative alterations to make to the base
+     * voice.
+     */
+    public PromptedVoice withBaseVoice(@Nullable String baseVoice) {
+        this.baseVoice = baseVoice;
+        return this;
     }
 
 
@@ -82,28 +130,45 @@ public class PromptedVoice {
         }
         PromptedVoice other = (PromptedVoice) o;
         return 
+            Utils.enhancedDeepEquals(this.baseVoice, other.baseVoice) &&
             Utils.enhancedDeepEquals(this.input, other.input);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            input);
+            baseVoice, input);
     }
     
     @Override
     public String toString() {
         return Utils.toString(PromptedVoice.class,
+                "baseVoice", baseVoice,
                 "input", input);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String baseVoice;
+
         private String input;
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Optional. The name or ID of an existing base voice to edit or remix.
+         * Use the voice name for prebuilt voices (e.g., `Puck`) or the voice ID for
+         * previously created voices (e.g., `voice_abc123`). This can be any
+         * prompted or replicated voice that the user has access to.
+         * When present, `input` describes relative alterations to make to the base
+         * voice.
+         */
+        public Builder baseVoice(@Nullable String baseVoice) {
+            this.baseVoice = baseVoice;
+            return this;
         }
 
         /**
@@ -117,7 +182,7 @@ public class PromptedVoice {
 
         public PromptedVoice build() {
             return new PromptedVoice(
-                input);
+                baseVoice, input);
         }
 
     }
