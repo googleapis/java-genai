@@ -322,42 +322,6 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode computerUseToVertex(
-      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"environment"},
-          Common.getValueByPath(fromObject, new String[] {"environment"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"excludedPredefinedFunctions"},
-          Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"enablePromptInjectionDetection"})
-        != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"enablePromptInjectionDetection"},
-          Common.getValueByPath(fromObject, new String[] {"enablePromptInjectionDetection"}));
-    }
-
-    if (!Common.isZero(
-        Common.getValueByPath(fromObject, new String[] {"disabledSafetyPolicies"}))) {
-      throw new IllegalArgumentException(
-          "disabledSafetyPolicies parameter is only supported in Gemini Developer API mode, not in"
-              + " Gemini Enterprise Agent Platform mode.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode contentEmbeddingFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -4961,11 +4925,7 @@ public final class Models {
       Common.setValueByPath(
           toObject,
           new String[] {"computerUse"},
-          computerUseToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"computerUse"})),
-              toObject,
-              rootObject));
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileSearch"}))) {

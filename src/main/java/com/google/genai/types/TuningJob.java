@@ -217,7 +217,7 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("distillationSamplingSpec")
   public abstract Optional<DistillationSamplingSpec> distillationSamplingSpec();
 
-  /** The Cloud Storage metrics URI associated with this tuning job. */
+  /** Output only. The Cloud Storage metrics URI associated with this TuningJob. */
   @JsonProperty("gcsMetricsUri")
   public abstract Optional<String> gcsMetricsUri();
 
@@ -1129,7 +1129,7 @@ public abstract class TuningJob extends JsonSerializable {
     /**
      * Setter for gcsMetricsUri.
      *
-     * <p>gcsMetricsUri: The Cloud Storage metrics URI associated with this tuning job.
+     * <p>gcsMetricsUri: Output only. The Cloud Storage metrics URI associated with this TuningJob.
      */
     @JsonProperty("gcsMetricsUri")
     public abstract Builder gcsMetricsUri(String gcsMetricsUri);

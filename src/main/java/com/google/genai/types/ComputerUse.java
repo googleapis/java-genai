@@ -53,9 +53,7 @@ public abstract class ComputerUse extends JsonSerializable {
   @JsonProperty("enablePromptInjectionDetection")
   public abstract Optional<Boolean> enablePromptInjectionDetection();
 
-  /**
-   * Optional. Disabled safety policies for computer use. This field is not supported in Vertex AI.
-   */
+  /** Optional. Disabled safety policies for computer use. */
   @JsonProperty("disabledSafetyPolicies")
   public abstract Optional<List<SafetyPolicy>> disabledSafetyPolicies();
 
@@ -175,8 +173,7 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
-     * not supported in Vertex AI.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
      */
     @JsonProperty("disabledSafetyPolicies")
     public abstract Builder disabledSafetyPolicies(List<SafetyPolicy> disabledSafetyPolicies);
@@ -184,8 +181,7 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
-     * not supported in Vertex AI.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPolicies(SafetyPolicy... disabledSafetyPolicies) {
@@ -205,8 +201,7 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a varargs of strings.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
-     * not supported in Vertex AI.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPolicies(String... disabledSafetyPolicies) {
@@ -216,8 +211,7 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a varargs of known enums.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
-     * not supported in Vertex AI.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPolicies(SafetyPolicy.Known... knownTypes) {
@@ -227,8 +221,7 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a list of known enums.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
-     * not supported in Vertex AI.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPoliciesFromKnown(List<SafetyPolicy.Known> knownTypes) {
@@ -240,8 +233,7 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a list of strings.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
-     * not supported in Vertex AI.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPoliciesFromString(List<String> disabledSafetyPolicies) {
