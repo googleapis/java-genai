@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.76.0](https://github.com/googleapis/java-genai/compare/v1.75.0...v1.76.0) (2026-10-07)
+
+
+### Features
+
+* add `lyria-3.5`, `gemini-omni-1.1-flash`, and `gemini-omni-flash-preview` to Interactions `Model` enum ([7b818f0](https://github.com/googleapis/java-genai/commit/7b818f0fca48b057b1a2ed08f6a025d1b2c3310b))
+* Support `"allowlist": "disabled"` in environment network config. ([b351eca](https://github.com/googleapis/java-genai/commit/b351eca1e5931bb3bdafa9cc4f44901c8cf74138))
+* support continuation_token in Interactions ([756e8fd](https://github.com/googleapis/java-genai/commit/756e8fd53f562077d27c7a078e0559be751c6761))
+* update discovery doc ([d0214f5](https://github.com/googleapis/java-genai/commit/d0214f56f61b0d77b23eb24de5f197d818869766))
+
+
+### Bug Fixes
+
+* **gemini-api-cli:** remove unsupported 2.5 and 1.6 models from Interactions model options and CLI examples ([f149188](https://github.com/googleapis/java-genai/commit/f1491884a68648b9a646dab39ef46ffd97794429))
+
+
+### Documentation
+
+* update generated SDK docstring examples to use gemini-flash-latest ([882ec6d](https://github.com/googleapis/java-genai/commit/882ec6df22f1fe39cfcf91540e73f7750190c562))
+
 ## [1.75.0](https://github.com/googleapis/java-genai/compare/v1.74.0...v1.75.0) (2026-10-01)
 
 
