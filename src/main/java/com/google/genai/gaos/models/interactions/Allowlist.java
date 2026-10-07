@@ -19,65 +19,86 @@
  */
 package com.google.genai.gaos.models.interactions;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.genai.gaos.utils.OneOfDeserializer;
+import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils.JsonShape;
+import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
 import com.google.genai.gaos.utils.Utils;
-import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * Allowlist
  * 
- * <p>Outbound networking configuration for the sandbox. When specified, restricts which external domains
- * the sandbox can reach. Omit entirely to allow all outbound traffic with no header injection.
+ * <p>List of allowed domains and their configurations. Set to `"disabled"`
+ * to block all network egress.
  */
+@JsonDeserialize(using = Allowlist._Deserializer.class)
 public class Allowlist {
-    /**
-     * List of allowed outbound domains. Only requests to listed domains are permitted. Use [{'domain':
-     * '*'}] to allow all domains while still injecting headers on specific ones.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("allowlist")
-    private List<AllowlistEntry> allowlist;
 
-    @JsonCreator
-    public Allowlist(
-            @JsonProperty("allowlist") @Nullable List<AllowlistEntry> allowlist) {
-        this.allowlist = allowlist;
+    @JsonValue
+    private final TypedObject value;
+    
+    private Allowlist(TypedObject value) {
+        this.value = value;
+    }
+
+    public static Allowlist of(List<AllowlistEntry> value) {
+        Utils.checkNotNull(value, "value");
+        return new Allowlist(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<AllowlistEntry>>(){}));
+    }
+
+    public static Allowlist of(Disabled value) {
+        Utils.checkNotNull(value, "value");
+        return new Allowlist(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Disabled>(){}));
     }
     
-    public Allowlist() {
-        this(null);
-    }
-
     /**
-     * List of allowed outbound domains. Only requests to listed domains are permitted. Use [{'domain':
-     * '*'}] to allow all domains while still injecting headers on specific ones.
+     * Returns an {@link Optional} containing the value if it is of type {@code List<AllowlistEntry>},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code List<AllowlistEntry>} value, or empty if not of this type
      */
-    public Optional<List<AllowlistEntry>> allowlist() {
-        return Optional.ofNullable(this.allowlist);
+    @SuppressWarnings("unchecked")
+    public Optional<List<AllowlistEntry>> arrayOfAllowlistEntry() {
+        if (value.value() instanceof List) {
+            return Optional.of((List<AllowlistEntry>) value.value());
+        }
+        return Optional.empty();
     }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-
+    
     /**
-     * List of allowed outbound domains. Only requests to listed domains are permitted. Use [{'domain':
-     * '*'}] to allow all domains while still injecting headers on specific ones.
+     * Returns an {@link Optional} containing the value if it is of type {@code Disabled},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code Disabled} value, or empty if not of this type
      */
-    public Allowlist withAllowlist(@Nullable List<AllowlistEntry> allowlist) {
-        this.allowlist = allowlist;
-        return this;
+    public Optional<Disabled> disabled() {
+        if (value.value() instanceof Disabled) {
+            return Optional.of((Disabled) value.value());
+        }
+        return Optional.empty();
     }
-
-
+   /**
+    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+    *
+    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+    */
+   public Optional<JsonNode> asJson() {
+       if (value.value() instanceof JsonNode) {
+           return Optional.of((JsonNode) value.value());
+       }
+       return Optional.empty();
+   }
+    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -87,44 +108,29 @@ public class Allowlist {
             return false;
         }
         Allowlist other = (Allowlist) o;
-        return 
-            Utils.enhancedDeepEquals(this.allowlist, other.allowlist);
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            allowlist);
+        return Utils.enhancedHash(value.value());
+    }
+    
+    @SuppressWarnings("serial")
+    public static final class _Deserializer extends OneOfDeserializer<Allowlist> {
+
+        public _Deserializer() {
+            super(Allowlist.class, false,
+                  TypeReferenceWithShape.of(new TypeReference<List<AllowlistEntry>>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<Disabled>() {}, JsonShape.DEFAULT));
+        }
     }
     
     @Override
     public String toString() {
         return Utils.toString(Allowlist.class,
-                "allowlist", allowlist);
+                "value", value);
     }
 
-    @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
-
-        private List<AllowlistEntry> allowlist;
-
-        private Builder() {
-          // force use of static builder() method
-        }
-
-        /**
-         * List of allowed outbound domains. Only requests to listed domains are permitted. Use [{'domain':
-         * '*'}] to allow all domains while still injecting headers on specific ones.
-         */
-        public Builder allowlist(@Nullable List<AllowlistEntry> allowlist) {
-            this.allowlist = allowlist;
-            return this;
-        }
-
-        public Allowlist build() {
-            return new Allowlist(
-                allowlist);
-        }
-
-    }
 }
+

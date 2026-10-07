@@ -19,85 +19,63 @@
  */
 package com.google.genai.gaos.models.interactions;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.genai.gaos.utils.OneOfDeserializer;
-import com.google.genai.gaos.utils.TypedObject;
-import com.google.genai.gaos.utils.Utils.JsonShape;
-import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
+import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
-import java.lang.SuppressWarnings;
 import java.util.Optional;
 
 /**
  * EnvironmentNetworkEgressAllowlist
  * 
- * <p>Outbound networking configuration for the sandbox. Accepts an object with an 'allowlist' array to
- * restrict traffic, or the string 'disabled' to turn off all network access. Omit entirely to allow
- * all outbound traffic with no header injection.
+ * <p>Network egress configuration for the environment.
  */
-@JsonDeserialize(using = EnvironmentNetworkEgressAllowlist._Deserializer.class)
 public class EnvironmentNetworkEgressAllowlist {
-
-    @JsonValue
-    private final TypedObject value;
-    
-    private EnvironmentNetworkEgressAllowlist(TypedObject value) {
-        this.value = value;
-    }
-
-    public static EnvironmentNetworkEgressAllowlist of(Allowlist value) {
-        Utils.checkNotNull(value, "value");
-        return new EnvironmentNetworkEgressAllowlist(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Allowlist>(){}));
-    }
-
-    public static EnvironmentNetworkEgressAllowlist of(Disabled value) {
-        Utils.checkNotNull(value, "value");
-        return new EnvironmentNetworkEgressAllowlist(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Disabled>(){}));
-    }
-    
     /**
-     * Returns an {@link Optional} containing the value if it is of type {@code Allowlist},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code Allowlist} value, or empty if not of this type
+     * List of allowed domains and their configurations. Set to `"disabled"`
+     * to block all network egress.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("allowlist")
+    private Allowlist allowlist;
+
+    @JsonCreator
+    public EnvironmentNetworkEgressAllowlist(
+            @JsonProperty("allowlist") @Nullable Allowlist allowlist) {
+        this.allowlist = allowlist;
+    }
+    
+    public EnvironmentNetworkEgressAllowlist() {
+        this(null);
+    }
+
+    /**
+     * List of allowed domains and their configurations. Set to `"disabled"`
+     * to block all network egress.
      */
     public Optional<Allowlist> allowlist() {
-        if (value.value() instanceof Allowlist) {
-            return Optional.of((Allowlist) value.value());
-        }
-        return Optional.empty();
+        return Optional.ofNullable(this.allowlist);
     }
-    
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+
     /**
-     * Returns an {@link Optional} containing the value if it is of type {@code Disabled},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code Disabled} value, or empty if not of this type
+     * List of allowed domains and their configurations. Set to `"disabled"`
+     * to block all network egress.
      */
-    public Optional<Disabled> disabled() {
-        if (value.value() instanceof Disabled) {
-            return Optional.of((Disabled) value.value());
-        }
-        return Optional.empty();
+    public EnvironmentNetworkEgressAllowlist withAllowlist(@Nullable Allowlist allowlist) {
+        this.allowlist = allowlist;
+        return this;
     }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -107,29 +85,44 @@ public class EnvironmentNetworkEgressAllowlist {
             return false;
         }
         EnvironmentNetworkEgressAllowlist other = (EnvironmentNetworkEgressAllowlist) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
+        return 
+            Utils.enhancedDeepEquals(this.allowlist, other.allowlist);
     }
     
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(value.value());
-    }
-    
-    @SuppressWarnings("serial")
-    public static final class _Deserializer extends OneOfDeserializer<EnvironmentNetworkEgressAllowlist> {
-
-        public _Deserializer() {
-            super(EnvironmentNetworkEgressAllowlist.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<Allowlist>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Disabled>() {}, JsonShape.DEFAULT));
-        }
+        return Utils.enhancedHash(
+            allowlist);
     }
     
     @Override
     public String toString() {
         return Utils.toString(EnvironmentNetworkEgressAllowlist.class,
-                "value", value);
+                "allowlist", allowlist);
     }
 
-}
+    @SuppressWarnings("UnusedReturnValue")
+    public final static class Builder {
 
+        private Allowlist allowlist;
+
+        private Builder() {
+          // force use of static builder() method
+        }
+
+        /**
+         * List of allowed domains and their configurations. Set to `"disabled"`
+         * to block all network egress.
+         */
+        public Builder allowlist(@Nullable Allowlist allowlist) {
+            this.allowlist = allowlist;
+            return this;
+        }
+
+        public EnvironmentNetworkEgressAllowlist build() {
+            return new EnvironmentNetworkEgressAllowlist(
+                allowlist);
+        }
+
+    }
+}

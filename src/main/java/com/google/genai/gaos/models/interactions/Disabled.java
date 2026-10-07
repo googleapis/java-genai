@@ -34,11 +34,6 @@ import java.util.Optional;
  * without runtime errors. Instances are immutable singletons with reference equality.
  * Use {@code asEnum()} for switch expressions.
  */
-/**
- * Disabled
- * 
- * <p>Turns all network off.
- */
 public class Disabled {
 
     public static final Disabled DISABLED = new Disabled("disabled");
