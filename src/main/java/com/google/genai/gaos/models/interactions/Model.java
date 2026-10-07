@@ -55,9 +55,11 @@ public class Model {
     public static final Model GEMINI31_PRO_PREVIEW = new Model("gemini-3.1-pro-preview");
     public static final Model GEMINI31_PRO_PREVIEW_CUSTOMTOOLS = new Model("gemini-3.1-pro-preview-customtools");
     public static final Model GEMINI31_FLASH_LITE = new Model("gemini-3.1-flash-lite");
+    public static final Model GEMINI31_FLASH_LITE_IMAGE = new Model("gemini-3.1-flash-lite-image");
     public static final Model GEMINI3_PRO_IMAGE = new Model("gemini-3-pro-image");
     public static final Model NANO_BANANA_PRO_PREVIEW = new Model("nano-banana-pro-preview");
     public static final Model GEMINI31_FLASH_IMAGE = new Model("gemini-3.1-flash-image");
+    public static final Model GEMINI_NANO_BANANA21 = new Model("gemini-nano-banana-2.1");
     public static final Model GEMINI31_FLASH_TTS_PREVIEW = new Model("gemini-3.1-flash-tts-preview");
     public static final Model GEMINI35_FLASH = new Model("gemini-3.5-flash");
     public static final Model GEMINI36_FLASH = new Model("gemini-3.6-flash");
@@ -158,9 +160,11 @@ public class Model {
         map.put("gemini-3.1-pro-preview", GEMINI31_PRO_PREVIEW);
         map.put("gemini-3.1-pro-preview-customtools", GEMINI31_PRO_PREVIEW_CUSTOMTOOLS);
         map.put("gemini-3.1-flash-lite", GEMINI31_FLASH_LITE);
+        map.put("gemini-3.1-flash-lite-image", GEMINI31_FLASH_LITE_IMAGE);
         map.put("gemini-3-pro-image", GEMINI3_PRO_IMAGE);
         map.put("nano-banana-pro-preview", NANO_BANANA_PRO_PREVIEW);
         map.put("gemini-3.1-flash-image", GEMINI31_FLASH_IMAGE);
+        map.put("gemini-nano-banana-2.1", GEMINI_NANO_BANANA21);
         map.put("gemini-3.1-flash-tts-preview", GEMINI31_FLASH_TTS_PREVIEW);
         map.put("gemini-3.5-flash", GEMINI35_FLASH);
         map.put("gemini-3.6-flash", GEMINI36_FLASH);
@@ -193,9 +197,11 @@ public class Model {
         map.put("gemini-3.1-pro-preview", ModelEnum.GEMINI31_PRO_PREVIEW);
         map.put("gemini-3.1-pro-preview-customtools", ModelEnum.GEMINI31_PRO_PREVIEW_CUSTOMTOOLS);
         map.put("gemini-3.1-flash-lite", ModelEnum.GEMINI31_FLASH_LITE);
+        map.put("gemini-3.1-flash-lite-image", ModelEnum.GEMINI31_FLASH_LITE_IMAGE);
         map.put("gemini-3-pro-image", ModelEnum.GEMINI3_PRO_IMAGE);
         map.put("nano-banana-pro-preview", ModelEnum.NANO_BANANA_PRO_PREVIEW);
         map.put("gemini-3.1-flash-image", ModelEnum.GEMINI31_FLASH_IMAGE);
+        map.put("gemini-nano-banana-2.1", ModelEnum.GEMINI_NANO_BANANA21);
         map.put("gemini-3.1-flash-tts-preview", ModelEnum.GEMINI31_FLASH_TTS_PREVIEW);
         map.put("gemini-3.5-flash", ModelEnum.GEMINI35_FLASH);
         map.put("gemini-3.6-flash", ModelEnum.GEMINI36_FLASH);
@@ -229,9 +235,11 @@ public class Model {
         GEMINI31_PRO_PREVIEW("gemini-3.1-pro-preview"),
         GEMINI31_PRO_PREVIEW_CUSTOMTOOLS("gemini-3.1-pro-preview-customtools"),
         GEMINI31_FLASH_LITE("gemini-3.1-flash-lite"),
+        GEMINI31_FLASH_LITE_IMAGE("gemini-3.1-flash-lite-image"),
         GEMINI3_PRO_IMAGE("gemini-3-pro-image"),
         NANO_BANANA_PRO_PREVIEW("nano-banana-pro-preview"),
         GEMINI31_FLASH_IMAGE("gemini-3.1-flash-image"),
+        GEMINI_NANO_BANANA21("gemini-nano-banana-2.1"),
         GEMINI31_FLASH_TTS_PREVIEW("gemini-3.1-flash-tts-preview"),
         GEMINI35_FLASH("gemini-3.5-flash"),
         GEMINI36_FLASH("gemini-3.6-flash"),
