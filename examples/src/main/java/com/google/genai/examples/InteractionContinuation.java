@@ -97,9 +97,11 @@ public final class InteractionContinuation {
       return;
     }
     for (Step step : interaction.steps().orElse(Collections.emptyList())) {
-      if (step instanceof ModelOutputStep modelOutputStep) {
+      if (step instanceof ModelOutputStep) {
+        ModelOutputStep modelOutputStep = (ModelOutputStep) step;
         for (Content content : modelOutputStep.content().orElse(Collections.emptyList())) {
-          if (content instanceof TextContent textContent) {
+          if (content instanceof TextContent) {
+            TextContent textContent = (TextContent) content;
             textContent.text().ifPresent(System.out::print);
           }
         }
@@ -169,13 +171,17 @@ public final class InteractionContinuation {
         try (EventStream<InteractionSSEStreamEvent> events = response.events()) {
           for (InteractionSSEStreamEvent streamEvent : events) {
             InteractionSSEEvent event = streamEvent.data().orElse(null);
-            if (event instanceof StepDelta stepDelta) {
+            if (event instanceof StepDelta) {
+              StepDelta stepDelta = (StepDelta) event;
               StepDeltaData data = stepDelta.delta().orElse(null);
-              if (data instanceof TextDelta textDelta) {
+              if (data instanceof TextDelta) {
+                TextDelta textDelta = (TextDelta) data;
                 textDelta.text().ifPresent(System.out::print);
                 System.out.flush();
               }
-            } else if (event instanceof InteractionCompletedEvent interactionCompletedEvent) {
+            } else if (event instanceof InteractionCompletedEvent) {
+              InteractionCompletedEvent interactionCompletedEvent =
+                  (InteractionCompletedEvent) event;
               InteractionSseEventInteraction completedInteraction =
                   interactionCompletedEvent.interaction().orElse(null);
               if (completedInteraction != null) {
