@@ -70,6 +70,16 @@ public class Interaction {
     private String cachedContent;
 
     /**
+     * The IDs of all server interactions merged into this response when automatic continuation is enabled,
+     * in order (ending with the final hop's ID).
+     * 
+     * <p>Note: this is added by the SDK.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("continuation_ids")
+    private List<String> continuationIds;
+
+    /**
      * Opaque token to resume a long decode. Output: set when status is
      * REQUIRES_CONTINUATION and decoding can be resumed. Input: pass the latest
      * token back unchanged in CreateInteraction to continue decoding.
@@ -282,6 +292,7 @@ public class Interaction {
             @JsonProperty("agent") @Nullable AgentOption agent,
             @JsonProperty("agent_config") @Nullable InteractionAgentConfig agentConfig,
             @JsonProperty("cached_content") @Nullable String cachedContent,
+            @JsonProperty("continuation_ids") @Nullable List<String> continuationIds,
             @JsonProperty("continuation_token") @Nullable String continuationToken,
             @JsonProperty("created") @Nullable String created,
             @JsonProperty("environment") @Nullable InteractionEnvironment environment,
@@ -312,6 +323,7 @@ public class Interaction {
         this.agent = agent;
         this.agentConfig = agentConfig;
         this.cachedContent = cachedContent;
+        this.continuationIds = continuationIds;
         this.continuationToken = continuationToken;
         this.created = created;
         this.environment = environment;
@@ -353,9 +365,10 @@ public class Interaction {
             null, null, null,
             null, null, null,
             null, null, null,
-            null, null, status,
             null, null, null,
-            null, null, null);
+            status, null, null,
+            null, null, null,
+            null);
     }
 
     /**
@@ -384,6 +397,16 @@ public class Interaction {
     @Deprecated
     public Optional<String> cachedContent() {
         return Optional.ofNullable(this.cachedContent);
+    }
+
+    /**
+     * The IDs of all server interactions merged into this response when automatic continuation is enabled,
+     * in order (ending with the final hop's ID).
+     * 
+     * <p>Note: this is added by the SDK.
+     */
+    public Optional<List<String>> continuationIds() {
+        return Optional.ofNullable(this.continuationIds);
     }
 
     /**
@@ -745,6 +768,18 @@ public class Interaction {
 
 
     /**
+     * The IDs of all server interactions merged into this response when automatic continuation is enabled,
+     * in order (ending with the final hop's ID).
+     * 
+     * <p>Note: this is added by the SDK.
+     */
+    public Interaction withContinuationIds(@Nullable List<String> continuationIds) {
+        this.continuationIds = continuationIds;
+        return this;
+    }
+
+
+    /**
      * Opaque token to resume a long decode. Output: set when status is
      * REQUIRES_CONTINUATION and decoding can be resumed. Input: pass the latest
      * token back unchanged in CreateInteraction to continue decoding.
@@ -1019,6 +1054,7 @@ public class Interaction {
             Utils.enhancedDeepEquals(this.agent, other.agent) &&
             Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
             Utils.enhancedDeepEquals(this.cachedContent, other.cachedContent) &&
+            Utils.enhancedDeepEquals(this.continuationIds, other.continuationIds) &&
             Utils.enhancedDeepEquals(this.continuationToken, other.continuationToken) &&
             Utils.enhancedDeepEquals(this.created, other.created) &&
             Utils.enhancedDeepEquals(this.environment, other.environment) &&
@@ -1052,15 +1088,16 @@ public class Interaction {
     public int hashCode() {
         return Utils.enhancedHash(
             agent, agentConfig, cachedContent,
-            continuationToken, created, environment,
-            environmentId, errors, generationConfig,
-            id, input, labels,
-            model, outputAudio, outputImage,
-            outputText, outputVideo, previousInteractionId,
-            responseFormat, responseMimeType, responseModalities,
-            safetySettings, serviceTier, status,
-            steps, systemInstruction, tools,
-            updated, usage, webhookConfig);
+            continuationIds, continuationToken, created,
+            environment, environmentId, errors,
+            generationConfig, id, input,
+            labels, model, outputAudio,
+            outputImage, outputText, outputVideo,
+            previousInteractionId, responseFormat, responseMimeType,
+            responseModalities, safetySettings, serviceTier,
+            status, steps, systemInstruction,
+            tools, updated, usage,
+            webhookConfig);
     }
     
     @Override
@@ -1069,6 +1106,7 @@ public class Interaction {
                 "agent", agent,
                 "agentConfig", agentConfig,
                 "cachedContent", cachedContent,
+                "continuationIds", continuationIds,
                 "continuationToken", continuationToken,
                 "created", created,
                 "environment", environment,
@@ -1107,6 +1145,8 @@ public class Interaction {
 
         @Deprecated
         private String cachedContent;
+
+        private List<String> continuationIds;
 
         private String continuationToken;
 
@@ -1196,6 +1236,17 @@ public class Interaction {
         @Deprecated
         public Builder cachedContent(@Nullable String cachedContent) {
             this.cachedContent = cachedContent;
+            return this;
+        }
+
+        /**
+         * The IDs of all server interactions merged into this response when automatic continuation is enabled,
+         * in order (ending with the final hop's ID).
+         * 
+         * <p>Note: this is added by the SDK.
+         */
+        public Builder continuationIds(@Nullable List<String> continuationIds) {
+            this.continuationIds = continuationIds;
             return this;
         }
 
@@ -1437,15 +1488,16 @@ public class Interaction {
         public Interaction build() {
             return new Interaction(
                 agent, agentConfig, cachedContent,
-                continuationToken, created, environment,
-                environmentId, errors, generationConfig,
-                id, input, labels,
-                model, outputAudio, outputImage,
-                outputText, outputVideo, previousInteractionId,
-                responseFormat, responseMimeType, responseModalities,
-                safetySettings, serviceTier, status,
-                steps, systemInstruction, tools,
-                updated, usage, webhookConfig);
+                continuationIds, continuationToken, created,
+                environment, environmentId, errors,
+                generationConfig, id, input,
+                labels, model, outputAudio,
+                outputImage, outputText, outputVideo,
+                previousInteractionId, responseFormat, responseMimeType,
+                responseModalities, safetySettings, serviceTier,
+                status, steps, systemInstruction,
+                tools, updated, usage,
+                webhookConfig);
         }
 
 
