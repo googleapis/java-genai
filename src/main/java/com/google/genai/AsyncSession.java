@@ -19,6 +19,7 @@ package com.google.genai;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.genai.types.LiveClientContent;
+import com.google.genai.types.LiveClientContextUpdate;
 import com.google.genai.types.LiveClientMessage;
 import com.google.genai.types.LiveClientToolResponse;
 import com.google.genai.types.LiveServerSetupComplete;
@@ -92,6 +93,20 @@ public final class AsyncSession {
     return send(
         LiveClientMessage.builder()
             .toolResponse(LiveClientToolResponse.fromJson(toolResponse.toJson()))
+            .build());
+  }
+
+  /**
+   * Sends context update to the live session.
+   *
+   * @param contextUpdate A {@link LiveClientContextUpdate} to send.
+   * @return A {@link CompletableFuture} that completes when the context update has been sent. The
+   *     future will fail if the context update cannot be sent.
+   */
+  public CompletableFuture<Void> sendContextUpdate(LiveClientContextUpdate contextUpdate) {
+    return send(
+        LiveClientMessage.builder()
+            .contextUpdate(contextUpdate)
             .build());
   }
 
