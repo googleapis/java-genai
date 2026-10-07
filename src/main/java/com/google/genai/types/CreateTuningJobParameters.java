@@ -32,7 +32,7 @@ import java.util.Optional;
 @InternalApi
 @JsonDeserialize(builder = CreateTuningJobParameters.Builder.class)
 public abstract class CreateTuningJobParameters extends JsonSerializable {
-  /** The base model that is being tuned, e.g., "gemini-2.5-flash". */
+  /** The base model that is being tuned, e.g., "gemini-flash-latest". */
   @JsonProperty("baseModel")
   public abstract Optional<String> baseModel();
 
@@ -68,7 +68,7 @@ public abstract class CreateTuningJobParameters extends JsonSerializable {
     /**
      * Setter for baseModel.
      *
-     * <p>baseModel: The base model that is being tuned, e.g., "gemini-2.5-flash".
+     * <p>baseModel: The base model that is being tuned, e.g., "gemini-flash-latest".
      */
     @JsonProperty("baseModel")
     public abstract Builder baseModel(String baseModel);

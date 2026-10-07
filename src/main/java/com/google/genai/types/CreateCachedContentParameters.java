@@ -32,7 +32,7 @@ import java.util.Optional;
 @InternalApi
 @JsonDeserialize(builder = CreateCachedContentParameters.Builder.class)
 public abstract class CreateCachedContentParameters extends JsonSerializable {
-  /** ID of the model to use. Example: gemini-2.0-flash */
+  /** ID of the model to use. Example: gemini-flash-latest */
   @JsonProperty("model")
   public abstract Optional<String> model();
 
@@ -63,7 +63,7 @@ public abstract class CreateCachedContentParameters extends JsonSerializable {
     /**
      * Setter for model.
      *
-     * <p>model: ID of the model to use. Example: gemini-2.0-flash
+     * <p>model: ID of the model to use. Example: gemini-flash-latest
      */
     @JsonProperty("model")
     public abstract Builder model(String model);

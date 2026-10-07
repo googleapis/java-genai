@@ -6472,7 +6472,7 @@ public final class Models {
   /**
    * Fetches information about a model by name.
    *
-   * @example ```java Model model = client.models.get("gemini-2.0-flash"); ```
+   * @example ```java Model model = client.models.get("gemini-flash-latest"); ```
    */
   public Model get(String model, GetModelConfig config) {
     GetModelParameters.Builder parameterBuilder = GetModelParameters.builder();
