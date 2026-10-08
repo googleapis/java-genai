@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +54,14 @@ public abstract class Transcription extends JsonSerializable {
   /** Detailed word-level transcriptions and timing details. */
   @JsonProperty("words")
   public abstract Optional<List<WordInfo>> words();
+
+  /** Start offset in time of the transcription relative to the start of the audio. */
+  @JsonProperty("startOffset")
+  public abstract Optional<Duration> startOffset();
+
+  /** End offset in time of the transcription relative to the start of the audio. */
+  @JsonProperty("endOffset")
+  public abstract Optional<Duration> endOffset();
 
   /** Instantiates a builder for Transcription. */
   @ExcludeFromGeneratedCoverageReport
@@ -184,6 +193,42 @@ public abstract class Transcription extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearWords() {
       return words(Optional.empty());
+    }
+
+    /**
+     * Setter for startOffset.
+     *
+     * <p>startOffset: Start offset in time of the transcription relative to the start of the audio.
+     */
+    @JsonProperty("startOffset")
+    public abstract Builder startOffset(Duration startOffset);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder startOffset(Optional<Duration> startOffset);
+
+    /** Clears the value of startOffset field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStartOffset() {
+      return startOffset(Optional.empty());
+    }
+
+    /**
+     * Setter for endOffset.
+     *
+     * <p>endOffset: End offset in time of the transcription relative to the start of the audio.
+     */
+    @JsonProperty("endOffset")
+    public abstract Builder endOffset(Duration endOffset);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder endOffset(Optional<Duration> endOffset);
+
+    /** Clears the value of endOffset field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEndOffset() {
+      return endOffset(Optional.empty());
     }
 
     public abstract Transcription build();

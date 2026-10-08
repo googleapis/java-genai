@@ -49,6 +49,10 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
   @JsonProperty("turnCoverage")
   public abstract Optional<TurnCoverage> turnCoverage();
 
+  /** If true, enables interim transcript timestamps. */
+  @JsonProperty("interimTranscriptTimestampEnabled")
+  public abstract Optional<Boolean> interimTranscriptTimestampEnabled();
+
   /** Instantiates a builder for RealtimeInputConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -174,6 +178,26 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder turnCoverage(String turnCoverage) {
       return turnCoverage(new TurnCoverage(turnCoverage));
+    }
+
+    /**
+     * Setter for interimTranscriptTimestampEnabled.
+     *
+     * <p>interimTranscriptTimestampEnabled: If true, enables interim transcript timestamps.
+     */
+    @JsonProperty("interimTranscriptTimestampEnabled")
+    public abstract Builder interimTranscriptTimestampEnabled(
+        boolean interimTranscriptTimestampEnabled);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder interimTranscriptTimestampEnabled(
+        Optional<Boolean> interimTranscriptTimestampEnabled);
+
+    /** Clears the value of interimTranscriptTimestampEnabled field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInterimTranscriptTimestampEnabled() {
+      return interimTranscriptTimestampEnabled(Optional.empty());
     }
 
     public abstract RealtimeInputConfig build();
