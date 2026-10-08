@@ -17,12 +17,21 @@
 package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.genai.types.AutomaticFunctionCallingConfig;
+import com.google.genai.types.Candidate;
 import com.google.genai.types.ComputeTokensResponse;
 import com.google.genai.types.Content;
 import com.google.genai.types.ControlReferenceConfig;
@@ -33,6 +42,8 @@ import com.google.genai.types.EditImageResponse;
 import com.google.genai.types.EditMode;
 import com.google.genai.types.EmbedContentConfig;
 import com.google.genai.types.EmbedContentResponse;
+import com.google.genai.types.FinishReason;
+import com.google.genai.types.FunctionDeclaration;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.HttpOptions;
@@ -50,14 +61,25 @@ import com.google.genai.types.StyleReferenceImage;
 import com.google.genai.types.SubjectReferenceConfig;
 import com.google.genai.types.SubjectReferenceImage;
 import com.google.genai.types.Tool;
+import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.List;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
 @EnabledIfEnvironmentVariable(
     named = "GOOGLE_GENAI_REPLAYS_DIRECTORY",
@@ -70,6 +92,20 @@ public class ModelsTest {
   private static final String IMAGEN_CAPABILITY_MODEL_NAME = "imagen-3.0-capability-001";
   private static final String GEMINI_IMAGE_MODALITY_MODEL_NAME =
       "gemini-2.0-flash-preview-image-generation";
+  private static final String CONTINUATION_REPLAYS =
+      "tests/models/generate_content_continuation_token/";
+  private static final String LONG_PROMPT =
+      "Write an exhaustive, multi-chapter textbook on compiler design that is around 40,000 tokens"
+          + " long.";
+  private static final byte[] CONTINUATION_TOKEN = "token".getBytes(StandardCharsets.UTF_8);
+
+  /**
+   * The model in the continuation recordings. It has no public name yet, so the recordings name it
+   * this way.
+   */
+  private static String longDecodingModel(boolean vertexAI) {
+    return vertexAI ? "test-model1" : "test-model2";
+  }
 
   /** Creates a raw reference image for edit image tests. */
   private RawReferenceImage createRawReferenceImage() throws Exception {
@@ -648,5 +684,289 @@ public class ModelsTest {
     }
     assertTrue(chunks > 2);
     assertTrue(responseStream.isConsumed());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  public void testGenerateContent_continuesByDefault(boolean vertexAI) throws Exception {
+    String suffix = vertexAI ? "vertex" : "mldev";
+    Client client =
+        TestUtils.createClient(
+            vertexAI,
+            CONTINUATION_REPLAYS
+                + "test_gc_without_afc_continuation_token_opt_in."
+                + suffix
+                + ".json");
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            longDecodingModel(vertexAI), LONG_PROMPT, GenerateContentConfig.builder().build());
+
+    // The recording holds two requests, and the replay fails unless the second is the first one
+    // with the continuation token added.
+    assertEquals(FinishReason.Known.STOP, response.finishReason().knownEnum());
+    assertFalse(response.candidates().get().get(0).continuationToken().isPresent());
+    assertNotNull(response.text());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  public void testGenerateContent_withoutAutomaticContinuation(boolean vertexAI) throws Exception {
+    String suffix = vertexAI ? "vertex" : "mldev";
+    Client client =
+        TestUtils.createClient(
+            vertexAI,
+            CONTINUATION_REPLAYS + "test_gc_without_afc_continuation_token." + suffix + ".json");
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            longDecodingModel(vertexAI),
+            LONG_PROMPT,
+            GenerateContentConfig.builder().automaticContinuation(false).build());
+
+    // The recording holds one request, so a continuation request would fail the replay.
+    assertEquals(FinishReason.Known.CONTINUATION, response.finishReason().knownEnum());
+    assertTrue(response.candidates().get().get(0).continuationToken().isPresent());
+  }
+
+  @Test
+  public void testGenerateContentStream_automaticContinuationResendsTheRequestWithTheToken()
+      throws Exception {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            streamResponse(
+                textResponse("Hello ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)),
+            streamResponse(textResponse("world", FinishReason.Known.STOP, null)));
+    Models models = new Models(apiClient);
+
+    List<String> texts = new ArrayList<>();
+    try (ResponseStream<GenerateContentResponse> stream =
+        models.generateContentStream(
+            GEMINI_MODEL_NAME,
+            "Write a long story.",
+            GenerateContentConfig.builder().automaticContinuation(true).build())) {
+      for (GenerateContentResponse chunk : stream) {
+        texts.add(chunk.text());
+      }
+    }
+
+    assertEquals(ImmutableList.of("Hello ", "world"), texts);
+    List<String> bodies = sentBodies(apiClient, 2);
+    ObjectNode second = (ObjectNode) JsonSerializable.stringToJsonNode(bodies.get(1));
+    assertEquals(
+        Base64.getEncoder().encodeToString(CONTINUATION_TOKEN),
+        second.remove("continuationToken").asText());
+    // Apart from the token, the second request is the first one: no earlier output is appended.
+    assertEquals(JsonSerializable.stringToJsonNode(bodies.get(0)), second);
+    assertFalse(bodies.get(0).contains("automaticContinuation"));
+  }
+
+  @Test
+  public void testGenerateContent_continuesTheAnswerThatFollowsAFunctionCall() throws Exception {
+    Content functionCall =
+        Content.builder()
+            .role("model")
+            .parts(Part.fromFunctionCall("describeTopic", ImmutableMap.of("topic", "compilers")))
+            .build();
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            jsonResponse(
+                GenerateContentResponse.builder()
+                    .candidates(
+                        Candidate.builder()
+                            .content(functionCall)
+                            .finishReason(FinishReason.Known.STOP))
+                    .build()),
+            jsonResponse(
+                textResponse("Compilers ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)),
+            jsonResponse(textResponse("translate code.", FinishReason.Known.STOP, null)));
+    Models models = new Models(apiClient);
+    Method describeTopic = ModelsTest.class.getDeclaredMethod("describeTopic", String.class);
+
+    GenerateContentResponse response =
+        models.generateContent(
+            GEMINI_MODEL_NAME,
+            "Describe compilers.",
+            GenerateContentConfig.builder().tools(Tool.builder().functions(describeTopic)).build());
+
+    assertEquals("Compilers translate code.", response.text());
+    List<String> bodies = sentBodies(apiClient, 3);
+    ObjectNode third = (ObjectNode) JsonSerializable.stringToJsonNode(bodies.get(2));
+    assertTrue(third.remove("continuationToken") != null);
+    // The answer is completed before anything else: its follow-up request is the request that
+    // sent the function response, with the token added.
+    assertEquals(JsonSerializable.stringToJsonNode(bodies.get(1)), third);
+  }
+
+  @Test
+  public void testGenerateContent_continuesAFunctionCallBeforeRunningTheFunction()
+      throws Exception {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            jsonResponse(textResponse("", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)),
+            jsonResponse(
+                GenerateContentResponse.builder()
+                    .candidates(
+                        Candidate.builder()
+                            .content(
+                                Content.builder()
+                                    .role("model")
+                                    .parts(
+                                        Part.fromFunctionCall(
+                                            "describeTopic",
+                                            ImmutableMap.of("topic", "compilers"))))
+                            .finishReason(FinishReason.Known.STOP))
+                    .build()),
+            jsonResponse(textResponse("Compilers translate code.", FinishReason.Known.STOP, null)));
+    Models models = new Models(apiClient);
+    Method describeTopic = ModelsTest.class.getDeclaredMethod("describeTopic", String.class);
+
+    GenerateContentResponse response =
+        models.generateContent(
+            GEMINI_MODEL_NAME,
+            "Describe compilers.",
+            GenerateContentConfig.builder().tools(Tool.builder().functions(describeTopic)).build());
+
+    assertEquals("Compilers translate code.", response.text());
+    List<String> bodies = sentBodies(apiClient, 3);
+    assertTrue(JsonSerializable.stringToJsonNode(bodies.get(1)).has("continuationToken"));
+    // The token belongs to the response it continued, so the request carrying the function
+    // response goes out without it.
+    assertFalse(JsonSerializable.stringToJsonNode(bodies.get(2)).has("continuationToken"));
+    assertTrue(bodies.get(2).contains("functionResponse"));
+  }
+
+  @Test
+  public void testGenerateContent_continuesWithAutomaticFunctionCallingDisabled() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            jsonResponse(
+                textResponse("Hello ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)),
+            jsonResponse(textResponse("world", FinishReason.Known.STOP, null)));
+    Models models = new Models(apiClient);
+
+    GenerateContentResponse response =
+        models.generateContent(
+            GEMINI_MODEL_NAME,
+            "Write a long story.",
+            GenerateContentConfig.builder()
+                .automaticFunctionCalling(AutomaticFunctionCallingConfig.builder().disable(true))
+                .build());
+
+    assertEquals("Hello world", response.text());
+    sentBodies(apiClient, 2);
+  }
+
+  @Test
+  public void testGenerateContent_continuesWithToolsItCannotCall() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            jsonResponse(
+                textResponse("Hello ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)),
+            jsonResponse(textResponse("world", FinishReason.Known.STOP, null)));
+    Models models = new Models(apiClient);
+
+    GenerateContentResponse response =
+        models.generateContent(
+            GEMINI_MODEL_NAME,
+            "Write a long story.",
+            GenerateContentConfig.builder()
+                .tools(
+                    Tool.builder()
+                        .functionDeclarations(
+                            FunctionDeclaration.builder().name("manualFunction").build()))
+                .build());
+
+    assertEquals("Hello world", response.text());
+    sentBodies(apiClient, 2);
+  }
+
+  @Test
+  public void testGenerateContentStream_continuesByDefault() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            streamResponse(
+                textResponse("Hello ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)),
+            streamResponse(textResponse("world", FinishReason.Known.STOP, null)));
+    Models models = new Models(apiClient);
+
+    List<String> texts = new ArrayList<>();
+    try (ResponseStream<GenerateContentResponse> stream =
+        models.generateContentStream(GEMINI_MODEL_NAME, "Write a long story.", null)) {
+      for (GenerateContentResponse chunk : stream) {
+        texts.add(chunk.text());
+      }
+    }
+
+    assertEquals(ImmutableList.of("Hello ", "world"), texts);
+    sentBodies(apiClient, 2);
+  }
+
+  @Test
+  public void testGenerateContentStream_doesNotContinueWhenAutomaticContinuationIsFalse() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            streamResponse(
+                textResponse("Hello ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)));
+    Models models = new Models(apiClient);
+
+    List<String> texts = new ArrayList<>();
+    try (ResponseStream<GenerateContentResponse> stream =
+        models.generateContentStream(
+            GEMINI_MODEL_NAME,
+            "Write a long story.",
+            GenerateContentConfig.builder().automaticContinuation(false).build())) {
+      for (GenerateContentResponse chunk : stream) {
+        texts.add(chunk.text());
+      }
+    }
+
+    assertEquals(ImmutableList.of("Hello "), texts);
+    sentBodies(apiClient, 1);
+  }
+
+  public static String describeTopic(String topic) {
+    return topic + " translate code";
+  }
+
+  private static GenerateContentResponse textResponse(
+      String text, FinishReason.Known finishReason, byte[] token) {
+    Candidate.Builder candidate =
+        Candidate.builder()
+            .content(Content.builder().role("model").parts(Part.fromText(text)))
+            .finishReason(finishReason);
+    if (token != null) {
+      candidate.continuationToken(token);
+    }
+    return GenerateContentResponse.builder().candidates(candidate.build()).build();
+  }
+
+  private static ApiResponse jsonResponse(GenerateContentResponse response) {
+    return new FakeApiResponse(
+        Headers.of(), ResponseBody.create(response.toJson(), MediaType.get("application/json")));
+  }
+
+  private static ApiResponse streamResponse(GenerateContentResponse... chunks) {
+    StringBuilder sse = new StringBuilder();
+    for (GenerateContentResponse chunk : chunks) {
+      sse.append("data: ").append(chunk.toJson()).append("\n\n");
+    }
+    return new FakeApiResponse(
+        Headers.of(), ResponseBody.create(sse.toString(), MediaType.get("text/event-stream")));
+  }
+
+  /** The bodies of the requests sent through {@code apiClient}, checking how many there were. */
+  private static List<String> sentBodies(ApiClient apiClient, int expectedRequests) {
+    ArgumentCaptor<String> bodies = ArgumentCaptor.forClass(String.class);
+    verify(apiClient, times(expectedRequests))
+        .request(anyString(), anyString(), bodies.capture(), any());
+    return bodies.getAllValues();
   }
 }

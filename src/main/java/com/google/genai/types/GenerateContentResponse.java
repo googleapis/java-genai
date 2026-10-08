@@ -378,7 +378,8 @@ public abstract class GenerateContentResponse extends JsonSerializable {
       ImmutableSet.of(
           FinishReason.Known.FINISH_REASON_UNSPECIFIED,
           FinishReason.Known.STOP,
-          FinishReason.Known.MAX_TOKENS);
+          FinishReason.Known.MAX_TOKENS,
+          FinishReason.Known.CONTINUATION);
 
   /**
    * Returns the list of parts in the first candidate of the response.
