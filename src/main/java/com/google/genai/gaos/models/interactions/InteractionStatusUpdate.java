@@ -54,23 +54,33 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     @JsonProperty("status")
     private InteractionStatusUpdateStatus status;
 
+    /**
+     * Statistics on the interaction request's token usage.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("usage")
+    private Usage usage;
+
     @JsonCreator
     public InteractionStatusUpdate(
             @JsonProperty("event_id") @Nullable String eventId,
             @JsonProperty("interaction_id") @Nonnull String interactionId,
-            @JsonProperty("status") @Nonnull InteractionStatusUpdateStatus status) {
+            @JsonProperty("status") @Nonnull InteractionStatusUpdateStatus status,
+            @JsonProperty("usage") @Nullable Usage usage) {
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.interactionId = Optional.ofNullable(interactionId)
             .orElseThrow(() -> new IllegalArgumentException("interactionId cannot be null"));
         this.status = Optional.ofNullable(status)
             .orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
+        this.usage = usage;
     }
     
     public InteractionStatusUpdate(
             @Nonnull String interactionId,
             @Nonnull InteractionStatusUpdateStatus status) {
-        this(null, interactionId, status);
+        this(null, interactionId, status,
+            null);
     }
 
     /**
@@ -92,6 +102,13 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
 
     public Optional<InteractionStatusUpdateStatus> status() {
         return Optional.ofNullable(this.status);
+    }
+
+    /**
+     * Statistics on the interaction request's token usage.
+     */
+    public Optional<Usage> usage() {
+        return Optional.ofNullable(this.usage);
     }
 
     public static Builder builder() {
@@ -121,6 +138,15 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     }
 
 
+    /**
+     * Statistics on the interaction request's token usage.
+     */
+    public InteractionStatusUpdate withUsage(@Nullable Usage usage) {
+        this.usage = usage;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -134,14 +160,15 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
             Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
             Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
             Utils.enhancedDeepEquals(this.interactionId, other.interactionId) &&
-            Utils.enhancedDeepEquals(this.status, other.status);
+            Utils.enhancedDeepEquals(this.status, other.status) &&
+            Utils.enhancedDeepEquals(this.usage, other.usage);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             eventId, eventType, interactionId,
-            status);
+            status, usage);
     }
     
     @Override
@@ -150,7 +177,8 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
                 "eventId", eventId,
                 "eventType", eventType,
                 "interactionId", interactionId,
-                "status", status);
+                "status", status,
+                "usage", usage);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -161,6 +189,8 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
         private String interactionId;
 
         private InteractionStatusUpdateStatus status;
+
+        private Usage usage;
 
         private Builder() {
           // force use of static builder() method
@@ -185,9 +215,18 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
             return this;
         }
 
+        /**
+         * Statistics on the interaction request's token usage.
+         */
+        public Builder usage(@Nullable Usage usage) {
+            this.usage = usage;
+            return this;
+        }
+
         public InteractionStatusUpdate build() {
             return new InteractionStatusUpdate(
-                eventId, interactionId, status);
+                eventId, interactionId, status,
+                usage);
         }
 
 
