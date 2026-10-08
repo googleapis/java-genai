@@ -26,6 +26,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
+import java.time.Duration;
 import java.util.Optional;
 
 
@@ -42,13 +43,35 @@ public class CreateInteractionRequest {
     @SpeakeasyMetadata("request:mediaType=application/json")
     private CreateInteractionRequestBody body;
 
+    /**
+     * Client-side only (not sent to the API): whether to automatically continue decoding across
+     * continuation hops. Defaults to true when unset.
+     */
+    private Boolean automaticContinuation;
+
+    /**
+     * Client-side only (not sent to the API): wall-clock budget for the whole call, across all
+     * continuation hops.
+     */
+    private Duration timeout;
+
     @JsonCreator
     public CreateInteractionRequest(
             @Nullable String apiVersion,
             @Nonnull CreateInteractionRequestBody body) {
+        this(apiVersion, body, null, null);
+    }
+
+    public CreateInteractionRequest(
+            @Nullable String apiVersion,
+            @Nonnull CreateInteractionRequestBody body,
+            @Nullable Boolean automaticContinuation,
+            @Nullable Duration timeout) {
         this.apiVersion = apiVersion;
         this.body = Optional.ofNullable(body)
             .orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
+        this.automaticContinuation = automaticContinuation;
+        this.timeout = timeout;
     }
     
     public CreateInteractionRequest(
@@ -68,6 +91,22 @@ public class CreateInteractionRequest {
      */
     public Optional<CreateInteractionRequestBody> body() {
         return Optional.ofNullable(this.body);
+    }
+
+    /**
+     * Whether automatic continuation is enabled for this call (defaults to true when empty).
+     * Client-side only; see {@code Interactions.create}.
+     */
+    public Optional<Boolean> automaticContinuation() {
+        return Optional.ofNullable(this.automaticContinuation);
+    }
+
+    /**
+     * Wall-clock budget for the whole call, across all continuation hops. Client-side only; see
+     * {@code Interactions.create}.
+     */
+    public Optional<Duration> timeout() {
+        return Optional.ofNullable(this.timeout);
     }
 
     public static Builder builder() {
@@ -93,6 +132,26 @@ public class CreateInteractionRequest {
     }
 
 
+    /**
+     * Whether automatic continuation is enabled for this call (defaults to true when unset).
+     * Client-side only; see {@code Interactions.create}.
+     */
+    public CreateInteractionRequest withAutomaticContinuation(@Nullable Boolean automaticContinuation) {
+        this.automaticContinuation = automaticContinuation;
+        return this;
+    }
+
+
+    /**
+     * Wall-clock budget for the whole call, across all continuation hops. Client-side only; see
+     * {@code Interactions.create}.
+     */
+    public CreateInteractionRequest withTimeout(@Nullable Duration timeout) {
+        this.timeout = timeout;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -104,20 +163,25 @@ public class CreateInteractionRequest {
         CreateInteractionRequest other = (CreateInteractionRequest) o;
         return 
             Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.body, other.body);
+            Utils.enhancedDeepEquals(this.body, other.body) &&
+            Utils.enhancedDeepEquals(this.automaticContinuation, other.automaticContinuation) &&
+            Utils.enhancedDeepEquals(this.timeout, other.timeout);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            apiVersion, body);
+            apiVersion, body, automaticContinuation,
+            timeout);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CreateInteractionRequest.class,
                 "apiVersion", apiVersion,
-                "body", body);
+                "body", body,
+                "automaticContinuation", automaticContinuation,
+                "timeout", timeout);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -126,6 +190,10 @@ public class CreateInteractionRequest {
         private String apiVersion;
 
         private CreateInteractionRequestBody body;
+
+        private Boolean automaticContinuation;
+
+        private Duration timeout;
 
         private Builder() {
           // force use of static builder() method
@@ -147,9 +215,28 @@ public class CreateInteractionRequest {
             return this;
         }
 
+        /**
+         * Whether automatic continuation is enabled for this call (defaults to true when unset).
+         * Client-side only; see {@code Interactions.create}.
+         */
+        public Builder automaticContinuation(@Nullable Boolean automaticContinuation) {
+            this.automaticContinuation = automaticContinuation;
+            return this;
+        }
+
+        /**
+         * Wall-clock budget for the whole call, across all continuation hops. Client-side only;
+         * see {@code Interactions.create}.
+         */
+        public Builder timeout(@Nullable Duration timeout) {
+            this.timeout = timeout;
+            return this;
+        }
+
         public CreateInteractionRequest build() {
             return new CreateInteractionRequest(
-                apiVersion, body);
+                apiVersion, body, automaticContinuation,
+                timeout);
         }
 
     }

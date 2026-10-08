@@ -31,13 +31,11 @@ import com.google.genai.gaos.models.operations.GetInteractionByIdRequest;
 import com.google.genai.gaos.models.operations.async.CancelInteractionByIdRequestBuilder;
 import com.google.genai.gaos.models.operations.async.CancelInteractionByIdResponse;
 import com.google.genai.gaos.models.operations.async.CreateInteractionRequestBuilder;
-import com.google.genai.gaos.models.operations.async.CreateInteractionResponse;
 import com.google.genai.gaos.models.operations.async.DeleteInteractionRequestBuilder;
 import com.google.genai.gaos.models.operations.async.DeleteInteractionResponse;
 import com.google.genai.gaos.models.operations.async.GetInteractionByIdRequestBuilder;
 import com.google.genai.gaos.models.operations.async.GetInteractionByIdResponse;
 import com.google.genai.gaos.operations.CancelInteractionById;
-import com.google.genai.gaos.operations.CreateInteraction;
 import com.google.genai.gaos.operations.DeleteInteraction;
 import com.google.genai.gaos.operations.GetInteractionById;
 import com.google.genai.gaos.operations.Operations;
@@ -94,6 +92,20 @@ public class AsyncInteractions {
     /**
      * Creates a new interaction.
      * 
+     * @param body The request body.
+     * @param automaticContinuation Whether to automatically continue decoding across
+     *     continuation hops; see {@link #create(CreateInteractionRequest, Options)}.
+     * @return {@code CompletableFuture<EventStream<InteractionSSEStreamEvent>}&gt; - The async response
+     */
+    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(
+            @Nonnull CreateInteractionRequestBody body, boolean automaticContinuation) {
+        return create(
+            new CreateInteractionRequest(null, body, automaticContinuation, null), null);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
      * @param apiVersion API version for request routing.
      * @param body The request body.
      * @param options additional options
@@ -103,19 +115,42 @@ public class AsyncInteractions {
     public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(
             @Nullable String apiVersion, @Nonnull CreateInteractionRequestBody body,
             @Nullable Options options) {
-        CreateInteractionRequest request = new CreateInteractionRequest(apiVersion, body);
-        AsyncRequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
-              = new CreateInteraction.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-                operation::handleResponse)
-                .thenApplyAsync(response -> new EventStream<InteractionSSEStreamEvent>(
-                        response.rawResponse().body(),
-                        new TypeReference<InteractionSSEStreamEvent>() {
-                        },
-                        Utils.mapper(),
-                        Optional.of("[DONE]")), Operations.streamCompletionExecutor()), operation);
+        return create(new CreateInteractionRequest(apiVersion, body), options);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return A CompletableFuture that completes with a blocking event stream once response headers are received.
+     * Iterating the stream blocks the calling thread; close it after use.
+     */
+    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(
+            @Nonnull CreateInteractionRequest request) {
+        return create(request, null);
+    }
+
+    /**
+     * Creates a new interaction.
+     *
+     * <p>Automatic continuation ({@code request.automaticContinuation()}, default {@code true})
+     * works as described on {@link Interactions#create(CreateInteractionRequest, Options)}: with
+     * {@code stream=true}, the events of every continuation hop are yielded sequentially and
+     * verbatim on the returned stream, which fetches the next hop on the thread iterating it. A
+     * failure after progress ends the iteration with a
+     * {@link com.google.genai.gaos.models.errors.ContinuationInterruptedException} carrying the
+     * token to resume from. {@code background=true} with {@code automaticContinuation(false)} is
+     * rejected with an {@link IllegalArgumentException} before any request is sent.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return A CompletableFuture that completes with a blocking event stream once response headers are received.
+     * Iterating the stream blocks the calling thread; close it after use.
+     */
+    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(
+            @Nonnull CreateInteractionRequest request,
+            @Nullable Options options) {
+        return InteractionContinuation.createAsync(sdkConfiguration, request, options, _headers);
     }
 
 

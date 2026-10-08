@@ -19,10 +19,8 @@
  */
 package com.google.genai.gaos.models.operations;
 
-import static com.google.genai.gaos.operations.Operations.RequestOperation;
-
+import com.google.genai.gaos.InteractionContinuation;
 import com.google.genai.gaos.SDKConfiguration;
-import com.google.genai.gaos.operations.CreateInteraction;
 import com.google.genai.gaos.utils.Headers;
 import com.google.genai.gaos.utils.Options;
 import com.google.genai.gaos.utils.RetryConfig;
@@ -30,6 +28,7 @@ import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.lang.String;
+import java.time.Duration;
 
 public class CreateInteractionRequestBuilder {
     private final SDKConfiguration sdkConfiguration;
@@ -53,6 +52,26 @@ public class CreateInteractionRequestBuilder {
 
     public CreateInteractionRequestBuilder body(@Nonnull CreateInteractionRequestBody body) {
         this.pojoBuilder.body(body);
+        this._setterCalled = true;
+        return this;
+    }
+
+    /**
+     * Whether to automatically continue decoding across continuation hops (defaults to true).
+     * Client-side only, not sent to the API; see {@code Interactions.create}.
+     */
+    public CreateInteractionRequestBuilder automaticContinuation(boolean automaticContinuation) {
+        this.pojoBuilder.automaticContinuation(automaticContinuation);
+        this._setterCalled = true;
+        return this;
+    }
+
+    /**
+     * Wall-clock budget for the whole call, across all continuation hops. Client-side only, not
+     * sent to the API; see {@code Interactions.create}.
+     */
+    public CreateInteractionRequestBuilder timeout(@Nonnull Duration timeout) {
+        this.pojoBuilder.timeout(Utils.checkNotNull(timeout, "timeout"));
         this._setterCalled = true;
         return this;
     }
@@ -83,8 +102,6 @@ public class CreateInteractionRequestBuilder {
     */
     public CreateInteractionResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
-              = new CreateInteraction.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(this._buildRequest()));
+        return InteractionContinuation.create(sdkConfiguration, this._buildRequest(), options, _headers);
     }
 }
