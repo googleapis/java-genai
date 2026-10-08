@@ -46,6 +46,23 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
 
   private static final Logger logger = Logger.getLogger(ChatBase.class.getName());
 
+  /**
+   * Decides whether a stream goes on into a new request once the current one ends. Used for
+   * automatic continuation.
+   */
+  interface Continuation<T extends JsonSerializable> {
+    /** Called with every element the stream hands out, in order. */
+    void observe(T element);
+
+    /** Returns the stream of the next request, or null to end the stream here. */
+    @Nullable ResponseStream<T> next();
+  }
+
+  private @Nullable Continuation<T> continuation;
+
+  // The stream of the request being read once the stream has gone on past its first request.
+  private @Nullable ResponseStream<T> following;
+
   /** Iterator for the ResponseStream. */
   class ResponseStreamIterator implements Iterator<T> {
     private final BufferedReader reader;
@@ -87,7 +104,8 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
 
     @Override
     public boolean hasNext() {
-      if (nextJson == null) {
+      boolean more = hasMore();
+      if (!more) {
         consumed = true;
         if (recordingHistory) {
           try {
@@ -105,7 +123,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
           }
         }
       }
-      return nextJson != null;
+      return more;
     }
 
     @Override
@@ -113,6 +131,37 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
       if (!hasNext()) {
         throw new NoSuchElementException("No more JSON objects in the stream");
       }
+      T response = following != null ? following.iterator.next() : readCurrent();
+      if (continuation != null) {
+        continuation.observe(response);
+      }
+      if (recordingHistory) {
+        history.add(response);
+      }
+      return response;
+    }
+
+    // Whether another element is available, from the current request or, when the stream is
+    // continued, from the requests after it.
+    private boolean hasMore() {
+      while (true) {
+        if (following != null ? following.iterator.hasNext() : nextJson != null) {
+          return true;
+        }
+        ResponseStream<T> next = continuation == null ? null : continuation.next();
+        if (next == null) {
+          return false;
+        }
+        if (following != null) {
+          following.close();
+        } else {
+          closeOwnResponse();
+        }
+        following = next;
+      }
+    }
+
+    private T readCurrent() {
       String currentJson = nextJson;
       nextJson = readNextJson();
       try {
@@ -147,11 +196,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
           currentJsonNode = (JsonNode) converter.invoke(obj, currentJsonNode, null);
         }
 
-        T response = JsonSerializable.fromJsonNode(currentJsonNode, clazz);
-        if (recordingHistory) {
-          history.add(response);
-        }
-        return response;
+        return JsonSerializable.fromJsonNode(currentJsonNode, clazz);
       } catch (IllegalAccessException | InvocationTargetException e) {
         throw new IllegalStateException("Failed to convert JSON object " + currentJson, e);
       }
@@ -237,8 +282,23 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
     return iterator;
   }
 
+  /** Lets the stream go on into new requests, as {@code continuation} decides. */
+  void setContinuation(Continuation<T> continuation) {
+    this.continuation = continuation;
+  }
+
   @Override
   public void close() {
+    try {
+      closeOwnResponse();
+    } finally {
+      if (following != null) {
+        following.close();
+      }
+    }
+  }
+
+  private void closeOwnResponse() {
     try {
       if (reader != null) {
         try {
