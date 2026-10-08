@@ -65,6 +65,12 @@ public class CreateInteractionRequestBuilder {
         return this;
     }
 
+    public CreateInteractionRequestBuilder automaticContinuation(boolean automaticContinuation) {
+        this.pojoBuilder.automaticContinuation(automaticContinuation);
+        this._setterCalled = true;
+        return this;
+    }
+
     public CreateInteractionRequestBuilder retryConfig(RetryConfig retryConfig) {
         this.optionsBuilder.retryConfig(retryConfig);
         return this;
@@ -98,17 +104,7 @@ public class CreateInteractionRequestBuilder {
     */
     public CompletableFuture<EventStream<InteractionSSEStreamEvent>> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
-              = new CreateInteraction.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-                operation::handleResponse)
-                .thenApplyAsync(response -> new EventStream<InteractionSSEStreamEvent>(
-                        response.rawResponse().body(),
-                        new TypeReference<InteractionSSEStreamEvent>() {
-                        },
-                        Utils.mapper(),
-                        Optional.of("[DONE]")), Operations.streamCompletionExecutor()), operation);
+        com.google.genai.gaos.Interactions syncSDK = new com.google.genai.gaos.Interactions(sdkConfiguration);
+        return new com.google.genai.gaos.AsyncInteractions(syncSDK, sdkConfiguration).create(this._buildRequest(), options, _headers);
     }
 }

@@ -63,6 +63,9 @@ import com.google.genai.gaos.models.operations.CreateInteractionResponse;
 import com.google.genai.gaos.utils.EventStream;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * An example of using the Unified Gen AI Java SDK to continue a long-decoding interaction across
@@ -70,25 +73,40 @@ import java.util.Objects;
  */
 public final class InteractionContinuation {
   public static void main(String[] args) {
-    Client client = new Client();
+    ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    try (Client client = Client.builder().asyncRetryScheduler(scheduler).build()) {
+      if (client.vertexAI()) {
+        System.out.println("Interactions API is not yet supported on Vertex AI");
+        return;
+      }
 
-    if (client.vertexAI()) {
-      System.out.println("Interactions API is not yet supported on Vertex AI");
-      return;
+      System.out.println("Using Gemini Developer API");
+
+      String modelName = System.getenv("GEMINI_MODEL");
+      if (modelName == null || modelName.isEmpty()) {
+        modelName = Constants.GEMINI_MODEL_NAME;
+      }
+
+      System.out.println("--- Automatic Unary Continuation ---");
+      runAutomaticUnaryContinuation(client, modelName);
+
+      System.out.println("\n--- Automatic Streaming Continuation ---");
+      runAutomaticStreamingContinuation(client, modelName);
+
+      System.out.println("\n--- Automatic Async Unary Continuation ---");
+      runAutomaticAsyncUnaryContinuation(client, modelName);
+
+      System.out.println("\n--- Automatic Async Streaming Continuation ---");
+      runAutomaticAsyncStreamingContinuation(client, modelName);
+
+      System.out.println("\n--- Manual Unary Continuation ---");
+      runUnaryContinuation(client, modelName);
+
+      System.out.println("\n--- Manual Streaming Continuation ---");
+      runStreamingContinuation(client, modelName);
+    } finally {
+      scheduler.shutdown();
     }
-
-    System.out.println("Using Gemini Developer API");
-
-    String modelName = System.getenv("GEMINI_MODEL");
-    if (modelName == null || modelName.isEmpty()) {
-      modelName = Constants.GEMINI_MODEL_NAME;
-    }
-
-    System.out.println("--- Unary Continuation ---");
-    runUnaryContinuation(client, modelName);
-
-    System.out.println("\n--- Streaming Continuation ---");
-    runStreamingContinuation(client, modelName);
   }
 
   private static void printInteractionText(Interaction interaction) {
@@ -109,6 +127,122 @@ public final class InteractionContinuation {
     }
   }
 
+  private static void runAutomaticUnaryContinuation(Client client, String modelName) {
+    CreateModelInteraction createRequest =
+        CreateModelInteraction.builder()
+            .model(Model.of(modelName))
+            .input(InteractionsInput.of("Write a 500 word story about a robot."))
+            .build();
+
+    Interaction interaction =
+        client
+            .interactions
+            .create(CreateInteractionRequestBody.of(createRequest), true)
+            .interaction()
+            .orElseThrow(() -> new IllegalStateException("No interaction returned"));
+
+    printInteractionText(interaction);
+    System.out.println("\nFinal status: " + interaction.status().orElse(null));
+  }
+
+  private static void runAutomaticStreamingContinuation(Client client, String modelName) {
+    CreateModelInteraction createRequest =
+        CreateModelInteraction.builder()
+            .model(Model.of(modelName))
+            .input(InteractionsInput.of("Write a 500 word story about a robot."))
+            .stream(true)
+            .build();
+
+    InteractionSseEventInteractionStatus status = null;
+    try {
+      CreateInteractionResponse response =
+          client.interactions.create(CreateInteractionRequestBody.of(createRequest), true);
+      try (EventStream<InteractionSSEStreamEvent> events = response.events()) {
+        for (InteractionSSEStreamEvent streamEvent : events) {
+          InteractionSSEEvent event = streamEvent.data().orElse(null);
+          if (event instanceof StepDelta) {
+            StepDelta stepDelta = (StepDelta) event;
+            StepDeltaData data = stepDelta.delta().orElse(null);
+            if (data instanceof TextDelta) {
+              TextDelta textDelta = (TextDelta) data;
+              textDelta.text().ifPresent(System.out::print);
+              System.out.flush();
+            }
+          } else if (event instanceof InteractionCompletedEvent) {
+            InteractionCompletedEvent interactionCompletedEvent = (InteractionCompletedEvent) event;
+            InteractionSseEventInteraction completedInteraction =
+                interactionCompletedEvent.interaction().orElse(null);
+            if (completedInteraction != null) {
+              status = completedInteraction.status().orElse(null);
+            }
+          }
+        }
+      }
+    } catch (Exception e) {
+      throw new IllegalStateException("Error during automatic streaming continuation", e);
+    }
+    System.out.println("\nFinal stream status: " + status);
+  }
+
+  private static void runAutomaticAsyncUnaryContinuation(Client client, String modelName) {
+    CreateModelInteraction createRequest =
+        CreateModelInteraction.builder()
+            .model(Model.of(modelName))
+            .input(InteractionsInput.of("Write a 500 word story about a robot."))
+            .build();
+
+    Interaction interaction =
+        CompletableFuture.supplyAsync(
+                () ->
+                    client.interactions.create(
+                        CreateInteractionRequestBody.of(createRequest), true))
+            .join()
+            .interaction()
+            .orElseThrow(() -> new IllegalStateException("No interaction returned"));
+
+    printInteractionText(interaction);
+    System.out.println("\nFinal status: " + interaction.status().orElse(null));
+  }
+
+  private static void runAutomaticAsyncStreamingContinuation(Client client, String modelName) {
+    CreateModelInteraction createRequest =
+        CreateModelInteraction.builder()
+            .model(Model.of(modelName))
+            .input(InteractionsInput.of("Write a 500 word story about a robot."))
+            .stream(true)
+            .build();
+
+    InteractionSseEventInteractionStatus status = null;
+    try {
+      CompletableFuture<EventStream<InteractionSSEStreamEvent>> futureStream =
+          client.async.interactions.create(CreateInteractionRequestBody.of(createRequest), true);
+      try (EventStream<InteractionSSEStreamEvent> events = futureStream.join()) {
+        for (InteractionSSEStreamEvent streamEvent : events) {
+          InteractionSSEEvent event = streamEvent.data().orElse(null);
+          if (event instanceof StepDelta) {
+            StepDelta stepDelta = (StepDelta) event;
+            StepDeltaData data = stepDelta.delta().orElse(null);
+            if (data instanceof TextDelta) {
+              TextDelta textDelta = (TextDelta) data;
+              textDelta.text().ifPresent(System.out::print);
+              System.out.flush();
+            }
+          } else if (event instanceof InteractionCompletedEvent) {
+            InteractionCompletedEvent interactionCompletedEvent = (InteractionCompletedEvent) event;
+            InteractionSseEventInteraction completedInteraction =
+                interactionCompletedEvent.interaction().orElse(null);
+            if (completedInteraction != null) {
+              status = completedInteraction.status().orElse(null);
+            }
+          }
+        }
+      }
+    } catch (Exception e) {
+      throw new IllegalStateException("Error during automatic async streaming continuation", e);
+    }
+    System.out.println("\nFinal stream status: " + status);
+  }
+
   private static void runUnaryContinuation(Client client, String modelName) {
     CreateModelInteraction createRequest =
         CreateModelInteraction.builder()
@@ -123,14 +257,13 @@ public final class InteractionContinuation {
             .interaction()
             .orElseThrow(() -> new IllegalStateException("No interaction returned"));
 
-    printInteractionText(interaction);
-
-    while (Objects.equals(interaction.status().orElse(null), InteractionStatus.INCOMPLETE)
+    while (Objects.equals(
+            interaction.status().orElse(null), InteractionStatus.CONTINUATION_REQUIRED)
         && interaction.continuationToken().isPresent()) {
       CreateModelInteraction continueRequest =
           CreateModelInteraction.builder()
               .model(Model.of(modelName))
-              .previousInteractionId(interaction.id().orElse(null))
+              .input(InteractionsInput.of("Write a 500 word story about a robot."))
               .continuationToken(interaction.continuationToken().orElse(null))
               .build();
 
@@ -141,28 +274,22 @@ public final class InteractionContinuation {
               .interaction()
               .orElseThrow(
                   () -> new IllegalStateException("No interaction returned on continuation"));
-
-      printInteractionText(interaction);
     }
 
+    printInteractionText(interaction);
     System.out.println("\nFinal status: " + interaction.status().orElse(null));
   }
 
   private static void runStreamingContinuation(Client client, String modelName) {
-    String interactionId = null;
     String continuationToken = null;
 
     while (true) {
       CreateModelInteraction.Builder requestBuilder =
           CreateModelInteraction.builder()
               .model(Model.of(modelName))
-              .previousInteractionId(interactionId)
+              .input(InteractionsInput.of("Write a 500 word story about a robot."))
               .continuationToken(continuationToken)
               .stream(true);
-      if (continuationToken == null) {
-        requestBuilder =
-            requestBuilder.input(InteractionsInput.of("Write a 500 word story about a robot."));
-      }
 
       InteractionSseEventInteractionStatus status = null;
       try {
@@ -185,7 +312,6 @@ public final class InteractionContinuation {
               InteractionSseEventInteraction completedInteraction =
                   interactionCompletedEvent.interaction().orElse(null);
               if (completedInteraction != null) {
-                interactionId = completedInteraction.id().orElse(null);
                 status = completedInteraction.status().orElse(null);
                 continuationToken = completedInteraction.continuationToken().orElse(null);
               }
@@ -196,7 +322,7 @@ public final class InteractionContinuation {
         throw new IllegalStateException("Error during streaming continuation", e);
       }
 
-      if (!Objects.equals(status, InteractionSseEventInteractionStatus.INCOMPLETE)
+      if (!Objects.equals(status, InteractionSseEventInteractionStatus.of("continuation_required"))
           || continuationToken == null) {
         System.out.println("\nFinal stream status: " + status);
         break;

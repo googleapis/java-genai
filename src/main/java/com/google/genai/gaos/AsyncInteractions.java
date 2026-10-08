@@ -41,6 +41,7 @@ import com.google.genai.gaos.operations.CreateInteraction;
 import com.google.genai.gaos.operations.DeleteInteraction;
 import com.google.genai.gaos.operations.GetInteractionById;
 import com.google.genai.gaos.operations.Operations;
+import com.google.genai.gaos.utils.ContinuationEventStream;
 import com.google.genai.gaos.utils.EventStream;
 import com.google.genai.gaos.utils.Headers;
 import com.google.genai.gaos.utils.Options;
@@ -57,7 +58,7 @@ public class AsyncInteractions {
     private final SDKConfiguration sdkConfiguration;
     private final Interactions syncSDK;
 
-    AsyncInteractions(Interactions syncSDK, SDKConfiguration sdkConfiguration) {
+    public AsyncInteractions(Interactions syncSDK, SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
         this.syncSDK = syncSDK;
     }
@@ -94,6 +95,17 @@ public class AsyncInteractions {
     /**
      * Creates a new interaction.
      * 
+     * @param body The request body.
+     * @param automaticContinuation Whether to automatically continue decoding across hops.
+     * @return {@code CompletableFuture<EventStream<InteractionSSEStreamEvent>}&gt; - The async response
+     */
+    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(@Nonnull CreateInteractionRequestBody body, boolean automaticContinuation) {
+        return create(null, body, automaticContinuation, null);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
      * @param apiVersion API version for request routing.
      * @param body The request body.
      * @param options additional options
@@ -104,18 +116,100 @@ public class AsyncInteractions {
             @Nullable String apiVersion, @Nonnull CreateInteractionRequestBody body,
             @Nullable Options options) {
         CreateInteractionRequest request = new CreateInteractionRequest(apiVersion, body);
+        return create(request, options);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
+     * @param apiVersion API version for request routing.
+     * @param body The request body.
+     * @param automaticContinuation Whether to automatically continue decoding across hops.
+     * @param options additional options
+     * @return A CompletableFuture that completes with a blocking event stream once response headers are received.
+     * Iterating the stream blocks the calling thread; close it after use.
+     */
+    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(
+            @Nullable String apiVersion, @Nonnull CreateInteractionRequestBody body,
+            boolean automaticContinuation, @Nullable Options options) {
+        CreateInteractionRequest request = new CreateInteractionRequest(apiVersion, body, automaticContinuation);
+        return create(request, options);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
+     * @param request The request object.
+     * @return A CompletableFuture that completes with a blocking event stream once response headers are received.
+     * Iterating the stream blocks the calling thread; close it after use.
+     */
+    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(@Nonnull CreateInteractionRequest request) {
+        return create(request, null);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
+     * @param request The request object.
+     * @param options additional options
+     * @return A CompletableFuture that completes with a blocking event stream once response headers are received.
+     * Iterating the stream blocks the calling thread; close it after use.
+     */
+    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(
+            @Nonnull CreateInteractionRequest request,
+            @Nullable Options options) {
+        return create(request, options, _headers);
+    }
+
+    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(
+            @Nonnull CreateInteractionRequest request,
+            @Nullable Options options,
+            @Nonnull Headers headers) {
+        boolean autoContinue = request != null && request.automaticContinuation().orElse(false);
+        boolean autoContinueExplicitFalse =
+            request != null
+                && request.automaticContinuation().isPresent()
+                && !request.automaticContinuation().get();
+        CreateInteractionRequestBody body = request != null ? request.body().orElse(null) : null;
+        boolean isBackground = Interactions.isBackground(body);
+
+        if (isBackground && autoContinueExplicitFalse) {
+            throw new IllegalArgumentException(
+                "automaticContinuation=false cannot be used with background=true.");
+        }
+
         AsyncRequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
               = new CreateInteraction.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
+                                    headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
                 operation::handleResponse)
-                .thenApplyAsync(response -> new EventStream<InteractionSSEStreamEvent>(
-                        response.rawResponse().body(),
-                        new TypeReference<InteractionSSEStreamEvent>() {
-                        },
-                        Utils.mapper(),
-                        Optional.of("[DONE]")), Operations.streamCompletionExecutor()), operation);
+                .thenApplyAsync(response -> {
+                    EventStream<InteractionSSEStreamEvent> initialStream = new EventStream<InteractionSSEStreamEvent>(
+                            response.rawResponse().body(),
+                            new TypeReference<InteractionSSEStreamEvent>() {
+                            },
+                            Utils.mapper(),
+                            Optional.of("[DONE]"));
+                    if (autoContinue) {
+                        return new ContinuationEventStream(
+                            initialStream,
+                            nextToken -> {
+                                CreateInteractionRequestBody nextBody = Interactions.withContinuationToken(body, nextToken);
+                                CreateInteractionRequest nextReq = new CreateInteractionRequest(request.apiVersion().orElse(null), nextBody, false);
+                                return syncSDK.create(nextReq, options, headers).events();
+                            }
+                        );
+                    } else if (!Interactions.hasContinuationToken(body)) {
+                        return new ContinuationEventStream(
+                            initialStream,
+                            null,
+                            Interactions::warnIncompleteContinuation
+                        );
+                    } else {
+                        return initialStream;
+                    }
+                }, Operations.streamCompletionExecutor()), operation);
     }
 
 
@@ -244,7 +338,10 @@ public class AsyncInteractions {
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+            operation::handleResponse)
+            .thenApply(response -> response.interaction().isPresent()
+                ? response.withInteraction(Interactions.withOutputProperties(response.interaction().get()))
+                : response), operation);
     }
 
 }

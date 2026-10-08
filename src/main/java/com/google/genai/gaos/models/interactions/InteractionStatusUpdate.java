@@ -73,14 +73,13 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     public InteractionStatusUpdate(
             @JsonProperty("continuation_token") @Nullable String continuationToken,
             @JsonProperty("event_id") @Nullable String eventId,
-            @JsonProperty("interaction_id") @Nonnull String interactionId,
+            @JsonProperty("interaction_id") @Nullable String interactionId,
             @JsonProperty("status") @Nonnull InteractionStatusUpdateStatus status,
             @JsonProperty("usage") @Nullable Usage usage) {
         this.continuationToken = continuationToken;
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
-        this.interactionId = Optional.ofNullable(interactionId)
-            .orElseThrow(() -> new IllegalArgumentException("interactionId cannot be null"));
+        this.interactionId = interactionId;
         this.status = Optional.ofNullable(status)
             .orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
         this.usage = usage;

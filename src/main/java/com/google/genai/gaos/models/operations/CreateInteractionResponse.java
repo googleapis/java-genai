@@ -110,13 +110,22 @@ public class CreateInteractionResponse implements Response {
     }
     // value overriden by x-speakeasy-sse-sentinel extension via reflection at runtime
     private Optional<String> _eventSentinel = Optional.empty();
+    private EventStream<InteractionSSEStreamEvent> _events;
 
     public EventStream<InteractionSSEStreamEvent> events() {
+        if (_events != null) {
+            return _events;
+        }
         return new EventStream<InteractionSSEStreamEvent>(
             rawResponse.body(),
             new TypeReference<InteractionSSEStreamEvent>() {},
             Utils.mapper(),
             _eventSentinel);
+    }
+
+    public CreateInteractionResponse withEvents(EventStream<InteractionSSEStreamEvent> events) {
+        this._events = events;
+        return this;
     }
 
 

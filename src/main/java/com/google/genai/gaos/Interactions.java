@@ -34,23 +34,52 @@ import com.google.genai.gaos.models.operations.DeleteInteractionResponse;
 import com.google.genai.gaos.models.operations.GetInteractionByIdRequest;
 import com.google.genai.gaos.models.operations.GetInteractionByIdRequestBuilder;
 import com.google.genai.gaos.models.operations.GetInteractionByIdResponse;
+import com.google.genai.gaos.models.interactions.Content;
+import com.google.genai.gaos.models.interactions.CreateAgentInteraction;
+import com.google.genai.gaos.models.interactions.CreateModelInteraction;
+import com.google.genai.gaos.models.interactions.Interaction;
+import com.google.genai.gaos.models.interactions.ModelOutputStep;
+import com.google.genai.gaos.models.interactions.Step;
+import com.google.genai.gaos.models.interactions.TextContent;
+import com.google.genai.gaos.models.interactions.ThoughtStep;
+import com.google.genai.gaos.models.interactions.UserInputStep;
 import com.google.genai.gaos.operations.CancelInteractionById;
 import com.google.genai.gaos.operations.CreateInteraction;
 import com.google.genai.gaos.operations.DeleteInteraction;
 import com.google.genai.gaos.operations.GetInteractionById;
+import com.google.genai.gaos.utils.ContinuationEventStream;
 import com.google.genai.gaos.utils.Headers;
 import com.google.genai.gaos.utils.Options;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 
 public class Interactions {
+    private static final Logger logger = Logger.getLogger(Interactions.class.getName());
+
+    static final String INCOMPLETE_CONTINUATION_WARNING =
+        "Interaction stopped before completion (status='continuation_required') with a "
+            + "continuation_token because the per-request decode token limit was "
+            + "reached. To resume decoding automatically, pass "
+            + "automaticContinuation=true (note: each continuation hop re-prefills and "
+            + "bills input tokens), or use background=true (the most cost-efficient "
+            + "option for server-managed continuation), or pass continuation_token to "
+            + "interactions.create().";
+
+    private static volatile boolean incompleteContinuationWarned = false;
+
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncInteractions asyncSDK;
 
-    Interactions(SDKConfiguration sdkConfiguration) {
+    public Interactions(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
         this.asyncSDK = new AsyncInteractions(this, sdkConfiguration);
     }
@@ -87,6 +116,18 @@ public class Interactions {
     /**
      * Creates a new interaction.
      * 
+     * @param body The request body.
+     * @param automaticContinuation Whether to automatically continue decoding across hops.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateInteractionResponse create(@Nonnull CreateInteractionRequestBody body, boolean automaticContinuation) {
+        return create(null, body, automaticContinuation, null);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
      * @param apiVersion API version for request routing.
      * @param body The request body.
      * @param options additional options
@@ -97,9 +138,148 @@ public class Interactions {
             @Nullable String apiVersion, @Nonnull CreateInteractionRequestBody body,
             @Nullable Options options) {
         CreateInteractionRequest request = new CreateInteractionRequest(apiVersion, body);
+        return create(request, options);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
+     * @param apiVersion API version for request routing.
+     * @param body The request body.
+     * @param automaticContinuation Whether to automatically continue decoding across hops.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateInteractionResponse create(
+            @Nullable String apiVersion, @Nonnull CreateInteractionRequestBody body,
+            boolean automaticContinuation, @Nullable Options options) {
+        CreateInteractionRequest request = new CreateInteractionRequest(apiVersion, body, automaticContinuation);
+        return create(request, options);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
+     * @param request The request object.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateInteractionResponse create(@Nonnull CreateInteractionRequest request) {
+        return create(request, null);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
+     * @param request The request object.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateInteractionResponse create(
+            @Nonnull CreateInteractionRequest request,
+            @Nullable Options options) {
+        return create(request, options, _headers);
+    }
+
+    public CreateInteractionResponse create(
+            @Nonnull CreateInteractionRequest request,
+            @Nullable Options options,
+            @Nonnull Headers headers) {
+        boolean autoContinue = request != null && request.automaticContinuation().orElse(false);
+        boolean autoContinueExplicitFalse =
+            request != null
+                && request.automaticContinuation().isPresent()
+                && !request.automaticContinuation().get();
+        CreateInteractionRequestBody body = request != null ? request.body().orElse(null) : null;
+        boolean isStreaming = isStreaming(body);
+        boolean isBackground = isBackground(body);
+        boolean isStoreFalse = isStoreFalse(body);
+
+        if (isBackground && autoContinueExplicitFalse) {
+            throw new IllegalArgumentException(
+                "automaticContinuation=false cannot be used with background=true.");
+        }
+
+        if (isStoreFalse && !isStreaming && autoContinue) {
+            throw new IllegalArgumentException(
+                "automaticContinuation=true cannot be used with store=false in unary mode. Use"
+                    + " store=true, stream=true, or background=true for automatic continuation to"
+                    + " work.");
+        }
+
+        if (autoContinue && isStreaming) {
+            RequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
+                  = new CreateInteraction.Sync(sdkConfiguration, options, headers);
+            CreateInteractionResponse initialResp = operation.handleResponse(operation.doRequest(request));
+            ContinuationEventStream continuationStream = new ContinuationEventStream(
+                initialResp.events(),
+                nextToken -> {
+                    CreateInteractionRequestBody nextBody = withContinuationToken(body, nextToken);
+                    CreateInteractionRequest nextReq = new CreateInteractionRequest(request.apiVersion().orElse(null), nextBody, false);
+                    RequestOperation<CreateInteractionRequest, CreateInteractionResponse> nextOp
+                          = new CreateInteraction.Sync(sdkConfiguration, options, headers);
+                    return nextOp.handleResponse(nextOp.doRequest(nextReq)).events();
+                }
+            );
+            return initialResp.withEvents(continuationStream);
+        }
+
+        if (autoContinue) {
+            CreateInteractionRequestBody currentBody = body;
+            CreateInteractionResponse lastResponse = null;
+
+            while (true) {
+                CreateInteractionRequest currentRequest = new CreateInteractionRequest(
+                    request.apiVersion().orElse(null), currentBody, false);
+                RequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
+                      = new CreateInteraction.Sync(sdkConfiguration, options, headers);
+                lastResponse = operation.handleResponse(operation.doRequest(currentRequest));
+                Interaction hopInteraction = lastResponse.interaction().orElse(null);
+
+                Optional<String> nextToken = shouldContinueUnary(hopInteraction);
+                if (nextToken.isPresent()) {
+                    currentBody = withContinuationToken(body, nextToken.get());
+                } else {
+                    break;
+                }
+            }
+
+            if (lastResponse.interaction().isPresent()) {
+                return lastResponse.withInteraction(withOutputProperties(lastResponse.interaction().get()));
+            }
+            return lastResponse;
+        }
+
+        if (isStreaming) {
+            RequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
+                  = new CreateInteraction.Sync(sdkConfiguration, options, headers);
+            CreateInteractionResponse response = operation.handleResponse(operation.doRequest(request));
+            if (!hasContinuationToken(body)) {
+                ContinuationEventStream warningStream = new ContinuationEventStream(
+                    response.events(),
+                    null,
+                    Interactions::warnIncompleteContinuation
+                );
+                return response.withEvents(warningStream);
+            }
+            return response;
+        }
+
         RequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
-              = new CreateInteraction.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(request));
+              = new CreateInteraction.Sync(sdkConfiguration, options, headers);
+        CreateInteractionResponse response = operation.handleResponse(operation.doRequest(request));
+
+        if (response.interaction().isPresent()) {
+            Interaction inter = withOutputProperties(response.interaction().get());
+            response = response.withInteraction(inter);
+            if (!hasContinuationToken(body) && shouldContinueUnary(inter).isPresent()) {
+                warnIncompleteContinuation();
+            }
+        }
+
+        return response;
     }
 
     /**
@@ -174,7 +354,12 @@ public class Interactions {
     public GetInteractionByIdResponse get(@Nonnull GetInteractionByIdRequest request, @Nullable Options options) {
         RequestOperation<GetInteractionByIdRequest, GetInteractionByIdResponse> operation
               = new GetInteractionById.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(request));
+        GetInteractionByIdResponse response = operation.handleResponse(operation.doRequest(request));
+        if (response.interaction().isPresent()) {
+            return response.withInteraction(
+                withOutputProperties(response.interaction().get()));
+        }
+        return response;
     }
 
     /**
@@ -215,7 +400,246 @@ public class Interactions {
         CancelInteractionByIdRequest request = new CancelInteractionByIdRequest(apiVersion, id);
         RequestOperation<CancelInteractionByIdRequest, CancelInteractionByIdResponse> operation
               = new CancelInteractionById.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(request));
+        CancelInteractionByIdResponse response = operation.handleResponse(operation.doRequest(request));
+        if (response.interaction().isPresent()) {
+            return response.withInteraction(
+                withOutputProperties(response.interaction().get()));
+        }
+        return response;
+    }
+
+    static void warnIncompleteContinuation() {
+        if (!incompleteContinuationWarned) {
+            incompleteContinuationWarned = true;
+            logger.warning(INCOMPLETE_CONTINUATION_WARNING);
+        }
+    }
+
+    static void _resetContinuationWarningsForTesting() {
+        incompleteContinuationWarned = false;
+    }
+
+    static Interaction withOutputProperties(Interaction interaction) {
+        if (interaction == null) {
+            return null;
+        }
+        List<Step> steps = interaction.steps().orElse(null);
+        if (steps == null) {
+            return interaction;
+        }
+        String outputText = computeOutputText(steps);
+        if (outputText == null) {
+            return interaction;
+        }
+        return Interaction.builder()
+            .agent(interaction.agent().orElse(null))
+            .agentConfig(interaction.agentConfig().orElse(null))
+            .cachedContent(interaction.cachedContent().orElse(null))
+            .continuationToken(interaction.continuationToken().orElse(null))
+            .created(interaction.created().orElse(null))
+            .environment(interaction.environment().orElse(null))
+            .environmentId(interaction.environmentId().orElse(null))
+            .errors(interaction.errors().orElse(null))
+            .generationConfig(interaction.generationConfig().orElse(null))
+            .id(interaction.id().orElse(null))
+            .input(interaction.input().orElse(null))
+            .labels(interaction.labels().orElse(null))
+            .model(interaction.model().orElse(null))
+            .outputAudio(interaction.outputAudio().orElse(null))
+            .outputImage(interaction.outputImage().orElse(null))
+            .outputText(outputText)
+            .outputVideo(interaction.outputVideo().orElse(null))
+            .previousInteractionId(interaction.previousInteractionId().orElse(null))
+            .responseFormat(interaction.responseFormat().orElse(null))
+            .responseMimeType(interaction.responseMimeType().orElse(null))
+            .responseModalities(interaction.responseModalities().orElse(null))
+            .safetySettings(interaction.safetySettings().orElse(null))
+            .serviceTier(interaction.serviceTier().orElse(null))
+            .status(interaction.status().orElse(null))
+            .steps(steps)
+            .systemInstruction(interaction.systemInstruction().orElse(null))
+            .tools(interaction.tools().orElse(null))
+            .updated(interaction.updated().orElse(null))
+            .usage(interaction.usage().orElse(null))
+            .webhookConfig(interaction.webhookConfig().orElse(null))
+            .build();
+    }
+
+    static String computeOutputText(List<Step> steps) {
+        if (steps == null || steps.isEmpty()) {
+            return null;
+        }
+        List<String> textParts = new ArrayList<>();
+        boolean collecting = false;
+
+        outer:
+        for (int i = steps.size() - 1; i >= 0; i--) {
+            Step step = steps.get(i);
+            if (step instanceof UserInputStep) {
+                break;
+            }
+            if (step instanceof ThoughtStep) {
+                continue;
+            }
+            if (!(step instanceof ModelOutputStep)) {
+                if (collecting) {
+                    break;
+                }
+                continue;
+            }
+
+            ModelOutputStep outputStep = (ModelOutputStep) step;
+            List<Content> contents = outputStep.content().orElse(null);
+            if (contents == null || contents.isEmpty()) {
+                if (collecting) {
+                    break;
+                }
+                continue;
+            }
+
+            for (int j = contents.size() - 1; j >= 0; j--) {
+                Content content = contents.get(j);
+                if (content instanceof TextContent) {
+                    collecting = true;
+                    textParts.add(((TextContent) content).text().orElse(""));
+                } else if (collecting) {
+                    break outer;
+                }
+            }
+        }
+
+        if (textParts.isEmpty()) {
+            return null;
+        }
+        Collections.reverse(textParts);
+        return String.join("", textParts);
+    }
+
+    static Optional<String> shouldContinueUnary(Interaction interaction) {
+        if (interaction == null) {
+            return Optional.empty();
+        }
+        String status = interaction.status().map(s -> s.value()).orElse(null);
+        if (!Objects.equals(status, "continuation_required")) {
+            return Optional.empty();
+        }
+        String token = interaction.continuationToken().orElse(null);
+        if (token == null || token.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(token);
+    }
+
+    static boolean isStreaming(CreateInteractionRequestBody body) {
+        if (body == null) {
+            return false;
+        }
+        if (body.createModelInteraction().isPresent()) {
+            return body.createModelInteraction().get().stream().orElse(false);
+        }
+        if (body.createAgentInteraction().isPresent()) {
+            return body.createAgentInteraction().get().stream().orElse(false);
+        }
+        return false;
+    }
+
+    static boolean isBackground(CreateInteractionRequestBody body) {
+        if (body == null) {
+            return false;
+        }
+        if (body.createModelInteraction().isPresent()) {
+            return body.createModelInteraction().get().background().orElse(false);
+        }
+        if (body.createAgentInteraction().isPresent()) {
+            return body.createAgentInteraction().get().background().orElse(false);
+        }
+        return false;
+    }
+
+    static boolean isStoreFalse(CreateInteractionRequestBody body) {
+        if (body == null) {
+            return false;
+        }
+        if (body.createModelInteraction().isPresent()) {
+            return !body.createModelInteraction().get().store().orElse(true);
+        }
+        if (body.createAgentInteraction().isPresent()) {
+            return !body.createAgentInteraction().get().store().orElse(true);
+        }
+        return false;
+    }
+
+    static CreateInteractionRequestBody withContinuationToken(
+            CreateInteractionRequestBody body, String token) {
+        if (body.createModelInteraction().isPresent()) {
+            CreateModelInteraction m = body.createModelInteraction().get();
+            CreateModelInteraction updated =
+                CreateModelInteraction.builder()
+                    .background(m.background().orElse(null))
+                    .cachedContent(m.cachedContent().orElse(null))
+                    .continuationToken(token)
+                    .environment(m.environment().orElse(null))
+                    .generationConfig(m.generationConfig().orElse(null))
+                    .input(m.input().orElse(null))
+                    .labels(m.labels().orElse(null))
+                    .model(m.model().orElse(null))
+                    .previousInteractionId(m.previousInteractionId().orElse(null))
+                    .responseFormat(m.responseFormat().orElse(null))
+                    .responseMimeType(m.responseMimeType().orElse(null))
+                    .responseModalities(m.responseModalities().orElse(null))
+                    .safetySettings(m.safetySettings().orElse(null))
+                    .serviceTier(m.serviceTier().orElse(null))
+                    .store(m.store().orElse(null))
+                    .stream(m.stream().orElse(null))
+                    .systemInstruction(m.systemInstruction().orElse(null))
+                    .tools(m.tools().orElse(null))
+                    .webhookConfig(m.webhookConfig().orElse(null))
+                    .build();
+            return CreateInteractionRequestBody.of(updated);
+        }
+        if (body.createAgentInteraction().isPresent()) {
+            CreateAgentInteraction a = body.createAgentInteraction().get();
+            CreateAgentInteraction updated =
+                CreateAgentInteraction.builder()
+                    .agent(a.agent().orElse(null))
+                    .agentConfig(a.agentConfig().orElse(null))
+                    .background(a.background().orElse(null))
+                    .continuationToken(token)
+                    .environment(a.environment().orElse(null))
+                    .input(a.input().orElse(null))
+                    .labels(a.labels().orElse(null))
+                    .previousInteractionId(a.previousInteractionId().orElse(null))
+                    .responseFormat(a.responseFormat().orElse(null))
+                    .responseMimeType(a.responseMimeType().orElse(null))
+                    .responseModalities(a.responseModalities().orElse(null))
+                    .safetySettings(a.safetySettings().orElse(null))
+                    .serviceTier(a.serviceTier().orElse(null))
+                    .store(a.store().orElse(null))
+                    .stream(a.stream().orElse(null))
+                    .systemInstruction(a.systemInstruction().orElse(null))
+                    .tools(a.tools().orElse(null))
+                    .webhookConfig(a.webhookConfig().orElse(null))
+                    .build();
+            return CreateInteractionRequestBody.of(updated);
+        }
+        return body;
+    }
+
+    static boolean hasContinuationToken(CreateInteractionRequestBody body) {
+        if (body == null) {
+            return false;
+        }
+        if (body.createModelInteraction().isPresent()) {
+            return body.createModelInteraction().get().continuationToken()
+                .filter(t -> !t.isEmpty())
+                .isPresent();
+        }
+        if (body.createAgentInteraction().isPresent()) {
+            return body.createAgentInteraction().get().continuationToken()
+                .filter(t -> !t.isEmpty())
+                .isPresent();
+        }
+        return false;
     }
 
 }

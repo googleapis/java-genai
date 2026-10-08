@@ -117,7 +117,7 @@ public class InteractionSseEventInteraction {
             @JsonProperty("agent") @Nullable String agent,
             @JsonProperty("continuation_token") @Nullable String continuationToken,
             @JsonProperty("created") @Nullable String created,
-            @JsonProperty("id") @Nonnull String id,
+            @JsonProperty("id") @Nullable String id,
             @JsonProperty("model") @Nullable String model,
             @JsonProperty("object") @Nullable String object,
             @JsonProperty("service_tier") @Nullable ServiceTier serviceTier,
@@ -128,8 +128,7 @@ public class InteractionSseEventInteraction {
         this.agent = agent;
         this.continuationToken = continuationToken;
         this.created = created;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = id;
         this.model = model;
         this.object = object;
         this.serviceTier = serviceTier;
