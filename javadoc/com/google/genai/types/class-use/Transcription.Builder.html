@@ -73,19 +73,29 @@ loadScripts(document, 'script');</script>
 <div class="block">Instantiates a builder for Transcription.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#clearFinished()" class="member-name-link">clearFinished</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#clearEndOffset()" class="member-name-link">clearEndOffset</a>()</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Clears the value of finished field.</div>
+<div class="block">Clears the value of endOffset field.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#clearLanguageCode()" class="member-name-link">clearLanguageCode</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#clearFinished()" class="member-name-link">clearFinished</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Clears the value of languageCode field.</div>
+<div class="block">Clears the value of finished field.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#clearSpeakerLabel()" class="member-name-link">clearSpeakerLabel</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#clearLanguageCode()" class="member-name-link">clearLanguageCode</a>()</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Clears the value of languageCode field.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#clearSpeakerLabel()" class="member-name-link">clearSpeakerLabel</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Clears the value of speakerLabel field.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#clearStartOffset()" class="member-name-link">clearStartOffset</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Clears the value of startOffset field.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#clearText()" class="member-name-link">clearText</a>()</code></div>
@@ -98,19 +108,29 @@ loadScripts(document, 'script');</script>
 <div class="block">Clears the value of words field.</div>
 </div>
 <div class="col-first even-row-color"><code>abstract <a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#finished(boolean)" class="member-name-link">finished</a><wbr>(boolean&nbsp;finished)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#endOffset(java.time.Duration)" class="member-name-link">endOffset</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a>&nbsp;endOffset)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Setter for finished.</div>
+<div class="block">Setter for endOffset.</div>
 </div>
 <div class="col-first odd-row-color"><code>abstract <a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#languageCode(java.lang.String)" class="member-name-link">languageCode</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;languageCode)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#finished(boolean)" class="member-name-link">finished</a><wbr>(boolean&nbsp;finished)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Setter for languageCode.</div>
+<div class="block">Setter for finished.</div>
 </div>
 <div class="col-first even-row-color"><code>abstract <a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#speakerLabel(java.lang.String)" class="member-name-link">speakerLabel</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;speakerLabel)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#languageCode(java.lang.String)" class="member-name-link">languageCode</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;languageCode)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Setter for languageCode.</div>
+</div>
+<div class="col-first odd-row-color"><code>abstract <a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#speakerLabel(java.lang.String)" class="member-name-link">speakerLabel</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;speakerLabel)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Setter for speakerLabel.</div>
+</div>
+<div class="col-first even-row-color"><code>abstract <a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#startOffset(java.time.Duration)" class="member-name-link">startOffset</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a>&nbsp;startOffset)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Setter for startOffset.</div>
 </div>
 <div class="col-first odd-row-color"><code>abstract <a href="../Transcription.Builder.html" title="class in com.google.genai.types">Transcription.Builder</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">Transcription.Builder.</span><code><a href="../Transcription.Builder.html#text(java.lang.String)" class="member-name-link">text</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
