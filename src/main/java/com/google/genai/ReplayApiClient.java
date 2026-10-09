@@ -44,6 +44,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import okhttp3.Headers;
 import okhttp3.MediaType;
@@ -55,6 +56,8 @@ import okio.Buffer;
 @InternalApi
 @ExcludeFromGeneratedCoverageReport
 public final class ReplayApiClient extends ApiClient {
+  private static final Pattern URL_SAFE_BASE64 = Pattern.compile("[A-Za-z0-9_-]+={0,2}");
+
   private final String clientMode;
   private final String replaysDirectory;
   private String replayId;
@@ -282,10 +285,12 @@ public final class ReplayApiClient extends ApiClient {
 
         case "user-agent":
         case "x-goog-api-client":
+          // The Java version is redacted whole, because it does not always have three parts.
+          // Debian's JDK reports 17.0.20.1, for example, and Java 8 reports 1.8.0_392.
           String redactedValue =
               headerValue
-                  .replaceAll("\\d+\\.\\d+\\.\\d+", "{VERSION_NUMBER}")
-                  .replace("gl-java/", "{LANGUAGE_LABEL}/");
+                  .replaceAll("gl-java/\\S+", "{LANGUAGE_LABEL}/{VERSION_NUMBER}")
+                  .replaceAll("\\d+\\.\\d+\\.\\d+", "{VERSION_NUMBER}");
           redactedHeaders.put(headerName, redactedValue);
           break;
 
@@ -372,10 +377,24 @@ public final class ReplayApiClient extends ApiClient {
         // In the replay file, the timestamp has +00:00 offset, while in the
         // actual request it uses Z to represent the offset. We need to
         // replace it to match the replay file.
-        return JsonSerializable.toJsonNode(node.asText().replaceAll("(?<=00)Z$", "\\+00:00"));
+        String text = node.asText().replaceAll("(?<=00)Z$", "\\+00:00");
+        return JsonSerializable.toJsonNode(toStandardBase64(text));
       }
     }
     return obj;
+  }
+
+  /**
+   * Converts a URL-safe base64 string to the standard alphabet. The replay files are recorded by
+   * the Python SDK, which sends bytes in URL-safe base64, while Java sends them in standard base64.
+   */
+  private static String toStandardBase64(String text) {
+    if (text.length() % 4 != 0
+        || (text.indexOf('-') < 0 && text.indexOf('_') < 0)
+        || !URL_SAFE_BASE64.matcher(text).matches()) {
+      return text;
+    }
+    return text.replace('-', '+').replace('_', '/');
   }
 
   /**
