@@ -7141,6 +7141,11 @@ public final class Models {
   /**
    * Generates content given a GenAI model and a list of content.
    *
+   * <p>Unless {@code config.automaticContinuation()} is false, a response that ends with finish
+   * reason {@code CONTINUATION} is continued: the same request is sent again with the response's
+   * continuation token until the model finishes. The responses are returned merged into one, with
+   * their parts concatenated and their usage metadata summed.
+   *
    * @param model the name of the GenAI model to use for generation
    * @param contents a {@link List<com.google.genai.types.Content>} to send to the generative model
    * @param config a {@link com.google.genai.types.GenerateContentConfig} instance that specifies
@@ -7154,7 +7159,7 @@ public final class Models {
         AfcUtil.findAfcIncompatibleToolIndexes(config);
     GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
     if (AfcUtil.shouldDisableAfc(transformedConfig)) {
-      return privateGenerateContent(model, contents, transformedConfig);
+      return sendGenerateContent(model, contents, transformedConfig);
     }
     if (!incompatibleToolsIndexes.isEmpty()) {
       int originalToolsSize = 0;
@@ -7168,12 +7173,12 @@ public final class Models {
                     + " supported: %s. AFC will be disabled.",
                 incompatibleToolsIndexes));
       }
-      return privateGenerateContent(model, contents, transformedConfig);
+      return sendGenerateContent(model, contents, transformedConfig);
     }
     ImmutableMap<String, Method> functionMap = AfcUtil.getFunctionMap(config);
     ImmutableMap<String, Object> functionInstanceMap = AfcUtil.getFunctionInstanceMap(config);
     if (functionMap.isEmpty()) {
-      return privateGenerateContent(model, contents, transformedConfig);
+      return sendGenerateContent(model, contents, transformedConfig);
     }
     int remainingRemoteCalls = AfcUtil.getMaxRemoteCallsAfc(transformedConfig);
     int i = 0;
@@ -7185,7 +7190,7 @@ public final class Models {
     List<Content> automaticFunctionCallingHistory = new ArrayList<>(contents);
     while (remainingRemoteCalls > 0) {
       i++;
-      response = privateGenerateContent(model, contents, transformedConfig);
+      response = sendGenerateContent(model, contents, transformedConfig);
       logger.info(String.format("Automatic function calling remote call %d is done", i));
       remainingRemoteCalls--;
       if (remainingRemoteCalls == 0) {
@@ -7258,6 +7263,11 @@ public final class Models {
   /**
    * Generates content with streaming support given a GenAI model and a list of content.
    *
+   * <p>Unless {@code config.automaticContinuation()} is false, a response that ends with finish
+   * reason {@code CONTINUATION} is continued: the same request is sent again with the response's
+   * continuation token until the model finishes, and the chunks of every request are returned in
+   * order. The usage metadata in a chunk covers only the request it came from.
+   *
    * @param model the name of the GenAI model to use for generation
    * @param contents a {@link List<com.google.genai.types.Content>} to send to the generative model
    * @param config a {@link com.google.genai.types.GenerateContentConfig} instance that specifies
@@ -7276,7 +7286,28 @@ public final class Models {
               + " methods at the moment, will just return the function call parts from model if"
               + " there is any.");
     }
-    return privateGenerateContentStream(model, contents, transformedConfig);
+    ResponseStream<GenerateContentResponse> stream =
+        privateGenerateContentStream(model, contents, transformedConfig);
+    if (ContinuationUtil.isEnabled(transformedConfig)) {
+      stream.setContinuation(
+          ContinuationUtil.streamContinuation(
+              transformedConfig,
+              requestConfig -> privateGenerateContentStream(model, contents, requestConfig)));
+    }
+    return stream;
+  }
+
+  /**
+   * Sends the request for one model response: a single request, or several when automatic
+   * continuation is on.
+   */
+  private GenerateContentResponse sendGenerateContent(
+      String model, List<Content> contents, GenerateContentConfig config) {
+    if (!ContinuationUtil.isEnabled(config)) {
+      return privateGenerateContent(model, contents, config);
+    }
+    return ContinuationUtil.generate(
+        config, requestConfig -> privateGenerateContent(model, contents, requestConfig));
   }
 
   /**
