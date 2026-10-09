@@ -112,10 +112,11 @@ implements <a href="InteractionSSEEvent.html" title="interface in com.google.gen
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.google.genai.gaos.models.interactions.InteractionStatusUpdateStatus)" class="member-name-link">InteractionStatusUpdate</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;interactionId,
  <a href="InteractionStatusUpdateStatus.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdateStatus</a>&nbsp;status)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,com.google.genai.gaos.models.interactions.InteractionStatusUpdateStatus)" class="member-name-link">InteractionStatusUpdate</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;continuationToken,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,com.google.genai.gaos.models.interactions.InteractionStatusUpdateStatus,com.google.genai.gaos.models.interactions.Usage)" class="member-name-link">InteractionStatusUpdate</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;continuationToken,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventId,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;interactionId,
- <a href="InteractionStatusUpdateStatus.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdateStatus</a>&nbsp;status)</code></div>
+ <a href="InteractionStatusUpdateStatus.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdateStatus</a>&nbsp;status,
+ <a href="Usage.html" title="class in com.google.genai.gaos.models.interactions">Usage</a>&nbsp;usage)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -164,24 +165,34 @@ implements <a href="InteractionSSEEvent.html" title="interface in com.google.gen
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InteractionStatusUpdate.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdate</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withContinuationToken(java.lang.String)" class="member-name-link">withContinuationToken</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;continuationToken)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="Usage.html" title="class in com.google.genai.gaos.models.interactions">Usage</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#usage()" class="member-name-link">usage</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Statistics on the interaction request's token usage.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InteractionStatusUpdate.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdate</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withContinuationToken(java.lang.String)" class="member-name-link">withContinuationToken</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;continuationToken)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">An optional opaque continuation token used to resume decoding from the
  latest checkpoint after a disconnected stream.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InteractionStatusUpdate.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdate</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withEventId(java.lang.String)" class="member-name-link">withEventId</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventId)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InteractionStatusUpdate.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdate</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withEventId(java.lang.String)" class="member-name-link">withEventId</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventId)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The event_id token to be used to resume the interaction stream, from
  this event.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InteractionStatusUpdate.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdate</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withInteractionId(java.lang.String)" class="member-name-link">withInteractionId</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;interactionId)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InteractionStatusUpdate.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdate</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withInteractionId(java.lang.String)" class="member-name-link">withInteractionId</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;interactionId)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withStatus(com.google.genai.gaos.models.interactions.InteractionStatusUpdateStatus)" class="member-name-link">withStatus</a><wbr>(<a href="InteractionStatusUpdateStatus.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdateStatus</a>&nbsp;status)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InteractionStatusUpdate.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdate</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withStatus(com.google.genai.gaos.models.interactions.InteractionStatusUpdateStatus)" class="member-name-link">withStatus</a><wbr>(<a href="InteractionStatusUpdateStatus.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdateStatus</a>&nbsp;status)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withUsage(com.google.genai.gaos.models.interactions.Usage)" class="member-name-link">withUsage</a><wbr>(<a href="Usage.html" title="class in com.google.genai.gaos.models.interactions">Usage</a>&nbsp;usage)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Statistics on the interaction request's token usage.</div>
+</div>
 </div>
 </div>
 </div>
@@ -200,7 +211,7 @@ implements <a href="InteractionSSEEvent.html" title="interface in com.google.gen
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,java.lang.String,com.google.genai.gaos.models.interactions.InteractionStatusUpdateStatus)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,java.lang.String,com.google.genai.gaos.models.interactions.InteractionStatusUpdateStatus,com.google.genai.gaos.models.interactions.Usage)">
 <h3>InteractionStatusUpdate</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InteractionStatusUpdate</span><wbr><span class="parameters">(@Nullable
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;continuationToken,
@@ -209,7 +220,9 @@ implements <a href="InteractionSSEEvent.html" title="interface in com.google.gen
  @Nonnull
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;interactionId,
  @Nonnull
- <a href="InteractionStatusUpdateStatus.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdateStatus</a>&nbsp;status)</span></div>
+ <a href="InteractionStatusUpdateStatus.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdateStatus</a>&nbsp;status,
+ @Nullable
+ <a href="Usage.html" title="class in com.google.genai.gaos.models.interactions">Usage</a>&nbsp;usage)</span></div>
 </section>
 </li>
 <li>
@@ -268,6 +281,13 @@ implements <a href="InteractionSSEEvent.html" title="interface in com.google.gen
 </section>
 </li>
 <li>
+<section class="detail" id="usage()">
+<h3>usage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="Usage.html" title="class in com.google.genai.gaos.models.interactions">Usage</a>&gt;</span>&nbsp;<span class="element-name">usage</span>()</div>
+<div class="block">Statistics on the interaction request's token usage.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="builder()">
 <h3>builder</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="InteractionStatusUpdate.Builder.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdate.Builder</a></span>&nbsp;<span class="element-name">builder</span>()</div>
@@ -303,6 +323,14 @@ implements <a href="InteractionSSEEvent.html" title="interface in com.google.gen
 <h3>withStatus</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="InteractionStatusUpdate.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdate</a></span>&nbsp;<span class="element-name">withStatus</span><wbr><span class="parameters">(@Nonnull
  <a href="InteractionStatusUpdateStatus.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdateStatus</a>&nbsp;status)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="withUsage(com.google.genai.gaos.models.interactions.Usage)">
+<h3>withUsage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="InteractionStatusUpdate.html" title="class in com.google.genai.gaos.models.interactions">InteractionStatusUpdate</a></span>&nbsp;<span class="element-name">withUsage</span><wbr><span class="parameters">(@Nullable
+ <a href="Usage.html" title="class in com.google.genai.gaos.models.interactions">Usage</a>&nbsp;usage)</span></div>
+<div class="block">Statistics on the interaction request's token usage.</div>
 </section>
 </li>
 <li>
