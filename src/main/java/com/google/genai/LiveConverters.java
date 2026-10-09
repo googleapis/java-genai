@@ -468,6 +468,98 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientContextUpdateToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"systemInstruction"},
+          contentToMldev(
+              JsonSerializable.toJsonNode(
+                  Transformers.tContent(
+                      Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tools"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tools"},
+          liveClientContextUpdateToolsToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"tools"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientContextUpdateToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"systemInstruction"},
+          contentToVertex(
+              JsonSerializable.toJsonNode(
+                  Transformers.tContent(
+                      Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tools"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tools"},
+          liveClientContextUpdateToolsToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"tools"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientContextUpdateToolsToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"tools"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tTools(Common.getValueByPath(fromObject, new String[] {"tools"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(toolToMldev(JsonSerializable.toJsonNode(Transformers.tTool(item)), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"tools"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientContextUpdateToolsToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"tools"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tTools(Common.getValueByPath(fromObject, new String[] {"tools"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(toolToVertex(JsonSerializable.toJsonNode(Transformers.tTool(item)), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"tools"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode liveClientMessageToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"setup"}) != null) {
@@ -512,6 +604,16 @@ final class LiveConverters {
           toObject,
           new String[] {"toolResponse"},
           Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"contextUpdate"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"contextUpdate"},
+          liveClientContextUpdateToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"contextUpdate"})),
+              toObject));
     }
 
     return toObject;
@@ -565,6 +667,16 @@ final class LiveConverters {
           toObject,
           new String[] {"toolResponse"},
           Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"contextUpdate"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"contextUpdate"},
+          liveClientContextUpdateToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"contextUpdate"})),
+              toObject));
     }
 
     return toObject;
