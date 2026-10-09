@@ -47,6 +47,9 @@ public class Model {
     public static final Model GEMINI_FLASH_LATEST = new Model("gemini-flash-latest");
     public static final Model GEMINI_FLASH_LITE_LATEST = new Model("gemini-flash-lite-latest");
     public static final Model GEMINI_PRO_LATEST = new Model("gemini-pro-latest");
+    public static final Model GEMINI25_FLASH = new Model("gemini-2.5-flash");
+    public static final Model GEMINI25_PRO = new Model("gemini-2.5-pro");
+    public static final Model GEMINI25_FLASH_LITE = new Model("gemini-2.5-flash-lite");
     public static final Model GEMINI35_FLASH_LITE = new Model("gemini-3.5-flash-lite");
     public static final Model GEMINI25_FLASH_IMAGE = new Model("gemini-2.5-flash-image");
     public static final Model GEMINI3_FLASH_PREVIEW = new Model("gemini-3-flash-preview");
@@ -67,6 +70,7 @@ public class Model {
     public static final Model GEMINI38_FLASH_LITE_TTS = new Model("gemini-3.8-flash-lite-tts");
     public static final Model LYRIA3_CLIP_PREVIEW = new Model("lyria-3-clip-preview");
     public static final Model LYRIA3_PRO_PREVIEW = new Model("lyria-3-pro-preview");
+    public static final Model GEMINI_ROBOTICS_ER16_PREVIEW = new Model("gemini-robotics-er-1.6-preview");
     public static final Model GEMINI_ROBOTICS_ER2_PREVIEW = new Model("gemini-robotics-er-2-preview");
     public static final Model LYRIA35 = new Model("lyria-3.5");
     public static final Model GEMINI_OMNI11_FLASH = new Model("gemini-omni-1.1-flash");
@@ -149,6 +153,9 @@ public class Model {
         map.put("gemini-flash-latest", GEMINI_FLASH_LATEST);
         map.put("gemini-flash-lite-latest", GEMINI_FLASH_LITE_LATEST);
         map.put("gemini-pro-latest", GEMINI_PRO_LATEST);
+        map.put("gemini-2.5-flash", GEMINI25_FLASH);
+        map.put("gemini-2.5-pro", GEMINI25_PRO);
+        map.put("gemini-2.5-flash-lite", GEMINI25_FLASH_LITE);
         map.put("gemini-3.5-flash-lite", GEMINI35_FLASH_LITE);
         map.put("gemini-2.5-flash-image", GEMINI25_FLASH_IMAGE);
         map.put("gemini-3-flash-preview", GEMINI3_FLASH_PREVIEW);
@@ -169,6 +176,7 @@ public class Model {
         map.put("gemini-3.8-flash-lite-tts", GEMINI38_FLASH_LITE_TTS);
         map.put("lyria-3-clip-preview", LYRIA3_CLIP_PREVIEW);
         map.put("lyria-3-pro-preview", LYRIA3_PRO_PREVIEW);
+        map.put("gemini-robotics-er-1.6-preview", GEMINI_ROBOTICS_ER16_PREVIEW);
         map.put("gemini-robotics-er-2-preview", GEMINI_ROBOTICS_ER2_PREVIEW);
         map.put("lyria-3.5", LYRIA35);
         map.put("gemini-omni-1.1-flash", GEMINI_OMNI11_FLASH);
@@ -183,6 +191,9 @@ public class Model {
         map.put("gemini-flash-latest", ModelEnum.GEMINI_FLASH_LATEST);
         map.put("gemini-flash-lite-latest", ModelEnum.GEMINI_FLASH_LITE_LATEST);
         map.put("gemini-pro-latest", ModelEnum.GEMINI_PRO_LATEST);
+        map.put("gemini-2.5-flash", ModelEnum.GEMINI25_FLASH);
+        map.put("gemini-2.5-pro", ModelEnum.GEMINI25_PRO);
+        map.put("gemini-2.5-flash-lite", ModelEnum.GEMINI25_FLASH_LITE);
         map.put("gemini-3.5-flash-lite", ModelEnum.GEMINI35_FLASH_LITE);
         map.put("gemini-2.5-flash-image", ModelEnum.GEMINI25_FLASH_IMAGE);
         map.put("gemini-3-flash-preview", ModelEnum.GEMINI3_FLASH_PREVIEW);
@@ -203,6 +214,7 @@ public class Model {
         map.put("gemini-3.8-flash-lite-tts", ModelEnum.GEMINI38_FLASH_LITE_TTS);
         map.put("lyria-3-clip-preview", ModelEnum.LYRIA3_CLIP_PREVIEW);
         map.put("lyria-3-pro-preview", ModelEnum.LYRIA3_PRO_PREVIEW);
+        map.put("gemini-robotics-er-1.6-preview", ModelEnum.GEMINI_ROBOTICS_ER16_PREVIEW);
         map.put("gemini-robotics-er-2-preview", ModelEnum.GEMINI_ROBOTICS_ER2_PREVIEW);
         map.put("lyria-3.5", ModelEnum.LYRIA35);
         map.put("gemini-omni-1.1-flash", ModelEnum.GEMINI_OMNI11_FLASH);
@@ -218,6 +230,9 @@ public class Model {
         GEMINI_FLASH_LATEST("gemini-flash-latest"),
         GEMINI_FLASH_LITE_LATEST("gemini-flash-lite-latest"),
         GEMINI_PRO_LATEST("gemini-pro-latest"),
+        GEMINI25_FLASH("gemini-2.5-flash"),
+        GEMINI25_PRO("gemini-2.5-pro"),
+        GEMINI25_FLASH_LITE("gemini-2.5-flash-lite"),
         GEMINI35_FLASH_LITE("gemini-3.5-flash-lite"),
         GEMINI25_FLASH_IMAGE("gemini-2.5-flash-image"),
         GEMINI3_FLASH_PREVIEW("gemini-3-flash-preview"),
@@ -238,6 +253,7 @@ public class Model {
         GEMINI38_FLASH_LITE_TTS("gemini-3.8-flash-lite-tts"),
         LYRIA3_CLIP_PREVIEW("lyria-3-clip-preview"),
         LYRIA3_PRO_PREVIEW("lyria-3-pro-preview"),
+        GEMINI_ROBOTICS_ER16_PREVIEW("gemini-robotics-er-1.6-preview"),
         GEMINI_ROBOTICS_ER2_PREVIEW("gemini-robotics-er-2-preview"),
         LYRIA35("lyria-3.5"),
         GEMINI_OMNI11_FLASH("gemini-omni-1.1-flash"),
