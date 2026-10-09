@@ -1614,6 +1614,17 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"continuationToken"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseFormat"},
+          responseFormatToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"responseFormat"})),
+              toObject,
+              rootObject));
+    }
+
     return toObject;
   }
 
@@ -1879,6 +1890,12 @@ public final class Models {
           parentObject,
           new String[] {"continuationToken"},
           Common.getValueByPath(fromObject, new String[] {"continuationToken"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"responseFormat"}))) {
+      throw new IllegalArgumentException(
+          "responseFormat parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     return toObject;
@@ -4472,6 +4489,40 @@ public final class Models {
       throw new IllegalArgumentException(
           "voiceConsentSignature parameter is only supported in Gemini Developer API mode, not in"
               + " Gemini Enterprise Agent Platform mode.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode responseFormatToMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audio"},
+          Common.getValueByPath(fromObject, new String[] {"audio"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"image"},
+          Common.getValueByPath(fromObject, new String[] {"image"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"video"}))) {
+      throw new IllegalArgumentException(
+          "video parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     return toObject;

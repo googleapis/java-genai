@@ -26,10 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/**
- * Configuration for the model to configure output formatting and delivery. This data type is not
- * supported in Gemini API.
- */
+/** Configuration for the model to configure output formatting and delivery. */
 @AutoValue
 @JsonDeserialize(builder = ResponseFormat.Builder.class)
 public abstract class ResponseFormat extends JsonSerializable {
@@ -45,7 +42,7 @@ public abstract class ResponseFormat extends JsonSerializable {
   @JsonProperty("text")
   public abstract Optional<TextResponseFormat> text();
 
-  /** Video output format. */
+  /** Video output format. This field is not supported in Gemini API. */
   @JsonProperty("video")
   public abstract Optional<VideoResponseFormat> video();
 
@@ -154,7 +151,7 @@ public abstract class ResponseFormat extends JsonSerializable {
     /**
      * Setter for video.
      *
-     * <p>video: Video output format.
+     * <p>video: Video output format. This field is not supported in Gemini API.
      */
     @JsonProperty("video")
     public abstract Builder video(VideoResponseFormat video);
@@ -162,7 +159,7 @@ public abstract class ResponseFormat extends JsonSerializable {
     /**
      * Setter for video builder.
      *
-     * <p>video: Video output format.
+     * <p>video: Video output format. This field is not supported in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder video(VideoResponseFormat.Builder videoBuilder) {
