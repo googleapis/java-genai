@@ -35,6 +35,14 @@ import java.util.Optional;
 
 public class InteractionStatusUpdate implements InteractionSSEEvent {
     /**
+     * An optional opaque continuation token used to resume decoding from the
+     * latest checkpoint after a disconnected stream.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("continuation_token")
+    private String continuationToken;
+
+    /**
      * The event_id token to be used to resume the interaction stream, from
      * this event.
      */
@@ -56,9 +64,11 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
 
     @JsonCreator
     public InteractionStatusUpdate(
+            @JsonProperty("continuation_token") @Nullable String continuationToken,
             @JsonProperty("event_id") @Nullable String eventId,
             @JsonProperty("interaction_id") @Nonnull String interactionId,
             @JsonProperty("status") @Nonnull InteractionStatusUpdateStatus status) {
+        this.continuationToken = continuationToken;
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.interactionId = Optional.ofNullable(interactionId)
@@ -70,7 +80,16 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     public InteractionStatusUpdate(
             @Nonnull String interactionId,
             @Nonnull InteractionStatusUpdateStatus status) {
-        this(null, interactionId, status);
+        this(null, null, interactionId,
+            status);
+    }
+
+    /**
+     * An optional opaque continuation token used to resume decoding from the
+     * latest checkpoint after a disconnected stream.
+     */
+    public Optional<String> continuationToken() {
+        return Optional.ofNullable(this.continuationToken);
     }
 
     /**
@@ -96,6 +115,16 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * An optional opaque continuation token used to resume decoding from the
+     * latest checkpoint after a disconnected stream.
+     */
+    public InteractionStatusUpdate withContinuationToken(@Nullable String continuationToken) {
+        this.continuationToken = continuationToken;
+        return this;
     }
 
 
@@ -131,6 +160,7 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
         }
         InteractionStatusUpdate other = (InteractionStatusUpdate) o;
         return 
+            Utils.enhancedDeepEquals(this.continuationToken, other.continuationToken) &&
             Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
             Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
             Utils.enhancedDeepEquals(this.interactionId, other.interactionId) &&
@@ -140,13 +170,14 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            eventId, eventType, interactionId,
-            status);
+            continuationToken, eventId, eventType,
+            interactionId, status);
     }
     
     @Override
     public String toString() {
         return Utils.toString(InteractionStatusUpdate.class,
+                "continuationToken", continuationToken,
                 "eventId", eventId,
                 "eventType", eventType,
                 "interactionId", interactionId,
@@ -156,6 +187,8 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String continuationToken;
+
         private String eventId;
 
         private String interactionId;
@@ -164,6 +197,15 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * An optional opaque continuation token used to resume decoding from the
+         * latest checkpoint after a disconnected stream.
+         */
+        public Builder continuationToken(@Nullable String continuationToken) {
+            this.continuationToken = continuationToken;
+            return this;
         }
 
         /**
@@ -187,7 +229,8 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
 
         public InteractionStatusUpdate build() {
             return new InteractionStatusUpdate(
-                eventId, interactionId, status);
+                continuationToken, eventId, interactionId,
+                status);
         }
 
 
