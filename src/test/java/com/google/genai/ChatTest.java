@@ -16,12 +16,19 @@
 
 package com.google.genai;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.AutomaticFunctionCallingConfig;
 import com.google.genai.types.Candidate;
@@ -34,13 +41,21 @@ import com.google.genai.types.Part;
 import com.google.genai.types.Tool;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 public class ChatTest {
@@ -61,6 +76,20 @@ public class ChatTest {
   private static final String STREAMING_RESPONSE_CHUNK_2 = "a time, in a land";
   private static final String STREAMING_RESPONSE_CHUNK_3 = " far, far away...";
   private static final String NON_STREAMING_RESPONSE = "This is a non-streaming response.";
+  private static final String CONTINUATION_REPLAYS =
+      "tests/models/generate_content_continuation_token/";
+  private static final String LONG_PROMPT =
+      "Write an exhaustive, multi-chapter textbook on compiler design that is around 40,000 tokens"
+          + " long.";
+  private static final byte[] CONTINUATION_TOKEN = "token".getBytes(StandardCharsets.UTF_8);
+
+  /**
+   * The model in the continuation recordings. It has no public name yet, so the recordings name it
+   * this way.
+   */
+  private static String longDecodingModel(boolean vertexAI) {
+    return vertexAI ? "test-model1" : "test-model2";
+  }
 
   static int findTheatersCallCount = 0;
 
@@ -675,5 +704,202 @@ public class ChatTest {
         assertThrows(
             IllegalStateException.class,
             () -> chatSession.sendMessageStream("Tell me another story."));
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  @EnabledIfEnvironmentVariable(
+      named = "GOOGLE_GENAI_REPLAYS_DIRECTORY",
+      matches = ".*genai/replays.*")
+  public void testSendMessage_continuesByDefault(boolean vertexAI) {
+    String suffix = vertexAI ? "vertex" : "mldev";
+    Client client =
+        TestUtils.createClient(
+            vertexAI,
+            CONTINUATION_REPLAYS
+                + "test_gc_without_afc_continuation_token_opt_in."
+                + suffix
+                + ".json");
+    Chat chat =
+        client.chats.create(longDecodingModel(vertexAI), GenerateContentConfig.builder().build());
+
+    GenerateContentResponse response = chat.sendMessage(LONG_PROMPT);
+
+    // The recording holds two requests, so the replay fails unless the chat continues the response.
+    assertEquals(FinishReason.Known.STOP, response.finishReason().knownEnum());
+    ImmutableList<Content> history = chat.getHistory(true);
+    assertEquals(2, history.size());
+    assertEquals(response.candidates().get().get(0).content().get(), history.get(1));
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  @EnabledIfEnvironmentVariable(
+      named = "GOOGLE_GENAI_REPLAYS_DIRECTORY",
+      matches = ".*genai/replays.*")
+  public void testSendMessage_doesNotContinueWhenAutomaticContinuationIsFalse(boolean vertexAI) {
+    String suffix = vertexAI ? "vertex" : "mldev";
+    Client client =
+        TestUtils.createClient(
+            vertexAI,
+            CONTINUATION_REPLAYS + "test_gc_without_afc_continuation_token." + suffix + ".json");
+    Chat chat =
+        client.chats.create(
+            longDecodingModel(vertexAI),
+            GenerateContentConfig.builder().automaticContinuation(false).build());
+
+    GenerateContentResponse response = chat.sendMessage(LONG_PROMPT);
+
+    // The recording holds one request, so a continuation request would fail the replay.
+    assertEquals(FinishReason.Known.CONTINUATION, response.finishReason().knownEnum());
+    assertEquals(2, chat.getHistory(true).size());
+  }
+
+  @Test
+  public void testSendMessage_continuesWithoutAConfigAndLeavesTheFirstRequestUnchanged() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            jsonResponse(
+                textResponse("Once upon ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)),
+            jsonResponse(textResponse("a time.", FinishReason.Known.STOP, null)));
+    Chat chat = new Chat(apiClient, MODEL_ID, null);
+
+    GenerateContentResponse response = chat.sendMessage("Tell me a story.");
+
+    assertEquals("Once upon a time.", response.text());
+    List<String> bodies = sentBodies(apiClient, 2);
+    JsonNode first = JsonSerializable.stringToJsonNode(bodies.get(0));
+    JsonNode second = JsonSerializable.stringToJsonNode(bodies.get(1));
+    // The first request is the one the chat sent before it continued responses.
+    assertFalse(first.has("generationConfig"));
+    assertFalse(first.has("continuationToken"));
+    assertEquals(first.get("contents"), second.get("contents"));
+    assertEquals(
+        Base64.getEncoder().encodeToString(CONTINUATION_TOKEN),
+        second.get("continuationToken").asText());
+    ImmutableList<Content> history = chat.getHistory(true);
+    assertEquals(2, history.size());
+    assertEquals("Once upon a time.", history.get(1).text());
+  }
+
+  @Test
+  public void testSendMessage_sendsMaxOutputTokensUntilTheServerStops() {
+    // The server counts maxOutputTokens across the requests and ends with MAX_TOKENS once it is
+    // spent, which ends the continuation.
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            jsonResponse(
+                textResponse("Once upon ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)),
+            jsonResponse(
+                textResponse("a time", FinishReason.Known.MAX_TOKENS, CONTINUATION_TOKEN)));
+    Chat chat =
+        new Chat(apiClient, MODEL_ID, GenerateContentConfig.builder().maxOutputTokens(10).build());
+
+    GenerateContentResponse response = chat.sendMessage("Tell me a story.");
+
+    assertEquals(FinishReason.Known.MAX_TOKENS, response.finishReason().knownEnum());
+    for (String body : sentBodies(apiClient, 2)) {
+      assertEquals(
+          10,
+          JsonSerializable.stringToJsonNode(body)
+              .get("generationConfig")
+              .get("maxOutputTokens")
+              .asInt());
+    }
+  }
+
+  @Test
+  public void testSendMessageStream_continuesAndRecordsTheWholeTurn() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            streamResponse(
+                textResponse("Once upon ", null, null),
+                textResponse("a time", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)),
+            streamResponse(textResponse(", the end.", FinishReason.Known.STOP, null)));
+    Chat chat = new Chat(apiClient, MODEL_ID, null);
+
+    List<String> texts = new ArrayList<>();
+    try (ResponseStream<GenerateContentResponse> stream =
+        chat.sendMessageStream("Tell me a story.")) {
+      for (GenerateContentResponse chunk : stream) {
+        texts.add(chunk.text());
+        if (texts.size() == 2) {
+          // The first request is read, but the turn goes on into the next one.
+          assertThrows(IllegalStateException.class, () -> chat.getHistory(true));
+        }
+      }
+    }
+
+    assertEquals(ImmutableList.of("Once upon ", "a time", ", the end."), texts);
+    List<String> bodies = sentBodies(apiClient, 2);
+    assertTrue(JsonSerializable.stringToJsonNode(bodies.get(1)).has("continuationToken"));
+    // The user's message, then the chunks of both requests.
+    assertEquals(
+        ImmutableList.of("Tell me a story.", "Once upon ", "a time", ", the end."),
+        chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
+  }
+
+  @Test
+  public void testSendMessageStream_doesNotContinueWhenAutomaticContinuationIsFalse() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            streamResponse(
+                textResponse("Once upon ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN)));
+    Chat chat = new Chat(apiClient, MODEL_ID, null);
+
+    List<String> texts = new ArrayList<>();
+    try (ResponseStream<GenerateContentResponse> stream =
+        chat.sendMessageStream(
+            "Tell me a story.",
+            GenerateContentConfig.builder().automaticContinuation(false).build())) {
+      for (GenerateContentResponse chunk : stream) {
+        texts.add(chunk.text());
+      }
+    }
+
+    assertEquals(ImmutableList.of("Once upon "), texts);
+    sentBodies(apiClient, 1);
+    assertEquals(
+        ImmutableList.of("Tell me a story.", "Once upon "),
+        chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
+  }
+
+  private static GenerateContentResponse textResponse(
+      String text, FinishReason.Known finishReason, byte[] token) {
+    Candidate.Builder candidate =
+        Candidate.builder().content(Content.builder().role("model").parts(Part.fromText(text)));
+    if (finishReason != null) {
+      candidate.finishReason(finishReason);
+    }
+    if (token != null) {
+      candidate.continuationToken(token);
+    }
+    return GenerateContentResponse.builder().candidates(candidate.build()).build();
+  }
+
+  private static ApiResponse jsonResponse(GenerateContentResponse response) {
+    return new FakeApiResponse(
+        Headers.of(), ResponseBody.create(response.toJson(), MediaType.get("application/json")));
+  }
+
+  private static ApiResponse streamResponse(GenerateContentResponse... chunks) {
+    StringBuilder sse = new StringBuilder();
+    for (GenerateContentResponse chunk : chunks) {
+      sse.append("data: ").append(chunk.toJson()).append("\n\n");
+    }
+    return new FakeApiResponse(
+        Headers.of(), ResponseBody.create(sse.toString(), MediaType.get("text/event-stream")));
+  }
+
+  /** The bodies of the requests sent through {@code apiClient}, checking how many there were. */
+  private static List<String> sentBodies(ApiClient apiClient, int expectedRequests) {
+    ArgumentCaptor<String> bodies = ArgumentCaptor.forClass(String.class);
+    verify(apiClient, times(expectedRequests))
+        .request(anyString(), anyString(), bodies.capture(), any());
+    return bodies.getAllValues();
   }
 }
