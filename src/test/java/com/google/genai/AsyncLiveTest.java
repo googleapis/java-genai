@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -140,5 +142,40 @@ public class AsyncLiveTest {
     assertTrue(session.setupComplete() != null);
     assertTrue(session.setupComplete().voiceConsentSignature().isPresent());
     assertEquals("test_sig", session.setupComplete().voiceConsentSignature().get().signature().get());
+  }
+
+  @Test
+  public void testReceive_InvokesCloseCallbackOnServerClose() throws Exception {
+    CompletableFuture<AsyncSession> future = new CompletableFuture<>();
+    AsyncLive.GenAiWebSocketClient client =
+        new AsyncLive.GenAiWebSocketClient(
+            new URI("wss://test"), new HashMap<>(), "{}", future, apiClient);
+    client.onMessage("{\"setupComplete\":{}}");
+    AsyncSession session = future.get();
+
+    AtomicBoolean closed = new AtomicBoolean(false);
+    session.receive(message -> {}, null, () -> closed.set(true));
+
+    client.onClosed(null, 1000, "Server closing");
+
+    assertTrue(closed.get());
+  }
+
+  @Test
+  public void testReceive_InvokesErrorCallbackOnFailure() throws Exception {
+    CompletableFuture<AsyncSession> future = new CompletableFuture<>();
+    AsyncLive.GenAiWebSocketClient client =
+        new AsyncLive.GenAiWebSocketClient(
+            new URI("wss://test"), new HashMap<>(), "{}", future, apiClient);
+    client.onMessage("{\"setupComplete\":{}}");
+    AsyncSession session = future.get();
+
+    AtomicReference<Throwable> received = new AtomicReference<>();
+    session.receive(message -> {}, received::set, null);
+
+    RuntimeException error = new RuntimeException("connection failed");
+    client.onFailure(null, error, null);
+
+    assertEquals(error, received.get());
   }
 }
