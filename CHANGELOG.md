@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.77.0](https://github.com/googleapis/java-genai/compare/v1.76.0...v1.77.0) (2026-10-10)
+
+
+### Features
+
+* Add `continuation_token` to the Interactions `interaction.status_update` event. ([ac7a064](https://github.com/googleapis/java-genai/commit/ac7a06496a6b5f22bb2065cae8359683cae65cc2))
+* Add a CONTINUATION_REQUIRED Interaction status ([654bbe9](https://github.com/googleapis/java-genai/commit/654bbe9820c92f5ee76c7b05929ee29fa2b4214b))
+* Add startOffset/endOffset to Transcription and interimTranscriptTimestampEnabled to RealtimeInputConfig ([2347e26](https://github.com/googleapis/java-genai/commit/2347e267945652b473a9c04e3935000944a630b1))
+* Add usage in InteractionStatusUpdate events ([05d8572](https://github.com/googleapis/java-genai/commit/05d8572654179777c273efc8a70f95a0bc1fb36a))
+
 ## [1.76.0](https://github.com/googleapis/java-genai/compare/v1.75.0...v1.76.0) (2026-10-07)
 
 
