@@ -19,6 +19,7 @@ package com.google.genai;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -98,9 +99,20 @@ public class LocalTokenizerLoaderTest {
   @AfterEach
   void tearDown() throws Exception {
     System.setProperty("java.io.tmpdir", originalTmpDir);
+    Field clientField = LocalTokenizerLoader.class.getDeclaredField("httpClient");
+    setStatic(clientField, null);
     // Restore original tokenizers map
     Field tokenizersField = LocalTokenizerLoader.class.getDeclaredField("TOKENIZERS");
     setStatic(tokenizersField, originalTokenizers);
+  }
+
+  @Test
+  void getTokenizerName_doesNotInitializeHttpClient() throws Exception {
+    Field clientField = LocalTokenizerLoader.class.getDeclaredField("httpClient");
+    setStatic(clientField, null);
+
+    assertEquals("gemma3", LocalTokenizerLoader.getTokenizerName("gemini-2.5-pro"));
+    assertNull(clientField.get(null));
   }
 
   @Test
