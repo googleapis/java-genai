@@ -634,7 +634,7 @@ public final class AsyncModels {
             "Automatic function calling remote call %d is done",
             (initialMaxCalls - remainingRemoteCalls + 1)));
 
-    return privateGenerateContent(model, contents, transformedConfig)
+    return sendGenerateContent(model, contents, transformedConfig)
         .thenCompose(
             response -> {
               if (remainingRemoteCalls - 1 <= 0) {
@@ -682,6 +682,11 @@ public final class AsyncModels {
   /**
    * Asynchronously generates content given a GenAI model and a list of content.
    *
+   * <p>Unless {@code config.automaticContinuation()} is false, a response that ends with finish
+   * reason {@code CONTINUATION} is continued: the same request is sent again with the response's
+   * continuation token until the model finishes. The responses are returned merged into one, with
+   * their parts concatenated and their usage metadata summed.
+   *
    * @param model the name of the GenAI model to use for generation
    * @param contents a {@link List<com.google.genai.types.Content>} to send to the generative model
    * @param config a {@link com.google.genai.types.GenerateContentConfig} instance that specifies
@@ -695,7 +700,7 @@ public final class AsyncModels {
         AfcUtil.findAfcIncompatibleToolIndexes(config);
     GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
     if (AfcUtil.shouldDisableAfc(transformedConfig)) {
-      return privateGenerateContent(model, contents, transformedConfig);
+      return sendGenerateContent(model, contents, transformedConfig);
     }
     if (!incompatibleToolsIndexes.isEmpty()) {
       int originalToolsSize = 0;
@@ -709,12 +714,12 @@ public final class AsyncModels {
                     + " %s. AFC will be disabled.",
                 incompatibleToolsIndexes));
       }
-      return privateGenerateContent(model, contents, transformedConfig);
+      return sendGenerateContent(model, contents, transformedConfig);
     }
     ImmutableMap<String, Method> functionMap = AfcUtil.getFunctionMap(config);
     ImmutableMap<String, Object> functionInstanceMap = AfcUtil.getFunctionInstanceMap(config);
     if (functionMap.isEmpty()) {
-      return privateGenerateContent(model, contents, transformedConfig);
+      return sendGenerateContent(model, contents, transformedConfig);
     }
 
     int maxRemoteCalls = AfcUtil.getMaxRemoteCallsAfc(transformedConfig);
@@ -780,6 +785,12 @@ public final class AsyncModels {
    * Asynchronously generates content with streaming support given a GenAI model and a list of
    * content.
    *
+   * <p>Unless {@code config.automaticContinuation()} is false, a response that ends with finish
+   * reason {@code CONTINUATION} is continued: the same request is sent again with the response's
+   * continuation token until the model finishes, and the chunks of every request are returned in
+   * order. Requests after the first are sent while the stream is read. The usage metadata in a
+   * chunk covers only the request it came from.
+   *
    * @param model the name of the GenAI model to use for generation
    * @param contents a {@link List<com.google.genai.types.Content>} to send to the generative model
    * @param config a {@link com.google.genai.types.GenerateContentConfig} instance that specifies
@@ -798,7 +809,34 @@ public final class AsyncModels {
               + " methods at the moment, will just return the function call parts from model if"
               + " there is any.");
     }
-    return privateGenerateContentStream(model, contents, transformedConfig);
+    CompletableFuture<ResponseStream<GenerateContentResponse>> stream =
+        privateGenerateContentStream(model, contents, transformedConfig);
+    if (!ContinuationUtil.isEnabled(transformedConfig)) {
+      return stream;
+    }
+    return stream.thenApply(
+        firstStream -> {
+          firstStream.setContinuation(
+              ContinuationUtil.streamContinuation(
+                  transformedConfig,
+                  requestConfig ->
+                      ContinuationUtil.join(
+                          privateGenerateContentStream(model, contents, requestConfig))));
+          return firstStream;
+        });
+  }
+
+  /**
+   * Sends the request for one model response: a single request, or several when automatic
+   * continuation is on.
+   */
+  private CompletableFuture<GenerateContentResponse> sendGenerateContent(
+      String model, List<Content> contents, GenerateContentConfig config) {
+    if (!ContinuationUtil.isEnabled(config)) {
+      return privateGenerateContent(model, contents, config);
+    }
+    return ContinuationUtil.generateAsync(
+        config, requestConfig -> privateGenerateContent(model, contents, requestConfig));
   }
 
   /**

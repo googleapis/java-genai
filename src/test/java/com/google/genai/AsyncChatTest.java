@@ -16,28 +16,40 @@
 
 package com.google.genai;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.google.common.collect.ImmutableList;
 import com.google.genai.types.Candidate;
 import com.google.genai.types.Content;
 import com.google.genai.types.FinishReason;
+import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.GenerateContentResponseUsageMetadata;
 import com.google.genai.types.Part;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 public class AsyncChatTest {
@@ -54,6 +66,7 @@ public class AsyncChatTest {
   private static final String STREAMING_RESPONSE_CHUNK_2 = "a time, in a land";
   private static final String STREAMING_RESPONSE_CHUNK_3 = " far, far away...";
   private static final String NON_STREAMING_RESPONSE = "This is a non-streaming response.";
+  private static final byte[] CONTINUATION_TOKEN = "token".getBytes(StandardCharsets.UTF_8);
 
   GenerateContentResponse responseChunk1 =
       GenerateContentResponse.builder()
@@ -349,5 +362,149 @@ public class AsyncChatTest {
             () -> chatSession.sendMessageStream("Tell me another story."));
 
     assert exception2.getMessage().equals("Response stream is not consumed");
+  }
+
+  @Test
+  public void testSendMessage_continuesByDefault() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(
+                jsonResponse(
+                    textResponse(
+                        "Once upon ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN))),
+            CompletableFuture.completedFuture(
+                jsonResponse(textResponse("a time.", FinishReason.Known.STOP, null))));
+    AsyncChat chat = new AsyncChat(apiClient, MODEL_ID, null);
+
+    GenerateContentResponse response = chat.sendMessage("Tell me a story.").join();
+
+    assertEquals("Once upon a time.", response.text());
+    List<String> bodies = sentBodies(apiClient, 2);
+    // A chat without a config sends its first request without one.
+    assertFalse(JsonSerializable.stringToJsonNode(bodies.get(0)).has("generationConfig"));
+    assertTrue(JsonSerializable.stringToJsonNode(bodies.get(1)).has("continuationToken"));
+    ImmutableList<Content> history = chat.getHistory(true);
+    assertEquals(2, history.size());
+    assertEquals("Once upon a time.", history.get(1).text());
+  }
+
+  @Test
+  public void testSendMessageStream_continuesByDefault() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(
+                streamResponse(
+                    textResponse("Once upon ", null, null),
+                    textResponse("a time", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN))),
+            CompletableFuture.completedFuture(
+                streamResponse(textResponse(", the end.", FinishReason.Known.STOP, null))));
+    AsyncChat chat = new AsyncChat(apiClient, MODEL_ID, null);
+
+    List<String> texts = new ArrayList<>();
+    try (ResponseStream<GenerateContentResponse> stream =
+        chat.sendMessageStream("Tell me a story.").join()) {
+      for (GenerateContentResponse chunk : stream) {
+        texts.add(chunk.text());
+      }
+    }
+
+    assertEquals(ImmutableList.of("Once upon ", "a time", ", the end."), texts);
+    assertTrue(
+        JsonSerializable.stringToJsonNode(sentBodies(apiClient, 2).get(1))
+            .has("continuationToken"));
+    // The user's message, then the chunks of both requests.
+    assertEquals(
+        ImmutableList.of("Tell me a story.", "Once upon ", "a time", ", the end."),
+        chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
+  }
+
+  @Test
+  public void testSendMessage_doesNotContinueWhenAutomaticContinuationIsFalse() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(
+                jsonResponse(
+                    textResponse(
+                        "Once upon ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN))));
+    AsyncChat chat = new AsyncChat(apiClient, MODEL_ID, null);
+
+    GenerateContentResponse response =
+        chat.sendMessage(
+                "Tell me a story.",
+                GenerateContentConfig.builder().automaticContinuation(false).build())
+            .join();
+
+    assertEquals(FinishReason.Known.CONTINUATION, response.finishReason().knownEnum());
+    sentBodies(apiClient, 1);
+    assertEquals(
+        ImmutableList.of("Tell me a story.", "Once upon "),
+        chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
+  }
+
+  @Test
+  public void testSendMessageStream_doesNotContinueWhenAutomaticContinuationIsFalse() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(
+                streamResponse(
+                    textResponse(
+                        "Once upon ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN))));
+    AsyncChat chat = new AsyncChat(apiClient, MODEL_ID, null);
+
+    List<String> texts = new ArrayList<>();
+    try (ResponseStream<GenerateContentResponse> stream =
+        chat.sendMessageStream(
+                "Tell me a story.",
+                GenerateContentConfig.builder().automaticContinuation(false).build())
+            .join()) {
+      for (GenerateContentResponse chunk : stream) {
+        texts.add(chunk.text());
+      }
+    }
+
+    assertEquals(ImmutableList.of("Once upon "), texts);
+    sentBodies(apiClient, 1);
+    assertEquals(
+        ImmutableList.of("Tell me a story.", "Once upon "),
+        chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
+  }
+
+  private static GenerateContentResponse textResponse(
+      String text, FinishReason.Known finishReason, byte[] token) {
+    Candidate.Builder candidate =
+        Candidate.builder().content(Content.builder().role("model").parts(Part.fromText(text)));
+    if (finishReason != null) {
+      candidate.finishReason(finishReason);
+    }
+    if (token != null) {
+      candidate.continuationToken(token);
+    }
+    return GenerateContentResponse.builder().candidates(candidate.build()).build();
+  }
+
+  private static ApiResponse jsonResponse(GenerateContentResponse response) {
+    return new FakeApiResponse(
+        Headers.of(), ResponseBody.create(response.toJson(), MediaType.get("application/json")));
+  }
+
+  private static ApiResponse streamResponse(GenerateContentResponse... chunks) {
+    StringBuilder sse = new StringBuilder();
+    for (GenerateContentResponse chunk : chunks) {
+      sse.append("data: ").append(chunk.toJson()).append("\n\n");
+    }
+    return new FakeApiResponse(
+        Headers.of(), ResponseBody.create(sse.toString(), MediaType.get("text/event-stream")));
+  }
+
+  /** The bodies of the requests sent through {@code apiClient}, checking how many there were. */
+  private static List<String> sentBodies(ApiClient apiClient, int expectedRequests) {
+    ArgumentCaptor<String> bodies = ArgumentCaptor.forClass(String.class);
+    verify(apiClient, times(expectedRequests))
+        .asyncRequest(anyString(), anyString(), bodies.capture(), any());
+    return bodies.getAllValues();
   }
 }
