@@ -247,12 +247,13 @@ public class Webhooks {
      * Updates an existing Webhook.
      * 
      * @param id Required. The ID of the webhook to update.
+     * @param body 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public UpdateWebhookResponse update(@Nonnull String id) {
+    public UpdateWebhookResponse update(@Nonnull String id, @Nonnull WebhookUpdate body) {
         return update(null, id, null,
-            null, null);
+            body, null);
     }
 
     /**
@@ -268,7 +269,7 @@ public class Webhooks {
      */
     public UpdateWebhookResponse update(
             @Nullable String apiVersion, @Nonnull String id,
-            @Nullable String updateMask, @Nullable WebhookUpdate body,
+            @Nullable String updateMask, @Nonnull WebhookUpdate body,
             @Nullable Options options) {
         UpdateWebhookRequest request = new UpdateWebhookRequest(
                 apiVersion, id, updateMask,
@@ -291,11 +292,12 @@ public class Webhooks {
      * Sends a ping event to a Webhook.
      * 
      * @param id Required. The ID of the webhook to ping.
+     * @param body Request message for WebhookService.PingWebhook.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public PingWebhookResponse ping(@Nonnull String id) {
-        return ping(null, id, null,
+    public PingWebhookResponse ping(@Nonnull String id, @Nonnull PingWebhookRequest body) {
+        return ping(null, id, body,
             null);
     }
 
@@ -311,7 +313,7 @@ public class Webhooks {
      */
     public PingWebhookResponse ping(
             @Nullable String apiVersion, @Nonnull String id,
-            @Nullable PingWebhookRequest body, @Nullable Options options) {
+            @Nonnull PingWebhookRequest body, @Nullable Options options) {
         com.google.genai.gaos.models.operations.PingWebhookRequest request = new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
         RequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation
               = new PingWebhook.Sync(sdkConfiguration, options, _headers);
@@ -331,11 +333,12 @@ public class Webhooks {
      * Generates a new signing secret for a Webhook.
      * 
      * @param id Required. The ID of the webhook for which to generate a signing secret.
+     * @param body Request message for WebhookService.RotateSigningSecret.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public RotateSigningSecretResponse rotateSigningSecret(@Nonnull String id) {
-        return rotateSigningSecret(null, id, null,
+    public RotateSigningSecretResponse rotateSigningSecret(@Nonnull String id, @Nonnull RotateSigningSecretRequest body) {
+        return rotateSigningSecret(null, id, body,
             null);
     }
 
@@ -351,7 +354,7 @@ public class Webhooks {
      */
     public RotateSigningSecretResponse rotateSigningSecret(
             @Nullable String apiVersion, @Nonnull String id,
-            @Nullable RotateSigningSecretRequest body, @Nullable Options options) {
+            @Nonnull RotateSigningSecretRequest body, @Nullable Options options) {
         com.google.genai.gaos.models.operations.RotateSigningSecretRequest request = new com.google.genai.gaos.models.operations.RotateSigningSecretRequest(apiVersion, id, body);
         RequestOperation<com.google.genai.gaos.models.operations.RotateSigningSecretRequest, RotateSigningSecretResponse> operation
               = new RotateSigningSecret.Sync(sdkConfiguration, options, _headers);

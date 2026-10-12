@@ -52,16 +52,18 @@ public class RotateSigningSecretRequest {
     public RotateSigningSecretRequest(
             @Nullable String apiVersion,
             @Nonnull String id,
-            @Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
+            @Nonnull com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
         this.apiVersion = apiVersion;
         this.id = Optional.ofNullable(id)
             .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
-        this.body = body;
+        this.body = Optional.ofNullable(body)
+            .orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
     }
     
     public RotateSigningSecretRequest(
-            @Nonnull String id) {
-        this(null, id, null);
+            @Nonnull String id,
+            @Nonnull com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
+        this(null, id, body);
     }
 
     /**
@@ -111,8 +113,8 @@ public class RotateSigningSecretRequest {
     /**
      * Required. The request body.
      */
-    public RotateSigningSecretRequest withBody(@Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
-        this.body = body;
+    public RotateSigningSecretRequest withBody(@Nonnull com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
+        this.body = Utils.checkNotNull(body, "body");
         return this;
     }
 
@@ -178,8 +180,8 @@ public class RotateSigningSecretRequest {
         /**
          * Required. The request body.
          */
-        public Builder body(@Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
-            this.body = body;
+        public Builder body(@Nonnull com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
+            this.body = Utils.checkNotNull(body, "body");
             return this;
         }
 

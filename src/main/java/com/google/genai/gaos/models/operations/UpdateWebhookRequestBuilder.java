@@ -64,7 +64,7 @@ public class UpdateWebhookRequestBuilder {
         return this;
     }
 
-    public UpdateWebhookRequestBuilder body(@Nullable WebhookUpdate body) {
+    public UpdateWebhookRequestBuilder body(@Nonnull WebhookUpdate body) {
         this.pojoBuilder.body(body);
         this._setterCalled = true;
         return this;

@@ -60,18 +60,20 @@ public class UpdateWebhookRequest {
             @Nullable String apiVersion,
             @Nonnull String id,
             @Nullable String updateMask,
-            @Nullable WebhookUpdate body) {
+            @Nonnull WebhookUpdate body) {
         this.apiVersion = apiVersion;
         this.id = Optional.ofNullable(id)
             .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.updateMask = updateMask;
-        this.body = body;
+        this.body = Optional.ofNullable(body)
+            .orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
     }
     
     public UpdateWebhookRequest(
-            @Nonnull String id) {
+            @Nonnull String id,
+            @Nonnull WebhookUpdate body) {
         this(null, id, null,
-            null);
+            body);
     }
 
     /**
@@ -137,8 +139,8 @@ public class UpdateWebhookRequest {
     /**
      * Required. The request body.
      */
-    public UpdateWebhookRequest withBody(@Nullable WebhookUpdate body) {
-        this.body = body;
+    public UpdateWebhookRequest withBody(@Nonnull WebhookUpdate body) {
+        this.body = Utils.checkNotNull(body, "body");
         return this;
     }
 
@@ -217,8 +219,8 @@ public class UpdateWebhookRequest {
         /**
          * Required. The request body.
          */
-        public Builder body(@Nullable WebhookUpdate body) {
-            this.body = body;
+        public Builder body(@Nonnull WebhookUpdate body) {
+            this.body = Utils.checkNotNull(body, "body");
             return this;
         }
 

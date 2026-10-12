@@ -60,7 +60,7 @@ public class RotateSigningSecretRequestBuilder {
         return this;
     }
 
-    public RotateSigningSecretRequestBuilder body(@Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
+    public RotateSigningSecretRequestBuilder body(@Nonnull com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
         this.pojoBuilder.body(body);
         this._setterCalled = true;
         return this;

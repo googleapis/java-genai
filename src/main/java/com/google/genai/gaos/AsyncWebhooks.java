@@ -259,12 +259,13 @@ public class AsyncWebhooks {
      * Updates an existing Webhook.
      * 
      * @param id Required. The ID of the webhook to update.
+     * @param body 
      * @return {@code CompletableFuture<UpdateWebhookResponse>} - The async response
      */
-    public CompletableFuture<UpdateWebhookResponse> update(@Nonnull String id) {
+    public CompletableFuture<UpdateWebhookResponse> update(@Nonnull String id, @Nonnull WebhookUpdate body) {
         return update(
                 null, id, null,
-                null, null);
+                body, null);
     }
 
     /**
@@ -279,7 +280,7 @@ public class AsyncWebhooks {
      */
     public CompletableFuture<UpdateWebhookResponse> update(
             @Nullable String apiVersion, @Nonnull String id,
-            @Nullable String updateMask, @Nullable WebhookUpdate body,
+            @Nullable String updateMask, @Nonnull WebhookUpdate body,
             @Nullable Options options) {
         UpdateWebhookRequest request = new UpdateWebhookRequest(
                 apiVersion, id, updateMask,
@@ -306,11 +307,12 @@ public class AsyncWebhooks {
      * Sends a ping event to a Webhook.
      * 
      * @param id Required. The ID of the webhook to ping.
+     * @param body Request message for WebhookService.PingWebhook.
      * @return {@code CompletableFuture<PingWebhookResponse>} - The async response
      */
-    public CompletableFuture<PingWebhookResponse> ping(@Nonnull String id) {
+    public CompletableFuture<PingWebhookResponse> ping(@Nonnull String id, @Nonnull PingWebhookRequest body) {
         return ping(
-                null, id, null,
+                null, id, body,
                 null);
     }
 
@@ -325,7 +327,7 @@ public class AsyncWebhooks {
      */
     public CompletableFuture<PingWebhookResponse> ping(
             @Nullable String apiVersion, @Nonnull String id,
-            @Nullable PingWebhookRequest body, @Nullable Options options) {
+            @Nonnull PingWebhookRequest body, @Nullable Options options) {
         com.google.genai.gaos.models.operations.PingWebhookRequest request = new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
         AsyncRequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation
               = new PingWebhook.Async(
@@ -349,11 +351,12 @@ public class AsyncWebhooks {
      * Generates a new signing secret for a Webhook.
      * 
      * @param id Required. The ID of the webhook for which to generate a signing secret.
+     * @param body Request message for WebhookService.RotateSigningSecret.
      * @return {@code CompletableFuture<RotateSigningSecretResponse>} - The async response
      */
-    public CompletableFuture<RotateSigningSecretResponse> rotateSigningSecret(@Nonnull String id) {
+    public CompletableFuture<RotateSigningSecretResponse> rotateSigningSecret(@Nonnull String id, @Nonnull RotateSigningSecretRequest body) {
         return rotateSigningSecret(
-                null, id, null,
+                null, id, body,
                 null);
     }
 
@@ -368,7 +371,7 @@ public class AsyncWebhooks {
      */
     public CompletableFuture<RotateSigningSecretResponse> rotateSigningSecret(
             @Nullable String apiVersion, @Nonnull String id,
-            @Nullable RotateSigningSecretRequest body, @Nullable Options options) {
+            @Nonnull RotateSigningSecretRequest body, @Nullable Options options) {
         com.google.genai.gaos.models.operations.RotateSigningSecretRequest request = new com.google.genai.gaos.models.operations.RotateSigningSecretRequest(apiVersion, id, body);
         AsyncRequestOperation<com.google.genai.gaos.models.operations.RotateSigningSecretRequest, RotateSigningSecretResponse> operation
               = new RotateSigningSecret.Async(

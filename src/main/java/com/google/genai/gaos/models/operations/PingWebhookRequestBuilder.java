@@ -57,7 +57,7 @@ public class PingWebhookRequestBuilder {
         return this;
     }
 
-    public PingWebhookRequestBuilder body(@Nullable com.google.genai.gaos.models.webhooks.PingWebhookRequest body) {
+    public PingWebhookRequestBuilder body(@Nonnull com.google.genai.gaos.models.webhooks.PingWebhookRequest body) {
         this.pojoBuilder.body(body);
         this._setterCalled = true;
         return this;
