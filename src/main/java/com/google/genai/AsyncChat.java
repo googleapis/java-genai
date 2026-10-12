@@ -31,6 +31,12 @@ import java.util.logging.Logger;
  * <p>This class provides a way to interact with a generative model in an async multi-turn chat
  * session. It keeps track of the chat history and uses it to provide context for subsequent
  * messages.
+ *
+ * <p>A response that ends with finish reason {@code CONTINUATION} is continued automatically: the
+ * same request is sent again with the response's continuation token until the model finishes, and
+ * the turn is recorded once, with the whole answer. A stream returns the chunks of every request in
+ * order, and its turn is recorded once the stream has been read to the end. Set {@code
+ * automaticContinuation(false)} in the {@link GenerateContentConfig} to turn this off.
  */
 public class AsyncChat extends ChatBase {
   private final ApiClient apiClient;
