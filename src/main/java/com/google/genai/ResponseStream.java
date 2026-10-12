@@ -56,6 +56,11 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
 
     /** Returns the stream of the next request, or null to end the stream here. */
     @Nullable ResponseStream<T> next();
+
+    /** Whether the stream can resume into a new request from a checkpoint continuation token. */
+    default boolean canResume() {
+      return false;
+    }
   }
 
   private @Nullable Continuation<T> continuation;
@@ -72,6 +77,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
     private final boolean needsRootObject;
     private final Headers responseHeaders;
     private String nextJson;
+    private boolean streamEnded = false;
     private boolean consumed = false;
 
     ResponseStreamIterator(
@@ -83,7 +89,6 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
         Headers responseHeaders) {
       this.reader = reader;
       this.clazz = clazz;
-      this.nextJson = readNextJson();
       this.obj = obj;
       this.needsRootObject = needsRootObject;
       this.responseHeaders = responseHeaders;
@@ -131,7 +136,20 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
       if (!hasNext()) {
         throw new NoSuchElementException("No more JSON objects in the stream");
       }
-      T response = following != null ? following.iterator.next() : readCurrent();
+      T response;
+      try {
+        response = following != null ? following.iterator.next() : readCurrent();
+      } catch (RuntimeException e) {
+        if (continuation != null && continuation.canResume()) {
+          closeCurrentHop();
+          ResponseStream<T> next = continuation.next();
+          if (next != null) {
+            following = next;
+            return next();
+          }
+        }
+        throw e;
+      }
       if (continuation != null) {
         continuation.observe(response);
       }
@@ -145,25 +163,58 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
     // continued, from the requests after it.
     private boolean hasMore() {
       while (true) {
-        if (following != null ? following.iterator.hasNext() : nextJson != null) {
-          return true;
+        try {
+          if (following != null) {
+            if (following.iterator.hasNext()) {
+              return true;
+            }
+          } else {
+            if (nextJson == null && !streamEnded) {
+              nextJson = readNextJson();
+              if (nextJson == null) {
+                streamEnded = true;
+              }
+            }
+            if (nextJson != null) {
+              return true;
+            }
+          }
+        } catch (RuntimeException e) {
+          if (continuation != null && continuation.canResume()) {
+            closeCurrentHop();
+            ResponseStream<T> next = continuation.next();
+            if (next != null) {
+              following = next;
+              continue;
+            }
+          }
+          throw e;
         }
+
         ResponseStream<T> next = continuation == null ? null : continuation.next();
         if (next == null) {
           return false;
         }
+        closeCurrentHop();
+        following = next;
+      }
+    }
+
+    private void closeCurrentHop() {
+      try {
         if (following != null) {
           following.close();
         } else {
           closeOwnResponse();
         }
-        following = next;
+      } catch (Exception ignored) {
+        // Suppress secondary exceptions when closing a dropped or finished stream hop.
       }
     }
 
     private T readCurrent() {
       String currentJson = nextJson;
-      nextJson = readNextJson();
+      nextJson = null;
       try {
         JsonNode currentJsonNode = JsonSerializable.stringToJsonNode(currentJson);
 

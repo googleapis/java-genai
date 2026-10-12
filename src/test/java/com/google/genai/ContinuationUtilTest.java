@@ -120,6 +120,74 @@ public final class ContinuationUtilTest {
     return texts;
   }
 
+  /** Hands out {@code streams} in order and records the config of every request. */
+  private static final class FakeStreamingModel {
+    final List<GenerateContentConfig> configs = new ArrayList<>();
+    private final Deque<ResponseStream<GenerateContentResponse>> streams;
+
+    @SafeVarargs
+    FakeStreamingModel(ResponseStream<GenerateContentResponse>... streams) {
+      this.streams = new ArrayDeque<>(Arrays.asList(streams));
+    }
+
+    ResponseStream<GenerateContentResponse> send(GenerateContentConfig config) {
+      configs.add(config);
+      return streams.removeFirst();
+    }
+  }
+
+  /** A stream that emits {@code chunk}, then throws {@code error} on the next read. */
+  private static ResponseStream<GenerateContentResponse> errorStream(
+      GenerateContentResponse chunk, RuntimeException error) {
+    String sse = "data: " + chunk.toJson() + "\n\n";
+    byte[] bytes = sse.getBytes(UTF_8);
+    java.io.InputStream in =
+        new java.io.InputStream() {
+          private int index = 0;
+
+          @Override
+          public int read() {
+            if (index < bytes.length) {
+              return bytes[index++] & 0xff;
+            }
+            throw error;
+          }
+
+          @Override
+          public int read(byte[] b, int off, int len) {
+            if (index < bytes.length) {
+              int toRead = Math.min(len, bytes.length - index);
+              System.arraycopy(bytes, index, b, off, toRead);
+              index += toRead;
+              return toRead;
+            }
+            throw error;
+          }
+        };
+    ResponseBody body =
+        new ResponseBody() {
+          @Override
+          public MediaType contentType() {
+            return MediaType.parse("text/event-stream");
+          }
+
+          @Override
+          public long contentLength() {
+            return -1;
+          }
+
+          @Override
+          public okio.BufferedSource source() {
+            return okio.Okio.buffer(okio.Okio.source(in));
+          }
+        };
+    return new ResponseStream<>(
+        GenerateContentResponse.class,
+        new FakeApiResponse(Headers.of(), body),
+        new ResponseStreamTest.DummyConverter(),
+        "convert");
+  }
+
   @Test
   public void testIsEnabled() {
     assertTrue(ContinuationUtil.isEnabled(null));
@@ -298,6 +366,40 @@ public final class ContinuationUtilTest {
 
     assertEquals(ImmutableList.of("a"), texts(first));
     assertTrue(configs.isEmpty());
+  }
+
+  @Test
+  public void testStreamResumesFromCheckpointTokenOnMidStreamCutoffOrError() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            // Hop 1: intermediate checkpoint chunk (finishReason == null), then stream cuts off
+            // early.
+            stream(response("a", null, TOKEN_1)),
+            // Hop 2: intermediate checkpoint chunk, then mid-stream exception.
+            errorStream(response("b", null, TOKEN_2), new IllegalStateException("stream dropped")),
+            // Hop 3: completes with STOP.
+            stream(response("c", FinishReason.Known.STOP, null)));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    assertEquals(ImmutableList.of("a", "b", "c"), texts(first));
+    assertEquals(3, model.configs.size());
+    assertArrayEquals(TOKEN_1, model.configs.get(1).continuationToken().get());
+    assertArrayEquals(TOKEN_2, model.configs.get(2).continuationToken().get());
+  }
+
+  @Test
+  public void testStreamRethrowsMidStreamErrorWhenNoCheckpointTokenWasReceived() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            errorStream(response("a"), new IllegalStateException("unrecoverable error")));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    assertThrows(IllegalStateException.class, () -> texts(first));
+    assertEquals(1, model.configs.size());
   }
 
   @Test

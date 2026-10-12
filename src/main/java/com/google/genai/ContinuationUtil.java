@@ -109,22 +109,30 @@ final class ContinuationUtil {
           finishReason = candidate.get().finishReason();
         }
         // A long stream also puts checkpoint tokens on chunks before the last one, so the token
-        // to resume from is the last one seen.
-        if (candidate.get().continuationToken().isPresent()) {
-          token = candidate.get().continuationToken();
+        // to resume from is the last one seen unless the hop ends with a non-resumable reason.
+        Optional<byte[]> chunkToken = candidate.get().continuationToken().filter(t -> t.length > 0);
+        if (chunkToken.isPresent()) {
+          token = chunkToken;
+        } else if (candidate.get().finishReason().isPresent()
+            && !isContinuable(candidate.get().finishReason())) {
+          token = Optional.empty();
         }
       }
 
       @Override
+      public boolean canResume() {
+        return token.isPresent() && isContinuable(finishReason);
+      }
+
+      @Override
       public @Nullable ResponseStream<GenerateContentResponse> next() {
-        boolean continuable = isContinuable(finishReason);
-        Optional<byte[]> resumeFrom = token;
-        finishReason = Optional.empty();
-        token = Optional.empty();
-        if (!continuable || !resumeFrom.isPresent()) {
+        if (!canResume()) {
           return null;
         }
-        return send.apply(withContinuationToken(config, resumeFrom.get()));
+        byte[] resumeFrom = token.get();
+        finishReason = Optional.empty();
+        token = Optional.empty();
+        return send.apply(withContinuationToken(config, resumeFrom));
       }
     };
   }
@@ -199,12 +207,15 @@ final class ContinuationUtil {
     if (!candidate.isPresent() || !isContinuable(candidate.get().finishReason())) {
       return Optional.empty();
     }
-    return candidate.get().continuationToken();
+    return candidate.get().continuationToken().filter(t -> t.length > 0);
   }
 
+  // Per the continuation protocol, when a continuationToken is present the backend only sets
+  // finishReason to null (intermediate checkpoint chunk) or CONTINUATION (stream end). MAX_TOKENS
+  // means the caller's maxOutputTokens, which the server counts across all the requests, is spent.
   private static boolean isContinuable(Optional<FinishReason> finishReason) {
-    return finishReason.isPresent()
-        && finishReason.get().knownEnum() == FinishReason.Known.CONTINUATION;
+    return !finishReason.isPresent()
+        || finishReason.get().knownEnum() == FinishReason.Known.CONTINUATION;
   }
 
   private static Optional<Candidate> firstCandidate(GenerateContentResponse response) {
