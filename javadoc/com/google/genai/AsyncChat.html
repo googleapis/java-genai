@@ -82,7 +82,13 @@ loadScripts(document, 'script');</script>
 
  <p>This class provides a way to interact with a generative model in an async multi-turn chat
  session. It keeps track of the chat history and uses it to provide context for subsequent
- messages.</div>
+ messages.
+
+ <p>A response that ends with finish reason <code>CONTINUATION</code> is continued automatically: the
+ same request is sent again with the response's continuation token until the model finishes, and
+ the turn is recorded once, with the whole answer. A stream returns the chunks of every request in
+ order, and its turn is recorded once the stream has been read to the end. Set <code>
+ automaticContinuation(false)</code> in the <a href="types/GenerateContentConfig.html" title="class in com.google.genai.types"><code>GenerateContentConfig</code></a> to turn this off.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">

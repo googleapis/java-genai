@@ -487,7 +487,12 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="types/GenerateContentResponse.html" title="class in com.google.genai.types">GenerateContentResponse</a>&gt;</span>&nbsp;<span class="element-name">generateContent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;model,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="types/Content.html" title="class in com.google.genai.types">Content</a>&gt;&nbsp;contents,
  <a href="types/GenerateContentConfig.html" title="class in com.google.genai.types">GenerateContentConfig</a>&nbsp;config)</span></div>
-<div class="block">Asynchronously generates content given a GenAI model and a list of content.</div>
+<div class="block">Asynchronously generates content given a GenAI model and a list of content.
+
+ <p>Unless <code>config.automaticContinuation()</code> is false, a response that ends with finish
+ reason <code>CONTINUATION</code> is continued: the same request is sent again with the response's
+ continuation token until the model finishes. The responses are returned merged into one, with
+ their parts concatenated and their usage metadata summed.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>model</code> - the name of the GenAI model to use for generation</dd>
@@ -545,7 +550,13 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="types/Content.html" title="class in com.google.genai.types">Content</a>&gt;&nbsp;contents,
  <a href="types/GenerateContentConfig.html" title="class in com.google.genai.types">GenerateContentConfig</a>&nbsp;config)</span></div>
 <div class="block">Asynchronously generates content with streaming support given a GenAI model and a list of
- content.</div>
+ content.
+
+ <p>Unless <code>config.automaticContinuation()</code> is false, a response that ends with finish
+ reason <code>CONTINUATION</code> is continued: the same request is sent again with the response's
+ continuation token until the model finishes, and the chunks of every request are returned in
+ order. Requests after the first are sent while the stream is read. The usage metadata in a
+ chunk covers only the request it came from.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>model</code> - the name of the GenAI model to use for generation</dd>
