@@ -109,7 +109,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Environment</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.google.genai.gaos.models.interactions.Env,java.lang.String,com.google.genai.gaos.models.interactions.Network,java.util.List)" class="member-name-link">Environment</a><wbr>(<a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&nbsp;env,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.util.Map,java.lang.String,com.google.genai.gaos.models.interactions.Network,java.util.List)" class="member-name-link">Environment</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&gt;&nbsp;env,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;environmentId,
  <a href="Network.html" title="class in com.google.genai.gaos.models.interactions">Network</a>&nbsp;network,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Source.html" title="class in com.google.genai.gaos.models.interactions">Source</a>&gt;&nbsp;sources)</code></div>
@@ -131,7 +131,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Environment.Builder.html" title="class in com.google.genai.gaos.models.interactions">Environment.Builder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#builder()" class="member-name-link">builder</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&gt;&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#env()" class="member-name-link">env</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Environment variables to set in the sandbox environment.</div>
@@ -162,7 +162,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#type()" class="member-name-link">type</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Environment.html" title="class in com.google.genai.gaos.models.interactions">Environment</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withEnv(com.google.genai.gaos.models.interactions.Env)" class="member-name-link">withEnv</a><wbr>(<a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&nbsp;env)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withEnv(java.util.Map)" class="member-name-link">withEnv</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&gt;&nbsp;env)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Environment variables to set in the sandbox environment.</div>
 </div>
@@ -197,10 +197,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.google.genai.gaos.models.interactions.Env,java.lang.String,com.google.genai.gaos.models.interactions.Network,java.util.List)">
+<section class="detail" id="&lt;init&gt;(java.util.Map,java.lang.String,com.google.genai.gaos.models.interactions.Network,java.util.List)">
 <h3>Environment</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Environment</span><wbr><span class="parameters">(@Nullable
- <a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&nbsp;env,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&gt;&nbsp;env,
  @Nullable
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;environmentId,
  @Nullable
@@ -226,7 +226,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="env()">
 <h3>env</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&gt;</span>&nbsp;<span class="element-name">env</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&gt;&gt;</span>&nbsp;<span class="element-name">env</span>()</div>
 <div class="block">Environment variables to set in the sandbox environment.</div>
 </section>
 </li>
@@ -264,10 +264,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="withEnv(com.google.genai.gaos.models.interactions.Env)">
+<section class="detail" id="withEnv(java.util.Map)">
 <h3>withEnv</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Environment.html" title="class in com.google.genai.gaos.models.interactions">Environment</a></span>&nbsp;<span class="element-name">withEnv</span><wbr><span class="parameters">(@Nullable
- <a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&nbsp;env)</span></div>
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="Env.html" title="class in com.google.genai.gaos.models.interactions">Env</a>&gt;&nbsp;env)</span></div>
 <div class="block">Environment variables to set in the sandbox environment.</div>
 </section>
 </li>
