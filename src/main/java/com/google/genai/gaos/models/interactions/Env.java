@@ -31,14 +31,8 @@ import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
-import java.util.Map;
 import java.util.Optional;
 
-/**
- * Env
- * 
- * <p>Environment variables to set in the sandbox environment.
- */
 @JsonDeserialize(using = Env._Deserializer.class)
 public class Env {
 
@@ -49,9 +43,9 @@ public class Env {
         this.value = value;
     }
 
-    public static Env of(Map<String, EnvVar> value) {
+    public static Env of(EnvVar value) {
         Utils.checkNotNull(value, "value");
-        return new Env(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Map<String, EnvVar>>(){}));
+        return new Env(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<EnvVar>(){}));
     }
 
     public static Env of(String value) {
@@ -60,15 +54,14 @@ public class Env {
     }
     
     /**
-     * Returns an {@link Optional} containing the value if it is of type {@code Map<String, EnvVar>},
+     * Returns an {@link Optional} containing the value if it is of type {@code EnvVar},
      * otherwise returns an empty {@link Optional}.
      *
-     * @return an {@link Optional} containing the {@code Map<String, EnvVar>} value, or empty if not of this type
+     * @return an {@link Optional} containing the {@code EnvVar} value, or empty if not of this type
      */
-    @SuppressWarnings("unchecked")
-    public Optional<Map<String, EnvVar>> mapOfEnvVar() {
-        if (value.value() instanceof Map) {
-            return Optional.of((Map<String, EnvVar>) value.value());
+    public Optional<EnvVar> envVar() {
+        if (value.value() instanceof EnvVar) {
+            return Optional.of((EnvVar) value.value());
         }
         return Optional.empty();
     }
@@ -120,7 +113,7 @@ public class Env {
 
         public _Deserializer() {
             super(Env.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<Map<String, EnvVar>>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<EnvVar>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }

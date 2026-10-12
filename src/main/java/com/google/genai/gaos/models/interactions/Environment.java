@@ -30,6 +30,7 @@ import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -43,7 +44,7 @@ public class Environment {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("env")
-    private Env env;
+    private Map<String, Env> env;
 
     /**
      * Optional. The environment ID for the interaction. If specified, the request will
@@ -71,7 +72,7 @@ public class Environment {
 
     @JsonCreator
     public Environment(
-            @JsonProperty("env") @Nullable Env env,
+            @JsonProperty("env") @Nullable Map<String, Env> env,
             @JsonProperty("environment_id") @Nullable String environmentId,
             @JsonProperty("network") @Nullable Network network,
             @JsonProperty("sources") @Nullable List<Source> sources) {
@@ -90,7 +91,7 @@ public class Environment {
     /**
      * Environment variables to set in the sandbox environment.
      */
-    public Optional<Env> env() {
+    public Optional<Map<String, Env>> env() {
         return Optional.ofNullable(this.env);
     }
 
@@ -125,7 +126,7 @@ public class Environment {
     /**
      * Environment variables to set in the sandbox environment.
      */
-    public Environment withEnv(@Nullable Env env) {
+    public Environment withEnv(@Nullable Map<String, Env> env) {
         this.env = env;
         return this;
     }
@@ -193,7 +194,7 @@ public class Environment {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private Env env;
+        private Map<String, Env> env;
 
         private String environmentId;
 
@@ -208,7 +209,7 @@ public class Environment {
         /**
          * Environment variables to set in the sandbox environment.
          */
-        public Builder env(@Nullable Env env) {
+        public Builder env(@Nullable Map<String, Env> env) {
             this.env = env;
             return this;
         }
