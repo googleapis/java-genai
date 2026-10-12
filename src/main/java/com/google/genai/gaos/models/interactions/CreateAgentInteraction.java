@@ -61,15 +61,6 @@ public class CreateAgentInteraction {
     private Boolean background;
 
     /**
-     * Opaque token to resume a long decode. Output: set when status is
-     * INCOMPLETE and decoding can be resumed. Input: pass the latest token
-     * back unchanged in CreateInteraction to continue decoding.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("continuation_token")
-    private String continuationToken;
-
-    /**
      * The environment configuration for the interaction. Can be an object
      * specifying remote environment sources or a string referencing an existing
      * environment ID.
@@ -184,7 +175,6 @@ public class CreateAgentInteraction {
             @JsonProperty("agent") @Nonnull AgentOption agent,
             @JsonProperty("agent_config") @Nullable CreateAgentInteractionAgentConfig agentConfig,
             @JsonProperty("background") @Nullable Boolean background,
-            @JsonProperty("continuation_token") @Nullable String continuationToken,
             @JsonProperty("environment") @Nullable CreateAgentInteractionEnvironment environment,
             @JsonProperty("input") @Nullable InteractionsInput input,
             @JsonProperty("labels") @Nullable Map<String, String> labels,
@@ -203,7 +193,6 @@ public class CreateAgentInteraction {
             .orElseThrow(() -> new IllegalArgumentException("agent cannot be null"));
         this.agentConfig = agentConfig;
         this.background = background;
-        this.continuationToken = continuationToken;
         this.environment = environment;
         this.input = input;
         this.labels = labels;
@@ -227,7 +216,7 @@ public class CreateAgentInteraction {
             null, null, null,
             null, null, null,
             null, null, null,
-            null, null, null);
+            null, null);
     }
 
     /**
@@ -249,15 +238,6 @@ public class CreateAgentInteraction {
      */
     public Optional<Boolean> background() {
         return Optional.ofNullable(this.background);
-    }
-
-    /**
-     * Opaque token to resume a long decode. Output: set when status is
-     * INCOMPLETE and decoding can be resumed. Input: pass the latest token
-     * back unchanged in CreateInteraction to continue decoding.
-     */
-    public Optional<String> continuationToken() {
-        return Optional.ofNullable(this.continuationToken);
     }
 
     /**
@@ -397,17 +377,6 @@ public class CreateAgentInteraction {
      */
     public CreateAgentInteraction withBackground(@Nullable Boolean background) {
         this.background = background;
-        return this;
-    }
-
-
-    /**
-     * Opaque token to resume a long decode. Output: set when status is
-     * INCOMPLETE and decoding can be resumed. Input: pass the latest token
-     * back unchanged in CreateInteraction to continue decoding.
-     */
-    public CreateAgentInteraction withContinuationToken(@Nullable String continuationToken) {
-        this.continuationToken = continuationToken;
         return this;
     }
 
@@ -562,7 +531,6 @@ public class CreateAgentInteraction {
             Utils.enhancedDeepEquals(this.agent, other.agent) &&
             Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
             Utils.enhancedDeepEquals(this.background, other.background) &&
-            Utils.enhancedDeepEquals(this.continuationToken, other.continuationToken) &&
             Utils.enhancedDeepEquals(this.environment, other.environment) &&
             Utils.enhancedDeepEquals(this.input, other.input) &&
             Utils.enhancedDeepEquals(this.labels, other.labels) &&
@@ -583,11 +551,11 @@ public class CreateAgentInteraction {
     public int hashCode() {
         return Utils.enhancedHash(
             agent, agentConfig, background,
-            continuationToken, environment, input,
-            labels, previousInteractionId, responseFormat,
-            responseMimeType, responseModalities, safetySettings,
-            serviceTier, store, stream,
-            systemInstruction, tools, webhookConfig);
+            environment, input, labels,
+            previousInteractionId, responseFormat, responseMimeType,
+            responseModalities, safetySettings, serviceTier,
+            store, stream, systemInstruction,
+            tools, webhookConfig);
     }
     
     @Override
@@ -596,7 +564,6 @@ public class CreateAgentInteraction {
                 "agent", agent,
                 "agentConfig", agentConfig,
                 "background", background,
-                "continuationToken", continuationToken,
                 "environment", environment,
                 "input", input,
                 "labels", labels,
@@ -621,8 +588,6 @@ public class CreateAgentInteraction {
         private CreateAgentInteractionAgentConfig agentConfig;
 
         private Boolean background;
-
-        private String continuationToken;
 
         private CreateAgentInteractionEnvironment environment;
 
@@ -679,16 +644,6 @@ public class CreateAgentInteraction {
          */
         public Builder background(@Nullable Boolean background) {
             this.background = background;
-            return this;
-        }
-
-        /**
-         * Opaque token to resume a long decode. Output: set when status is
-         * INCOMPLETE and decoding can be resumed. Input: pass the latest token
-         * back unchanged in CreateInteraction to continue decoding.
-         */
-        public Builder continuationToken(@Nullable String continuationToken) {
-            this.continuationToken = continuationToken;
             return this;
         }
 
@@ -823,11 +778,11 @@ public class CreateAgentInteraction {
         public CreateAgentInteraction build() {
             return new CreateAgentInteraction(
                 agent, agentConfig, background,
-                continuationToken, environment, input,
-                labels, previousInteractionId, responseFormat,
-                responseMimeType, responseModalities, safetySettings,
-                serviceTier, store, stream,
-                systemInstruction, tools, webhookConfig);
+                environment, input, labels,
+                previousInteractionId, responseFormat, responseMimeType,
+                responseModalities, safetySettings, serviceTier,
+                store, stream, systemInstruction,
+                tools, webhookConfig);
         }
 
     }

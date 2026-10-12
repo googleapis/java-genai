@@ -49,7 +49,6 @@ public class InteractionStatus {
     public static final InteractionStatus INCOMPLETE = new InteractionStatus("incomplete");
     public static final InteractionStatus BUDGET_EXCEEDED = new InteractionStatus("budget_exceeded");
     public static final InteractionStatus QUEUED = new InteractionStatus("queued");
-    public static final InteractionStatus CONTINUATION_REQUIRED = new InteractionStatus("continuation_required");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -131,7 +130,6 @@ public class InteractionStatus {
         map.put("incomplete", INCOMPLETE);
         map.put("budget_exceeded", BUDGET_EXCEEDED);
         map.put("queued", QUEUED);
-        map.put("continuation_required", CONTINUATION_REQUIRED);
         return map;
     }
 
@@ -145,7 +143,6 @@ public class InteractionStatus {
         map.put("incomplete", InteractionStatusEnum.INCOMPLETE);
         map.put("budget_exceeded", InteractionStatusEnum.BUDGET_EXCEEDED);
         map.put("queued", InteractionStatusEnum.QUEUED);
-        map.put("continuation_required", InteractionStatusEnum.CONTINUATION_REQUIRED);
         return map;
     }
     
@@ -159,8 +156,7 @@ public class InteractionStatus {
         CANCELLED("cancelled"),
         INCOMPLETE("incomplete"),
         BUDGET_EXCEEDED("budget_exceeded"),
-        QUEUED("queued"),
-        CONTINUATION_REQUIRED("continuation_required"),;
+        QUEUED("queued"),;
 
         private final String value;
 
