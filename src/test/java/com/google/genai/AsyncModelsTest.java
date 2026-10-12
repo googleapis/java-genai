@@ -17,11 +17,20 @@
 package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.genai.types.Candidate;
 import com.google.genai.types.ComputeTokensResponse;
 import com.google.genai.types.Content;
 import com.google.genai.types.CountTokensResponse;
@@ -32,6 +41,7 @@ import com.google.genai.types.EditImageResponse;
 import com.google.genai.types.EditMode;
 import com.google.genai.types.EmbedContentConfig;
 import com.google.genai.types.EmbedContentResponse;
+import com.google.genai.types.FinishReason;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.GenerateImagesConfig;
@@ -59,16 +69,27 @@ import com.google.genai.types.UpdateModelConfig;
 import com.google.genai.types.VertexAISearch;
 import com.google.genai.types.VertexRagStore;
 import com.google.genai.types.VertexRagStoreRagResource;
+import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
 @EnabledIfEnvironmentVariable(
     named = "GOOGLE_GENAI_REPLAYS_DIRECTORY",
@@ -79,6 +100,20 @@ public class AsyncModelsTest {
   private static final String IMAGE_GENERATION_MODEL_ID = "gemini-2.5-flash-image";
   private static final String IMAGEN_GENERATE_MODEL_NAME = "imagen-4.0-generate-001";
   private static final String TEXT_EMBEDDING_MODEL_ID = "gemini-embedding-001";
+  private static final String CONTINUATION_REPLAYS =
+      "tests/models/generate_content_continuation_token/";
+  private static final String LONG_PROMPT =
+      "Write an exhaustive, multi-chapter textbook on compiler design that is around 40,000 tokens"
+          + " long.";
+  private static final byte[] CONTINUATION_TOKEN = "token".getBytes(StandardCharsets.UTF_8);
+
+  /**
+   * The model in the continuation recordings. It has no public name yet, so the recordings name it
+   * this way.
+   */
+  private static String longDecodingModel(boolean vertexAI) {
+    return vertexAI ? "test-model1" : "test-model2";
+  }
 
   /** Creates a raw reference image for edit image tests. */
   private RawReferenceImage createRawReferenceImage() throws Exception {
@@ -890,5 +925,173 @@ public class AsyncModelsTest {
             "gemini-2.5-flash", "What is the weather like in New York on 02/02/2026?", config);
     GenerateContentResponse response = responseFuture.join();
     assertNotNull(response.text());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  public void testGenerateContent_continuesByDefaultAsync(boolean vertexAI) throws Exception {
+    String suffix = vertexAI ? "vertex" : "mldev";
+    Client client =
+        TestUtils.createClient(
+            vertexAI,
+            CONTINUATION_REPLAYS
+                + "test_gc_without_afc_continuation_token_opt_in."
+                + suffix
+                + ".json");
+
+    GenerateContentResponse response =
+        client
+            .async
+            .models
+            .generateContent(
+                longDecodingModel(vertexAI), LONG_PROMPT, GenerateContentConfig.builder().build())
+            .join();
+
+    // The recording holds two requests, and the replay fails unless the second is the first one
+    // with the continuation token added.
+    assertEquals(FinishReason.Known.STOP, response.finishReason().knownEnum());
+    assertFalse(response.candidates().get().get(0).continuationToken().isPresent());
+    assertNotNull(response.text());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  public void testGenerateContent_withoutAutomaticContinuationAsync(boolean vertexAI)
+      throws Exception {
+    String suffix = vertexAI ? "vertex" : "mldev";
+    Client client =
+        TestUtils.createClient(
+            vertexAI,
+            CONTINUATION_REPLAYS + "test_gc_without_afc_continuation_token." + suffix + ".json");
+
+    GenerateContentResponse response =
+        client
+            .async
+            .models
+            .generateContent(
+                longDecodingModel(vertexAI),
+                LONG_PROMPT,
+                GenerateContentConfig.builder().automaticContinuation(false).build())
+            .join();
+
+    // The recording holds one request, so a continuation request would fail the replay.
+    assertEquals(FinishReason.Known.CONTINUATION, response.finishReason().knownEnum());
+    assertTrue(response.candidates().get().get(0).continuationToken().isPresent());
+  }
+
+  @Test
+  public void testGenerateContentStream_automaticContinuationResendsTheRequestWithTheTokenAsync()
+      throws Exception {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(
+                streamResponse(
+                    textResponse("Hello ", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN))),
+            CompletableFuture.completedFuture(
+                streamResponse(textResponse("world", FinishReason.Known.STOP, null))));
+    AsyncModels models = new AsyncModels(apiClient);
+
+    List<String> texts = new ArrayList<>();
+    try (ResponseStream<GenerateContentResponse> stream =
+        models
+            .generateContentStream(
+                MODEL_ID,
+                "Write a long story.",
+                GenerateContentConfig.builder().automaticContinuation(true).build())
+            .join()) {
+      for (GenerateContentResponse chunk : stream) {
+        texts.add(chunk.text());
+      }
+    }
+
+    assertEquals(ImmutableList.of("Hello ", "world"), texts);
+    ArgumentCaptor<String> bodies = ArgumentCaptor.forClass(String.class);
+    verify(apiClient, times(2)).asyncRequest(anyString(), anyString(), bodies.capture(), any());
+    ObjectNode second =
+        (ObjectNode) JsonSerializable.stringToJsonNode(bodies.getAllValues().get(1));
+    assertEquals(
+        Base64.getEncoder().encodeToString(CONTINUATION_TOKEN),
+        second.remove("continuationToken").asText());
+    assertEquals(JsonSerializable.stringToJsonNode(bodies.getAllValues().get(0)), second);
+  }
+
+  @Test
+  public void testGenerateContent_continuesAFunctionCallBeforeRunningTheFunctionAsync()
+      throws Exception {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(
+                jsonResponse(
+                    textResponse("", FinishReason.Known.CONTINUATION, CONTINUATION_TOKEN))),
+            CompletableFuture.completedFuture(
+                jsonResponse(
+                    GenerateContentResponse.builder()
+                        .candidates(
+                            Candidate.builder()
+                                .content(
+                                    Content.builder()
+                                        .role("model")
+                                        .parts(
+                                            Part.fromFunctionCall(
+                                                "describeTopic",
+                                                ImmutableMap.of("topic", "compilers"))))
+                                .finishReason(FinishReason.Known.STOP))
+                        .build())),
+            CompletableFuture.completedFuture(
+                jsonResponse(
+                    textResponse("Compilers translate code.", FinishReason.Known.STOP, null))));
+    AsyncModels models = new AsyncModels(apiClient);
+    Method describeTopic = AsyncModelsTest.class.getDeclaredMethod("describeTopic", String.class);
+
+    GenerateContentResponse response =
+        models
+            .generateContent(
+                MODEL_ID,
+                "Describe compilers.",
+                GenerateContentConfig.builder()
+                    .tools(Tool.builder().functions(describeTopic))
+                    .build())
+            .join();
+
+    assertEquals("Compilers translate code.", response.text());
+    ArgumentCaptor<String> bodies = ArgumentCaptor.forClass(String.class);
+    verify(apiClient, times(3)).asyncRequest(anyString(), anyString(), bodies.capture(), any());
+    assertTrue(
+        JsonSerializable.stringToJsonNode(bodies.getAllValues().get(1)).has("continuationToken"));
+    assertFalse(
+        JsonSerializable.stringToJsonNode(bodies.getAllValues().get(2)).has("continuationToken"));
+    assertTrue(bodies.getAllValues().get(2).contains("functionResponse"));
+  }
+
+  public static String describeTopic(String topic) {
+    return topic + " translate code";
+  }
+
+  private static ApiResponse jsonResponse(GenerateContentResponse response) {
+    return new FakeApiResponse(
+        Headers.of(), ResponseBody.create(response.toJson(), MediaType.get("application/json")));
+  }
+
+  private static GenerateContentResponse textResponse(
+      String text, FinishReason.Known finishReason, byte[] token) {
+    Candidate.Builder candidate =
+        Candidate.builder()
+            .content(Content.builder().role("model").parts(Part.fromText(text)))
+            .finishReason(finishReason);
+    if (token != null) {
+      candidate.continuationToken(token);
+    }
+    return GenerateContentResponse.builder().candidates(candidate.build()).build();
+  }
+
+  private static ApiResponse streamResponse(GenerateContentResponse... chunks) {
+    StringBuilder sse = new StringBuilder();
+    for (GenerateContentResponse chunk : chunks) {
+      sse.append("data: ").append(chunk.toJson()).append("\n\n");
+    }
+    return new FakeApiResponse(
+        Headers.of(), ResponseBody.create(sse.toString(), MediaType.get("text/event-stream")));
   }
 }

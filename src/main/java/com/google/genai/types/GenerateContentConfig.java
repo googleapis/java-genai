@@ -254,6 +254,14 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("continuationToken")
   public abstract Optional<byte[]> continuationToken();
 
+  /**
+   * Defaults to true. When a response ends with finish reason `CONTINUATION`, the SDK sends the
+   * same request again with the response's continuation token until the model finishes. Timeouts,
+   * retries and billing apply to each request. Set to false to turn this off.
+   */
+  @JsonProperty("automaticContinuation")
+  public abstract Optional<Boolean> automaticContinuation();
+
   /** Instantiates a builder for GenerateContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -1206,6 +1214,27 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearContinuationToken() {
       return continuationToken(Optional.empty());
+    }
+
+    /**
+     * Setter for automaticContinuation.
+     *
+     * <p>automaticContinuation: Defaults to true. When a response ends with finish reason
+     * `CONTINUATION`, the SDK sends the same request again with the response's continuation token
+     * until the model finishes. Timeouts, retries and billing apply to each request. Set to false
+     * to turn this off.
+     */
+    @JsonProperty("automaticContinuation")
+    public abstract Builder automaticContinuation(boolean automaticContinuation);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder automaticContinuation(Optional<Boolean> automaticContinuation);
+
+    /** Clears the value of automaticContinuation field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAutomaticContinuation() {
+      return automaticContinuation(Optional.empty());
     }
 
     public abstract GenerateContentConfig build();
