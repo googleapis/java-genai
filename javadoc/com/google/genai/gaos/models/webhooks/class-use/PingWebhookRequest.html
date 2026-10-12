@@ -74,10 +74,22 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../../operations/async/PingWebhookResponse.html" title="class in com.google.genai.gaos.models.operations.async">PingWebhookResponse</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AsyncWebhooks.</span><code><a href="../../../AsyncWebhooks.html#ping(java.lang.String,java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest,com.google.genai.gaos.utils.Options)" class="member-name-link">ping</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;apiVersion,
+<div class="col-second even-row-color"><span class="type-name-label">AsyncWebhooks.</span><code><a href="../../../AsyncWebhooks.html#ping(java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest)" class="member-name-link">ping</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ <a href="../PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Sends a ping event to a Webhook.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="../../operations/async/PingWebhookResponse.html" title="class in com.google.genai.gaos.models.operations.async">PingWebhookResponse</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AsyncWebhooks.</span><code><a href="../../../AsyncWebhooks.html#ping(java.lang.String,java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest,com.google.genai.gaos.utils.Options)" class="member-name-link">ping</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;apiVersion,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="../PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body,
  <a href="../../../utils/Options.html" title="class in com.google.genai.gaos.utils">Options</a>&nbsp;options)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sends a ping event to a Webhook.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../../operations/PingWebhookResponse.html" title="class in com.google.genai.gaos.models.operations">PingWebhookResponse</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Webhooks.</span><code><a href="../../../Webhooks.html#ping(java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest)" class="member-name-link">ping</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ <a href="../PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Sends a ping event to a Webhook.</div>
 </div>
@@ -131,10 +143,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../operations/PingWebhookRequest.html#%3Cinit%3E(java.lang.String,java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest)" class="member-name-link">PingWebhookRequest</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;apiVersion,
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+<div class="col-second even-row-color"><code><a href="../../operations/PingWebhookRequest.html#%3Cinit%3E(java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest)" class="member-name-link">PingWebhookRequest</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="../PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../operations/PingWebhookRequest.html#%3Cinit%3E(java.lang.String,java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest)" class="member-name-link">PingWebhookRequest</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;apiVersion,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ <a href="../PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

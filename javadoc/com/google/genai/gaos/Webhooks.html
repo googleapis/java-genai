@@ -172,7 +172,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Sends a ping event to a Webhook.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="models/operations/PingWebhookResponse.html" title="class in com.google.genai.gaos.models.operations">PingWebhookResponse</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ping(java.lang.String)" class="member-name-link">ping</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ping(java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest)" class="member-name-link">ping</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ <a href="models/webhooks/PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sends a ping event to a Webhook.</div>
 </div>
@@ -190,7 +191,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Generates a new signing secret for a Webhook.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="models/operations/RotateSigningSecretResponse.html" title="class in com.google.genai.gaos.models.operations">RotateSigningSecretResponse</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rotateSigningSecret(java.lang.String)" class="member-name-link">rotateSigningSecret</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rotateSigningSecret(java.lang.String,com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest)" class="member-name-link">rotateSigningSecret</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ <a href="models/webhooks/RotateSigningSecretRequest.html" title="class in com.google.genai.gaos.models.webhooks">RotateSigningSecretRequest</a>&nbsp;body)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Generates a new signing secret for a Webhook.</div>
 </div>
@@ -208,7 +210,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Updates an existing Webhook.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="models/operations/UpdateWebhookResponse.html" title="class in com.google.genai.gaos.models.operations">UpdateWebhookResponse</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update(java.lang.String)" class="member-name-link">update</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update(java.lang.String,com.google.genai.gaos.models.webhooks.WebhookUpdate)" class="member-name-link">update</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ <a href="models/webhooks/WebhookUpdate.html" title="class in com.google.genai.gaos.models.webhooks">WebhookUpdate</a>&nbsp;body)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates an existing Webhook.</div>
 </div>
@@ -460,14 +463,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="update(java.lang.String)">
+<section class="detail" id="update(java.lang.String,com.google.genai.gaos.models.webhooks.WebhookUpdate)">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="models/operations/UpdateWebhookResponse.html" title="class in com.google.genai.gaos.models.operations">UpdateWebhookResponse</a></span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(@Nonnull
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ @Nonnull
+ <a href="models/webhooks/WebhookUpdate.html" title="class in com.google.genai.gaos.models.webhooks">WebhookUpdate</a>&nbsp;body)</span></div>
 <div class="block">Updates an existing Webhook.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>id</code> - Required. The ID of the webhook to update.</dd>
+<dd><code>body</code> - </dd>
 <dt>Returns:</dt>
 <dd>The response from the API call</dd>
 <dt>Throws:</dt>
@@ -484,7 +490,7 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  @Nullable
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;updateMask,
- @Nullable
+ @Nonnull
  <a href="models/webhooks/WebhookUpdate.html" title="class in com.google.genai.gaos.models.webhooks">WebhookUpdate</a>&nbsp;body,
  @Nullable
  <a href="utils/Options.html" title="class in com.google.genai.gaos.utils">Options</a>&nbsp;options)</span></div>
@@ -515,14 +521,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="ping(java.lang.String)">
+<section class="detail" id="ping(java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest)">
 <h3>ping</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="models/operations/PingWebhookResponse.html" title="class in com.google.genai.gaos.models.operations">PingWebhookResponse</a></span>&nbsp;<span class="element-name">ping</span><wbr><span class="parameters">(@Nonnull
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ @Nonnull
+ <a href="models/webhooks/PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body)</span></div>
 <div class="block">Sends a ping event to a Webhook.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>id</code> - Required. The ID of the webhook to ping.</dd>
+<dd><code>body</code> - Request message for WebhookService.PingWebhook.</dd>
 <dt>Returns:</dt>
 <dd>The response from the API call</dd>
 <dt>Throws:</dt>
@@ -537,7 +546,7 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;apiVersion,
  @Nonnull
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- @Nullable
+ @Nonnull
  <a href="models/webhooks/PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body,
  @Nullable
  <a href="utils/Options.html" title="class in com.google.genai.gaos.utils">Options</a>&nbsp;options)</span></div>
@@ -567,14 +576,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="rotateSigningSecret(java.lang.String)">
+<section class="detail" id="rotateSigningSecret(java.lang.String,com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest)">
 <h3>rotateSigningSecret</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="models/operations/RotateSigningSecretResponse.html" title="class in com.google.genai.gaos.models.operations">RotateSigningSecretResponse</a></span>&nbsp;<span class="element-name">rotateSigningSecret</span><wbr><span class="parameters">(@Nonnull
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ @Nonnull
+ <a href="models/webhooks/RotateSigningSecretRequest.html" title="class in com.google.genai.gaos.models.webhooks">RotateSigningSecretRequest</a>&nbsp;body)</span></div>
 <div class="block">Generates a new signing secret for a Webhook.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>id</code> - Required. The ID of the webhook for which to generate a signing secret.</dd>
+<dd><code>body</code> - Request message for WebhookService.RotateSigningSecret.</dd>
 <dt>Returns:</dt>
 <dd>The response from the API call</dd>
 <dt>Throws:</dt>
@@ -589,7 +601,7 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;apiVersion,
  @Nonnull
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- @Nullable
+ @Nonnull
  <a href="models/webhooks/RotateSigningSecretRequest.html" title="class in com.google.genai.gaos.models.webhooks">RotateSigningSecretRequest</a>&nbsp;body,
  @Nullable
  <a href="utils/Options.html" title="class in com.google.genai.gaos.utils">Options</a>&nbsp;options)</span></div>

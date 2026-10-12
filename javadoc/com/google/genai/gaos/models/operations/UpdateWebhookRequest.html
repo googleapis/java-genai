@@ -104,7 +104,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">UpdateWebhookRequest</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.google.genai.gaos.models.webhooks.WebhookUpdate)" class="member-name-link">UpdateWebhookRequest</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ <a href="../webhooks/WebhookUpdate.html" title="class in com.google.genai.gaos.models.webhooks">WebhookUpdate</a>&nbsp;body)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,com.google.genai.gaos.models.webhooks.WebhookUpdate)" class="member-name-link">UpdateWebhookRequest</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;apiVersion,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
@@ -203,15 +204,17 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  @Nullable
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;updateMask,
- @Nullable
+ @Nonnull
  <a href="../webhooks/WebhookUpdate.html" title="class in com.google.genai.gaos.models.webhooks">WebhookUpdate</a>&nbsp;body)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,com.google.genai.gaos.models.webhooks.WebhookUpdate)">
 <h3>UpdateWebhookRequest</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">UpdateWebhookRequest</span><wbr><span class="parameters">(@Nonnull
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ @Nonnull
+ <a href="../webhooks/WebhookUpdate.html" title="class in com.google.genai.gaos.models.webhooks">WebhookUpdate</a>&nbsp;body)</span></div>
 </section>
 </li>
 </ul>
@@ -283,7 +286,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="withBody(com.google.genai.gaos.models.webhooks.WebhookUpdate)">
 <h3>withBody</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="UpdateWebhookRequest.html" title="class in com.google.genai.gaos.models.operations">UpdateWebhookRequest</a></span>&nbsp;<span class="element-name">withBody</span><wbr><span class="parameters">(@Nullable
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="UpdateWebhookRequest.html" title="class in com.google.genai.gaos.models.operations">UpdateWebhookRequest</a></span>&nbsp;<span class="element-name">withBody</span><wbr><span class="parameters">(@Nonnull
  <a href="../webhooks/WebhookUpdate.html" title="class in com.google.genai.gaos.models.webhooks">WebhookUpdate</a>&nbsp;body)</span></div>
 <div class="block">Required. The request body.</div>
 </section>
