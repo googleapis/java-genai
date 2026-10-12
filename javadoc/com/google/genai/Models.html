@@ -514,7 +514,7 @@ loadScripts(document, 'script');</script>
  <p>Unless <code>config.automaticContinuation()</code> is false, a response that ends with finish
  reason <code>CONTINUATION</code> is continued: the same request is sent again with the response's
  continuation token until the model finishes, and the chunks of every request are returned in
- order. The usage metadata in a chunk covers only the request it came from.</div>
+ order, with usage metadata accumulated across requests.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>model</code> - the name of the GenAI model to use for generation</dd>

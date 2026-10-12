@@ -161,10 +161,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Output only.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="GenerateContentResponseUsageMetadata.html" title="class in com.google.genai.types">GenerateContentResponseUsageMetadata</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromJson(java.lang.String)" class="member-name-link">fromJson</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;jsonString)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#firstHopPromptTokenCount()" class="member-name-link">firstHopPromptTokenCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Output only.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="GenerateContentResponseUsageMetadata.html" title="class in com.google.genai.types">GenerateContentResponseUsageMetadata</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromJson(java.lang.String)" class="member-name-link">fromJson</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;jsonString)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Deserializes a JSON string to a GenerateContentResponseUsageMetadata object.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialPromptTokenCount()" class="member-name-link">initialPromptTokenCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the prompt token count from the initial request prior to any continuation hops.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#promptTokenCount()" class="member-name-link">promptTokenCount</a>()</code></div>
@@ -343,6 +353,25 @@ loadScripts(document, 'script');</script>
 <h3>fromJson</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="GenerateContentResponseUsageMetadata.html" title="class in com.google.genai.types">GenerateContentResponseUsageMetadata</a></span>&nbsp;<span class="element-name">fromJson</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;jsonString)</span></div>
 <div class="block">Deserializes a JSON string to a GenerateContentResponseUsageMetadata object.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="firstHopPromptTokenCount()">
+<h3>firstHopPromptTokenCount</h3>
+<div class="member-signature"><span class="annotations">@InternalApi
+</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">firstHopPromptTokenCount</span>()</div>
+<div class="block">Output only. The prompt token count from the initial request prior to any continuation hops, if
+ this response was produced by multi-hop continuation.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="initialPromptTokenCount()">
+<h3>initialPromptTokenCount</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">initialPromptTokenCount</span>()</div>
+<div class="block">Returns the prompt token count from the initial request prior to any continuation hops.
+
+ <p>If this response was not produced by multi-hop continuation, or if no explicit initial count
+ was set, this defaults to <a href="#promptTokenCount()"><code>promptTokenCount()</code></a>.</div>
 </section>
 </li>
 </ul>
