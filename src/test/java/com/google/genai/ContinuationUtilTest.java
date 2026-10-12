@@ -48,6 +48,7 @@ import com.google.genai.types.SafetyRating;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -118,6 +119,31 @@ public final class ContinuationUtilTest {
       texts.add(chunk.text());
     }
     return texts;
+  }
+
+  private static List<GenerateContentResponse> chunks(
+      ResponseStream<GenerateContentResponse> stream) {
+    List<GenerateContentResponse> chunks = new ArrayList<>();
+    for (GenerateContentResponse chunk : stream) {
+      chunks.add(chunk);
+    }
+    return chunks;
+  }
+
+  private static List<String> texts(List<GenerateContentResponse> chunks) {
+    return chunks.stream().map(GenerateContentResponse::text).collect(Collectors.toList());
+  }
+
+  private static List<FinishReason.Known> finishReasons(List<GenerateContentResponse> chunks) {
+    List<FinishReason.Known> reasons = new ArrayList<>();
+    for (GenerateContentResponse chunk : chunks) {
+      reasons.add(
+          ContinuationUtil.firstCandidate(chunk)
+              .flatMap(Candidate::finishReason)
+              .map(FinishReason::knownEnum)
+              .orElse(null));
+    }
+    return reasons;
   }
 
   /** Hands out {@code streams} in order and records the config of every request. */
@@ -253,8 +279,18 @@ public final class ContinuationUtilTest {
     GenerateContentResponse only = response("Hello", FinishReason.Known.CONTINUATION, null);
     FakeModel model = new FakeModel(only);
 
-    assertSame(only, ContinuationUtil.generate(CONFIG, model::send));
+    GenerateContentResponse response = ContinuationUtil.generate(CONFIG, model::send);
+    assertSame(only, response);
+    assertEquals(FinishReason.Known.CONTINUATION, response.finishReason().knownEnum());
     assertEquals(1, model.configs.size());
+
+    FakeStreamingModel streamingModel =
+        new FakeStreamingModel(stream(response("Hello", FinishReason.Known.CONTINUATION, null)));
+    ResponseStream<GenerateContentResponse> first = streamingModel.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, streamingModel::send));
+    List<GenerateContentResponse> chunks = chunks(first);
+    assertEquals(Collections.singletonList(FinishReason.Known.CONTINUATION), finishReasons(chunks));
+    assertEquals(1, streamingModel.configs.size());
   }
 
   @Test
@@ -312,7 +348,9 @@ public final class ContinuationUtilTest {
               return stream(response("d", FinishReason.Known.STOP, null));
             }));
 
-    assertEquals(ImmutableList.of("a", "b", "c", "d"), texts(first));
+    List<GenerateContentResponse> chunks = chunks(first);
+    assertEquals(ImmutableList.of("a", "b", "c", "d"), texts(chunks));
+    assertEquals(Arrays.asList(null, null, null, FinishReason.Known.STOP), finishReasons(chunks));
     assertEquals(1, configs.size());
     assertArrayEquals(TOKEN_2, configs.get(0).continuationToken().get());
   }
@@ -330,7 +368,9 @@ public final class ContinuationUtilTest {
               return stream(response("c", FinishReason.Known.STOP, null));
             }));
 
-    assertEquals(ImmutableList.of("a", "b", "c"), texts(first));
+    List<GenerateContentResponse> chunks = chunks(first);
+    assertEquals(ImmutableList.of("a", "b", "c"), texts(chunks));
+    assertEquals(Arrays.asList(null, null, FinishReason.Known.STOP), finishReasons(chunks));
     assertArrayEquals(TOKEN_1, configs.get(0).continuationToken().get());
   }
 
@@ -364,7 +404,9 @@ public final class ContinuationUtilTest {
               return stream();
             }));
 
-    assertEquals(ImmutableList.of("a"), texts(first));
+    List<GenerateContentResponse> chunks = chunks(first);
+    assertEquals(ImmutableList.of("a"), texts(chunks));
+    assertEquals(Collections.singletonList(FinishReason.Known.MAX_TOKENS), finishReasons(chunks));
     assertTrue(configs.isEmpty());
   }
 

@@ -54,6 +54,11 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
     /** Called with every element the stream hands out, in order. */
     void observe(T element);
 
+    /** Transforms each element before handing it out, e.g. clearing intermediate finish reasons. */
+    default T transform(T element) {
+      return element;
+    }
+
     /** Returns the stream of the next request, or null to end the stream here. */
     @Nullable ResponseStream<T> next();
 
@@ -152,6 +157,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
       }
       if (continuation != null) {
         continuation.observe(response);
+        response = continuation.transform(response);
       }
       if (recordingHistory) {
         history.add(response);

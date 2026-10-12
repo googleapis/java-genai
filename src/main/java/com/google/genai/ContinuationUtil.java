@@ -120,8 +120,13 @@ final class ContinuationUtil {
       }
 
       @Override
+      public GenerateContentResponse transform(GenerateContentResponse chunk) {
+        return clearIntermediateFinishReason(chunk, token);
+      }
+
+      @Override
       public boolean canResume() {
-        return token.isPresent() && isContinuable(finishReason);
+        return canResumeStream(token, finishReason);
       }
 
       @Override
@@ -218,7 +223,26 @@ final class ContinuationUtil {
         || finishReason.get().knownEnum() == FinishReason.Known.CONTINUATION;
   }
 
-  private static Optional<Candidate> firstCandidate(GenerateContentResponse response) {
+  static boolean canResumeStream(Optional<byte[]> token, Optional<FinishReason> finishReason) {
+    return token.isPresent() && token.get().length > 0 && isContinuable(finishReason);
+  }
+
+  static GenerateContentResponse clearIntermediateFinishReason(
+      GenerateContentResponse chunk, Optional<byte[]> token) {
+    Optional<Candidate> candidate = firstCandidate(chunk);
+    if (!candidate.isPresent()) {
+      return chunk;
+    }
+    if (candidate.get().finishReason().isPresent()
+        && canResumeStream(token, candidate.get().finishReason())) {
+      List<Candidate> updatedCandidates = new ArrayList<>(chunk.candidates().get());
+      updatedCandidates.set(0, candidate.get().toBuilder().clearFinishReason().build());
+      return chunk.toBuilder().candidates(updatedCandidates).build();
+    }
+    return chunk;
+  }
+
+  static Optional<Candidate> firstCandidate(GenerateContentResponse response) {
     if (!response.candidates().isPresent() || response.candidates().get().isEmpty()) {
       return Optional.empty();
     }
