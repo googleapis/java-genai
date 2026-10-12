@@ -38,6 +38,13 @@ import java.util.Optional;
  */
 public class Usage {
     /**
+     * Accumulated billable token usage across all continuation calls.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("billable_usage")
+    private BillableUsage billableUsage;
+
+    /**
      * A breakdown of cached token usage by modality.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -117,6 +124,7 @@ public class Usage {
 
     @JsonCreator
     public Usage(
+            @JsonProperty("billable_usage") @Nullable BillableUsage billableUsage,
             @JsonProperty("cached_tokens_by_modality") @Nullable List<ModalityTokens> cachedTokensByModality,
             @JsonProperty("grounding_tool_count") @Nullable List<GroundingToolCount> groundingToolCount,
             @JsonProperty("input_tokens_by_modality") @Nullable List<ModalityTokens> inputTokensByModality,
@@ -128,6 +136,7 @@ public class Usage {
             @JsonProperty("total_thought_tokens") @Nullable Integer totalThoughtTokens,
             @JsonProperty("total_tokens") @Nullable Integer totalTokens,
             @JsonProperty("total_tool_use_tokens") @Nullable Integer totalToolUseTokens) {
+        this.billableUsage = billableUsage;
         this.cachedTokensByModality = cachedTokensByModality;
         this.groundingToolCount = groundingToolCount;
         this.inputTokensByModality = inputTokensByModality;
@@ -145,7 +154,14 @@ public class Usage {
         this(null, null, null,
             null, null, null,
             null, null, null,
-            null, null);
+            null, null, null);
+    }
+
+    /**
+     * Accumulated billable token usage across all continuation calls.
+     */
+    public Optional<BillableUsage> billableUsage() {
+        return Optional.ofNullable(this.billableUsage);
     }
 
     /**
@@ -228,6 +244,15 @@ public class Usage {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Accumulated billable token usage across all continuation calls.
+     */
+    public Usage withBillableUsage(@Nullable BillableUsage billableUsage) {
+        this.billableUsage = billableUsage;
+        return this;
     }
 
 
@@ -341,6 +366,7 @@ public class Usage {
         }
         Usage other = (Usage) o;
         return 
+            Utils.enhancedDeepEquals(this.billableUsage, other.billableUsage) &&
             Utils.enhancedDeepEquals(this.cachedTokensByModality, other.cachedTokensByModality) &&
             Utils.enhancedDeepEquals(this.groundingToolCount, other.groundingToolCount) &&
             Utils.enhancedDeepEquals(this.inputTokensByModality, other.inputTokensByModality) &&
@@ -357,15 +383,16 @@ public class Usage {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            cachedTokensByModality, groundingToolCount, inputTokensByModality,
-            outputTokensByModality, toolUseTokensByModality, totalCachedTokens,
-            totalInputTokens, totalOutputTokens, totalThoughtTokens,
-            totalTokens, totalToolUseTokens);
+            billableUsage, cachedTokensByModality, groundingToolCount,
+            inputTokensByModality, outputTokensByModality, toolUseTokensByModality,
+            totalCachedTokens, totalInputTokens, totalOutputTokens,
+            totalThoughtTokens, totalTokens, totalToolUseTokens);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Usage.class,
+                "billableUsage", billableUsage,
                 "cachedTokensByModality", cachedTokensByModality,
                 "groundingToolCount", groundingToolCount,
                 "inputTokensByModality", inputTokensByModality,
@@ -381,6 +408,8 @@ public class Usage {
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
+
+        private BillableUsage billableUsage;
 
         private List<ModalityTokens> cachedTokensByModality;
 
@@ -406,6 +435,14 @@ public class Usage {
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Accumulated billable token usage across all continuation calls.
+         */
+        public Builder billableUsage(@Nullable BillableUsage billableUsage) {
+            this.billableUsage = billableUsage;
+            return this;
         }
 
         /**
@@ -499,10 +536,10 @@ public class Usage {
 
         public Usage build() {
             return new Usage(
-                cachedTokensByModality, groundingToolCount, inputTokensByModality,
-                outputTokensByModality, toolUseTokensByModality, totalCachedTokens,
-                totalInputTokens, totalOutputTokens, totalThoughtTokens,
-                totalTokens, totalToolUseTokens);
+                billableUsage, cachedTokensByModality, groundingToolCount,
+                inputTokensByModality, outputTokensByModality, toolUseTokensByModality,
+                totalCachedTokens, totalInputTokens, totalOutputTokens,
+                totalThoughtTokens, totalTokens, totalToolUseTokens);
         }
 
     }
