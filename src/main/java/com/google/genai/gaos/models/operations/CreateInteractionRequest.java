@@ -42,18 +42,28 @@ public class CreateInteractionRequest {
     @SpeakeasyMetadata("request:mediaType=application/json")
     private CreateInteractionRequestBody body;
 
+    private Boolean automaticContinuation;
+
     @JsonCreator
     public CreateInteractionRequest(
             @Nullable String apiVersion,
             @Nonnull CreateInteractionRequestBody body) {
+        this(apiVersion, body, null);
+    }
+
+    public CreateInteractionRequest(
+            @Nullable String apiVersion,
+            @Nonnull CreateInteractionRequestBody body,
+            @Nullable Boolean automaticContinuation) {
         this.apiVersion = apiVersion;
         this.body = Optional.ofNullable(body)
             .orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
+        this.automaticContinuation = automaticContinuation;
     }
     
     public CreateInteractionRequest(
             @Nonnull CreateInteractionRequestBody body) {
-        this(null, body);
+        this(null, body, null);
     }
 
     /**
@@ -68,6 +78,13 @@ public class CreateInteractionRequest {
      */
     public Optional<CreateInteractionRequestBody> body() {
         return Optional.ofNullable(this.body);
+    }
+
+    /**
+     * Whether automatic continuation is enabled.
+     */
+    public Optional<Boolean> automaticContinuation() {
+        return Optional.ofNullable(this.automaticContinuation);
     }
 
     public static Builder builder() {
@@ -92,6 +109,14 @@ public class CreateInteractionRequest {
         return this;
     }
 
+    /**
+     * Whether automatic continuation is enabled.
+     */
+    public CreateInteractionRequest withAutomaticContinuation(@Nullable Boolean automaticContinuation) {
+        this.automaticContinuation = automaticContinuation;
+        return this;
+    }
+
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -104,20 +129,22 @@ public class CreateInteractionRequest {
         CreateInteractionRequest other = (CreateInteractionRequest) o;
         return 
             Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.body, other.body);
+            Utils.enhancedDeepEquals(this.body, other.body) &&
+            Utils.enhancedDeepEquals(this.automaticContinuation, other.automaticContinuation);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            apiVersion, body);
+            apiVersion, body, automaticContinuation);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CreateInteractionRequest.class,
                 "apiVersion", apiVersion,
-                "body", body);
+                "body", body,
+                "automaticContinuation", automaticContinuation);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -126,6 +153,7 @@ public class CreateInteractionRequest {
         private String apiVersion;
 
         private CreateInteractionRequestBody body;
+        private Boolean automaticContinuation;
 
         private Builder() {
           // force use of static builder() method
@@ -147,9 +175,19 @@ public class CreateInteractionRequest {
             return this;
         }
 
+        /**
+         * Whether automatic continuation is enabled.
+         */
+        public Builder automaticContinuation(@Nullable Boolean automaticContinuation) {
+            this.automaticContinuation = automaticContinuation;
+            return this;
+        }
+
         public CreateInteractionRequest build() {
-            return new CreateInteractionRequest(
+            CreateInteractionRequest res = new CreateInteractionRequest(
                 apiVersion, body);
+            res.withAutomaticContinuation(automaticContinuation);
+            return res;
         }
 
     }

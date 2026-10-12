@@ -57,6 +57,12 @@ public class CreateInteractionRequestBuilder {
         return this;
     }
 
+    public CreateInteractionRequestBuilder automaticContinuation(boolean automaticContinuation) {
+        this.pojoBuilder.automaticContinuation(automaticContinuation);
+        this._setterCalled = true;
+        return this;
+    }
+
     public CreateInteractionRequestBuilder retryConfig(RetryConfig retryConfig) {
         this.optionsBuilder.retryConfig(retryConfig);
         return this;
@@ -83,8 +89,6 @@ public class CreateInteractionRequestBuilder {
     */
     public CreateInteractionResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
-              = new CreateInteraction.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(this._buildRequest()));
+        return new com.google.genai.gaos.Interactions(sdkConfiguration).create(this._buildRequest(), options, _headers);
     }
 }
