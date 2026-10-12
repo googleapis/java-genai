@@ -21,6 +21,7 @@ package com.google.genai.types;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
@@ -498,5 +499,11 @@ public abstract class GenerateContentResponse extends JsonSerializable {
       throw new IllegalArgumentException(
           String.format("The response finished unexpectedly with reason %s.", finishReason));
     }
+  }
+
+  /** Returns the prompt token count from the initial request prior to any continuation hops. */
+  @JsonIgnore
+  public Optional<Integer> initialPromptTokenCount() {
+    return usageMetadata().flatMap(GenerateContentResponseUsageMetadata::initialPromptTokenCount);
   }
 }

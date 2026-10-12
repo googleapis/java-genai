@@ -26,6 +26,7 @@ import com.google.genai.types.Candidate;
 import com.google.genai.types.FinishReason;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.GenerateContentResponseUsageMetadata;
 import com.google.genai.types.HttpResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -90,7 +91,7 @@ final class ContinuationUtil {
 
   /**
    * Continues a stream into a new request whenever one stops before the model finished. The chunks
-   * of every request reach the caller unchanged, in order.
+   * of every request reach the caller in order, with usage metadata accumulated across requests.
    */
   static ResponseStream.Continuation<GenerateContentResponse> streamContinuation(
       @Nullable GenerateContentConfig config,
@@ -98,6 +99,8 @@ final class ContinuationUtil {
     return new ResponseStream.Continuation<GenerateContentResponse>() {
       private Optional<FinishReason> finishReason = Optional.empty();
       private Optional<byte[]> token = Optional.empty();
+      private Optional<GenerateContentResponseUsageMetadata> accumulatedUsage = Optional.empty();
+      private Optional<GenerateContentResponseUsageMetadata> hopUsage = Optional.empty();
 
       @Override
       public void observe(GenerateContentResponse chunk) {
@@ -121,7 +124,19 @@ final class ContinuationUtil {
 
       @Override
       public GenerateContentResponse transform(GenerateContentResponse chunk) {
-        return clearIntermediateFinishReason(chunk, token);
+        chunk = clearIntermediateFinishReason(chunk, token);
+        if (chunk.usageMetadata().isPresent()) {
+          GenerateContentResponseUsageMetadata chunkUsage = chunk.usageMetadata().get();
+          GenerateContentResponseUsageMetadata mergedUsage =
+              accumulatedUsage.isPresent()
+                  ? mergeUsageMetadata(accumulatedUsage.get(), chunkUsage)
+                  : chunkUsage;
+          hopUsage = Optional.of(mergedUsage);
+          if (mergedUsage != chunkUsage) {
+            chunk = chunk.toBuilder().usageMetadata(mergedUsage).build();
+          }
+        }
+        return chunk;
       }
 
       @Override
@@ -137,6 +152,10 @@ final class ContinuationUtil {
         byte[] resumeFrom = token.get();
         finishReason = Optional.empty();
         token = Optional.empty();
+        if (hopUsage.isPresent()) {
+          accumulatedUsage = hopUsage;
+        }
+        hopUsage = Optional.empty();
         return send.apply(withContinuationToken(config, resumeFrom));
       }
     };
@@ -182,10 +201,46 @@ final class ContinuationUtil {
     }
     GenerateContentResponse result =
         JsonSerializable.fromJsonNode(merged, GenerateContentResponse.class);
+    Optional<Integer> firstInitialPrompt =
+        responses.stream()
+            .map(GenerateContentResponse::initialPromptTokenCount)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .findFirst();
+    if (result.usageMetadata().isPresent() && firstInitialPrompt.isPresent()) {
+      result =
+          result.toBuilder()
+              .usageMetadata(
+                  result.usageMetadata().get().toBuilder()
+                      .firstHopPromptTokenCount(firstInitialPrompt.get())
+                      .build())
+              .build();
+    }
     if (!sdkHttpResponse.isPresent()) {
       return result;
     }
     return result.toBuilder().sdkHttpResponse(sdkHttpResponse.get()).build();
+  }
+
+  /**
+   * Merges usage metadata from a previous hop and the current chunk, summing token counts across
+   * hops while preserving the initial request's prompt token count.
+   */
+  static GenerateContentResponseUsageMetadata mergeUsageMetadata(
+      GenerateContentResponseUsageMetadata prev, GenerateContentResponseUsageMetadata curr) {
+    ObjectNode prevNode = JsonSerializable.objectMapper.valueToTree(prev);
+    ObjectNode currNode = JsonSerializable.objectMapper.valueToTree(curr);
+    ObjectNode mergedNode = mergeObjects(prevNode, currNode, true, ImmutableSet.of());
+    GenerateContentResponseUsageMetadata merged =
+        JsonSerializable.fromJsonNode(mergedNode, GenerateContentResponseUsageMetadata.class);
+    Optional<Integer> firstHop =
+        prev.initialPromptTokenCount().isPresent()
+            ? prev.initialPromptTokenCount()
+            : curr.initialPromptTokenCount();
+    if (firstHop.isPresent()) {
+      merged = merged.toBuilder().firstHopPromptTokenCount(firstHop.get()).build();
+    }
+    return merged;
   }
 
   private static CompletableFuture<List<GenerateContentResponse>> continueAsync(
@@ -284,7 +339,10 @@ final class ContinuationUtil {
     }
     if (prev.isObject() && curr.isObject()) {
       return mergeObjects(
-          (ObjectNode) prev, (ObjectNode) curr, key.equals("usageMetadata"), ImmutableSet.of());
+          (ObjectNode) prev,
+          (ObjectNode) curr,
+          sumAllNumbers || key.equals("usageMetadata"),
+          ImmutableSet.of());
     }
     if (prev.isArray() && curr.isArray()) {
       return mergeArrays(key, (ArrayNode) prev, (ArrayNode) curr);

@@ -445,6 +445,129 @@ public final class ContinuationUtilTest {
   }
 
   @Test
+  public void testStreamAccumulatesUsageMetadataAcrossRequests() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            // Hop 1: checkpoint chunk with usage, then stream drops mid-hop.
+            errorStream(
+                response("a", null, TOKEN_1).toBuilder()
+                    .usageMetadata(
+                        GenerateContentResponseUsageMetadata.builder()
+                            .promptTokenCount(10)
+                            .cachedContentTokenCount(4)
+                            .candidatesTokenCount(40)
+                            .thoughtsTokenCount(5)
+                            .totalTokenCount(55)
+                            .promptTokensDetails(modalityTokenCount(MediaModality.Known.TEXT, 10))
+                            .candidatesTokensDetails(
+                                modalityTokenCount(MediaModality.Known.TEXT, 40))
+                            .build())
+                    .build(),
+                new IllegalStateException("stream dropped")),
+            // Hop 2: chunk without usage, then chunk with CONTINUATION, TOKEN_2, and usage.
+            stream(
+                response("b"),
+                response("c", FinishReason.Known.CONTINUATION, TOKEN_2).toBuilder()
+                    .usageMetadata(
+                        GenerateContentResponseUsageMetadata.builder()
+                            .promptTokenCount(55)
+                            .cachedContentTokenCount(50)
+                            .candidatesTokenCount(60)
+                            .thoughtsTokenCount(3)
+                            .totalTokenCount(118)
+                            .promptTokensDetails(modalityTokenCount(MediaModality.Known.TEXT, 55))
+                            .candidatesTokensDetails(
+                                modalityTokenCount(MediaModality.Known.TEXT, 60))
+                            .build())
+                    .build()),
+            // Hop 3: finishes with STOP and final usage.
+            stream(
+                response("d", FinishReason.Known.STOP, null).toBuilder()
+                    .usageMetadata(
+                        GenerateContentResponseUsageMetadata.builder()
+                            .promptTokenCount(118)
+                            .cachedContentTokenCount(110)
+                            .candidatesTokenCount(25)
+                            .thoughtsTokenCount(2)
+                            .totalTokenCount(145)
+                            .promptTokensDetails(modalityTokenCount(MediaModality.Known.TEXT, 118))
+                            .candidatesTokensDetails(
+                                modalityTokenCount(MediaModality.Known.TEXT, 25))
+                            .build())
+                    .build()));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+    List<GenerateContentResponse> chunks = chunks(first);
+
+    assertEquals(ImmutableList.of("a", "b", "c", "d"), texts(chunks));
+
+    // Chunk 0 (Hop 1): unchanged initial hop usage
+    GenerateContentResponseUsageMetadata chunk0Usage = chunks.get(0).usageMetadata().get();
+    assertEquals(10, chunk0Usage.promptTokenCount().get());
+    assertEquals(10, chunk0Usage.initialPromptTokenCount().get());
+    assertEquals(10, chunks.get(0).initialPromptTokenCount().get());
+    assertEquals(4, chunk0Usage.cachedContentTokenCount().get());
+    assertEquals(40, chunk0Usage.candidatesTokenCount().get());
+    assertEquals(5, chunk0Usage.thoughtsTokenCount().get());
+    assertEquals(55, chunk0Usage.totalTokenCount().get());
+
+    // Chunk 1 (Hop 2 first chunk): no usageMetadata
+    assertFalse(chunks.get(1).usageMetadata().isPresent());
+    assertFalse(chunks.get(1).initialPromptTokenCount().isPresent());
+
+    // Chunk 2 (Hop 2 final chunk): accumulated across Hop 1 + Hop 2
+    GenerateContentResponseUsageMetadata chunk2Usage = chunks.get(2).usageMetadata().get();
+    assertEquals(65, chunk2Usage.promptTokenCount().get());
+    assertEquals(10, chunk2Usage.initialPromptTokenCount().get());
+    assertEquals(10, chunks.get(2).initialPromptTokenCount().get());
+    assertEquals(54, chunk2Usage.cachedContentTokenCount().get());
+    assertEquals(100, chunk2Usage.candidatesTokenCount().get());
+    assertEquals(8, chunk2Usage.thoughtsTokenCount().get());
+    assertEquals(173, chunk2Usage.totalTokenCount().get());
+
+    // Chunk 3 (Hop 3 final chunk): accumulated across Hop 1 + Hop 2 + Hop 3
+    GenerateContentResponseUsageMetadata finalUsage = chunks.get(3).usageMetadata().get();
+    assertEquals(183, finalUsage.promptTokenCount().get());
+    assertEquals(10, finalUsage.initialPromptTokenCount().get());
+    assertEquals(10, chunks.get(3).initialPromptTokenCount().get());
+    assertEquals(164, finalUsage.cachedContentTokenCount().get());
+    assertEquals(125, finalUsage.candidatesTokenCount().get());
+    assertEquals(10, finalUsage.thoughtsTokenCount().get());
+    assertEquals(318, finalUsage.totalTokenCount().get());
+    assertEquals(
+        ImmutableList.of(modalityTokenCount(MediaModality.Known.TEXT, 183)),
+        finalUsage.promptTokensDetails().get());
+    assertEquals(
+        ImmutableList.of(modalityTokenCount(MediaModality.Known.TEXT, 125)),
+        finalUsage.candidatesTokensDetails().get());
+  }
+
+  @Test
+  public void testInitialPromptTokenCount_defaultsToPromptTokenCountWhenNotContinued() {
+    GenerateContentResponse response =
+        response("Hello", FinishReason.Known.STOP, null).toBuilder()
+            .usageMetadata(
+                GenerateContentResponseUsageMetadata.builder()
+                    .promptTokenCount(42)
+                    .candidatesTokenCount(10)
+                    .totalTokenCount(52)
+                    .build())
+            .build();
+
+    assertEquals(42, response.initialPromptTokenCount().get());
+    assertEquals(42, response.usageMetadata().get().initialPromptTokenCount().get());
+    assertEquals(42, response.usageMetadata().get().promptTokenCount().get());
+  }
+
+  @Test
+  public void testInitialPromptTokenCount_isEmptyWhenUsageMetadataAbsent() {
+    GenerateContentResponse response = response("Hello", FinishReason.Known.STOP, null);
+
+    assertFalse(response.initialPromptTokenCount().isPresent());
+  }
+
+  @Test
   public void testJoin_rethrowsAnUncheckedFailureAsItself() {
     CompletableFuture<String> failed = new CompletableFuture<>();
     failed.completeExceptionally(new IllegalStateException("boom"));
@@ -495,34 +618,45 @@ public final class ContinuationUtilTest {
             .usageMetadata(
                 GenerateContentResponseUsageMetadata.builder()
                     .promptTokenCount(10)
+                    .cachedContentTokenCount(4)
                     .candidatesTokenCount(100)
                     .thoughtsTokenCount(5)
                     .totalTokenCount(115)
                     .promptTokensDetails(modalityTokenCount(MediaModality.Known.TEXT, 10))
+                    .cacheTokensDetails(modalityTokenCount(MediaModality.Known.TEXT, 4))
                     .candidatesTokensDetails(modalityTokenCount(MediaModality.Known.TEXT, 100)))
             .build();
     GenerateContentResponse second =
         response("world", FinishReason.Known.STOP, null).toBuilder()
             .usageMetadata(
                 GenerateContentResponseUsageMetadata.builder()
-                    .promptTokenCount(115)
+                    .promptTokenCount(110)
+                    .cachedContentTokenCount(100)
                     .candidatesTokenCount(50)
-                    .totalTokenCount(165)
+                    .totalTokenCount(160)
+                    .promptTokensDetails(modalityTokenCount(MediaModality.Known.TEXT, 110))
+                    .cacheTokensDetails(modalityTokenCount(MediaModality.Known.TEXT, 100))
                     .candidatesTokensDetails(
                         modalityTokenCount(MediaModality.Known.TEXT, 50),
                         modalityTokenCount(MediaModality.Known.IMAGE, 3)))
             .build();
 
-    GenerateContentResponseUsageMetadata usage =
-        ContinuationUtil.merge(ImmutableList.of(first, second)).usageMetadata().get();
+    GenerateContentResponse merged = ContinuationUtil.merge(ImmutableList.of(first, second));
+    GenerateContentResponseUsageMetadata usage = merged.usageMetadata().get();
 
-    assertEquals(125, usage.promptTokenCount().get());
+    assertEquals(120, usage.promptTokenCount().get());
+    assertEquals(10, merged.initialPromptTokenCount().get());
+    assertEquals(10, usage.initialPromptTokenCount().get());
+    assertEquals(104, usage.cachedContentTokenCount().get());
     assertEquals(150, usage.candidatesTokenCount().get());
     assertEquals(5, usage.thoughtsTokenCount().get());
-    assertEquals(280, usage.totalTokenCount().get());
+    assertEquals(275, usage.totalTokenCount().get());
     assertEquals(
-        ImmutableList.of(modalityTokenCount(MediaModality.Known.TEXT, 10)),
+        ImmutableList.of(modalityTokenCount(MediaModality.Known.TEXT, 120)),
         usage.promptTokensDetails().get());
+    assertEquals(
+        ImmutableList.of(modalityTokenCount(MediaModality.Known.TEXT, 104)),
+        usage.cacheTokensDetails().get());
     assertEquals(
         ImmutableList.of(
             modalityTokenCount(MediaModality.Known.TEXT, 150),

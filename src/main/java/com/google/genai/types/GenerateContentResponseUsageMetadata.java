@@ -21,8 +21,10 @@ package com.google.genai.types;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
@@ -459,6 +461,28 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
       return trafficType(new TrafficType(trafficType));
     }
 
+    /**
+     * Setter for firstHopPromptTokenCount.
+     *
+     * <p>firstHopPromptTokenCount: Output only. The prompt token count from the initial request
+     * prior to any continuation hops.
+     */
+    @CanIgnoreReturnValue
+    @InternalApi
+    public abstract Builder firstHopPromptTokenCount(Integer firstHopPromptTokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    @InternalApi
+    public abstract Builder firstHopPromptTokenCount(Optional<Integer> firstHopPromptTokenCount);
+
+    /** Clears the value of firstHopPromptTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFirstHopPromptTokenCount() {
+      return firstHopPromptTokenCount(Optional.empty());
+    }
+
     public abstract GenerateContentResponseUsageMetadata build();
   }
 
@@ -466,5 +490,24 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
   @ExcludeFromGeneratedCoverageReport
   public static GenerateContentResponseUsageMetadata fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerateContentResponseUsageMetadata.class);
+  }
+
+  /**
+   * Output only. The prompt token count from the initial request prior to any continuation hops, if
+   * this response was produced by multi-hop continuation.
+   */
+  @JsonIgnore
+  @InternalApi
+  public abstract Optional<Integer> firstHopPromptTokenCount();
+
+  /**
+   * Returns the prompt token count from the initial request prior to any continuation hops.
+   *
+   * <p>If this response was not produced by multi-hop continuation, or if no explicit initial count
+   * was set, this defaults to {@link #promptTokenCount()}.
+   */
+  @JsonIgnore
+  public Optional<Integer> initialPromptTokenCount() {
+    return firstHopPromptTokenCount().isPresent() ? firstHopPromptTokenCount() : promptTokenCount();
   }
 }
