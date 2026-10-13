@@ -36,7 +36,7 @@ import java.util.Optional;
  * 
  * <p>An image content block.
  */
-public class ImageContent implements FunctionResultSubcontent, Content, ThoughtSummaryContent {
+public class ImageContent implements Content, FunctionResultSubcontent, ThoughtSummaryContent {
     /**
      * The image content.
      */
