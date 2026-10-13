@@ -285,8 +285,6 @@ public abstract class ApiClient implements AutoCloseable {
       builder.readTimeout(Duration.ofMillis(0));
       builder.writeTimeout(Duration.ofMillis(0));
 
-      httpOptions.timeout().ifPresent(timeout -> builder.callTimeout(Duration.ofMillis(timeout)));
-
       clientOptions.ifPresent(
           options -> {
             Dispatcher dispatcher = new Dispatcher();
@@ -301,6 +299,8 @@ public abstract class ApiClient implements AutoCloseable {
                     });
           });
     }
+
+    httpOptions.timeout().ifPresent(timeout -> builder.callTimeout(Duration.ofMillis(timeout)));
 
     HttpRetryOptions retryOptions =
         httpOptions.retryOptions().orElse(HttpRetryOptions.builder().build());
@@ -725,7 +725,7 @@ public abstract class ApiClient implements AutoCloseable {
     httpOptionsToApply.extraBody().ifPresent(mergedHttpOptionsBuilder::extraBody);
     httpOptionsToApply.retryOptions().ifPresent(mergedHttpOptionsBuilder::retryOptions);
 
-    if (httpOptionsToApply.headers().isPresent()) {
+    if (httpOptionsToApply.headers().isPresent() || httpOptionsToApply.timeout().isPresent()) {
       Stream<Map.Entry<String, String>> headersStream =
           Stream.concat(
               Stream.concat(

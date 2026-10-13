@@ -1024,11 +1024,16 @@ public class HttpApiClientTest {
 
     assertEquals(httpOptions.apiVersion(), client.httpOptions.apiVersion());
     assertEquals(httpOptions.timeout(), client.httpOptions.timeout());
-    // Default values for baseUrl and apiVersion are used.
+    // Default values for baseUrl and headers are used, plus X-Server-Timeout from timeout.
     assertEquals(defaultHttpOptionsMLDev.baseUrl(), client.httpOptions.baseUrl());
-    assertEquals(defaultHttpOptionsMLDev.headers(), client.httpOptions.headers());
-    // Defaults to having no timeout.
-    assertFalse(client.httpOptions.headers().get().containsKey("X-Server-Timeout"));
+    assertTrue(
+        client
+            .httpOptions
+            .headers()
+            .orElse(ImmutableMap.of())
+            .entrySet()
+            .containsAll(defaultHttpOptionsMLDev.headers().orElse(ImmutableMap.of()).entrySet()));
+    assertEquals("5", client.httpOptions.headers().get().get("X-Server-Timeout"));
   }
 
   @Test
@@ -1045,11 +1050,29 @@ public class HttpApiClientTest {
 
     assertEquals(httpOptions.apiVersion(), client.httpOptions.apiVersion());
     assertEquals(httpOptions.timeout(), client.httpOptions.timeout());
-    // Default values for baseUrl and apiVersion are used.
+    // Default values for baseUrl and headers are used, plus X-Server-Timeout from timeout.
     assertEquals(defaultHttpOptionsVertex.baseUrl(), client.httpOptions.baseUrl());
-    assertEquals(defaultHttpOptionsVertex.headers(), client.httpOptions.headers());
-    // Defaults to having no timeout.
-    assertFalse(client.httpOptions.headers().get().containsKey("X-Server-Timeout"));
+    assertTrue(
+        client
+            .httpOptions
+            .headers()
+            .orElse(ImmutableMap.of())
+            .entrySet()
+            .containsAll(defaultHttpOptionsVertex.headers().orElse(ImmutableMap.of()).entrySet()));
+    assertEquals("5", client.httpOptions.headers().get().get("X-Server-Timeout"));
+  }
+
+  @Test
+  public void testBuildRequestWithPerRequestTimeoutSetsServerTimeoutHeader() throws Exception {
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    HttpOptions requestHttpOptions = HttpOptions.builder().timeout(600000).build();
+
+    Request request =
+        client.buildRequest(
+            "POST", TEST_PATH, TEST_REQUEST_JSON, Optional.of(requestHttpOptions));
+
+    assertEquals("600", request.header("X-Server-Timeout"));
   }
 
   @Test

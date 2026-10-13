@@ -63,7 +63,7 @@ public class SpeakeasyHTTPClient implements HTTPClient {
     private final OkHttpClient client = new OkHttpClient.Builder()
             .followRedirects(false)
             .followSslRedirects(false)
-            .readTimeout(300, TimeUnit.SECONDS)
+            .readTimeout(0, TimeUnit.SECONDS)
             .build();
 
     private static final Set<String> STREAMING_MEDIA_TYPES =
