@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.77.0](https://github.com/googleapis/java-genai/compare/v1.76.0...v1.77.0) (2026-10-13)
+
+
+### Features
+
+* accumulate streaming continuation usage metadata and expose initialPromptTokenCount ([889612d](https://github.com/googleapis/java-genai/commit/889612db8cd1e7da649b7026c64c3a6ac2fa045f))
+* Add `continuation_token` to the Interactions `interaction.status_update` event. ([ac7a064](https://github.com/googleapis/java-genai/commit/ac7a06496a6b5f22bb2065cae8359683cae65cc2))
+* Add a CONTINUATION_REQUIRED Interaction status ([654bbe9](https://github.com/googleapis/java-genai/commit/654bbe9820c92f5ee76c7b05929ee29fa2b4214b))
+* add automatic continuation to generateContent and chat sessions ([308a0bb](https://github.com/googleapis/java-genai/commit/308a0bb625fe1169351c44f006093b9105e5d15c))
+* add billable token counts fields ([67f96d6](https://github.com/googleapis/java-genai/commit/67f96d6cc53cd53e9de2afff3bcee52513441bd3))
+* Add startOffset/endOffset to Transcription and interimTranscriptTimestampEnabled to RealtimeInputConfig ([2347e26](https://github.com/googleapis/java-genai/commit/2347e267945652b473a9c04e3935000944a630b1))
+* Add usage in InteractionStatusUpdate events ([05d8572](https://github.com/googleapis/java-genai/commit/05d8572654179777c273efc8a70f95a0bc1fb36a))
+* **cli:** update Speakeasy generator to v2.948.0, bump CLI to v0.4.2, and apply CLI overlay fixes ([1f1a002](https://github.com/googleapis/java-genai/commit/1f1a002ab6a9bef4aba1c8de71bc6765f630802b))
+
+
+### Bug Fixes
+
+* clear intermediate CONTINUATION finishReason in streaming continuation ([72a2c84](https://github.com/googleapis/java-genai/commit/72a2c84fab5002ebd6613b87058af1e13fd78055))
+* Raise default HTTP timeouts so long-running requests aren't killed client-side ([48f896e](https://github.com/googleapis/java-genai/commit/48f896e9596b00355e68887a30f32b98c7fbec9f))
+* resume streaming generation from the latest checkpoint continuation token on mid-stream errors or cutoffs ([2207ec9](https://github.com/googleapis/java-genai/commit/2207ec9d267d9653b302ca32d597ce494acc5b6c))
+* Update EnvironmentConfig.env schema to map keys to EnvVar or string. ([10b3414](https://github.com/googleapis/java-genai/commit/10b341481f7767ebe107c57614f3fc5e395f0379))
+
 ## [1.76.0](https://github.com/googleapis/java-genai/compare/v1.75.0...v1.76.0) (2026-10-07)
 
 
