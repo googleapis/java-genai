@@ -66,6 +66,7 @@ public class Model {
     public static final Model GEMINI36_FLASH = new Model("gemini-3.6-flash");
     public static final Model GEMINI37_FLASH = new Model("gemini-3.7-flash");
     public static final Model GEMINI38_FLASH = new Model("gemini-3.8-flash");
+    public static final Model GEMINI4_ARGON = new Model("gemini-4-argon");
     public static final Model GEMINI38_FLASH_TTS = new Model("gemini-3.8-flash-tts");
     public static final Model GEMINI38_FLASH_LITE_TTS = new Model("gemini-3.8-flash-lite-tts");
     public static final Model LYRIA3_CLIP_PREVIEW = new Model("lyria-3-clip-preview");
@@ -172,6 +173,7 @@ public class Model {
         map.put("gemini-3.6-flash", GEMINI36_FLASH);
         map.put("gemini-3.7-flash", GEMINI37_FLASH);
         map.put("gemini-3.8-flash", GEMINI38_FLASH);
+        map.put("gemini-4-argon", GEMINI4_ARGON);
         map.put("gemini-3.8-flash-tts", GEMINI38_FLASH_TTS);
         map.put("gemini-3.8-flash-lite-tts", GEMINI38_FLASH_LITE_TTS);
         map.put("lyria-3-clip-preview", LYRIA3_CLIP_PREVIEW);
@@ -210,6 +212,7 @@ public class Model {
         map.put("gemini-3.6-flash", ModelEnum.GEMINI36_FLASH);
         map.put("gemini-3.7-flash", ModelEnum.GEMINI37_FLASH);
         map.put("gemini-3.8-flash", ModelEnum.GEMINI38_FLASH);
+        map.put("gemini-4-argon", ModelEnum.GEMINI4_ARGON);
         map.put("gemini-3.8-flash-tts", ModelEnum.GEMINI38_FLASH_TTS);
         map.put("gemini-3.8-flash-lite-tts", ModelEnum.GEMINI38_FLASH_LITE_TTS);
         map.put("lyria-3-clip-preview", ModelEnum.LYRIA3_CLIP_PREVIEW);
@@ -249,6 +252,7 @@ public class Model {
         GEMINI36_FLASH("gemini-3.6-flash"),
         GEMINI37_FLASH("gemini-3.7-flash"),
         GEMINI38_FLASH("gemini-3.8-flash"),
+        GEMINI4_ARGON("gemini-4-argon"),
         GEMINI38_FLASH_TTS("gemini-3.8-flash-tts"),
         GEMINI38_FLASH_LITE_TTS("gemini-3.8-flash-lite-tts"),
         LYRIA3_CLIP_PREVIEW("lyria-3-clip-preview"),
