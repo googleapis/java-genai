@@ -93,6 +93,8 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import okhttp3.Headers;
 import okhttp3.ResponseBody;
 
@@ -7137,6 +7139,49 @@ public final class Models {
   private static final AtomicBoolean loggedEditImageWarning = new AtomicBoolean(false);
   private static final AtomicBoolean loggedGenerateVideosVideoWarning = new AtomicBoolean(false);
   private static final AtomicBoolean loggedGenerateVideosWarning = new AtomicBoolean(false);
+  private static final AtomicBoolean loggedTemperatureWarning = new AtomicBoolean(false);
+  private static final AtomicBoolean loggedTopPWarning = new AtomicBoolean(false);
+  private static final AtomicBoolean loggedTopKWarning = new AtomicBoolean(false);
+  private static final AtomicBoolean loggedThinkingBudgetWarning = new AtomicBoolean(false);
+  private static final Pattern GEMINI_VERSION_PATTERN =
+      Pattern.compile("^gemini-(\\d+)(?:\\.(\\d+))?(?:-|$)");
+
+  static boolean isGemini36OrNewer(String model) {
+    if (model == null || model.isEmpty()) {
+      return false;
+    }
+    int lastSlash = model.lastIndexOf('/');
+    String modelId = (lastSlash >= 0 ? model.substring(lastSlash + 1) : model).toLowerCase();
+    Matcher matcher = GEMINI_VERSION_PATTERN.matcher(modelId);
+    if (!matcher.find()) {
+      return false;
+    }
+    int major = Integer.parseInt(matcher.group(1));
+    int minor = matcher.group(2) != null ? Integer.parseInt(matcher.group(2)) : 0;
+    return major > 3 || (major == 3 && minor >= 6);
+  }
+
+  static void warnUnsupportedParameters(String model, GenerateContentConfig config) {
+    if (config == null || !isGemini36OrNewer(model)) {
+      return;
+    }
+    if (config.temperature().isPresent() && loggedTemperatureWarning.compareAndSet(false, true)) {
+      logger.warning("temperature is not supported on Gemini 3.6 and newer models and is ignored.");
+    }
+    if (config.topP().isPresent() && loggedTopPWarning.compareAndSet(false, true)) {
+      logger.warning("top_p is not supported on Gemini 3.6 and newer models and is ignored.");
+    }
+    if (config.topK().isPresent() && loggedTopKWarning.compareAndSet(false, true)) {
+      logger.warning("top_k is not supported on Gemini 3.6 and newer models and is ignored.");
+    }
+    if (config.thinkingConfig().isPresent()
+        && config.thinkingConfig().get().thinkingBudget().isPresent()
+        && loggedThinkingBudgetWarning.compareAndSet(false, true)) {
+      logger.warning(
+          "thinking_budget is not supported on Gemini 3.6 and newer models and is ignored."
+              + " Please use thinking_level instead.");
+    }
+  }
 
   /**
    * Generates content given a GenAI model and a list of content.
@@ -7155,6 +7200,7 @@ public final class Models {
    */
   public GenerateContentResponse generateContent(
       String model, List<Content> contents, GenerateContentConfig config) {
+    warnUnsupportedParameters(model, config);
     ImmutableList<Integer> incompatibleToolsIndexes =
         AfcUtil.findAfcIncompatibleToolIndexes(config);
     GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
@@ -7277,6 +7323,7 @@ public final class Models {
    */
   public ResponseStream<GenerateContentResponse> generateContentStream(
       String model, List<Content> contents, GenerateContentConfig config) {
+    warnUnsupportedParameters(model, config);
     GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
     if (AfcUtil.hasCallableTool(config) && !AfcUtil.shouldDisableAfc(transformedConfig)) {
       logger.warning(

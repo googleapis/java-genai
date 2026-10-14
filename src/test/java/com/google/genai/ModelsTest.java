@@ -60,7 +60,9 @@ import com.google.genai.types.StyleReferenceConfig;
 import com.google.genai.types.StyleReferenceImage;
 import com.google.genai.types.SubjectReferenceConfig;
 import com.google.genai.types.SubjectReferenceImage;
+import com.google.genai.types.ThinkingConfig;
 import com.google.genai.types.Tool;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -70,6 +72,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
@@ -930,6 +936,87 @@ public class ModelsTest {
 
     assertEquals(ImmutableList.of("Hello "), texts);
     sentBodies(apiClient, 1);
+  }
+
+  private static void resetUnsupportedParameterWarnings() throws Exception {
+    for (String fieldName :
+        new String[] {
+          "loggedTemperatureWarning",
+          "loggedTopPWarning",
+          "loggedTopKWarning",
+          "loggedThinkingBudgetWarning"
+        }) {
+      Field field = Models.class.getDeclaredField(fieldName);
+      field.setAccessible(true);
+      ((AtomicBoolean) field.get(null)).set(false);
+    }
+  }
+
+  @Test
+  public void testIsGemini36OrNewer() {
+    assertTrue(Models.isGemini36OrNewer("gemini-3.6-flash"));
+    assertTrue(Models.isGemini36OrNewer("publishers/google/models/gemini-3.6-pro"));
+    assertTrue(Models.isGemini36OrNewer("gemini-3.8-flash"));
+
+    assertFalse(Models.isGemini36OrNewer("gemini-3.1-pro"));
+    assertFalse(Models.isGemini36OrNewer("gemini-3-flash"));
+    assertFalse(Models.isGemini36OrNewer("gemini-2.5-flash"));
+    assertFalse(Models.isGemini36OrNewer("gemini-flash-latest"));
+    assertFalse(Models.isGemini36OrNewer(""));
+    assertFalse(Models.isGemini36OrNewer(null));
+  }
+
+  @Test
+  public void testWarnUnsupportedParameters_logsOnceOnGemini36AndNewer() throws Exception {
+    resetUnsupportedParameterWarnings();
+    Logger logger = Logger.getLogger(Models.class.getName());
+    List<String> messages = new ArrayList<>();
+    Handler handler =
+        new Handler() {
+          @Override
+          public void publish(LogRecord record) {
+            messages.add(record.getMessage());
+          }
+
+          @Override
+          public void flush() {}
+
+          @Override
+          public void close() {}
+        };
+    logger.addHandler(handler);
+    try {
+      GenerateContentConfig config =
+          GenerateContentConfig.builder()
+              .temperature(0.5f)
+              .topP(0.9f)
+              .topK(40f)
+              .thinkingConfig(ThinkingConfig.builder().thinkingBudget(1024).build())
+              .build();
+
+      // Older model does not warn or consume the one-time flags.
+      Models.warnUnsupportedParameters("gemini-3.1-pro", config);
+      assertTrue(messages.isEmpty());
+
+      // First call on Gemini 3.6+ logs all 4 warnings.
+      Models.warnUnsupportedParameters("gemini-3.6-flash", config);
+      assertEquals(
+          ImmutableList.of(
+              "temperature is not supported on Gemini 3.6 and newer models and is ignored.",
+              "top_p is not supported on Gemini 3.6 and newer models and is ignored.",
+              "top_k is not supported on Gemini 3.6 and newer models and is ignored.",
+              "thinking_budget is not supported on Gemini 3.6 and newer models and is ignored."
+                  + " Please use thinking_level instead."),
+          messages);
+
+      // Second call does not log again.
+      messages.clear();
+      Models.warnUnsupportedParameters("gemini-3.6-flash", config);
+      assertTrue(messages.isEmpty());
+    } finally {
+      logger.removeHandler(handler);
+      resetUnsupportedParameterWarnings();
+    }
   }
 
   public static String describeTopic(String topic) {

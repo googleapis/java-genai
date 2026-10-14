@@ -696,6 +696,7 @@ public final class AsyncModels {
    */
   public CompletableFuture<GenerateContentResponse> generateContent(
       String model, List<Content> contents, GenerateContentConfig config) {
+    Models.warnUnsupportedParameters(model, config);
     ImmutableList<Integer> incompatibleToolsIndexes =
         AfcUtil.findAfcIncompatibleToolIndexes(config);
     GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
@@ -800,6 +801,7 @@ public final class AsyncModels {
    */
   public CompletableFuture<ResponseStream<GenerateContentResponse>> generateContentStream(
       String model, List<Content> contents, GenerateContentConfig config) {
+    Models.warnUnsupportedParameters(model, config);
     GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
     if (AfcUtil.hasCallableTool(config) && !AfcUtil.shouldDisableAfc(transformedConfig)) {
       logger.warning(
