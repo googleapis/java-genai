@@ -475,15 +475,15 @@ public final class TableTest {
    * Retry options for the shared integration tests, applied to every request the test client makes
    * so that a transient 5xx or 429 does not fail the nightly.
    *
-   * <p>Deliberately shorter than the SDK defaults: a multistep test retries per request, so the
-   * backoff has to stay well inside the test timeout. Keep aligned with conftest.py in the Python
-   * SDK tests.
+   * <p>The max delay is deliberately capped below the SDK default: a multistep test retries per
+   * request, so the backoff (about 30 s per request) has to stay well inside the test timeout. Keep
+   * aligned with conftest.py in the Python SDK tests.
    */
   private static final HttpRetryOptions SHARED_TEST_RETRY_OPTIONS =
       HttpRetryOptions.builder()
-          .attempts(3)
-          .initialDelay(1.0)
-          .maxDelay(10.0)
+          .attempts(5)
+          .initialDelay(2.0)
+          .maxDelay(16.0)
           .expBase(2.0)
           .httpStatusCodes(ImmutableList.of(408, 429, 500, 502, 503, 504))
           .build();
