@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.78.0](https://github.com/googleapis/java-genai/compare/v1.77.0...v1.78.0) (2026-10-14)
+
+
+### Features
+
+* **interactions:** add gemini-4-argon to Model enum ([e10046d](https://github.com/googleapis/java-genai/commit/e10046dbe7e5b40980bb611cd7264c11093a2dc1))
+
+
+### Bug Fixes
+
+* fix the grounding metadata merging for automatic continuation in generate content and generate content stream ([f2e7cee](https://github.com/googleapis/java-genai/commit/f2e7cee154efc79051f361e5692a065999e36c74))
+* make continuation streams retry dropped hops, stop on prompt_feedback, and keep real errors in generate_content ([8858e04](https://github.com/googleapis/java-genai/commit/8858e04a37d6772f08ce10220034a5a3265bd69c))
+
 ## [1.77.0](https://github.com/googleapis/java-genai/compare/v1.76.0...v1.77.0) (2026-10-13)
 
 
