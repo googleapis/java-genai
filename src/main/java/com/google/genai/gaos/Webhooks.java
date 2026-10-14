@@ -292,12 +292,11 @@ public class Webhooks {
      * Sends a ping event to a Webhook.
      * 
      * @param id Required. The ID of the webhook to ping.
-     * @param body Request message for WebhookService.PingWebhook.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public PingWebhookResponse ping(@Nonnull String id, @Nonnull PingWebhookRequest body) {
-        return ping(null, id, body,
+    public PingWebhookResponse ping(@Nonnull String id) {
+        return ping(null, id, null,
             null);
     }
 
@@ -313,7 +312,7 @@ public class Webhooks {
      */
     public PingWebhookResponse ping(
             @Nullable String apiVersion, @Nonnull String id,
-            @Nonnull PingWebhookRequest body, @Nullable Options options) {
+            @Nullable PingWebhookRequest body, @Nullable Options options) {
         com.google.genai.gaos.models.operations.PingWebhookRequest request = new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
         RequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation
               = new PingWebhook.Sync(sdkConfiguration, options, _headers);

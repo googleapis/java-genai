@@ -307,12 +307,11 @@ public class AsyncWebhooks {
      * Sends a ping event to a Webhook.
      * 
      * @param id Required. The ID of the webhook to ping.
-     * @param body Request message for WebhookService.PingWebhook.
      * @return {@code CompletableFuture<PingWebhookResponse>} - The async response
      */
-    public CompletableFuture<PingWebhookResponse> ping(@Nonnull String id, @Nonnull PingWebhookRequest body) {
+    public CompletableFuture<PingWebhookResponse> ping(@Nonnull String id) {
         return ping(
-                null, id, body,
+                null, id, null,
                 null);
     }
 
@@ -327,7 +326,7 @@ public class AsyncWebhooks {
      */
     public CompletableFuture<PingWebhookResponse> ping(
             @Nullable String apiVersion, @Nonnull String id,
-            @Nonnull PingWebhookRequest body, @Nullable Options options) {
+            @Nullable PingWebhookRequest body, @Nullable Options options) {
         com.google.genai.gaos.models.operations.PingWebhookRequest request = new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
         AsyncRequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation
               = new PingWebhook.Async(

@@ -43,7 +43,7 @@ public class PingWebhookRequest {
     private String id;
 
     /**
-     * Required. The request body.
+     * The request body.
      */
     @SpeakeasyMetadata("request:mediaType=application/json")
     private com.google.genai.gaos.models.webhooks.PingWebhookRequest body;
@@ -52,18 +52,16 @@ public class PingWebhookRequest {
     public PingWebhookRequest(
             @Nullable String apiVersion,
             @Nonnull String id,
-            @Nonnull com.google.genai.gaos.models.webhooks.PingWebhookRequest body) {
+            @Nullable com.google.genai.gaos.models.webhooks.PingWebhookRequest body) {
         this.apiVersion = apiVersion;
         this.id = Optional.ofNullable(id)
             .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
-        this.body = Optional.ofNullable(body)
-            .orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
+        this.body = body;
     }
     
     public PingWebhookRequest(
-            @Nonnull String id,
-            @Nonnull com.google.genai.gaos.models.webhooks.PingWebhookRequest body) {
-        this(null, id, body);
+            @Nonnull String id) {
+        this(null, id, null);
     }
 
     /**
@@ -81,7 +79,7 @@ public class PingWebhookRequest {
     }
 
     /**
-     * Required. The request body.
+     * The request body.
      */
     public Optional<com.google.genai.gaos.models.webhooks.PingWebhookRequest> body() {
         return Optional.ofNullable(this.body);
@@ -111,10 +109,10 @@ public class PingWebhookRequest {
 
 
     /**
-     * Required. The request body.
+     * The request body.
      */
-    public PingWebhookRequest withBody(@Nonnull com.google.genai.gaos.models.webhooks.PingWebhookRequest body) {
-        this.body = Utils.checkNotNull(body, "body");
+    public PingWebhookRequest withBody(@Nullable com.google.genai.gaos.models.webhooks.PingWebhookRequest body) {
+        this.body = body;
         return this;
     }
 
@@ -178,10 +176,10 @@ public class PingWebhookRequest {
         }
 
         /**
-         * Required. The request body.
+         * The request body.
          */
-        public Builder body(@Nonnull com.google.genai.gaos.models.webhooks.PingWebhookRequest body) {
-            this.body = Utils.checkNotNull(body, "body");
+        public Builder body(@Nullable com.google.genai.gaos.models.webhooks.PingWebhookRequest body) {
+            this.body = body;
             return this;
         }
 
