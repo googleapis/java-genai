@@ -167,8 +167,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Sends a ping event to a Webhook.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="models/operations/async/PingWebhookResponse.html" title="class in com.google.genai.gaos.models.operations.async">PingWebhookResponse</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ping(java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest)" class="member-name-link">ping</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- <a href="models/webhooks/PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ping(java.lang.String)" class="member-name-link">ping</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sends a ping event to a Webhook.</div>
 </div>
@@ -501,17 +500,14 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="ping(java.lang.String,com.google.genai.gaos.models.webhooks.PingWebhookRequest)">
+<section class="detail" id="ping(java.lang.String)">
 <h3>ping</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="models/operations/async/PingWebhookResponse.html" title="class in com.google.genai.gaos.models.operations.async">PingWebhookResponse</a>&gt;</span>&nbsp;<span class="element-name">ping</span><wbr><span class="parameters">(@Nonnull
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- @Nonnull
- <a href="models/webhooks/PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body)</span></div>
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
 <div class="block">Sends a ping event to a Webhook.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>id</code> - Required. The ID of the webhook to ping.</dd>
-<dd><code>body</code> - Request message for WebhookService.PingWebhook.</dd>
 <dt>Returns:</dt>
 <dd><code>CompletableFuture&lt;PingWebhookResponse&gt;</code> - The async response</dd>
 </dl>
@@ -524,7 +520,7 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;apiVersion,
  @Nonnull
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- @Nonnull
+ @Nullable
  <a href="models/webhooks/PingWebhookRequest.html" title="class in com.google.genai.gaos.models.webhooks">PingWebhookRequest</a>&nbsp;body,
  @Nullable
  <a href="utils/Options.html" title="class in com.google.genai.gaos.utils">Options</a>&nbsp;options)</span></div>
