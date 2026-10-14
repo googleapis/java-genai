@@ -35,7 +35,11 @@ import com.google.genai.types.FinishReason;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.GenerateContentResponseUsageMetadata;
+import com.google.genai.types.GroundingChunk;
+import com.google.genai.types.GroundingChunkImage;
+import com.google.genai.types.GroundingChunkWeb;
 import com.google.genai.types.GroundingMetadata;
+import com.google.genai.types.GroundingSupport;
 import com.google.genai.types.HarmCategory;
 import com.google.genai.types.HarmProbability;
 import com.google.genai.types.HttpResponse;
@@ -45,6 +49,7 @@ import com.google.genai.types.MediaModality;
 import com.google.genai.types.ModalityTokenCount;
 import com.google.genai.types.Part;
 import com.google.genai.types.SafetyRating;
+import com.google.genai.types.Segment;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -609,6 +614,476 @@ public final class ContinuationUtilTest {
         merged.candidates().get().get(0).citationMetadata().get().citations().get().stream()
             .map(citation -> citation.uri().get())
             .collect(Collectors.toList()));
+  }
+
+  @Test
+  public void testMerge_shiftsGroundingSupportChunkAndPartIndices() {
+    GenerateContentResponse first =
+        GenerateContentResponse.builder()
+            .candidates(
+                Candidate.builder()
+                    .content(
+                        Content.builder()
+                            .role("model")
+                            .parts(
+                                Part.builder().text("Thinking...").thought(true).build(),
+                                Part.builder().text("part 1 ").build()))
+                    .finishReason(FinishReason.Known.CONTINUATION)
+                    .continuationToken(TOKEN_1)
+                    .groundingMetadata(
+                        GroundingMetadata.builder()
+                            .groundingChunks(
+                                GroundingChunk.builder()
+                                    .image(
+                                        GroundingChunkImage.builder()
+                                            .imageUri("https://img1.example/a.png")
+                                            .sourceUri("https://source1.example/img")
+                                            .title("Image 1")
+                                            .domain("source1.example"))
+                                    .build(),
+                                GroundingChunk.builder()
+                                    .web(
+                                        GroundingChunkWeb.builder()
+                                            .uri("https://source1.example")
+                                            .title("Source 1"))
+                                    .build())
+                            .groundingSupports(
+                                GroundingSupport.builder()
+                                    .groundingChunkIndices(0, 1)
+                                    .confidenceScores(0.9f, 0.8f)
+                                    .segment(
+                                        Segment.builder()
+                                            .partIndex(1)
+                                            .startIndex(0)
+                                            .endIndex(7)
+                                            .text("part 1 "))
+                                    .build())))
+            .build();
+    GenerateContentResponse second =
+        GenerateContentResponse.builder()
+            .candidates(
+                Candidate.builder()
+                    .content(
+                        Content.builder()
+                            .role("model")
+                            .parts(Part.builder().text("part 2 ").build()))
+                    .finishReason(FinishReason.Known.STOP)
+                    .groundingMetadata(
+                        GroundingMetadata.builder()
+                            .groundingChunks(
+                                GroundingChunk.builder()
+                                    .web(
+                                        GroundingChunkWeb.builder()
+                                            .uri("https://source2.example")
+                                            .title("Source 2"))
+                                    .build())
+                            .groundingSupports(
+                                GroundingSupport.builder()
+                                    .groundingChunkIndices(0)
+                                    .confidenceScores(0.95f)
+                                    .segment(
+                                        Segment.builder()
+                                            .partIndex(0)
+                                            .startIndex(0)
+                                            .endIndex(7)
+                                            .text("part 2 "))
+                                    .build(),
+                                GroundingSupport.builder()
+                                    .groundingChunkIndices(0)
+                                    .segment(
+                                        Segment.builder().startIndex(0).endIndex(7).text("part 2 "))
+                                    .build())))
+            .build();
+
+    GenerateContentResponse merged = ContinuationUtil.merge(ImmutableList.of(first, second));
+    Candidate cand = merged.candidates().get().get(0);
+    GroundingMetadata gm = cand.groundingMetadata().get();
+
+    assertEquals(3, gm.groundingChunks().get().size());
+    assertEquals(3, gm.groundingSupports().get().size());
+
+    GroundingSupport s0 = gm.groundingSupports().get().get(0);
+    assertEquals(ImmutableList.of(0, 1), s0.groundingChunkIndices().get());
+    assertEquals(1, s0.segment().get().partIndex().get());
+
+    GroundingSupport s1 = gm.groundingSupports().get().get(1);
+    assertEquals(ImmutableList.of(2), s1.groundingChunkIndices().get());
+    assertEquals(2, s1.segment().get().partIndex().get());
+    assertEquals(
+        "https://source2.example",
+        gm.groundingChunks()
+            .get()
+            .get(s1.groundingChunkIndices().get().get(0))
+            .web()
+            .get()
+            .uri()
+            .get());
+    assertEquals(
+        "part 2 ",
+        cand.content().get().parts().get().get(s1.segment().get().partIndex().get()).text().get());
+
+    GroundingSupport s2 = gm.groundingSupports().get().get(2);
+    assertEquals(ImmutableList.of(2), s2.groundingChunkIndices().get());
+    assertEquals(2, s2.segment().get().partIndex().get());
+  }
+
+  @Test
+  public void testMerge_groundingSupportsCornerCases() {
+    GenerateContentResponse hop1 =
+        GenerateContentResponse.builder()
+            .candidates(
+                ImmutableList.of(
+                    Candidate.builder()
+                        .index(0)
+                        .content(
+                            Content.builder()
+                                .role("model")
+                                .parts(
+                                    ImmutableList.of(
+                                        Part.fromText("c0-h1-p0 "), Part.fromText("c0-h1-p1 "))))
+                        .finishReason(FinishReason.Known.CONTINUATION)
+                        .continuationToken(TOKEN_1)
+                        .build(),
+                    Candidate.builder()
+                        .index(1)
+                        .content(
+                            Content.builder()
+                                .role("model")
+                                .parts(ImmutableList.of(Part.fromText("c1-h1-p0 "))))
+                        .groundingMetadata(
+                            GroundingMetadata.builder()
+                                .groundingChunks(
+                                    ImmutableList.of(
+                                        GroundingChunk.builder()
+                                            .web(
+                                                GroundingChunkWeb.builder()
+                                                    .uri("https://c1-s0.example"))
+                                            .build())))
+                        .finishReason(FinishReason.Known.CONTINUATION)
+                        .continuationToken(TOKEN_1)
+                        .build()))
+            .build();
+
+    GenerateContentResponse hop2 =
+        GenerateContentResponse.builder()
+            .candidates(
+                ImmutableList.of(
+                    Candidate.builder()
+                        .index(0)
+                        .content(
+                            Content.builder()
+                                .role("model")
+                                .parts(ImmutableList.of(Part.fromText("c0-h2-p0 "))))
+                        .groundingMetadata(
+                            GroundingMetadata.builder()
+                                .groundingChunks(
+                                    ImmutableList.of(
+                                        GroundingChunk.builder()
+                                            .web(
+                                                GroundingChunkWeb.builder()
+                                                    .uri("https://c0-s0.example"))
+                                            .build(),
+                                        GroundingChunk.builder()
+                                            .web(
+                                                GroundingChunkWeb.builder()
+                                                    .uri("https://c0-s1.example"))
+                                            .build())))
+                        .finishReason(FinishReason.Known.CONTINUATION)
+                        .continuationToken(TOKEN_2)
+                        .build(),
+                    Candidate.builder()
+                        .index(1)
+                        .content(
+                            Content.builder()
+                                .role("model")
+                                .parts(ImmutableList.of(Part.fromText("c1-h2-p0 "))))
+                        .groundingMetadata(
+                            GroundingMetadata.builder()
+                                .groundingChunks(
+                                    ImmutableList.of(
+                                        GroundingChunk.builder()
+                                            .web(
+                                                GroundingChunkWeb.builder()
+                                                    .uri("https://c1-s1.example"))
+                                            .build()))
+                                .groundingSupports(
+                                    ImmutableList.of(
+                                        GroundingSupport.builder()
+                                            .groundingChunkIndices(0)
+                                            .segment(
+                                                Segment.builder().partIndex(0).text("c1-h2-p0 "))
+                                            .build())))
+                        .finishReason(FinishReason.Known.STOP)
+                        .build()))
+            .build();
+
+    GenerateContentResponse hop3 =
+        GenerateContentResponse.builder()
+            .candidates(
+                ImmutableList.of(
+                    Candidate.builder()
+                        .index(0)
+                        .content(
+                            Content.builder()
+                                .role("model")
+                                .parts(ImmutableList.of(Part.fromText("c0-h3-p0."))))
+                        .groundingMetadata(
+                            GroundingMetadata.builder()
+                                .groundingChunks(
+                                    ImmutableList.of(
+                                        GroundingChunk.builder()
+                                            .web(
+                                                GroundingChunkWeb.builder()
+                                                    .uri("https://c0-s2.example"))
+                                            .build()))
+                                .groundingSupports(
+                                    ImmutableList.of(
+                                        GroundingSupport.builder().groundingChunkIndices(0).build(),
+                                        GroundingSupport.builder()
+                                            .segment(
+                                                Segment.builder().partIndex(0).text("c0-h3-p0."))
+                                            .build(),
+                                        GroundingSupport.builder()
+                                            .groundingChunkIndices(0)
+                                            .segment(
+                                                Segment.builder().partIndex(0).text("c0-h3-p0."))
+                                            .build())))
+                        .finishReason(FinishReason.Known.STOP)
+                        .build()))
+            .build();
+
+    GenerateContentResponse merged = ContinuationUtil.merge(ImmutableList.of(hop1, hop2, hop3));
+
+    Candidate cand0 = merged.candidates().get().get(0);
+    GroundingMetadata gm0 = cand0.groundingMetadata().get();
+    assertEquals(4, cand0.content().get().parts().get().size());
+    assertEquals(3, gm0.groundingChunks().get().size());
+    assertEquals(3, gm0.groundingSupports().get().size());
+    assertFalse(gm0.groundingSupports().get().get(0).segment().isPresent());
+    assertEquals(
+        ImmutableList.of(2), gm0.groundingSupports().get().get(0).groundingChunkIndices().get());
+    assertFalse(gm0.groundingSupports().get().get(1).groundingChunkIndices().isPresent());
+    assertEquals(3, gm0.groundingSupports().get().get(1).segment().get().partIndex().get());
+    GroundingSupport s2 = gm0.groundingSupports().get().get(2);
+    assertEquals(
+        "https://c0-s2.example",
+        gm0.groundingChunks()
+            .get()
+            .get(s2.groundingChunkIndices().get().get(0))
+            .web()
+            .get()
+            .uri()
+            .get());
+    assertEquals(
+        "c0-h3-p0.",
+        cand0.content().get().parts().get().get(s2.segment().get().partIndex().get()).text().get());
+
+    Candidate cand1 = merged.candidates().get().get(1);
+    GroundingMetadata gm1 = cand1.groundingMetadata().get();
+    assertEquals(
+        ImmutableList.of(1), gm1.groundingSupports().get().get(0).groundingChunkIndices().get());
+    assertEquals(1, gm1.groundingSupports().get().get(0).segment().get().partIndex().get());
+  }
+
+  @Test
+  public void testGenerate_mergesGroundingSupportsAcrossHops() {
+    GenerateContentResponse hop1 =
+        GenerateContentResponse.builder()
+            .candidates(
+                Candidate.builder()
+                    .content(Content.builder().role("model").parts(Part.fromText("part 1 ")))
+                    .finishReason(FinishReason.Known.CONTINUATION)
+                    .continuationToken(TOKEN_1)
+                    .groundingMetadata(
+                        GroundingMetadata.builder()
+                            .groundingChunks(
+                                GroundingChunk.builder()
+                                    .web(GroundingChunkWeb.builder().uri("https://source1.example"))
+                                    .build())
+                            .groundingSupports(
+                                GroundingSupport.builder()
+                                    .groundingChunkIndices(0)
+                                    .segment(Segment.builder().partIndex(0).text("part 1 "))
+                                    .build())))
+            .build();
+    GenerateContentResponse hop2 =
+        GenerateContentResponse.builder()
+            .candidates(
+                Candidate.builder()
+                    .content(Content.builder().role("model").parts(Part.fromText("part 2 ")))
+                    .finishReason(FinishReason.Known.STOP)
+                    .groundingMetadata(
+                        GroundingMetadata.builder()
+                            .groundingChunks(
+                                GroundingChunk.builder()
+                                    .web(GroundingChunkWeb.builder().uri("https://source2.example"))
+                                    .build())
+                            .groundingSupports(
+                                GroundingSupport.builder()
+                                    .groundingChunkIndices(0)
+                                    .segment(Segment.builder().partIndex(0).text("part 2 "))
+                                    .build())))
+            .build();
+
+    FakeModel model = new FakeModel(hop1, hop2);
+    GenerateContentResponse merged = ContinuationUtil.generate(CONFIG, model::send);
+
+    Candidate cand = merged.candidates().get().get(0);
+    GroundingMetadata gm = cand.groundingMetadata().get();
+    GroundingSupport s = gm.groundingSupports().get().get(1);
+    assertEquals(
+        "https://source2.example",
+        gm.groundingChunks()
+            .get()
+            .get(s.groundingChunkIndices().get().get(0))
+            .web()
+            .get()
+            .uri()
+            .get());
+    assertEquals(
+        "part 2 ",
+        cand.content().get().parts().get().get(s.segment().get().partIndex().get()).text().get());
+  }
+
+  @Test
+  public void testStreamContinuation_preservesPerChunkGroundingAndMergesAcrossHops() {
+    GenerateContentResponse hop1Chunk1 = response("hop 1 intro, ");
+    GenerateContentResponse hop1Chunk2 =
+        GenerateContentResponse.builder()
+            .candidates(
+                Candidate.builder()
+                    .content(
+                        Content.builder().role("model").parts(Part.fromText("hop 1 grounded. ")))
+                    .finishReason(FinishReason.Known.CONTINUATION)
+                    .continuationToken(TOKEN_1)
+                    .groundingMetadata(
+                        GroundingMetadata.builder()
+                            .groundingChunks(
+                                GroundingChunk.builder()
+                                    .web(GroundingChunkWeb.builder().uri("https://source1.example"))
+                                    .build())
+                            .groundingSupports(
+                                GroundingSupport.builder()
+                                    .groundingChunkIndices(0)
+                                    .segment(
+                                        Segment.builder().partIndex(0).text("hop 1 grounded. "))
+                                    .build())))
+            .build();
+    GenerateContentResponse hop2Chunk1 = response("hop 2 intro, ");
+    GenerateContentResponse hop2Chunk2 =
+        GenerateContentResponse.builder()
+            .candidates(
+                Candidate.builder()
+                    .content(
+                        Content.builder().role("model").parts(Part.fromText("hop 2 grounded.")))
+                    .finishReason(FinishReason.Known.STOP)
+                    .groundingMetadata(
+                        GroundingMetadata.builder()
+                            .groundingChunks(
+                                GroundingChunk.builder()
+                                    .web(GroundingChunkWeb.builder().uri("https://source2.example"))
+                                    .build())
+                            .groundingSupports(
+                                GroundingSupport.builder()
+                                    .groundingChunkIndices(0)
+                                    .segment(Segment.builder().partIndex(0).text("hop 2 grounded."))
+                                    .build())))
+            .build();
+
+    FakeStreamingModel model =
+        new FakeStreamingModel(stream(hop1Chunk1, hop1Chunk2), stream(hop2Chunk1, hop2Chunk2));
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+    List<GenerateContentResponse> streamed = chunks(first);
+
+    assertEquals(4, streamed.size());
+    // Each yielded chunk keeps per-chunk indices resolving to its own chunk and part.
+    GroundingSupport sHop1 =
+        streamed
+            .get(1)
+            .candidates()
+            .get()
+            .get(0)
+            .groundingMetadata()
+            .get()
+            .groundingSupports()
+            .get()
+            .get(0);
+    assertEquals(
+        "https://source1.example",
+        streamed
+            .get(1)
+            .candidates()
+            .get()
+            .get(0)
+            .groundingMetadata()
+            .get()
+            .groundingChunks()
+            .get()
+            .get(sHop1.groundingChunkIndices().get().get(0))
+            .web()
+            .get()
+            .uri()
+            .get());
+    GroundingSupport sHop2 =
+        streamed
+            .get(3)
+            .candidates()
+            .get()
+            .get(0)
+            .groundingMetadata()
+            .get()
+            .groundingSupports()
+            .get()
+            .get(0);
+    assertEquals(
+        "https://source2.example",
+        streamed
+            .get(3)
+            .candidates()
+            .get()
+            .get(0)
+            .groundingMetadata()
+            .get()
+            .groundingChunks()
+            .get()
+            .get(sHop2.groundingChunkIndices().get().get(0))
+            .web()
+            .get()
+            .uri()
+            .get());
+
+    // Merging the streamed chunks shifts indices across all 4 chunks.
+    GenerateContentResponse merged = ContinuationUtil.merge(streamed);
+    Candidate cand = merged.candidates().get().get(0);
+    GroundingMetadata gm = cand.groundingMetadata().get();
+    assertEquals(2, gm.groundingSupports().get().size());
+    GroundingSupport m0 = gm.groundingSupports().get().get(0);
+    assertEquals(
+        "https://source1.example",
+        gm.groundingChunks()
+            .get()
+            .get(m0.groundingChunkIndices().get().get(0))
+            .web()
+            .get()
+            .uri()
+            .get());
+    assertEquals(
+        "hop 1 grounded. ",
+        cand.content().get().parts().get().get(m0.segment().get().partIndex().get()).text().get());
+    GroundingSupport m1 = gm.groundingSupports().get().get(1);
+    assertEquals(
+        "https://source2.example",
+        gm.groundingChunks()
+            .get()
+            .get(m1.groundingChunkIndices().get().get(0))
+            .web()
+            .get()
+            .uri()
+            .get());
+    assertEquals(
+        "hop 2 grounded.",
+        cand.content().get().parts().get().get(m1.segment().get().partIndex().get()).text().get());
   }
 
   @Test

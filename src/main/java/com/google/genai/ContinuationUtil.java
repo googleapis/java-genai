@@ -386,11 +386,82 @@ final class ContinuationUtil {
       merged.merge(
           candidateIndex(curr.get(position), position),
           (ObjectNode) curr.get(position),
-          (previous, current) -> mergeObjects(previous, current, false, END_OF_GENERATION_FIELDS));
+          (previous, current) ->
+              mergeObjects(
+                  previous,
+                  shiftGroundingSupports(previous, current),
+                  false,
+                  END_OF_GENERATION_FIELDS));
     }
     ArrayNode result = JsonSerializable.objectMapper.createArrayNode();
     merged.values().forEach(result::add);
     return result;
+  }
+
+  private static ObjectNode shiftGroundingSupports(ObjectNode previous, ObjectNode current) {
+    JsonNode currGmNode = current.get("groundingMetadata");
+    if (currGmNode == null || !currGmNode.isObject()) {
+      return current;
+    }
+    JsonNode currSupportsNode = currGmNode.get("groundingSupports");
+    if (currSupportsNode == null || !currSupportsNode.isArray() || currSupportsNode.size() == 0) {
+      return current;
+    }
+
+    int partOffset = 0;
+    JsonNode prevContentNode = previous.get("content");
+    if (prevContentNode != null && prevContentNode.isObject()) {
+      JsonNode prevPartsNode = prevContentNode.get("parts");
+      if (prevPartsNode != null && prevPartsNode.isArray()) {
+        partOffset = prevPartsNode.size();
+      }
+    }
+
+    int chunkOffset = 0;
+    JsonNode prevGmNode = previous.get("groundingMetadata");
+    if (prevGmNode != null && prevGmNode.isObject()) {
+      JsonNode prevChunksNode = prevGmNode.get("groundingChunks");
+      if (prevChunksNode != null && prevChunksNode.isArray()) {
+        chunkOffset = prevChunksNode.size();
+      }
+    }
+
+    if (partOffset == 0 && chunkOffset == 0) {
+      return current;
+    }
+
+    ObjectNode shiftedCandidate = current.deepCopy();
+    ObjectNode shiftedGm = (ObjectNode) shiftedCandidate.get("groundingMetadata");
+    ArrayNode shiftedSupports = (ArrayNode) shiftedGm.get("groundingSupports");
+    for (JsonNode supportNode : shiftedSupports) {
+      if (!supportNode.isObject()) {
+        continue;
+      }
+      ObjectNode supportObj = (ObjectNode) supportNode;
+      if (chunkOffset > 0) {
+        JsonNode indicesNode = supportObj.get("groundingChunkIndices");
+        if (indicesNode != null && indicesNode.isArray()) {
+          ArrayNode indicesArr = (ArrayNode) indicesNode;
+          for (int i = 0; i < indicesArr.size(); i++) {
+            JsonNode idx = indicesArr.get(i);
+            if (idx != null && idx.canConvertToInt()) {
+              indicesArr.set(i, LongNode.valueOf(idx.longValue() + chunkOffset));
+            }
+          }
+        }
+      }
+      if (partOffset > 0) {
+        JsonNode segmentNode = supportObj.get("segment");
+        if (segmentNode != null && segmentNode.isObject()) {
+          ObjectNode segmentObj = (ObjectNode) segmentNode;
+          JsonNode partIdxNode = segmentObj.get("partIndex");
+          long prevPartIdx =
+              partIdxNode != null && partIdxNode.canConvertToInt() ? partIdxNode.longValue() : 0L;
+          segmentObj.set("partIndex", LongNode.valueOf(prevPartIdx + partOffset));
+        }
+      }
+    }
+    return shiftedCandidate;
   }
 
   // A candidate without an index is matched by its position.
