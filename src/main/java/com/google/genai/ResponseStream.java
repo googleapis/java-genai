@@ -62,8 +62,12 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
     /** Returns the stream of the next request, or null to end the stream here. */
     @Nullable ResponseStream<T> next();
 
-    /** Whether the stream can resume into a new request from a checkpoint continuation token. */
-    default boolean canResume() {
+    /**
+     * Called when the current request fails with {@code error}: whether the stream can resume into
+     * a new request. When it returns true the stream calls {@link #next}; otherwise it rethrows
+     * {@code error}.
+     */
+    default boolean canResume(RuntimeException error) {
       return false;
     }
   }
@@ -145,7 +149,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
       try {
         response = following != null ? following.iterator.next() : readCurrent();
       } catch (RuntimeException e) {
-        if (continuation != null && continuation.canResume()) {
+        if (continuation != null && continuation.canResume(e)) {
           closeCurrentHop();
           ResponseStream<T> next = continuation.next();
           if (next != null) {
@@ -186,7 +190,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
             }
           }
         } catch (RuntimeException e) {
-          if (continuation != null && continuation.canResume()) {
+          if (continuation != null && continuation.canResume(e)) {
             closeCurrentHop();
             ResponseStream<T> next = continuation.next();
             if (next != null) {
@@ -213,7 +217,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
         } else {
           closeOwnResponse();
         }
-      } catch (Exception ignored) {
+      } catch (RuntimeException ignored) {
         // Suppress secondary exceptions when closing a dropped or finished stream hop.
       }
     }

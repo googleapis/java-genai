@@ -27,6 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.genai.errors.ApiException;
+import com.google.genai.errors.ServerException;
+import com.google.genai.types.BlockedReason;
 import com.google.genai.types.Candidate;
 import com.google.genai.types.Citation;
 import com.google.genai.types.CitationMetadata;
@@ -34,6 +37,7 @@ import com.google.genai.types.Content;
 import com.google.genai.types.FinishReason;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.GenerateContentResponsePromptFeedback;
 import com.google.genai.types.GenerateContentResponseUsageMetadata;
 import com.google.genai.types.GroundingChunk;
 import com.google.genai.types.GroundingChunkImage;
@@ -105,10 +109,14 @@ public final class ContinuationUtilTest {
 
   /** A stream over {@code chunks}, read from an SSE body the way a real response is. */
   private static ResponseStream<GenerateContentResponse> stream(GenerateContentResponse... chunks) {
-    String sse =
+    return sseStream(
         Arrays.stream(chunks)
             .map(chunk -> "data: " + chunk.toJson() + "\n\n")
-            .collect(Collectors.joining());
+            .collect(Collectors.joining()));
+  }
+
+  /** A stream over the SSE body {@code sse}. */
+  private static ResponseStream<GenerateContentResponse> sseStream(String sse) {
     ResponseBody body =
         ResponseBody.create(sse.getBytes(UTF_8), MediaType.parse("text/event-stream"));
     return new ResponseStream<>(
@@ -170,7 +178,16 @@ public final class ContinuationUtilTest {
   /** A stream that emits {@code chunk}, then throws {@code error} on the next read. */
   private static ResponseStream<GenerateContentResponse> errorStream(
       GenerateContentResponse chunk, RuntimeException error) {
-    String sse = "data: " + chunk.toJson() + "\n\n";
+    return errorStream(error, chunk);
+  }
+
+  /** A stream that emits {@code chunks}, then throws {@code error} on the next read. */
+  private static ResponseStream<GenerateContentResponse> errorStream(
+      RuntimeException error, GenerateContentResponse... chunks) {
+    String sse =
+        Arrays.stream(chunks)
+            .map(chunk -> "data: " + chunk.toJson() + "\n\n")
+            .collect(Collectors.joining());
     byte[] bytes = sse.getBytes(UTF_8);
     java.io.InputStream in =
         new java.io.InputStream() {
@@ -447,6 +464,321 @@ public final class ContinuationUtilTest {
 
     assertThrows(IllegalStateException.class, () -> texts(first));
     assertEquals(1, model.configs.size());
+  }
+
+  private static GenerateContentResponse blocked() {
+    return GenerateContentResponse.builder()
+        .promptFeedback(
+            GenerateContentResponsePromptFeedback.builder()
+                .blockReason(BlockedReason.Known.SAFETY)
+                .blockReasonMessage("Blocked on continuation"))
+        .build();
+  }
+
+  @Test
+  public void testStreamDoesNotResumeFromACheckpointAfterABlockedChunk() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(stream(response("a"), response("b", null, TOKEN_1), blocked()));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    List<GenerateContentResponse> chunks = chunks(first);
+    assertEquals(3, chunks.size());
+    assertEquals(ImmutableList.of("a", "b"), texts(chunks.subList(0, 2)));
+    assertFalse(chunks.get(2).candidates().isPresent());
+    assertEquals(
+        BlockedReason.Known.SAFETY,
+        chunks.get(2).promptFeedback().get().blockReason().get().knownEnum());
+    assertEquals(1, model.configs.size());
+    assertTrue(first.isConsumed());
+  }
+
+  @Test
+  public void testStreamRethrowsAnErrorAfterABlockedChunkInsteadOfResuming() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            errorStream(
+                new IllegalStateException("stream dropped"),
+                response("a", null, TOKEN_1),
+                blocked()));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    assertThrows(IllegalStateException.class, () -> chunks(first));
+    assertEquals(1, model.configs.size());
+  }
+
+  @Test
+  public void testStreamDoesNotResumeAfterPromptFeedbackOnAResumedRequest() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1)),
+            stream(blocked()),
+            stream(response("never sent", FinishReason.Known.STOP, null)));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    List<GenerateContentResponse> chunks = chunks(first);
+    assertEquals(2, chunks.size());
+    assertEquals("a", chunks.get(0).text());
+    assertTrue(chunks.get(1).promptFeedback().isPresent());
+    assertEquals(2, model.configs.size());
+  }
+
+  @Test
+  public void testStreamDoesNotResumeFromATokenOnAChunkWithPromptFeedback() {
+    GenerateContentResponse withFeedback =
+        response("a", FinishReason.Known.CONTINUATION, TOKEN_1).toBuilder()
+            .promptFeedback(GenerateContentResponsePromptFeedback.builder().build())
+            .build();
+    FakeStreamingModel model = new FakeStreamingModel(stream(withFeedback));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    List<GenerateContentResponse> chunks = chunks(first);
+    // The finish reason is kept because the stream is not continued.
+    assertEquals(Collections.singletonList(FinishReason.Known.CONTINUATION), finishReasons(chunks));
+    assertEquals(1, model.configs.size());
+  }
+
+  @Test
+  public void testStreamRetriesARequestThatDropsBeforeAnyContentFromItsToken() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1)),
+            errorStream(new IllegalStateException("dropped during prefill")),
+            // Ends without a chunk, as a connection closed during prefill does.
+            stream(),
+            stream(response("b", FinishReason.Known.STOP, null)));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    assertEquals(ImmutableList.of("a", "b"), texts(first));
+    assertEquals(4, model.configs.size());
+    for (int i = 1; i < 4; i++) {
+      assertArrayEquals(TOKEN_1, model.configs.get(i).continuationToken().get());
+    }
+  }
+
+  @Test
+  public void testStreamRetriesARequestThatFailsToOpen() {
+    List<GenerateContentConfig> configs = new ArrayList<>();
+    ResponseStream<GenerateContentResponse> first =
+        stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1));
+    first.setContinuation(
+        ContinuationUtil.streamContinuation(
+            CONFIG,
+            config -> {
+              configs.add(config);
+              if (configs.size() == 1) {
+                // A transport error, not one the API returned, so the request is retried.
+                throw new IllegalStateException("connection refused");
+              }
+              return stream(response("b", FinishReason.Known.STOP, null));
+            }));
+
+    assertEquals(ImmutableList.of("a", "b"), texts(first));
+    assertEquals(2, configs.size());
+    assertArrayEquals(TOKEN_1, configs.get(1).continuationToken().get());
+  }
+
+  @Test
+  public void testStreamGivesUpAfterMaxReconnectsWithoutProgress() {
+    IllegalStateException error = new IllegalStateException("dropped during prefill");
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1)),
+            errorStream(error),
+            errorStream(error),
+            errorStream(error),
+            errorStream(error),
+            stream(response("never sent", FinishReason.Known.STOP, null)));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    assertSame(error, assertThrows(IllegalStateException.class, () -> texts(first)));
+    // The first request, the resumed one and MAX_STREAM_RECONNECTS_WITHOUT_PROGRESS retries.
+    assertEquals(2 + ContinuationUtil.MAX_STREAM_RECONNECTS_WITHOUT_PROGRESS, model.configs.size());
+  }
+
+  @Test
+  public void testStreamDoesNotRetryAResumedRequestTheApiRejects() {
+    // Retrying a request the API rejects is left to the HTTP client's retry options.
+    ServerException error = new ServerException(503, "UNAVAILABLE", "overloaded");
+    List<GenerateContentConfig> configs = new ArrayList<>();
+    ResponseStream<GenerateContentResponse> first =
+        stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1));
+    first.setContinuation(
+        ContinuationUtil.streamContinuation(
+            CONFIG,
+            config -> {
+              configs.add(config);
+              if (configs.size() == 1) {
+                throw error;
+              }
+              return stream(response("never sent", FinishReason.Known.STOP, null));
+            }));
+
+    List<String> texts = new ArrayList<>();
+    assertSame(
+        error,
+        assertThrows(
+            ServerException.class,
+            () -> {
+              for (GenerateContentResponse chunk : first) {
+                texts.add(chunk.text());
+              }
+            }));
+    assertEquals(ImmutableList.of("a"), texts);
+    // The resumed request was sent once (the first request is not sent through the function).
+    assertEquals(1, configs.size());
+  }
+
+  @Test
+  public void testStreamDoesNotRetryAResumedRequestWhoseStreamStartsWithAnError() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1)),
+            sseStream(
+                "data: {\"error\": {\"code\": 503, \"message\": \"overloaded\","
+                    + " \"status\": \"UNAVAILABLE\"}}\n\n"),
+            stream(response("never sent", FinishReason.Known.STOP, null)));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    ApiException error = assertThrows(ApiException.class, () -> texts(first));
+    assertEquals(503, error.code());
+    assertEquals(2, model.configs.size());
+  }
+
+  @Test
+  public void testStreamResumesAfterAnApiErrorOnceAHopReceivedAChunk() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            sseStream(
+                "data: "
+                    + response("a", null, TOKEN_1).toJson()
+                    + "\n\n"
+                    + "data: {\"error\": {\"code\": 503, \"message\": \"overloaded\","
+                    + " \"status\": \"UNAVAILABLE\"}}\n\n"),
+            stream(response("b", FinishReason.Known.STOP, null)));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    assertEquals(ImmutableList.of("a", "b"), texts(first));
+    assertEquals(2, model.configs.size());
+    assertArrayEquals(TOKEN_1, model.configs.get(1).continuationToken().get());
+  }
+
+  @Test
+  public void testStreamThrowsADropWhenRetriesThenKeepEndingEmpty() {
+    IllegalStateException error = new IllegalStateException("dropped during prefill");
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1)),
+            errorStream(error),
+            stream(),
+            stream(),
+            stream(),
+            stream(response("never sent", FinishReason.Known.STOP, null)));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    List<String> texts = new ArrayList<>();
+    assertSame(
+        error,
+        assertThrows(
+            IllegalStateException.class,
+            () -> {
+              for (GenerateContentResponse chunk : first) {
+                texts.add(chunk.text());
+              }
+            }));
+    assertEquals(ImmutableList.of("a"), texts);
+    // The first request, the resumed one and MAX_STREAM_RECONNECTS_WITHOUT_PROGRESS retries.
+    assertEquals(2 + ContinuationUtil.MAX_STREAM_RECONNECTS_WITHOUT_PROGRESS, model.configs.size());
+  }
+
+  @Test
+  public void testStreamDoesNotThrowAnEarlierDropWhenTheApiEndsTheStream() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1)),
+            errorStream(new IllegalStateException("dropped during prefill")),
+            stream(blocked()));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    List<GenerateContentResponse> chunks = chunks(first);
+    assertEquals(2, chunks.size());
+    assertTrue(chunks.get(1).promptFeedback().isPresent());
+    assertEquals(3, model.configs.size());
+  }
+
+  @Test
+  public void testStreamDoesNotReplayARequestThatAlreadyHandedOutContent() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1)),
+            errorStream(new IllegalStateException("stream dropped"), response("b")),
+            stream(response("never sent", FinishReason.Known.STOP, null)));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    List<String> texts = new ArrayList<>();
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          for (GenerateContentResponse chunk : first) {
+            texts.add(chunk.text());
+          }
+        });
+    assertEquals(ImmutableList.of("a", "b"), texts);
+    assertEquals(2, model.configs.size());
+  }
+
+  @Test
+  public void testStreamEndsNormallyWhenAResumedRequestEndsWithoutAFinishReason() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1)), stream(response("b")));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    // The API returned no error, so the stream just ends with what it handed out.
+    assertEquals(ImmutableList.of("a", "b"), texts(first));
+    assertEquals(2, model.configs.size());
+  }
+
+  @Test
+  public void testStreamEndsNormallyWhenResumedRequestsKeepEndingEmpty() {
+    FakeStreamingModel model =
+        new FakeStreamingModel(
+            stream(response("a", FinishReason.Known.CONTINUATION, TOKEN_1)),
+            stream(),
+            stream(),
+            stream(),
+            stream(),
+            stream(response("never sent", FinishReason.Known.STOP, null)));
+
+    ResponseStream<GenerateContentResponse> first = model.send(CONFIG);
+    first.setContinuation(ContinuationUtil.streamContinuation(CONFIG, model::send));
+
+    assertEquals(ImmutableList.of("a"), texts(first));
+    // The first request, the resumed one and MAX_STREAM_RECONNECTS_WITHOUT_PROGRESS retries.
+    assertEquals(2 + ContinuationUtil.MAX_STREAM_RECONNECTS_WITHOUT_PROGRESS, model.configs.size());
   }
 
   @Test
@@ -1153,6 +1485,53 @@ public final class ContinuationUtilTest {
     assertEquals(FinishReason.Known.STOP, candidate.finishReason().get().knownEnum());
     assertFalse(candidate.continuationToken().isPresent());
     assertFalse(candidate.finishMessage().isPresent());
+  }
+
+  @Test
+  public void testMerge_clearsFinishReasonAndKeepsPromptFeedbackWhenAResponseHasNoCandidates() {
+    GenerateContentResponse first =
+        withFirstCandidate(
+                response("Partial output before block.", FinishReason.Known.CONTINUATION, TOKEN_1),
+                candidate -> candidate.finishMessage("Continuing"))
+            .toBuilder()
+            .usageMetadata(
+                GenerateContentResponseUsageMetadata.builder()
+                    .promptTokenCount(10)
+                    .candidatesTokenCount(100)
+                    .totalTokenCount(110))
+            .build();
+
+    for (List<Candidate> emptyCandidates : Arrays.asList(null, ImmutableList.<Candidate>of())) {
+      GenerateContentResponse.Builder secondBuilder =
+          GenerateContentResponse.builder()
+              .promptFeedback(
+                  GenerateContentResponsePromptFeedback.builder()
+                      .blockReason(BlockedReason.Known.OTHER)
+                      .blockReasonMessage("Blocked on continuation hop"))
+              .usageMetadata(
+                  GenerateContentResponseUsageMetadata.builder()
+                      .promptTokenCount(110)
+                      .totalTokenCount(110));
+      if (emptyCandidates != null) {
+        secondBuilder.candidates(emptyCandidates);
+      }
+      GenerateContentResponse second = secondBuilder.build();
+
+      GenerateContentResponse merged = ContinuationUtil.merge(ImmutableList.of(first, second));
+
+      assertEquals("Partial output before block.", merged.text());
+      assertEquals(1, merged.candidates().get().size());
+      Candidate candidate = merged.candidates().get().get(0);
+      assertFalse(candidate.finishReason().isPresent());
+      assertFalse(candidate.continuationToken().isPresent());
+      assertFalse(candidate.finishMessage().isPresent());
+      assertEquals(
+          BlockedReason.Known.OTHER, merged.promptFeedback().get().blockReason().get().knownEnum());
+      assertEquals(
+          "Blocked on continuation hop", merged.promptFeedback().get().blockReasonMessage().get());
+      assertEquals(120, merged.usageMetadata().get().promptTokenCount().get());
+      assertEquals(10, merged.usageMetadata().get().initialPromptTokenCount().get());
+    }
   }
 
   @Test
