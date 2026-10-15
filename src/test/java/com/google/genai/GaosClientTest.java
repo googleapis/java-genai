@@ -149,6 +149,11 @@ public final class GaosClientTest {
                 + "/interactions");
     assertEquals(expectedUri, req.uri());
     assertTrue(req.headers().firstValue("Authorization").orElse("").contains("Bearer test-token"));
+    assertTrue(req.headers().firstValue("user-agent").orElse("").contains("google-genai-sdk/"));
+    assertTrue(req.headers().firstValue("user-agent").orElse("").contains("gl-java/"));
+    assertEquals(
+        req.headers().firstValue("user-agent").orElse(null),
+        req.headers().firstValue("x-goog-api-client").orElse(null));
   }
 
   @Test
@@ -187,6 +192,11 @@ public final class GaosClientTest {
     URI expectedUri = URI.create("https://generativelanguage.googleapis.com/v1beta/interactions");
     assertEquals(expectedUri, req.uri());
     assertEquals("test-api-key", req.headers().firstValue("x-goog-api-key").orElse(null));
+    assertTrue(req.headers().firstValue("user-agent").orElse("").contains("google-genai-sdk/"));
+    assertTrue(req.headers().firstValue("user-agent").orElse("").contains("gl-java/"));
+    assertEquals(
+        req.headers().firstValue("user-agent").orElse(null),
+        req.headers().firstValue("x-goog-api-client").orElse(null));
   }
 
   @Test
