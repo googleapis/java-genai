@@ -96,12 +96,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PromptedVoice.html" title="class in com.google.genai.gaos.models.voices">PromptedVoice</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#build()" class="member-name-link">build</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PromptedVoice.Builder.html" title="class in com.google.genai.gaos.models.voices">PromptedVoice.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#input(java.lang.String)" class="member-name-link">input</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PromptedVoice.Builder.html" title="class in com.google.genai.gaos.models.voices">PromptedVoice.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#baseVoice(java.lang.String)" class="member-name-link">baseVoice</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;baseVoice)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Optional.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PromptedVoice.html" title="class in com.google.genai.gaos.models.voices">PromptedVoice</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#build()" class="member-name-link">build</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PromptedVoice.Builder.html" title="class in com.google.genai.gaos.models.voices">PromptedVoice.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#input(java.lang.String)" class="member-name-link">input</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Required.</div>
 </div>
 </div>
@@ -121,6 +126,19 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="baseVoice(java.lang.String)">
+<h3>baseVoice</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PromptedVoice.Builder.html" title="class in com.google.genai.gaos.models.voices">PromptedVoice.Builder</a></span>&nbsp;<span class="element-name">baseVoice</span><wbr><span class="parameters">(@Nullable
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;baseVoice)</span></div>
+<div class="block">Optional. The name or ID of an existing base voice to edit or remix.
+ Use the voice name for prebuilt voices (e.g., `Puck`) or the voice ID for
+ previously created voices (e.g., `voice_abc123`). This can be any
+ prompted or replicated voice that the user has access to.
+ When present, `input` describes relative alterations to make to the base
+ voice.</div>
+</section>
+</li>
 <li>
 <section class="detail" id="input(java.lang.String)">
 <h3>input</h3>
