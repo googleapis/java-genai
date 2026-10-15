@@ -216,6 +216,8 @@ public class AsyncLive {
     private final CompletableFuture<AsyncSession> sessionFuture;
     private final ApiClient apiClient;
     private Consumer<LiveServerMessage> messageCallback;
+    private Consumer<Throwable> errorCallback;
+    private Runnable closeCallback;
     private WebSocket webSocket;
 
     public GenAiWebSocketClient(
@@ -259,6 +261,14 @@ public class AsyncLive {
       this.messageCallback = messageCallback;
     }
 
+    public void setErrorCallback(Consumer<Throwable> errorCallback) {
+      this.errorCallback = errorCallback;
+    }
+
+    public void setCloseCallback(Runnable closeCallback) {
+      this.closeCallback = closeCallback;
+    }
+
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
       this.webSocket = webSocket;
@@ -296,6 +306,8 @@ public class AsyncLive {
       if (!sessionFuture.isDone()) {
         sessionFuture.completeExceptionally(
             new GenAiIOException("WebSocket closed unexpectedly: " + reason));
+      } else if (closeCallback != null) {
+        closeCallback.run();
       }
     }
 
@@ -304,6 +316,8 @@ public class AsyncLive {
       logger.log(Level.SEVERE, "Error during live session", t);
       if (!sessionFuture.isDone()) {
         sessionFuture.completeExceptionally(t);
+      } else if (errorCallback != null) {
+        errorCallback.accept(t);
       }
     }
 
