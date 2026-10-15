@@ -1614,6 +1614,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"continuationToken"}));
     }
 
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"generationOutputConfig"}))) {
+      throw new IllegalArgumentException(
+          "generationOutputConfig parameter is only supported in Gemini Enterprise Agent Platform"
+              + " mode, not in Gemini Developer API mode.");
+    }
+
     return toObject;
   }
 
@@ -1879,6 +1886,13 @@ public final class Models {
           parentObject,
           new String[] {"continuationToken"},
           Common.getValueByPath(fromObject, new String[] {"continuationToken"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"generationOutputConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"generationOutputConfig"},
+          Common.getValueByPath(fromObject, new String[] {"generationOutputConfig"}));
     }
 
     return toObject;

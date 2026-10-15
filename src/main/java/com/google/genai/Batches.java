@@ -1401,6 +1401,13 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"continuationToken"}));
     }
 
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"generationOutputConfig"}))) {
+      throw new IllegalArgumentException(
+          "generationOutputConfig parameter is only supported in Gemini Enterprise Agent Platform"
+              + " mode, not in Gemini Developer API mode.");
+    }
+
     return toObject;
   }
 
