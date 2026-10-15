@@ -262,6 +262,10 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("automaticContinuation")
   public abstract Optional<Boolean> automaticContinuation();
 
+  /** Optional. Configuration for persisting output assets to external storage. */
+  @JsonProperty("generationOutputConfig")
+  public abstract Optional<GenerationOutputConfig> generationOutputConfig();
+
   /** Instantiates a builder for GenerateContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -1235,6 +1239,38 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearAutomaticContinuation() {
       return automaticContinuation(Optional.empty());
+    }
+
+    /**
+     * Setter for generationOutputConfig.
+     *
+     * <p>generationOutputConfig: Optional. Configuration for persisting output assets to external
+     * storage.
+     */
+    @JsonProperty("generationOutputConfig")
+    public abstract Builder generationOutputConfig(GenerationOutputConfig generationOutputConfig);
+
+    /**
+     * Setter for generationOutputConfig builder.
+     *
+     * <p>generationOutputConfig: Optional. Configuration for persisting output assets to external
+     * storage.
+     */
+    @CanIgnoreReturnValue
+    public Builder generationOutputConfig(
+        GenerationOutputConfig.Builder generationOutputConfigBuilder) {
+      return generationOutputConfig(generationOutputConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder generationOutputConfig(
+        Optional<GenerationOutputConfig> generationOutputConfig);
+
+    /** Clears the value of generationOutputConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGenerationOutputConfig() {
+      return generationOutputConfig(Optional.empty());
     }
 
     public abstract GenerateContentConfig build();
