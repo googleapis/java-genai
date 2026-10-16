@@ -19,11 +19,20 @@ package com.google.genai;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.common.collect.ImmutableList;
+import com.google.genai.types.Content;
+import com.google.genai.types.FunctionDeclaration;
 import com.google.genai.types.HttpOptions;
+import com.google.genai.types.LiveClientContextUpdate;
+import com.google.genai.types.LiveClientContextUpdateTools;
+import com.google.genai.types.Part;
+import com.google.genai.types.Tool;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.HashMap;
@@ -32,6 +41,9 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
 
 public class AsyncLiveTest {
   private ApiClient apiClient;
@@ -140,5 +152,137 @@ public class AsyncLiveTest {
     assertTrue(session.setupComplete() != null);
     assertTrue(session.setupComplete().voiceConsentSignature().isPresent());
     assertEquals("test_sig", session.setupComplete().voiceConsentSignature().get().signature().get());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  public void testSendContextUpdate_SystemInstruction(boolean vertexAI) throws Exception {
+    when(apiClient.vertexAI()).thenReturn(vertexAI);
+    AsyncLive.GenAiWebSocketClient websocket = mock(AsyncLive.GenAiWebSocketClient.class);
+    AsyncSession session = new AsyncSession(apiClient, websocket, "test-session", null);
+
+    LiveClientContextUpdate update =
+        LiveClientContextUpdate.builder()
+            .systemInstruction(
+                Content.fromParts(Part.fromText("You are a helpful assistant.")))
+            .build();
+
+    session.sendContextUpdate(update).get();
+
+    ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+    verify(websocket).send(captor.capture());
+    JsonNode sentJson = JsonSerializable.stringToJsonNode(captor.getValue());
+    assertTrue(sentJson.has("contextUpdate"));
+    assertEquals(
+        "You are a helpful assistant.",
+        sentJson
+            .get("contextUpdate")
+            .get("systemInstruction")
+            .get("parts")
+            .get(0)
+            .get("text")
+            .asText());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  public void testSendContextUpdate_ClearTools(boolean vertexAI) throws Exception {
+    when(apiClient.vertexAI()).thenReturn(vertexAI);
+    AsyncLive.GenAiWebSocketClient websocket = mock(AsyncLive.GenAiWebSocketClient.class);
+    AsyncSession session = new AsyncSession(apiClient, websocket, "test-session", null);
+
+    LiveClientContextUpdate update =
+        LiveClientContextUpdate.builder()
+            .tools(LiveClientContextUpdateTools.builder().tools(ImmutableList.of()).build())
+            .build();
+
+    session.sendContextUpdate(update).get();
+
+    ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+    verify(websocket).send(captor.capture());
+    JsonNode sentJson = JsonSerializable.stringToJsonNode(captor.getValue());
+    assertTrue(sentJson.has("contextUpdate"));
+    assertTrue(sentJson.get("contextUpdate").has("tools"));
+    assertEquals(0, sentJson.get("contextUpdate").get("tools").get("tools").size());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  public void testSendContextUpdate_WithFunctionDeclaration(boolean vertexAI) throws Exception {
+    when(apiClient.vertexAI()).thenReturn(vertexAI);
+    AsyncLive.GenAiWebSocketClient websocket = mock(AsyncLive.GenAiWebSocketClient.class);
+    AsyncSession session = new AsyncSession(apiClient, websocket, "test-session", null);
+
+    Tool tool =
+        Tool.builder()
+            .functionDeclarations(
+                ImmutableList.of(
+                    FunctionDeclaration.builder()
+                        .name("get_current_weather")
+                        .description("Gets the weather for a location.")
+                        .build()))
+            .build();
+    LiveClientContextUpdate update =
+        LiveClientContextUpdate.builder()
+            .tools(LiveClientContextUpdateTools.builder().tools(ImmutableList.of(tool)).build())
+            .build();
+
+    session.sendContextUpdate(update).get();
+
+    ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+    verify(websocket).send(captor.capture());
+    JsonNode sentJson = JsonSerializable.stringToJsonNode(captor.getValue());
+    assertTrue(sentJson.has("contextUpdate"));
+    JsonNode toolsNode = sentJson.get("contextUpdate").get("tools").get("tools");
+    assertEquals(1, toolsNode.size());
+    assertEquals(
+        "get_current_weather",
+        toolsNode.get(0).get("functionDeclarations").get(0).get("name").asText());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  public void testSendContextUpdate_BothSystemInstructionAndTools(boolean vertexAI)
+      throws Exception {
+    when(apiClient.vertexAI()).thenReturn(vertexAI);
+    AsyncLive.GenAiWebSocketClient websocket = mock(AsyncLive.GenAiWebSocketClient.class);
+    AsyncSession session = new AsyncSession(apiClient, websocket, "test-session", null);
+
+    Tool tool =
+        Tool.builder()
+            .functionDeclarations(
+                ImmutableList.of(
+                    FunctionDeclaration.builder()
+                        .name("get_current_weather")
+                        .description("Gets the weather for a location.")
+                        .build()))
+            .build();
+    LiveClientContextUpdate update =
+        LiveClientContextUpdate.builder()
+            .systemInstruction(
+                Content.fromParts(Part.fromText("Updated instruction.")))
+            .tools(LiveClientContextUpdateTools.builder().tools(ImmutableList.of(tool)).build())
+            .build();
+
+    session.sendContextUpdate(update).get();
+
+    ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+    verify(websocket).send(captor.capture());
+    JsonNode sentJson = JsonSerializable.stringToJsonNode(captor.getValue());
+    assertTrue(sentJson.has("contextUpdate"));
+    assertEquals(
+        "Updated instruction.",
+        sentJson
+            .get("contextUpdate")
+            .get("systemInstruction")
+            .get("parts")
+            .get(0)
+            .get("text")
+            .asText());
+    JsonNode toolsNode = sentJson.get("contextUpdate").get("tools").get("tools");
+    assertEquals(1, toolsNode.size());
+    assertEquals(
+        "get_current_weather",
+        toolsNode.get(0).get("functionDeclarations").get(0).get("name").asText());
   }
 }

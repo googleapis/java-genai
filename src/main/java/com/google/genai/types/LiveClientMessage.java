@@ -57,6 +57,10 @@ public abstract class LiveClientMessage extends JsonSerializable {
   @JsonProperty("toolResponse")
   public abstract Optional<LiveClientToolResponse> toolResponse();
 
+  /** Updates to the context of the current session. */
+  @JsonProperty("contextUpdate")
+  public abstract Optional<LiveClientContextUpdate> contextUpdate();
+
   /** Instantiates a builder for LiveClientMessage. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -222,6 +226,34 @@ public abstract class LiveClientMessage extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearToolResponse() {
       return toolResponse(Optional.empty());
+    }
+
+    /**
+     * Setter for contextUpdate.
+     *
+     * <p>contextUpdate: Updates to the context of the current session.
+     */
+    @JsonProperty("contextUpdate")
+    public abstract Builder contextUpdate(LiveClientContextUpdate contextUpdate);
+
+    /**
+     * Setter for contextUpdate builder.
+     *
+     * <p>contextUpdate: Updates to the context of the current session.
+     */
+    @CanIgnoreReturnValue
+    public Builder contextUpdate(LiveClientContextUpdate.Builder contextUpdateBuilder) {
+      return contextUpdate(contextUpdateBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder contextUpdate(Optional<LiveClientContextUpdate> contextUpdate);
+
+    /** Clears the value of contextUpdate field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearContextUpdate() {
+      return contextUpdate(Optional.empty());
     }
 
     public abstract LiveClientMessage build();
