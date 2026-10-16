@@ -19,6 +19,7 @@ package com.google.genai.gaos.hooks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
+import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.SecuritySource;
 import com.google.genai.gaos.models.shared.Security;
 import com.google.genai.gaos.utils.AsyncHooks;
@@ -32,11 +33,11 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link SDKHooks} to verify that request authorization headers
- * (x-goog-api-key, Authorization, defaultHeaders) are properly configured
- * and not accidentally cleared during SDK regeneration.
+ * Tests for {@link SDKHooks} to verify that request authorization headers (x-goog-api-key,
+ * Authorization, defaultHeaders) are properly configured and not accidentally cleared during SDK
+ * regeneration.
  */
-public final class SDKHooksTest {
+public final class SdkHooksTest {
 
   private static final String API_KEY = "test-api-key-12345";
   private static final String ACCESS_TOKEN = "test-access-token-abcde";
@@ -80,7 +81,8 @@ public final class SDKHooksTest {
     HttpRequest request = createBaseRequest();
 
     HttpRequest modified = hooks.beforeRequest(context, request);
-    assertEquals("Bearer " + ACCESS_TOKEN, modified.headers().firstValue("Authorization").orElse(null));
+    assertEquals(
+        "Bearer " + ACCESS_TOKEN, modified.headers().firstValue("Authorization").orElse(null));
   }
 
   @Test
@@ -124,7 +126,8 @@ public final class SDKHooksTest {
     HttpRequest request = createBaseRequest();
 
     HttpRequest modified = asyncHooks.beforeRequest(context, request).get();
-    assertEquals("Bearer " + ACCESS_TOKEN, modified.headers().firstValue("Authorization").orElse(null));
+    assertEquals(
+        "Bearer " + ACCESS_TOKEN, modified.headers().firstValue("Authorization").orElse(null));
   }
 
   @Test
@@ -153,5 +156,42 @@ public final class SDKHooksTest {
 
     HttpRequest modified = hooks.beforeRequest(context, request);
     assertSame(request, modified);
+  }
+
+  @Test
+  public void testSyncAndAsyncHooksPropagateUserProjectFromGlobals() throws Exception {
+    Hooks hooks = new Hooks();
+    SDKHooks.initialize(hooks);
+    AsyncHooks asyncHooks = new AsyncHooks();
+    SDKHooks.initialize(asyncHooks);
+
+    SDKConfiguration config = new SDKConfiguration();
+    config.globals.putParam("header", "x-goog-user-project", "my-quota-project");
+    Hook.BeforeRequestContext context =
+        new Hook.BeforeRequestContextImpl(
+            config,
+            "https://generativelanguage.googleapis.com",
+            "createInteraction",
+            Optional.empty(),
+            Optional.empty());
+
+    HttpRequest request = createBaseRequest();
+    HttpRequest syncModified = hooks.beforeRequest(context, request);
+    assertEquals(
+        "my-quota-project", syncModified.headers().firstValue("x-goog-user-project").orElse(null));
+
+    HttpRequest asyncModified = asyncHooks.beforeRequest(context, request).get();
+    assertEquals(
+        "my-quota-project", asyncModified.headers().firstValue("x-goog-user-project").orElse(null));
+
+    // Existing x-goog-user-project header on the request should not be overwritten.
+    HttpRequest presetRequest =
+        request.toBuilder().setHeader("x-goog-user-project", "override-project").build();
+    HttpRequest syncPreset = hooks.beforeRequest(context, presetRequest);
+    assertEquals(
+        "override-project", syncPreset.headers().firstValue("x-goog-user-project").orElse(null));
+    HttpRequest asyncPreset = asyncHooks.beforeRequest(context, presetRequest).get();
+    assertEquals(
+        "override-project", asyncPreset.headers().firstValue("x-goog-user-project").orElse(null));
   }
 }

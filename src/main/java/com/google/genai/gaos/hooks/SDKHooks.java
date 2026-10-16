@@ -37,11 +37,12 @@ public final class SDKHooks {
     public static void initialize(com.google.genai.gaos.utils.Hooks hooks) {
         hooks.registerBeforeRequest(
             (context, request) -> {
+              HttpRequest.Builder builder = null;
               if (context.securitySource().isPresent()) {
                 HasSecurity hasSecurity = context.securitySource().get().getSecurity();
                 if (hasSecurity instanceof Security) {
                   Security security = (Security) hasSecurity;
-                  HttpRequest.Builder builder = request.toBuilder();
+                  builder = request.toBuilder();
 
                   if (security.defaultHeaders().isPresent()) {
                     for (Map.Entry<String, String> entry : security.defaultHeaders().get().entrySet()) {
@@ -53,21 +54,33 @@ public final class SDKHooks {
                   } else if (security.accessToken().isPresent()) {
                     builder.setHeader("Authorization", "Bearer " + security.accessToken().get());
                   }
-                  return builder.build();
                 }
               }
-              return request;
+              if (context.sdkConfiguration() != null
+                  && context.sdkConfiguration().globals != null
+                  && !request.headers().firstValue("x-goog-user-project").isPresent()) {
+                java.util.Optional<String> userProject =
+                    context.sdkConfiguration().globals.getParam("header", "x-goog-user-project");
+                if (userProject.isPresent()) {
+                  if (builder == null) {
+                    builder = request.toBuilder();
+                  }
+                  builder.setHeader("x-goog-user-project", userProject.get());
+                }
+              }
+              return builder != null ? builder.build() : request;
             });
     }
 
     public static void initialize(com.google.genai.gaos.utils.AsyncHooks asyncHooks) {
         asyncHooks.registerBeforeRequest(
             (context, request) -> {
+              HttpRequest.Builder builder = null;
               if (context.securitySource().isPresent()) {
                 HasSecurity hasSecurity = context.securitySource().get().getSecurity();
                 if (hasSecurity instanceof Security) {
                   Security security = (Security) hasSecurity;
-                  HttpRequest.Builder builder = request.toBuilder();
+                  builder = request.toBuilder();
 
                   if (security.defaultHeaders().isPresent()) {
                     for (Map.Entry<String, String> entry : security.defaultHeaders().get().entrySet()) {
@@ -79,10 +92,22 @@ public final class SDKHooks {
                   } else if (security.accessToken().isPresent()) {
                     builder.setHeader("Authorization", "Bearer " + security.accessToken().get());
                   }
-                  return CompletableFuture.completedFuture(builder.build());
                 }
               }
-              return CompletableFuture.completedFuture(request);
+              if (context.sdkConfiguration() != null
+                  && context.sdkConfiguration().globals != null
+                  && !request.headers().firstValue("x-goog-user-project").isPresent()) {
+                java.util.Optional<String> userProject =
+                    context.sdkConfiguration().globals.getParam("header", "x-goog-user-project");
+                if (userProject.isPresent()) {
+                  if (builder == null) {
+                    builder = request.toBuilder();
+                  }
+                  builder.setHeader("x-goog-user-project", userProject.get());
+                }
+              }
+              return CompletableFuture.completedFuture(
+                  builder != null ? builder.build() : request);
             });
     }
 
