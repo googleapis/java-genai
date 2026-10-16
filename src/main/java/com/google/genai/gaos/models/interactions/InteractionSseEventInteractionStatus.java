@@ -47,6 +47,8 @@ public class InteractionSseEventInteractionStatus {
     public static final InteractionSseEventInteractionStatus FAILED = new InteractionSseEventInteractionStatus("failed");
     public static final InteractionSseEventInteractionStatus CANCELLED = new InteractionSseEventInteractionStatus("cancelled");
     public static final InteractionSseEventInteractionStatus INCOMPLETE = new InteractionSseEventInteractionStatus("incomplete");
+    public static final InteractionSseEventInteractionStatus BUDGET_EXCEEDED = new InteractionSseEventInteractionStatus("budget_exceeded");
+    public static final InteractionSseEventInteractionStatus QUEUED = new InteractionSseEventInteractionStatus("queued");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -126,6 +128,8 @@ public class InteractionSseEventInteractionStatus {
         map.put("failed", FAILED);
         map.put("cancelled", CANCELLED);
         map.put("incomplete", INCOMPLETE);
+        map.put("budget_exceeded", BUDGET_EXCEEDED);
+        map.put("queued", QUEUED);
         return map;
     }
 
@@ -137,6 +141,8 @@ public class InteractionSseEventInteractionStatus {
         map.put("failed", InteractionSseEventInteractionStatusEnum.FAILED);
         map.put("cancelled", InteractionSseEventInteractionStatusEnum.CANCELLED);
         map.put("incomplete", InteractionSseEventInteractionStatusEnum.INCOMPLETE);
+        map.put("budget_exceeded", InteractionSseEventInteractionStatusEnum.BUDGET_EXCEEDED);
+        map.put("queued", InteractionSseEventInteractionStatusEnum.QUEUED);
         return map;
     }
     
@@ -148,7 +154,9 @@ public class InteractionSseEventInteractionStatus {
         COMPLETED("completed"),
         FAILED("failed"),
         CANCELLED("cancelled"),
-        INCOMPLETE("incomplete"),;
+        INCOMPLETE("incomplete"),
+        BUDGET_EXCEEDED("budget_exceeded"),
+        QUEUED("queued"),;
 
         private final String value;
 
