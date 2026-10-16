@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.79.0](https://github.com/googleapis/java-genai/compare/v1.78.0...v1.79.0) (2026-10-16)
+
+
+### Features
+
+* add base_voice to PromptedVoice in GAOS SDK ([9fbbc95](https://github.com/googleapis/java-genai/commit/9fbbc95f508304e524cb75f9a57044b7aac8357d))
+* Add Live API in-session context updates (`send_context_update`) and types across GenAI SDKs. ([89ef7e5](https://github.com/googleapis/java-genai/commit/89ef7e58d273fb42c02593e57ed60f98d2fe35c5))
+
+
+### Bug Fixes
+
+* **interactions:** sync InteractionSseEventInteractionStatus enum with InteractionStatus ([5584baa](https://github.com/googleapis/java-genai/commit/5584baa64180d34eea329e6ea219b56e55268e22))
+* **triggers:** fix agent triggers OpenAPI overlays, numeric fields, and SDK patches ([80b6d5e](https://github.com/googleapis/java-genai/commit/80b6d5e4756aeb5c2e486e43f9973146d74bf1d5))
+
 ## [1.78.0](https://github.com/googleapis/java-genai/compare/v1.77.0...v1.78.0) (2026-10-14)
 
 
