@@ -18,7 +18,10 @@ package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -30,15 +33,19 @@ import static org.mockito.Mockito.when;
 
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.proto.SentencepieceModel.ModelProto;
-import java.io.IOException;
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -101,6 +108,7 @@ public class LocalTokenizerLoaderTest {
     // Restore original tokenizers map
     Field tokenizersField = LocalTokenizerLoader.class.getDeclaredField("TOKENIZERS");
     setStatic(tokenizersField, originalTokenizers);
+    setStatic(LocalTokenizerLoader.class.getDeclaredField("httpClient"), null);
   }
 
   @Test
@@ -259,6 +267,90 @@ public class LocalTokenizerLoaderTest {
         assertThrows(
             GenAiIOException.class, () -> LocalTokenizerLoader.loadModelProto(tokenizerName));
     assertTrue(exception.getMessage().contains("Downloaded model file is corrupted"));
+  }
+
+  /**
+   * Initializes a fresh copy of the class, as GraalVM build-time initialization does, and checks
+   * that no static field captures OkHttp state that cannot live in a native image heap.
+   */
+  @Test
+  void classInitialization_doesNotStoreOkHttpObjectsInStaticFields() throws Exception {
+    List<URL> urls = new ArrayList<>();
+    for (String entry : System.getProperty("java.class.path").split(File.pathSeparator)) {
+      urls.add(new File(entry).toURI().toURL());
+    }
+    try (URLClassLoader loader =
+        new URLClassLoader(
+            urls.toArray(new URL[0]), ClassLoader.getSystemClassLoader().getParent())) {
+      Class<?> loaderClass = Class.forName("com.google.genai.LocalTokenizerLoader", true, loader);
+      assertNotSame(LocalTokenizerLoader.class, loaderClass);
+      List<Class<?>> classes = new ArrayList<>();
+      classes.add(loaderClass);
+      for (Class<?> nested : loaderClass.getDeclaredClasses()) {
+        classes.add(Class.forName(nested.getName(), true, loader));
+      }
+      for (Class<?> clazz : classes) {
+        for (Field field : clazz.getDeclaredFields()) {
+          if (!Modifier.isStatic(field.getModifiers())) {
+            continue;
+          }
+          field.setAccessible(true);
+          Object value = field.get(null);
+          assertFalse(
+              value != null && value.getClass().getName().startsWith("okhttp3."),
+              clazz.getName() + "." + field.getName() + " holds " + value);
+        }
+      }
+    }
+  }
+
+  /** The first download creates the HTTP client, and later downloads reuse it. */
+  @Test
+  void loadModelProto_download_createsHttpClientOnceAndReusesIt() throws Exception {
+    String tokenizerName = "test-tokenizer-unreachable";
+    Field tokenizersField = LocalTokenizerLoader.class.getDeclaredField("TOKENIZERS");
+    Map<String, Object> modifiableTokenizers = new HashMap<>(originalTokenizers);
+    modifiableTokenizers.put(
+        tokenizerName,
+        new LocalTokenizerLoader.TokenizerConfig("http://127.0.0.1:1/model", "dummy-hash"));
+    setStatic(tokenizersField, Collections.unmodifiableMap(modifiableTokenizers));
+    Field clientField = LocalTokenizerLoader.class.getDeclaredField("httpClient");
+    setStatic(clientField, null);
+
+    assertThrows(GenAiIOException.class, () -> LocalTokenizerLoader.loadModelProto(tokenizerName));
+    Object client = clientField.get(null);
+    assertNotNull(client);
+    assertThrows(GenAiIOException.class, () -> LocalTokenizerLoader.loadModelProto(tokenizerName));
+    assertSame(client, clientField.get(null));
+  }
+
+  /** A model found in the file cache loads without creating an HTTP client. */
+  @Test
+  void loadModelProto_fromFileCache_doesNotCreateHttpClient() throws Exception {
+    String tokenizerName = "test-tokenizer-file-cache";
+    String modelUrl = "http://fake.url/model-file-cache";
+    ModelProto testProto =
+        ModelProto.newBuilder()
+            .addPieces(
+                ModelProto.SentencePiece.newBuilder()
+                    .setPiece("<s>")
+                    .setType(ModelProto.SentencePiece.Type.CONTROL))
+            .build();
+    byte[] protoBytes = testProto.toByteArray();
+
+    Field tokenizersField = LocalTokenizerLoader.class.getDeclaredField("TOKENIZERS");
+    Map<String, Object> modifiableTokenizers = new HashMap<>(originalTokenizers);
+    modifiableTokenizers.put(
+        tokenizerName, new LocalTokenizerLoader.TokenizerConfig(modelUrl, sha256(protoBytes)));
+    setStatic(tokenizersField, Collections.unmodifiableMap(modifiableTokenizers));
+
+    Path modelDir = Files.createDirectories(tempDir.resolve("vertexai_tokenizer_model"));
+    Files.write(modelDir.resolve(sha1(modelUrl)), protoBytes);
+    Field clientField = LocalTokenizerLoader.class.getDeclaredField("httpClient");
+    setStatic(clientField, null);
+
+    assertEquals(testProto, LocalTokenizerLoader.loadModelProto(tokenizerName));
+    assertNull(clientField.get(null));
   }
 
   // Helper for hashing

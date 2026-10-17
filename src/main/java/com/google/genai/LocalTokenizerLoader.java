@@ -129,7 +129,8 @@ final class LocalTokenizerLoader {
   private static final Map<String, ModelProto> modelProtoCache = new ConcurrentHashMap<>();
   private static final Map<String, LocalTokenizerProcessor> localTokenizerProcessorCache =
       new ConcurrentHashMap<>();
-  private static OkHttpClient httpClient = new OkHttpClient();
+  // Created lazily so build-time class initialization captures no SSL state.
+  private static OkHttpClient httpClient;
 
   private LocalTokenizerLoader() {}
 
@@ -238,9 +239,17 @@ final class LocalTokenizerLoader {
     }
   }
 
+  /** Returns the shared HTTP client, creating it on first use. */
+  private static synchronized OkHttpClient getHttpClient() {
+    if (httpClient == null) {
+      httpClient = new OkHttpClient();
+    }
+    return httpClient;
+  }
+
   private static byte[] loadFromUrl(String fileUrl, String expectedHash) throws IOException {
     Request request = new Request.Builder().url(fileUrl).build();
-    try (Response response = httpClient.newCall(request).execute()) {
+    try (Response response = getHttpClient().newCall(request).execute()) {
       if (response == null) {
         throw new GenAiIOException("HTTP request failed: response is null");
       }
