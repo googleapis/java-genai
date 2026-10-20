@@ -157,7 +157,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;byte[]&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#continuationToken()" class="member-name-link">continuationToken</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">An opaque continuation token returned when `finish_reason` is `CONTINUATION`.</div>
+<div class="block">Output only.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#finishMessage()" class="member-name-link">finishMessage</a>()</code></div>
@@ -333,8 +333,9 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="continuationToken()">
 <h3>continuationToken</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;byte[]&gt;</span>&nbsp;<span class="element-name">continuationToken</span>()</div>
-<div class="block">An opaque continuation token returned when `finish_reason` is `CONTINUATION`. Pass it in a
- subsequent request to continue generation.</div>
+<div class="block">Output only. An optional opaque continuation token returned when `finish_reason` is
+ `CONTINUATION`. Clients can pass this token in a subsequent `GenerateContentRequest` to
+ continue generation.</div>
 </section>
 </li>
 <li>

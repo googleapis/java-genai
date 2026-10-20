@@ -611,8 +611,9 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="Candidate.Builder.html" title="class in com.google.genai.types">Candidate.Builder</a></span>&nbsp;<span class="element-name">continuationToken</span><wbr><span class="parameters">(byte[]&nbsp;continuationToken)</span></div>
 <div class="block">Setter for continuationToken.
 
- <p>continuationToken: An opaque continuation token returned when `finish_reason` is
- `CONTINUATION`. Pass it in a subsequent request to continue generation.</div>
+ <p>continuationToken: Output only. An optional opaque continuation token returned when
+ `finish_reason` is `CONTINUATION`. Clients can pass this token in a subsequent
+ `GenerateContentRequest` to continue generation.</div>
 </section>
 </li>
 <li>

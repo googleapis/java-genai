@@ -80,7 +80,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">ComputerUse</span>
 <span class="extends-implements">extends <a href="../JsonSerializable.html" title="class in com.google.genai">JsonSerializable</a></span></div>
-<div class="block">Tool to support computer use.</div>
+<div class="block">A tool that enables the model to interact directly with a computer environment.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -207,32 +207,32 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="environment()">
 <h3>environment</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="Environment.html" title="class in com.google.genai.types">Environment</a>&gt;</span>&nbsp;<span class="element-name">environment</span>()</div>
-<div class="block">Required. The environment being operated.</div>
+<div class="block">Required. The target environment where the computer use tool operates.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="excludedPredefinedFunctions()">
 <h3>excludedPredefinedFunctions</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</span>&nbsp;<span class="element-name">excludedPredefinedFunctions</span>()</div>
-<div class="block">Optional. By default, [predefined
+<div class="block">Optional. A list of predefined functions to explicitly exclude from the model call. By default,
+ [predefined
  functions](https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
- are included in the final model call. Some of them can be explicitly excluded from being
- automatically included. This can serve two purposes: 1. Using a more restricted / different
- action space. 2. Improving the definitions / instructions of predefined functions.</div>
+ are included. Excluding functions allows for a more restricted action space or custom
+ definitions for predefined functions.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="enablePromptInjectionDetection()">
 <h3>enablePromptInjectionDetection</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;</span>&nbsp;<span class="element-name">enablePromptInjectionDetection</span>()</div>
-<div class="block">Optional. Enables the prompt injection detection check on computer-use request.</div>
+<div class="block">Optional. Whether to enable the prompt injection detection check on the computer use request.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="disabledSafetyPolicies()">
 <h3>disabledSafetyPolicies</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="SafetyPolicy.html" title="class in com.google.genai.types">SafetyPolicy</a>&gt;&gt;</span>&nbsp;<span class="element-name">disabledSafetyPolicies</span>()</div>
-<div class="block">Optional. Disabled safety policies for computer use.</div>
+<div class="block">Optional. A list of safety policies to disable for the computer use tool.</div>
 </section>
 </li>
 <li>

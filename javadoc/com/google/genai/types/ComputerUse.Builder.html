@@ -230,7 +230,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">environment</span><wbr><span class="parameters">(<a href="Environment.html" title="class in com.google.genai.types">Environment</a>&nbsp;environment)</span></div>
 <div class="block">Setter for environment.
 
- <p>environment: Required. The environment being operated.</div>
+ <p>environment: Required. The target environment where the computer use tool operates.</div>
 </section>
 </li>
 <li>
@@ -248,7 +248,7 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">environment</span><wbr><span class="parameters">(<a href="Environment.Known.html" title="enum in com.google.genai.types">Environment.Known</a>&nbsp;knownType)</span></div>
 <div class="block">Setter for environment given a known enum.
 
- <p>environment: Required. The environment being operated.</div>
+ <p>environment: Required. The target environment where the computer use tool operates.</div>
 </section>
 </li>
 <li>
@@ -258,7 +258,7 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">environment</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;environment)</span></div>
 <div class="block">Setter for environment given a string.
 
- <p>environment: Required. The environment being operated.</div>
+ <p>environment: Required. The target environment where the computer use tool operates.</div>
 </section>
 </li>
 <li>
@@ -267,11 +267,11 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">excludedPredefinedFunctions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;excludedPredefinedFunctions)</span></div>
 <div class="block">Setter for excludedPredefinedFunctions.
 
- <p>excludedPredefinedFunctions: Optional. By default, [predefined
+ <p>excludedPredefinedFunctions: Optional. A list of predefined functions to explicitly
+ exclude from the model call. By default, [predefined
  functions](https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
- are included in the final model call. Some of them can be explicitly excluded from being
- automatically included. This can serve two purposes: 1. Using a more restricted / different
- action space. 2. Improving the definitions / instructions of predefined functions.</div>
+ are included. Excluding functions allows for a more restricted action space or custom
+ definitions for predefined functions.</div>
 </section>
 </li>
 <li>
@@ -281,11 +281,11 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">excludedPredefinedFunctions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;excludedPredefinedFunctions)</span></div>
 <div class="block">Setter for excludedPredefinedFunctions.
 
- <p>excludedPredefinedFunctions: Optional. By default, [predefined
+ <p>excludedPredefinedFunctions: Optional. A list of predefined functions to explicitly
+ exclude from the model call. By default, [predefined
  functions](https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
- are included in the final model call. Some of them can be explicitly excluded from being
- automatically included. This can serve two purposes: 1. Using a more restricted / different
- action space. 2. Improving the definitions / instructions of predefined functions.</div>
+ are included. Excluding functions allows for a more restricted action space or custom
+ definitions for predefined functions.</div>
 </section>
 </li>
 <li>
@@ -302,8 +302,8 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">enablePromptInjectionDetection</span><wbr><span class="parameters">(boolean&nbsp;enablePromptInjectionDetection)</span></div>
 <div class="block">Setter for enablePromptInjectionDetection.
 
- <p>enablePromptInjectionDetection: Optional. Enables the prompt injection detection check on
- computer-use request.</div>
+ <p>enablePromptInjectionDetection: Optional. Whether to enable the prompt injection detection
+ check on the computer use request.</div>
 </section>
 </li>
 <li>
@@ -320,7 +320,8 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">disabledSafetyPolicies</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="SafetyPolicy.html" title="class in com.google.genai.types">SafetyPolicy</a>&gt;&nbsp;disabledSafetyPolicies)</span></div>
 <div class="block">Setter for disabledSafetyPolicies.
 
- <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.</div>
+ <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+ use tool.</div>
 </section>
 </li>
 <li>
@@ -330,7 +331,8 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">disabledSafetyPolicies</span><wbr><span class="parameters">(<a href="SafetyPolicy.html" title="class in com.google.genai.types">SafetyPolicy</a>...&nbsp;disabledSafetyPolicies)</span></div>
 <div class="block">Setter for disabledSafetyPolicies.
 
- <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.</div>
+ <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+ use tool.</div>
 </section>
 </li>
 <li>
@@ -348,7 +350,8 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">disabledSafetyPolicies</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;disabledSafetyPolicies)</span></div>
 <div class="block">Setter for disabledSafetyPolicies given a varargs of strings.
 
- <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.</div>
+ <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+ use tool.</div>
 </section>
 </li>
 <li>
@@ -358,7 +361,8 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">disabledSafetyPolicies</span><wbr><span class="parameters">(<a href="SafetyPolicy.Known.html" title="enum in com.google.genai.types">SafetyPolicy.Known</a>...&nbsp;knownTypes)</span></div>
 <div class="block">Setter for disabledSafetyPolicies given a varargs of known enums.
 
- <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.</div>
+ <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+ use tool.</div>
 </section>
 </li>
 <li>
@@ -368,7 +372,8 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">disabledSafetyPoliciesFromKnown</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="SafetyPolicy.Known.html" title="enum in com.google.genai.types">SafetyPolicy.Known</a>&gt;&nbsp;knownTypes)</span></div>
 <div class="block">Setter for disabledSafetyPolicies given a list of known enums.
 
- <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.</div>
+ <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+ use tool.</div>
 </section>
 </li>
 <li>
@@ -378,7 +383,8 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ComputerUse.Builder.html" title="class in com.google.genai.types">ComputerUse.Builder</a></span>&nbsp;<span class="element-name">disabledSafetyPoliciesFromString</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;disabledSafetyPolicies)</span></div>
 <div class="block">Setter for disabledSafetyPolicies given a list of strings.
 
- <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.</div>
+ <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+ use tool.</div>
 </section>
 </li>
 <li>
