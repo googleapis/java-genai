@@ -102,8 +102,9 @@ public abstract class Candidate extends JsonSerializable {
   public abstract Optional<UrlContextMetadata> urlContextMetadata();
 
   /**
-   * An opaque continuation token returned when `finish_reason` is `CONTINUATION`. Pass it in a
-   * subsequent request to continue generation.
+   * Output only. An optional opaque continuation token returned when `finish_reason` is
+   * `CONTINUATION`. Clients can pass this token in a subsequent `GenerateContentRequest` to
+   * continue generation.
    */
   @JsonProperty("continuationToken")
   public abstract Optional<byte[]> continuationToken();
@@ -439,8 +440,9 @@ public abstract class Candidate extends JsonSerializable {
     /**
      * Setter for continuationToken.
      *
-     * <p>continuationToken: An opaque continuation token returned when `finish_reason` is
-     * `CONTINUATION`. Pass it in a subsequent request to continue generation.
+     * <p>continuationToken: Output only. An optional opaque continuation token returned when
+     * `finish_reason` is `CONTINUATION`. Clients can pass this token in a subsequent
+     * `GenerateContentRequest` to continue generation.
      */
     @JsonProperty("continuationToken")
     public abstract Builder continuationToken(byte[] continuationToken);

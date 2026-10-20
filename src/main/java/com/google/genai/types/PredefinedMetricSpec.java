@@ -42,6 +42,14 @@ public abstract class PredefinedMetricSpec extends JsonSerializable {
   @JsonProperty("metricSpecParameters")
   public abstract Optional<Map<String, Object>> metricSpecParameters();
 
+  /**
+   * Optional. Per-step autorater overrides for this predefined metric. Keys are evaluation stage
+   * names (snake_case). Valid keys: "intent_extraction", "rubric_generation", "rubric_validation".
+   * Unknown keys return INVALID_ARGUMENT.
+   */
+  @JsonProperty("stepAutoraterConfigs")
+  public abstract Optional<Map<String, AutoraterConfig>> stepAutoraterConfigs();
+
   /** Instantiates a builder for PredefinedMetricSpec. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -95,6 +103,27 @@ public abstract class PredefinedMetricSpec extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMetricSpecParameters() {
       return metricSpecParameters(Optional.empty());
+    }
+
+    /**
+     * Setter for stepAutoraterConfigs.
+     *
+     * <p>stepAutoraterConfigs: Optional. Per-step autorater overrides for this predefined metric.
+     * Keys are evaluation stage names (snake_case). Valid keys: "intent_extraction",
+     * "rubric_generation", "rubric_validation". Unknown keys return INVALID_ARGUMENT.
+     */
+    @JsonProperty("stepAutoraterConfigs")
+    public abstract Builder stepAutoraterConfigs(Map<String, AutoraterConfig> stepAutoraterConfigs);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder stepAutoraterConfigs(
+        Optional<Map<String, AutoraterConfig>> stepAutoraterConfigs);
+
+    /** Clears the value of stepAutoraterConfigs field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStepAutoraterConfigs() {
+      return stepAutoraterConfigs(Optional.empty());
     }
 
     public abstract PredefinedMetricSpec build();

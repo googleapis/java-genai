@@ -23,21 +23,21 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** The environment being operated. */
+/** The target environment where the computer use tool operates. */
 public class Environment {
 
   /** Enum representing the known values for Environment. */
   public enum Known {
-    /** Defaults to browser. */
+    /** The environment is unspecified. */
     ENVIRONMENT_UNSPECIFIED,
 
-    /** Operates in a web browser. */
+    /** The tool operates in a web browser. */
     ENVIRONMENT_BROWSER,
 
-    /** Operates in a mobile environment. */
+    /** The tool operates in a mobile environment. */
     ENVIRONMENT_MOBILE,
 
-    /** Operates in a desktop environment. */
+    /** The tool operates in a desktop environment. */
     ENVIRONMENT_DESKTOP
   }
 

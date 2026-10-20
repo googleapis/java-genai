@@ -31,29 +31,31 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Tool to support computer use. */
+/** A tool that enables the model to interact directly with a computer environment. */
 @AutoValue
 @JsonDeserialize(builder = ComputerUse.Builder.class)
 public abstract class ComputerUse extends JsonSerializable {
-  /** Required. The environment being operated. */
+  /** Required. The target environment where the computer use tool operates. */
   @JsonProperty("environment")
   public abstract Optional<Environment> environment();
 
   /**
-   * Optional. By default, [predefined
+   * Optional. A list of predefined functions to explicitly exclude from the model call. By default,
+   * [predefined
    * functions](https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
-   * are included in the final model call. Some of them can be explicitly excluded from being
-   * automatically included. This can serve two purposes: 1. Using a more restricted / different
-   * action space. 2. Improving the definitions / instructions of predefined functions.
+   * are included. Excluding functions allows for a more restricted action space or custom
+   * definitions for predefined functions.
    */
   @JsonProperty("excludedPredefinedFunctions")
   public abstract Optional<List<String>> excludedPredefinedFunctions();
 
-  /** Optional. Enables the prompt injection detection check on computer-use request. */
+  /**
+   * Optional. Whether to enable the prompt injection detection check on the computer use request.
+   */
   @JsonProperty("enablePromptInjectionDetection")
   public abstract Optional<Boolean> enablePromptInjectionDetection();
 
-  /** Optional. Disabled safety policies for computer use. */
+  /** Optional. A list of safety policies to disable for the computer use tool. */
   @JsonProperty("disabledSafetyPolicies")
   public abstract Optional<List<SafetyPolicy>> disabledSafetyPolicies();
 
@@ -78,7 +80,7 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for environment.
      *
-     * <p>environment: Required. The environment being operated.
+     * <p>environment: Required. The target environment where the computer use tool operates.
      */
     @JsonProperty("environment")
     public abstract Builder environment(Environment environment);
@@ -96,7 +98,7 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for environment given a known enum.
      *
-     * <p>environment: Required. The environment being operated.
+     * <p>environment: Required. The target environment where the computer use tool operates.
      */
     @CanIgnoreReturnValue
     public Builder environment(Environment.Known knownType) {
@@ -106,7 +108,7 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for environment given a string.
      *
-     * <p>environment: Required. The environment being operated.
+     * <p>environment: Required. The target environment where the computer use tool operates.
      */
     @CanIgnoreReturnValue
     public Builder environment(String environment) {
@@ -116,11 +118,11 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for excludedPredefinedFunctions.
      *
-     * <p>excludedPredefinedFunctions: Optional. By default, [predefined
+     * <p>excludedPredefinedFunctions: Optional. A list of predefined functions to explicitly
+     * exclude from the model call. By default, [predefined
      * functions](https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
-     * are included in the final model call. Some of them can be explicitly excluded from being
-     * automatically included. This can serve two purposes: 1. Using a more restricted / different
-     * action space. 2. Improving the definitions / instructions of predefined functions.
+     * are included. Excluding functions allows for a more restricted action space or custom
+     * definitions for predefined functions.
      */
     @JsonProperty("excludedPredefinedFunctions")
     public abstract Builder excludedPredefinedFunctions(List<String> excludedPredefinedFunctions);
@@ -128,11 +130,11 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for excludedPredefinedFunctions.
      *
-     * <p>excludedPredefinedFunctions: Optional. By default, [predefined
+     * <p>excludedPredefinedFunctions: Optional. A list of predefined functions to explicitly
+     * exclude from the model call. By default, [predefined
      * functions](https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
-     * are included in the final model call. Some of them can be explicitly excluded from being
-     * automatically included. This can serve two purposes: 1. Using a more restricted / different
-     * action space. 2. Improving the definitions / instructions of predefined functions.
+     * are included. Excluding functions allows for a more restricted action space or custom
+     * definitions for predefined functions.
      */
     @CanIgnoreReturnValue
     public Builder excludedPredefinedFunctions(String... excludedPredefinedFunctions) {
@@ -153,8 +155,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for enablePromptInjectionDetection.
      *
-     * <p>enablePromptInjectionDetection: Optional. Enables the prompt injection detection check on
-     * computer-use request.
+     * <p>enablePromptInjectionDetection: Optional. Whether to enable the prompt injection detection
+     * check on the computer use request.
      */
     @JsonProperty("enablePromptInjectionDetection")
     public abstract Builder enablePromptInjectionDetection(boolean enablePromptInjectionDetection);
@@ -173,7 +175,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+     * use tool.
      */
     @JsonProperty("disabledSafetyPolicies")
     public abstract Builder disabledSafetyPolicies(List<SafetyPolicy> disabledSafetyPolicies);
@@ -181,7 +184,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+     * use tool.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPolicies(SafetyPolicy... disabledSafetyPolicies) {
@@ -201,7 +205,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a varargs of strings.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+     * use tool.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPolicies(String... disabledSafetyPolicies) {
@@ -211,7 +216,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a varargs of known enums.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+     * use tool.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPolicies(SafetyPolicy.Known... knownTypes) {
@@ -221,7 +227,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a list of known enums.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+     * use tool.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPoliciesFromKnown(List<SafetyPolicy.Known> knownTypes) {
@@ -233,7 +240,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a list of strings.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. A list of safety policies to disable for the computer
+     * use tool.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPoliciesFromString(List<String> disabledSafetyPolicies) {

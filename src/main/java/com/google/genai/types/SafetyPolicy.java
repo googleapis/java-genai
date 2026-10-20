@@ -28,28 +28,28 @@ public class SafetyPolicy {
 
   /** Enum representing the known values for SafetyPolicy. */
   public enum Known {
-    /** Unspecified safety policy. This value should not be used. */
+    /** The safety policy is unspecified. */
     SAFETY_POLICY_UNSPECIFIED,
 
-    /** Financial transactions safety policy. */
+    /** Policy that restricts financial transactions. */
     FINANCIAL_TRANSACTIONS,
 
-    /** Sensitive data modification safety policy. */
+    /** Policy that restricts modification of sensitive data. */
     SENSITIVE_DATA_MODIFICATION,
 
-    /** Communication tool safety policy. */
+    /** Policy that restricts the use of communication tools. */
     COMMUNICATION_TOOL,
 
-    /** Account creation safety policy. */
+    /** Policy that restricts the creation of accounts. */
     ACCOUNT_CREATION,
 
-    /** Data modification safety policy. */
+    /** Policy that restricts general data modification. */
     DATA_MODIFICATION,
 
-    /** User consent management safety policy. */
+    /** Policy that restricts user consent management. */
     USER_CONSENT_MANAGEMENT,
 
-    /** Legal terms and agreements safety policy. */
+    /** Policy that restricts interaction with legal terms and agreements. */
     LEGAL_TERMS_AND_AGREEMENTS
   }
 
