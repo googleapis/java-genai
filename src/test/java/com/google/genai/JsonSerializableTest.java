@@ -18,12 +18,15 @@ package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.genai.errors.GenAiIOException;
+import com.google.genai.types.LiveServerMessage;
+import java.time.Duration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -130,5 +133,67 @@ class JsonSerializableTest {
               JsonSerializable.setMaxReadLength(-100);
             });
     assertEquals("Invalid JSON max read length: -100", ex2.getMessage());
+  }
+
+  /** Deserializes a Live voice activity offset, the field that carries the reported values. */
+  private static Duration parseAudioOffset(String value) {
+    LiveServerMessage message =
+        LiveServerMessage.fromJson("{\"voiceActivity\":{\"audioOffset\":\"" + value + "\"}}");
+    return message.voiceActivity().get().audioOffset().get();
+  }
+
+  /** The Live API sends fractional seconds, so the sub-second part must survive the parse. */
+  @Test
+  void fromJsonString_durationWithFractionalSeconds_keepsSubSecondPrecision() {
+    assertEquals(Duration.ofSeconds(7, 280_000_000), parseAudioOffset("7.280s"));
+    assertEquals(Duration.ofSeconds(0, 360_000_000), parseAudioOffset("0.360s"));
+    assertEquals(Duration.ofSeconds(1, 600_000_000), parseAudioOffset("1.600s"));
+    assertEquals(Duration.ofSeconds(1, 1), parseAudioOffset("1.000000001s"));
+  }
+
+  @Test
+  void fromJsonString_durationWithWholeSeconds_parsesSeconds() {
+    assertEquals(Duration.ofSeconds(86400), parseAudioOffset("86400s"));
+    assertEquals(Duration.ofSeconds(-3), parseAudioOffset("-3s"));
+  }
+
+  @Test
+  void fromJsonString_negativeFractionalDuration_parsesNegativeDuration() {
+    assertEquals(Duration.ofMillis(-1500), parseAudioOffset("-1.500s"));
+    assertEquals(Duration.ofMillis(-500), parseAudioOffset("-0.500s"));
+  }
+
+  @Test
+  void fromJsonString_goAwayTimeLeftWithFractionalSeconds_keepsSubSecondPrecision() {
+    LiveServerMessage message =
+        LiveServerMessage.fromJson("{\"goAway\":{\"timeLeft\":\"7.280s\"}}");
+
+    assertEquals(Duration.ofSeconds(7, 280_000_000), message.goAway().get().timeLeft().get());
+  }
+
+  @Test
+  void fromJsonString_malformedDuration_throwsException() {
+    String[] values = {"7.2.8s", "7.s", "abcs", "1.0000000001s", "1.-5s"};
+    for (String value : values) {
+      GenAiIOException exception =
+          assertThrows(GenAiIOException.class, () -> parseAudioOffset(value));
+      assertTrue(
+          exception.getCause().getMessage().contains("Cannot parse duration from string: " + value),
+          "Unexpected message for " + value + ": " + exception.getCause().getMessage());
+    }
+  }
+
+  @Test
+  void fromJsonString_durationWithoutSecondsSuffix_throwsException() {
+    GenAiIOException exception = assertThrows(GenAiIOException.class, () -> parseAudioOffset("5"));
+
+    assertTrue(
+        exception.getCause().getMessage().contains("Expected duration in format 'Xs', but got: 5"));
+  }
+
+  @Test
+  void readValue_nullOrEmptyDuration_returnsNull() throws Exception {
+    assertNull(JsonSerializable.objectMapper().readValue("null", Duration.class));
+    assertNull(JsonSerializable.objectMapper().readValue("\"\"", Duration.class));
   }
 }
