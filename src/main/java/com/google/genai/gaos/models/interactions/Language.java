@@ -42,6 +42,7 @@ import java.util.Optional;
 public class Language {
 
     public static final Language PYTHON = new Language("python");
+    public static final Language BASH = new Language("bash");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -116,19 +117,22 @@ public class Language {
     private static final Map<String, Language> createValuesMap() {
         Map<String, Language> map = new LinkedHashMap<>();
         map.put("python", PYTHON);
+        map.put("bash", BASH);
         return map;
     }
 
     private static final Map<String, LanguageEnum> createEnumsMap() {
         Map<String, LanguageEnum> map = new HashMap<>();
         map.put("python", LanguageEnum.PYTHON);
+        map.put("bash", LanguageEnum.BASH);
         return map;
     }
     
     
     public enum LanguageEnum {
 
-        PYTHON("python"),;
+        PYTHON("python"),
+        BASH("bash"),;
 
         private final String value;
 
