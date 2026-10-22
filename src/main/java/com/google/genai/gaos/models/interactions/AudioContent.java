@@ -37,7 +37,7 @@ import java.util.Optional;
  * 
  * <p>An audio content block.
  */
-public class AudioContent implements Content {
+public class AudioContent implements FunctionResultSubcontent, Content {
     /**
      * The number of audio channels.
      */

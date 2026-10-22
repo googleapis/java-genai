@@ -36,7 +36,7 @@ import java.util.Optional;
  * 
  * <p>A document content block.
  */
-public class DocumentContent implements Content {
+public class DocumentContent implements FunctionResultSubcontent, Content {
     /**
      * The document content.
      */
