@@ -456,6 +456,13 @@ final class TokensConverters {
           Common.getValueByPath(fromObject, new String[] {"translationConfig"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"setup", "labels"},
+          Common.getValueByPath(fromObject, new String[] {"labels"}));
+    }
+
     return toObject;
   }
 

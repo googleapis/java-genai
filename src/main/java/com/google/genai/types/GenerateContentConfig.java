@@ -266,6 +266,13 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("generationOutputConfig")
   public abstract Optional<GenerationOutputConfig> generationOutputConfig();
 
+  /**
+   * Configures the logging behavior for a given request. If set, it takes precedence over the
+   * project-level logging config. This field is not supported in Gemini Enterprise Agent Platform.
+   */
+  @JsonProperty("store")
+  public abstract Optional<Boolean> store();
+
   /** Instantiates a builder for GenerateContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -1271,6 +1278,26 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearGenerationOutputConfig() {
       return generationOutputConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for store.
+     *
+     * <p>store: Configures the logging behavior for a given request. If set, it takes precedence
+     * over the project-level logging config. This field is not supported in Gemini Enterprise Agent
+     * Platform.
+     */
+    @JsonProperty("store")
+    public abstract Builder store(boolean store);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder store(Optional<Boolean> store);
+
+    /** Clears the value of store field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStore() {
+      return store(Optional.empty());
     }
 
     public abstract GenerateContentConfig build();

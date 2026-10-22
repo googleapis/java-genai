@@ -1408,6 +1408,13 @@ public final class Batches {
               + " mode, not in Gemini Developer API mode.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"store"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"store"},
+          Common.getValueByPath(fromObject, new String[] {"store"}));
+    }
+
     return toObject;
   }
 

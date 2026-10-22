@@ -29,6 +29,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /** Session config for the API connection. */
@@ -172,6 +173,13 @@ public abstract class LiveConnectConfig extends JsonSerializable {
   /** Config for translation. */
   @JsonProperty("translationConfig")
   public abstract Optional<TranslationConfig> translationConfig();
+
+  /**
+   * Labels with user-defined metadata for the session. In Gemini Enterprise Agent Platform, they
+   * are used for billing and reporting.
+   */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
 
   /** Instantiates a builder for LiveConnectConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -896,6 +904,25 @@ public abstract class LiveConnectConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearTranslationConfig() {
       return translationConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: Labels with user-defined metadata for the session. In Gemini Enterprise Agent
+     * Platform, they are used for billing and reporting.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder labels(Optional<Map<String, String>> labels);
+
+    /** Clears the value of labels field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLabels() {
+      return labels(Optional.empty());
     }
 
     public abstract LiveConnectConfig build();

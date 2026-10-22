@@ -1621,6 +1621,13 @@ public final class Models {
               + " mode, not in Gemini Developer API mode.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"store"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"store"},
+          Common.getValueByPath(fromObject, new String[] {"store"}));
+    }
+
     return toObject;
   }
 
@@ -1893,6 +1900,12 @@ public final class Models {
           parentObject,
           new String[] {"outputConfig"},
           Common.getValueByPath(fromObject, new String[] {"generationOutputConfig"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"store"}))) {
+      throw new IllegalArgumentException(
+          "store parameter is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     return toObject;
