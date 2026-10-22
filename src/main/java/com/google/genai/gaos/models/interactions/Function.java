@@ -55,6 +55,10 @@ public class Function implements Tool, AgentTool {
 
     /**
      * The JSON Schema for the function's parameters.
+     * 
+     * <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+     * `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+     * `minContains`, and `maxContains` are ignored and not enforced.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("parameters")
@@ -95,6 +99,10 @@ public class Function implements Tool, AgentTool {
 
     /**
      * The JSON Schema for the function's parameters.
+     * 
+     * <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+     * `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+     * `minContains`, and `maxContains` are ignored and not enforced.
      */
     public Optional<Object> parameters() {
         return Optional.ofNullable(this.parameters);
@@ -130,6 +138,10 @@ public class Function implements Tool, AgentTool {
 
     /**
      * The JSON Schema for the function's parameters.
+     * 
+     * <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+     * `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+     * `minContains`, and `maxContains` are ignored and not enforced.
      */
     public Function withParameters(@Nullable Object parameters) {
         this.parameters = parameters;
@@ -200,6 +212,10 @@ public class Function implements Tool, AgentTool {
 
         /**
          * The JSON Schema for the function's parameters.
+         * 
+         * <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+         * `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+         * `minContains`, and `maxContains` are ignored and not enforced.
          */
         public Builder parameters(@Nullable Object parameters) {
             this.parameters = parameters;

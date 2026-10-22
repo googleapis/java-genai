@@ -49,6 +49,13 @@ public class TextResponseFormat {
     /**
      * The JSON schema that the output should conform to. Only applicable when
      * mime_type is application/json.
+     * 
+     * <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+     * `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+     * `minContains`, and `maxContains` are ignored and not enforced; validate
+     * these in your application. `minItems` and `maxItems` are enforced. Schemas
+     * that are too complex to enforce (for example, large `maxItems` on nested
+     * arrays) return a 400 INVALID_ARGUMENT error.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("schema")
@@ -81,6 +88,13 @@ public class TextResponseFormat {
     /**
      * The JSON schema that the output should conform to. Only applicable when
      * mime_type is application/json.
+     * 
+     * <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+     * `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+     * `minContains`, and `maxContains` are ignored and not enforced; validate
+     * these in your application. `minItems` and `maxItems` are enforced. Schemas
+     * that are too complex to enforce (for example, large `maxItems` on nested
+     * arrays) return a 400 INVALID_ARGUMENT error.
      */
     public Optional<Map<String, Object>> schema() {
         return Optional.ofNullable(this.schema);
@@ -107,6 +121,13 @@ public class TextResponseFormat {
     /**
      * The JSON schema that the output should conform to. Only applicable when
      * mime_type is application/json.
+     * 
+     * <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+     * `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+     * `minContains`, and `maxContains` are ignored and not enforced; validate
+     * these in your application. `minItems` and `maxItems` are enforced. Schemas
+     * that are too complex to enforce (for example, large `maxItems` on nested
+     * arrays) return a 400 INVALID_ARGUMENT error.
      */
     public TextResponseFormat withSchema(@Nullable Map<String, Object> schema) {
         this.schema = schema;
@@ -165,6 +186,13 @@ public class TextResponseFormat {
         /**
          * The JSON schema that the output should conform to. Only applicable when
          * mime_type is application/json.
+         * 
+         * <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+         * `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+         * `minContains`, and `maxContains` are ignored and not enforced; validate
+         * these in your application. `minItems` and `maxItems` are enforced. Schemas
+         * that are too complex to enforce (for example, large `maxItems` on nested
+         * arrays) return a 400 INVALID_ARGUMENT error.
          */
         public Builder schema(@Nullable Map<String, Object> schema) {
             this.schema = schema;
