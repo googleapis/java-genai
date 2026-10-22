@@ -330,6 +330,7 @@ public class Interaction {
         this.updated = updated;
         this.usage = usage;
         this.webhookConfig = webhookConfig;
+        populateOutputProperties();
     }
     
     public Interaction(
@@ -581,6 +582,106 @@ public class Interaction {
                 .build();
             Step step = modelOutputStep;
             this.steps = java.util.Collections.singletonList(step);
+            populateOutputProperties();
+        }
+    }
+
+    /**
+     * Populates the SDK-only convenience fields ({@code output_text}, {@code output_image},
+     * {@code output_audio}, {@code output_video}) from {@code steps}.
+     *
+     * <p>{@code output_text} is the concatenation of the trailing run of text content produced by
+     * the model in the last turn. Thought steps and empty model outputs are skipped; a user input
+     * step, a tool step after text was found, or non-text content after text was found ends the
+     * run. {@code output_image}, {@code output_audio} and {@code output_video} are the last item of
+     * each kind produced by the model since the last user input.
+     */
+    private void populateOutputProperties() {
+        if (this.steps == null || this.steps.isEmpty()) {
+            return;
+        }
+
+        List<String> textParts = new java.util.ArrayList<>();
+        boolean collecting = false;
+        outer:
+        for (int i = this.steps.size() - 1; i >= 0; i--) {
+            Step step = this.steps.get(i);
+            if (step == null) {
+                continue;
+            }
+            String stepType = step.type();
+            if ("user_input".equals(stepType)) {
+                break;
+            }
+            if ("thought".equals(stepType)) {
+                continue;
+            }
+            if (!(step instanceof ModelOutputStep)) {
+                if (collecting) {
+                    break;
+                }
+                continue;
+            }
+            List<Content> content = ((ModelOutputStep) step).content().orElse(null);
+            if (content == null || content.isEmpty()) {
+                continue;
+            }
+            for (int j = content.size() - 1; j >= 0; j--) {
+                Content item = content.get(j);
+                if (item instanceof TextContent) {
+                    collecting = true;
+                    textParts.add(((TextContent) item).text().orElse(""));
+                } else if (collecting) {
+                    break outer;
+                }
+            }
+        }
+
+        ImageContent image = null;
+        AudioContent audio = null;
+        VideoContent video = null;
+        for (int i = this.steps.size() - 1; i >= 0; i--) {
+            Step step = this.steps.get(i);
+            if (step == null) {
+                continue;
+            }
+            if ("user_input".equals(step.type())) {
+                break;
+            }
+            if (!(step instanceof ModelOutputStep)) {
+                continue;
+            }
+            List<Content> content = ((ModelOutputStep) step).content().orElse(null);
+            if (content == null) {
+                continue;
+            }
+            for (int j = content.size() - 1; j >= 0; j--) {
+                Content item = content.get(j);
+                if (image == null && item instanceof ImageContent) {
+                    image = (ImageContent) item;
+                }
+                if (audio == null && item instanceof AudioContent) {
+                    audio = (AudioContent) item;
+                }
+                if (video == null && item instanceof VideoContent) {
+                    video = (VideoContent) item;
+                }
+            }
+        }
+
+        java.util.Collections.reverse(textParts);
+        String text = String.join("", textParts);
+        if (!text.isEmpty()) {
+            this.outputText = text;
+        }
+        if (image != null) {
+            this.outputImage = image;
+        }
+        if (audio != null) {
+            this.outputAudio = audio;
+        }
+        if (video != null) {
+            this.outputVideo = video;
         }
     }
 
