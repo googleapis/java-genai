@@ -140,7 +140,14 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TextResponseFormat.Builder.html" title="class in com.google.genai.gaos.models.interactions">TextResponseFormat.Builder</a></span>&nbsp;<span class="element-name">schema</span><wbr><span class="parameters">(@Nullable
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;schema)</span></div>
 <div class="block">The JSON schema that the output should conform to. Only applicable when
- mime_type is application/json.</div>
+ mime_type is application/json.
+ 
+ <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+ `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+ `minContains`, and `maxContains` are ignored and not enforced; validate
+ these in your application. `minItems` and `maxItems` are enforced. Schemas
+ that are too complex to enforce (for example, large `maxItems` on nested
+ arrays) return a 400 INVALID_ARGUMENT error.</div>
 </section>
 </li>
 <li>

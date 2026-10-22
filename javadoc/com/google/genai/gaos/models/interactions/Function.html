@@ -237,7 +237,11 @@ implements <a href="Tool.html" title="interface in com.google.genai.gaos.models.
 <section class="detail" id="parameters()">
 <h3>parameters</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">parameters</span>()</div>
-<div class="block">The JSON Schema for the function's parameters.</div>
+<div class="block">The JSON Schema for the function's parameters.
+ 
+ <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+ `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+ `minContains`, and `maxContains` are ignored and not enforced.</div>
 </section>
 </li>
 <li>
@@ -279,7 +283,11 @@ implements <a href="Tool.html" title="interface in com.google.genai.gaos.models.
 <h3>withParameters</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Function.html" title="class in com.google.genai.gaos.models.interactions">Function</a></span>&nbsp;<span class="element-name">withParameters</span><wbr><span class="parameters">(@Nullable
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;parameters)</span></div>
-<div class="block">The JSON Schema for the function's parameters.</div>
+<div class="block">The JSON Schema for the function's parameters.
+ 
+ <p>Supports a subset of JSON Schema. `minLength`, `maxLength`,
+ `minProperties`, `maxProperties`, `uniqueItems`, `contains`,
+ `minContains`, and `maxContains` are ignored and not enforced.</div>
 </section>
 </li>
 <li>
