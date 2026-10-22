@@ -18,8 +18,10 @@ package com.google.genai.types;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.genai.errors.GenAiIOException;
 import java.time.Duration;
 import org.junit.jupiter.api.Test;
 
@@ -60,5 +62,70 @@ public class VideoMetadataTest {
     VideoMetadata deserialized = VideoMetadata.fromJson(json);
     assertFalse(deserialized.startOffset().isPresent());
     assertFalse(deserialized.endOffset().isPresent());
+  }
+
+  @Test
+  public void testDeserialization_fractionalSeconds() {
+    VideoMetadata deserialized =
+        VideoMetadata.fromJson("{\"startOffset\":\"1.5s\",\"endOffset\":\"10.250s\"}");
+
+    assertEquals(Duration.ofMillis(1500), deserialized.startOffset().get());
+    assertEquals(Duration.ofMillis(10250), deserialized.endOffset().get());
+  }
+
+  @Test
+  public void testDeserialization_nanosecondPrecisionAndNegative() {
+    VideoMetadata deserialized =
+        VideoMetadata.fromJson("{\"startOffset\":\"0.000000001s\",\"endOffset\":\"-1.5s\"}");
+
+    assertEquals(Duration.ofNanos(1), deserialized.startOffset().get());
+    assertEquals(Duration.ofMillis(-1500), deserialized.endOffset().get());
+  }
+
+  @Test
+  public void testSerializationDeserialization_fractionalSeconds() {
+    VideoMetadata original =
+        VideoMetadata.builder()
+            .startOffset(Duration.ofMillis(1500))
+            .endOffset(Duration.ofMillis(-10250))
+            .build();
+
+    String json = original.toJson();
+    assertTrue(json.contains("\"startOffset\":\"1.5s\""));
+    assertTrue(json.contains("\"endOffset\":\"-10.25s\""));
+
+    assertEquals(original, VideoMetadata.fromJson(json));
+  }
+
+  @Test
+  public void testDeserialization_invalidDuration_throws() {
+    for (String value :
+        new String[] {"1.5", "abc", "s", "1.s", ".5s", "1.5.5s", "+1s", "1.0000000001s", "1e3s"}) {
+      assertThrows(
+          GenAiIOException.class,
+          () -> VideoMetadata.fromJson("{\"startOffset\":\"" + value + "\"}"),
+          value);
+    }
+  }
+
+  @Test
+  public void testDeserialization_outOfRangeDuration_throws() {
+    assertThrows(
+        GenAiIOException.class,
+        () -> VideoMetadata.fromJson("{\"startOffset\":\"99999999999999999999s\"}"));
+    assertThrows(
+        GenAiIOException.class,
+        () -> VideoMetadata.fromJson("{\"startOffset\":\"-9223372036854775808.5s\"}"));
+  }
+
+  @Test
+  public void testDeserialization_durationRangeLimits() {
+    VideoMetadata deserialized =
+        VideoMetadata.fromJson(
+            "{\"startOffset\":\"-9223372036854775808s\","
+                + "\"endOffset\":\"9223372036854775807.999999999s\"}");
+
+    assertEquals(Duration.ofSeconds(Long.MIN_VALUE), deserialized.startOffset().get());
+    assertEquals(Duration.ofSeconds(Long.MAX_VALUE, 999_999_999), deserialized.endOffset().get());
   }
 }

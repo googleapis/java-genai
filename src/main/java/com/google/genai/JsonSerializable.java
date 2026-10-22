@@ -34,7 +34,11 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.api.core.InternalApi;
 import com.google.genai.errors.GenAiIOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Duration;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /** A class that can be serialized to JSON and deserialized from JSON. */
 public abstract class JsonSerializable {
@@ -49,48 +53,68 @@ public abstract class JsonSerializable {
    */
   public static final String MAX_READ_LENGTH_PROPERTY = "genai.json.maxReadLength";
 
-  /** Custom Jackson serializer for {@link java.time.Duration} to output "Xs" format. */
-  static class CustomDurationSerializer extends JsonSerializer<java.time.Duration> {
+  /**
+   * Pattern of a duration in the protobuf JSON format: seconds with up to nine fractional digits,
+   * followed by "s", e.g. "3s", "3.5s" or "-0.000000001s".
+   */
+  private static final Pattern DURATION_PATTERN = Pattern.compile("-?\\d+(\\.\\d{1,9})?s");
+
+  /** Range of seconds that fits in a {@link Duration}. */
+  private static final BigDecimal MIN_DURATION_SECONDS = BigDecimal.valueOf(Long.MIN_VALUE);
+
+  private static final BigDecimal MAX_DURATION_SECONDS =
+      BigDecimal.valueOf(Long.MAX_VALUE).add(BigDecimal.valueOf(999_999_999, 9));
+
+  /**
+   * Custom Jackson serializer for {@link Duration} to output the protobuf JSON duration format,
+   * e.g. "3s" or "3.5s".
+   */
+  static class CustomDurationSerializer extends JsonSerializer<Duration> {
     @Override
     public void serialize(
-        java.time.Duration duration,
-        JsonGenerator jsonGenerator,
-        SerializerProvider serializerProvider)
+        Duration duration, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
         throws java.io.IOException {
       if (duration == null) {
         jsonGenerator.writeNull();
       } else {
-        jsonGenerator.writeString(duration.getSeconds() + "s");
+        // Keep the fractional seconds, e.g. 1500 ms is "1.5s", not "1s".
+        BigDecimal seconds =
+            BigDecimal.valueOf(duration.getSeconds())
+                .add(BigDecimal.valueOf(duration.getNano(), 9));
+        jsonGenerator.writeString(seconds.stripTrailingZeros().toPlainString() + "s");
       }
     }
   }
 
-  /** Custom Jackson deserializer for {@link java.time.Duration} to parse "Xs" format. */
-  static class CustomDurationDeserializer extends JsonDeserializer<java.time.Duration> {
+  /**
+   * Custom Jackson deserializer for {@link Duration} to parse the protobuf JSON duration format,
+   * e.g. "3s" or "3.5s".
+   */
+  static class CustomDurationDeserializer extends JsonDeserializer<Duration> {
     @Override
-    public java.time.Duration deserialize(JsonParser p, DeserializationContext ctxt)
+    public Duration deserialize(JsonParser p, DeserializationContext ctxt)
         throws java.io.IOException, JsonProcessingException {
       String value = p.getValueAsString();
 
       if (value == null || value.isEmpty()) {
         return null;
       }
-      if (value.endsWith("s")) {
-        String secondsPart = value.substring(0, value.length() - 1);
-        try {
-          long seconds = Long.parseLong(secondsPart);
-          return java.time.Duration.ofSeconds(seconds);
-        } catch (NumberFormatException e) {
-          throw ctxt.weirdStringException(
-              value,
-              java.time.Duration.class,
-              "Cannot parse duration from string: " + value + ". Expected format 'Xs'.");
-        }
-      } else {
-        // If it doesn't end with 's', delegate to the default deserializer.
+      if (!DURATION_PATTERN.matcher(value).matches()) {
         throw ctxt.weirdStringException(
-            value, java.time.Duration.class, "Expected duration in format 'Xs', but got: " + value);
+            value,
+            Duration.class,
+            "Expected duration in format like '3s' or '3.5s', but got: " + value);
       }
+      BigDecimal seconds = new BigDecimal(value.substring(0, value.length() - 1));
+      if (seconds.compareTo(MIN_DURATION_SECONDS) < 0
+          || seconds.compareTo(MAX_DURATION_SECONDS) > 0) {
+        throw ctxt.weirdStringException(
+            value, Duration.class, "Duration is out of range: " + value);
+      }
+      long wholeSeconds = seconds.setScale(0, RoundingMode.DOWN).longValue();
+      int nanos = seconds.subtract(BigDecimal.valueOf(wholeSeconds)).movePointRight(9).intValue();
+      // For negative durations nanos is negative too; Duration.ofSeconds normalizes it.
+      return Duration.ofSeconds(wholeSeconds, nanos);
     }
   }
 
@@ -114,8 +138,8 @@ public abstract class JsonSerializable {
 
     // Create a module for custom serializers/deserializers
     SimpleModule customModule = new SimpleModule();
-    customModule.addSerializer(java.time.Duration.class, new CustomDurationSerializer());
-    customModule.addDeserializer(java.time.Duration.class, new CustomDurationDeserializer());
+    customModule.addSerializer(Duration.class, new CustomDurationSerializer());
+    customModule.addDeserializer(Duration.class, new CustomDurationDeserializer());
 
     // Register JavaTimeModule for other java.time types *before* the custom module
     // This ensures our custom Duration handling takes precedence over the default one
