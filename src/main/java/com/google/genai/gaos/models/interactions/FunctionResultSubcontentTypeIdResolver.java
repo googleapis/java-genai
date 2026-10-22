@@ -37,6 +37,7 @@ public class FunctionResultSubcontentTypeIdResolver extends GenericTypeIdResolve
     private void initializeTypeMap() {
         registerType("audio", AudioContent.class);
         registerType("document", DocumentContent.class);
+        registerType("function", Function.class);
         registerType("image", ImageContent.class);
         registerType("text", TextContent.class);
         registerType("video", VideoContent.class);
