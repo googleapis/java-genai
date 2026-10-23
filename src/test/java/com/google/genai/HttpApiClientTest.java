@@ -208,7 +208,7 @@ public class HttpApiClientTest {
 
     assertEquals("GET", capturedRequest.method());
     assertEquals(
-        "https://generativelanguage.googleapis.com/v1beta/" + TEST_PATH,
+        "https://generativelanguage.googleapis.com/v1/" + TEST_PATH,
         capturedRequest.url().toString());
     assertNotNull(capturedRequest.header("x-goog-api-key"));
     assertEquals(API_KEY, capturedRequest.header("x-goog-api-key"));
@@ -232,7 +232,7 @@ public class HttpApiClientTest {
 
     assertEquals("DELETE", capturedRequest.method());
     assertEquals(
-        "https://generativelanguage.googleapis.com/v1beta/" + TEST_PATH,
+        "https://generativelanguage.googleapis.com/v1/" + TEST_PATH,
         capturedRequest.url().toString());
     assertNotNull(capturedRequest.header("x-goog-api-key"));
     assertEquals(API_KEY, capturedRequest.header("x-goog-api-key"));

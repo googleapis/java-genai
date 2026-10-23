@@ -143,6 +143,7 @@ public final class Client implements AutoCloseable {
   /** Builder for {@link Client}. */
   public static class Builder {
     private Optional<String> apiKey = Optional.empty();
+    private Optional<String> apiVersion = Optional.empty();
     private Optional<String> project = Optional.empty();
     private Optional<String> location = Optional.empty();
     private Optional<GoogleCredentials> credentials = Optional.empty();
@@ -155,18 +156,38 @@ public final class Client implements AutoCloseable {
 
     /** Builds the {@link Client} instance. */
     public Client build() {
+      Optional<HttpOptions> resolvedHttpOptions = this.httpOptions;
+      if (this.apiVersion.isPresent()) {
+        if (this.httpOptions.isPresent() && this.httpOptions.get().apiVersion().isPresent()) {
+          throw new IllegalArgumentException(
+              "apiVersion is set in both Client.Builder and HttpOptions. Please specify apiVersion"
+                  + " in only one place.");
+        }
+        HttpOptions currentOptions =
+            this.httpOptions.orElseGet(() -> HttpOptions.builder().build());
+        resolvedHttpOptions =
+            Optional.of(currentOptions.toBuilder().apiVersion(this.apiVersion.get()).build());
+      }
 
       return new Client(
           apiKey,
           project,
           location,
           credentials,
-          httpOptions,
+          resolvedHttpOptions,
           clientOptions,
           vertexAI,
           enterprise,
           debugConfig,
           asyncRetryScheduler);
+    }
+
+    /** Sets the API version for the client (e.g. "v1" or "v1beta"). */
+    @CanIgnoreReturnValue
+    public Builder apiVersion(String apiVersion) {
+      checkNotNull(apiVersion, "apiVersion cannot be null");
+      this.apiVersion = Optional.of(apiVersion);
+      return this;
     }
 
     /** Sets the API key for Gemini API. */

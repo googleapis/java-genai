@@ -94,6 +94,41 @@ public class ClientTest {
   }
 
   @Test
+  public void testInitClientFromBuilder_withApiVersion() {
+    // Act
+    Client client =
+        Client.builder()
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .apiVersion("v1beta")
+            .build();
+
+    // Assert
+    assertEquals(API_KEY, client.apiKey());
+    assertFalse(client.vertexAI());
+  }
+
+  @Test
+  public void testInitClientFromBuilder_withApiVersionConflict_throwsException() {
+    // Act
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                Client.builder()
+                    .apiKey(API_KEY)
+                    .vertexAI(false)
+                    .apiVersion("v1beta")
+                    .httpOptions(HttpOptions.builder().apiVersion("v1").build())
+                    .build());
+
+    // Assert
+    assertEquals(
+        "apiVersion is set in both Client.Builder and HttpOptions. Please specify apiVersion in only one place.",
+        exception.getMessage());
+  }
+
+  @Test
   public void testReplayClient_mldev() {
     // Act
     Client client =
