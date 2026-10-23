@@ -52,6 +52,13 @@ public class Usage {
     private List<GroundingToolCount> groundingToolCount;
 
     /**
+     * Number of input tokens used in the first turn of this interaction.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("initial_input_tokens")
+    private Integer initialInputTokens;
+
+    /**
      * A breakdown of input token usage by modality.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -119,6 +126,7 @@ public class Usage {
     public Usage(
             @JsonProperty("cached_tokens_by_modality") @Nullable List<ModalityTokens> cachedTokensByModality,
             @JsonProperty("grounding_tool_count") @Nullable List<GroundingToolCount> groundingToolCount,
+            @JsonProperty("initial_input_tokens") @Nullable Integer initialInputTokens,
             @JsonProperty("input_tokens_by_modality") @Nullable List<ModalityTokens> inputTokensByModality,
             @JsonProperty("output_tokens_by_modality") @Nullable List<ModalityTokens> outputTokensByModality,
             @JsonProperty("tool_use_tokens_by_modality") @Nullable List<ModalityTokens> toolUseTokensByModality,
@@ -130,6 +138,7 @@ public class Usage {
             @JsonProperty("total_tool_use_tokens") @Nullable Integer totalToolUseTokens) {
         this.cachedTokensByModality = cachedTokensByModality;
         this.groundingToolCount = groundingToolCount;
+        this.initialInputTokens = initialInputTokens;
         this.inputTokensByModality = inputTokensByModality;
         this.outputTokensByModality = outputTokensByModality;
         this.toolUseTokensByModality = toolUseTokensByModality;
@@ -145,7 +154,7 @@ public class Usage {
         this(null, null, null,
             null, null, null,
             null, null, null,
-            null, null);
+            null, null, null);
     }
 
     /**
@@ -160,6 +169,13 @@ public class Usage {
      */
     public Optional<List<GroundingToolCount>> groundingToolCount() {
         return Optional.ofNullable(this.groundingToolCount);
+    }
+
+    /**
+     * Number of input tokens used in the first turn of this interaction.
+     */
+    public Optional<Integer> initialInputTokens() {
+        return Optional.ofNullable(this.initialInputTokens);
     }
 
     /**
@@ -245,6 +261,15 @@ public class Usage {
      */
     public Usage withGroundingToolCount(@Nullable List<GroundingToolCount> groundingToolCount) {
         this.groundingToolCount = groundingToolCount;
+        return this;
+    }
+
+
+    /**
+     * Number of input tokens used in the first turn of this interaction.
+     */
+    public Usage withInitialInputTokens(@Nullable Integer initialInputTokens) {
+        this.initialInputTokens = initialInputTokens;
         return this;
     }
 
@@ -343,6 +368,7 @@ public class Usage {
         return 
             Utils.enhancedDeepEquals(this.cachedTokensByModality, other.cachedTokensByModality) &&
             Utils.enhancedDeepEquals(this.groundingToolCount, other.groundingToolCount) &&
+            Utils.enhancedDeepEquals(this.initialInputTokens, other.initialInputTokens) &&
             Utils.enhancedDeepEquals(this.inputTokensByModality, other.inputTokensByModality) &&
             Utils.enhancedDeepEquals(this.outputTokensByModality, other.outputTokensByModality) &&
             Utils.enhancedDeepEquals(this.toolUseTokensByModality, other.toolUseTokensByModality) &&
@@ -357,10 +383,10 @@ public class Usage {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            cachedTokensByModality, groundingToolCount, inputTokensByModality,
-            outputTokensByModality, toolUseTokensByModality, totalCachedTokens,
-            totalInputTokens, totalOutputTokens, totalThoughtTokens,
-            totalTokens, totalToolUseTokens);
+            cachedTokensByModality, groundingToolCount, initialInputTokens,
+            inputTokensByModality, outputTokensByModality, toolUseTokensByModality,
+            totalCachedTokens, totalInputTokens, totalOutputTokens,
+            totalThoughtTokens, totalTokens, totalToolUseTokens);
     }
     
     @Override
@@ -368,6 +394,7 @@ public class Usage {
         return Utils.toString(Usage.class,
                 "cachedTokensByModality", cachedTokensByModality,
                 "groundingToolCount", groundingToolCount,
+                "initialInputTokens", initialInputTokens,
                 "inputTokensByModality", inputTokensByModality,
                 "outputTokensByModality", outputTokensByModality,
                 "toolUseTokensByModality", toolUseTokensByModality,
@@ -385,6 +412,8 @@ public class Usage {
         private List<ModalityTokens> cachedTokensByModality;
 
         private List<GroundingToolCount> groundingToolCount;
+
+        private Integer initialInputTokens;
 
         private List<ModalityTokens> inputTokensByModality;
 
@@ -421,6 +450,14 @@ public class Usage {
          */
         public Builder groundingToolCount(@Nullable List<GroundingToolCount> groundingToolCount) {
             this.groundingToolCount = groundingToolCount;
+            return this;
+        }
+
+        /**
+         * Number of input tokens used in the first turn of this interaction.
+         */
+        public Builder initialInputTokens(@Nullable Integer initialInputTokens) {
+            this.initialInputTokens = initialInputTokens;
             return this;
         }
 
@@ -499,10 +536,10 @@ public class Usage {
 
         public Usage build() {
             return new Usage(
-                cachedTokensByModality, groundingToolCount, inputTokensByModality,
-                outputTokensByModality, toolUseTokensByModality, totalCachedTokens,
-                totalInputTokens, totalOutputTokens, totalThoughtTokens,
-                totalTokens, totalToolUseTokens);
+                cachedTokensByModality, groundingToolCount, initialInputTokens,
+                inputTokensByModality, outputTokensByModality, toolUseTokensByModality,
+                totalCachedTokens, totalInputTokens, totalOutputTokens,
+                totalThoughtTokens, totalTokens, totalToolUseTokens);
         }
 
     }
