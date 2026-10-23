@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.79.0](https://github.com/googleapis/java-genai/compare/v1.78.0...v1.79.0) (2026-10-22)
+
+
+### Features
+
+* Add `store` to `GenerateContentConfig` (Gemini Developer API only) and `labels` to `LiveConnectConfig`. ([912b141](https://github.com/googleapis/java-genai/commit/912b141675a63e5b475af4d751bef85108b5639f))
+* add base_voice to PromptedVoice in GAOS SDK ([9fbbc95](https://github.com/googleapis/java-genai/commit/9fbbc95f508304e524cb75f9a57044b7aac8357d))
+* Add generation_output_config to GenerateContentConfig ([eabd2d1](https://github.com/googleapis/java-genai/commit/eabd2d18516ba0584986932fad433fd0fa1c08dd))
+* Add Live API in-session context updates (`send_context_update`) and types across GenAI SDKs. ([89ef7e5](https://github.com/googleapis/java-genai/commit/89ef7e58d273fb42c02593e57ed60f98d2fe35c5))
+* include AudioContent, DocumentContent, and VideoContent in FunctionResultSubContent ([ac14f74](https://github.com/googleapis/java-genai/commit/ac14f749d01a5bbc7959c1496d19a651d18869ac))
+* **interactions:** populate output_text and output media helpers in the Java SDK ([1ca9c62](https://github.com/googleapis/java-genai/commit/1ca9c62a3e9bc6355dc5dd86c7deb7bdf0afc3d4))
+* update discovery doc ([c00afaf](https://github.com/googleapis/java-genai/commit/c00afaf6b4b30e27ee82a8e04e548a0b8212d85c))
+
+
+### Bug Fixes
+
+* Create the LocalTokenizerLoader HTTP client lazily so GraalVM native builds succeed ([42dea8b](https://github.com/googleapis/java-genai/commit/42dea8bb60e427687a5bf5df77652421eb69d85b)), refs [#978](https://github.com/googleapis/java-genai/issues/978)
+* **interactions:** sync InteractionSseEventInteractionStatus enum with InteractionStatus ([5584baa](https://github.com/googleapis/java-genai/commit/5584baa64180d34eea329e6ea219b56e55268e22))
+* Support fractional-second durations (e.g. "1.5s") in Duration fields ([453c442](https://github.com/googleapis/java-genai/commit/453c44255fb46963914b8fdf9b2a44540f543aeb))
+* **triggers:** fix agent triggers OpenAPI overlays, numeric fields, and SDK patches ([80b6d5e](https://github.com/googleapis/java-genai/commit/80b6d5e4756aeb5c2e486e43f9973146d74bf1d5))
+* update Jackson to 2.18.11 ([2b42dd6](https://github.com/googleapis/java-genai/commit/2b42dd6c5e1ad22bc450d86c6547507d9b5dd8b3))
+
+
+### Documentation
+
+* Update unenforced JSON Schema keywords on Interactions schema fields. ([381cc56](https://github.com/googleapis/java-genai/commit/381cc569c5bd9bb43f1b27eef24c241c7cd1b354))
+
 ## [1.78.0](https://github.com/googleapis/java-genai/compare/v1.77.0...v1.78.0) (2026-10-14)
 
 
