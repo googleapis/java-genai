@@ -70,6 +70,15 @@ public class Interaction {
     private String cachedContent;
 
     /**
+     * Opaque token to resume a long decode. Output: set when status is
+     * REQUIRES_CONTINUATION and decoding can be resumed. Input: pass the latest
+     * token back unchanged in CreateInteraction to continue decoding.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("continuation_token")
+    private String continuationToken;
+
+    /**
      * Required. Output only. The time at which the response was created in ISO 8601 format
      * (YYYY-MM-DDThh:mm:ssZ).
      */
@@ -273,6 +282,7 @@ public class Interaction {
             @JsonProperty("agent") @Nullable AgentOption agent,
             @JsonProperty("agent_config") @Nullable InteractionAgentConfig agentConfig,
             @JsonProperty("cached_content") @Nullable String cachedContent,
+            @JsonProperty("continuation_token") @Nullable String continuationToken,
             @JsonProperty("created") @Nullable String created,
             @JsonProperty("environment") @Nullable InteractionEnvironment environment,
             @JsonProperty("environment_id") @Nullable String environmentId,
@@ -302,6 +312,7 @@ public class Interaction {
         this.agent = agent;
         this.agentConfig = agentConfig;
         this.cachedContent = cachedContent;
+        this.continuationToken = continuationToken;
         this.created = created;
         this.environment = environment;
         this.environmentId = environmentId;
@@ -342,9 +353,9 @@ public class Interaction {
             null, null, null,
             null, null, null,
             null, null, null,
-            null, status, null,
+            null, null, status,
             null, null, null,
-            null, null);
+            null, null, null);
     }
 
     /**
@@ -373,6 +384,15 @@ public class Interaction {
     @Deprecated
     public Optional<String> cachedContent() {
         return Optional.ofNullable(this.cachedContent);
+    }
+
+    /**
+     * Opaque token to resume a long decode. Output: set when status is
+     * REQUIRES_CONTINUATION and decoding can be resumed. Input: pass the latest
+     * token back unchanged in CreateInteraction to continue decoding.
+     */
+    public Optional<String> continuationToken() {
+        return Optional.ofNullable(this.continuationToken);
     }
 
     /**
@@ -725,6 +745,17 @@ public class Interaction {
 
 
     /**
+     * Opaque token to resume a long decode. Output: set when status is
+     * REQUIRES_CONTINUATION and decoding can be resumed. Input: pass the latest
+     * token back unchanged in CreateInteraction to continue decoding.
+     */
+    public Interaction withContinuationToken(@Nullable String continuationToken) {
+        this.continuationToken = continuationToken;
+        return this;
+    }
+
+
+    /**
      * Required. Output only. The time at which the response was created in ISO 8601 format
      * (YYYY-MM-DDThh:mm:ssZ).
      */
@@ -988,6 +1019,7 @@ public class Interaction {
             Utils.enhancedDeepEquals(this.agent, other.agent) &&
             Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
             Utils.enhancedDeepEquals(this.cachedContent, other.cachedContent) &&
+            Utils.enhancedDeepEquals(this.continuationToken, other.continuationToken) &&
             Utils.enhancedDeepEquals(this.created, other.created) &&
             Utils.enhancedDeepEquals(this.environment, other.environment) &&
             Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
@@ -1020,15 +1052,15 @@ public class Interaction {
     public int hashCode() {
         return Utils.enhancedHash(
             agent, agentConfig, cachedContent,
-            created, environment, environmentId,
-            errors, generationConfig, id,
-            input, labels, model,
-            outputAudio, outputImage, outputText,
-            outputVideo, previousInteractionId, responseFormat,
-            responseMimeType, responseModalities, safetySettings,
-            serviceTier, status, steps,
-            systemInstruction, tools, updated,
-            usage, webhookConfig);
+            continuationToken, created, environment,
+            environmentId, errors, generationConfig,
+            id, input, labels,
+            model, outputAudio, outputImage,
+            outputText, outputVideo, previousInteractionId,
+            responseFormat, responseMimeType, responseModalities,
+            safetySettings, serviceTier, status,
+            steps, systemInstruction, tools,
+            updated, usage, webhookConfig);
     }
     
     @Override
@@ -1037,6 +1069,7 @@ public class Interaction {
                 "agent", agent,
                 "agentConfig", agentConfig,
                 "cachedContent", cachedContent,
+                "continuationToken", continuationToken,
                 "created", created,
                 "environment", environment,
                 "environmentId", environmentId,
@@ -1074,6 +1107,8 @@ public class Interaction {
 
         @Deprecated
         private String cachedContent;
+
+        private String continuationToken;
 
         private String created;
 
@@ -1161,6 +1196,16 @@ public class Interaction {
         @Deprecated
         public Builder cachedContent(@Nullable String cachedContent) {
             this.cachedContent = cachedContent;
+            return this;
+        }
+
+        /**
+         * Opaque token to resume a long decode. Output: set when status is
+         * REQUIRES_CONTINUATION and decoding can be resumed. Input: pass the latest
+         * token back unchanged in CreateInteraction to continue decoding.
+         */
+        public Builder continuationToken(@Nullable String continuationToken) {
+            this.continuationToken = continuationToken;
             return this;
         }
 
@@ -1392,15 +1437,15 @@ public class Interaction {
         public Interaction build() {
             return new Interaction(
                 agent, agentConfig, cachedContent,
-                created, environment, environmentId,
-                errors, generationConfig, id,
-                input, labels, model,
-                outputAudio, outputImage, outputText,
-                outputVideo, previousInteractionId, responseFormat,
-                responseMimeType, responseModalities, safetySettings,
-                serviceTier, status, steps,
-                systemInstruction, tools, updated,
-                usage, webhookConfig);
+                continuationToken, created, environment,
+                environmentId, errors, generationConfig,
+                id, input, labels,
+                model, outputAudio, outputImage,
+                outputText, outputVideo, previousInteractionId,
+                responseFormat, responseMimeType, responseModalities,
+                safetySettings, serviceTier, status,
+                steps, systemInstruction, tools,
+                updated, usage, webhookConfig);
         }
 
 
