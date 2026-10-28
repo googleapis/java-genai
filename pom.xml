@@ -53,6 +53,7 @@
     <jackson.version>2.18.11</jackson.version>
     <junit.version>5.11.4</junit.version>
     <okhttp.version>4.12.0</okhttp.version>
+    <commons-codec.version>1.18.0</commons-codec.version>
     <main.java.src.dir>src/main/java</main.java.src.dir>
     <test.java.src.dir>src/test/java</test.java.src.dir>
   </properties>
@@ -90,6 +91,15 @@
       <groupId>com.google.auth</groupId>
       <artifactId>google-auth-library-oauth2-http</artifactId>
       <version>${google.auth.version}</version>
+    </dependency>
+    <!-- Not used directly. Overrides the vulnerable commons-codec 1.11 that
+         google-auth-library-oauth2-http pulls in through Apache httpclient.
+         Matches the version in Google Cloud Java's shared dependencies.
+         See https://github.com/googleapis/java-genai/issues/896. -->
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>${commons-codec.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.auto.value</groupId>
