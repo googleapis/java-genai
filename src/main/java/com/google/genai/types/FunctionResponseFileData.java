@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** URI based data for function response. This data type is not supported in Gemini API. */
+/** URI based data for function response. */
 @AutoValue
 @JsonDeserialize(builder = FunctionResponseFileData.Builder.class)
 public abstract class FunctionResponseFileData extends JsonSerializable {

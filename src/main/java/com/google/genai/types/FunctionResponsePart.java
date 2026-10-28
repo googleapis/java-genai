@@ -40,9 +40,17 @@ public abstract class FunctionResponsePart extends JsonSerializable {
   @JsonProperty("inlineData")
   public abstract Optional<FunctionResponseBlob> inlineData();
 
-  /** URI based data. This field is not supported in Gemini API. */
+  /** URI based data. */
   @JsonProperty("fileData")
   public abstract Optional<FunctionResponseFileData> fileData();
+
+  /**
+   * Optional. How the model processes this part's media for understanding. Only meaningful for
+   * video parts (`inline_data` or `file_data` with video mime). Non-video parts ignore this field.
+   * This field is not supported in Vertex AI.
+   */
+  @JsonProperty("mediaProcessing")
+  public abstract Optional<MediaProcessing> mediaProcessing();
 
   /** Instantiates a builder for FunctionResponsePart. */
   @ExcludeFromGeneratedCoverageReport
@@ -93,7 +101,7 @@ public abstract class FunctionResponsePart extends JsonSerializable {
     /**
      * Setter for fileData.
      *
-     * <p>fileData: URI based data. This field is not supported in Gemini API.
+     * <p>fileData: URI based data.
      */
     @JsonProperty("fileData")
     public abstract Builder fileData(FunctionResponseFileData fileData);
@@ -101,7 +109,7 @@ public abstract class FunctionResponsePart extends JsonSerializable {
     /**
      * Setter for fileData builder.
      *
-     * <p>fileData: URI based data. This field is not supported in Gemini API.
+     * <p>fileData: URI based data.
      */
     @CanIgnoreReturnValue
     public Builder fileData(FunctionResponseFileData.Builder fileDataBuilder) {
@@ -116,6 +124,50 @@ public abstract class FunctionResponsePart extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearFileData() {
       return fileData(Optional.empty());
+    }
+
+    /**
+     * Setter for mediaProcessing.
+     *
+     * <p>mediaProcessing: Optional. How the model processes this part's media for understanding.
+     * Only meaningful for video parts (`inline_data` or `file_data` with video mime). Non-video
+     * parts ignore this field. This field is not supported in Vertex AI.
+     */
+    @JsonProperty("mediaProcessing")
+    public abstract Builder mediaProcessing(MediaProcessing mediaProcessing);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mediaProcessing(Optional<MediaProcessing> mediaProcessing);
+
+    /** Clears the value of mediaProcessing field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMediaProcessing() {
+      return mediaProcessing(Optional.empty());
+    }
+
+    /**
+     * Setter for mediaProcessing given a known enum.
+     *
+     * <p>mediaProcessing: Optional. How the model processes this part's media for understanding.
+     * Only meaningful for video parts (`inline_data` or `file_data` with video mime). Non-video
+     * parts ignore this field. This field is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder mediaProcessing(MediaProcessing.Known knownType) {
+      return mediaProcessing(new MediaProcessing(knownType));
+    }
+
+    /**
+     * Setter for mediaProcessing given a string.
+     *
+     * <p>mediaProcessing: Optional. How the model processes this part's media for understanding.
+     * Only meaningful for video parts (`inline_data` or `file_data` with video mime). Non-video
+     * parts ignore this field. This field is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder mediaProcessing(String mediaProcessing) {
+      return mediaProcessing(new MediaProcessing(mediaProcessing));
     }
 
     public abstract FunctionResponsePart build();

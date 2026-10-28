@@ -167,6 +167,81 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponsePartToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileData"},
+          Common.getValueByPath(fromObject, new String[] {"fileData"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}))) {
+      throw new IllegalArgumentException(
+          "mediaProcessing parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponseToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"willContinue"}))) {
+      throw new IllegalArgumentException(
+          "willContinue parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"scheduling"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"scheduling"},
+          Common.getValueByPath(fromObject, new String[] {"scheduling"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(functionResponsePartToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"parts"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"response"},
+          Common.getValueByPath(fromObject, new String[] {"response"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode generationConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"modelSelectionConfig"}) != null) {
@@ -666,7 +741,10 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"toolResponse"},
-          Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
+          liveClientToolResponseToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"toolResponse"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"contextUpdate"}) != null) {
@@ -982,6 +1060,24 @@ final class LiveConverters {
       throw new IllegalArgumentException(
           "labels parameter is only supported in Gemini Developer API mode, not in Gemini"
               + " Enterprise Agent Platform mode.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientToolResponseToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponses"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionResponses"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(functionResponseToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"functionResponses"}, result);
     }
 
     return toObject;
@@ -1869,7 +1965,10 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+          functionResponseToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionResponse"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
