@@ -45,6 +45,7 @@ public class AgentOption {
     public static final AgentOption DEEP_RESEARCH_PREVIEW042026 = new AgentOption("deep-research-preview-04-2026");
     public static final AgentOption DEEP_RESEARCH_MAX_PREVIEW042026 = new AgentOption("deep-research-max-preview-04-2026");
     public static final AgentOption ANTIGRAVITY_PREVIEW052026 = new AgentOption("antigravity-preview-05-2026");
+    public static final AgentOption ANTIGRAVITY_PREVIEW092026 = new AgentOption("antigravity-preview-09-2026");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -122,6 +123,7 @@ public class AgentOption {
         map.put("deep-research-preview-04-2026", DEEP_RESEARCH_PREVIEW042026);
         map.put("deep-research-max-preview-04-2026", DEEP_RESEARCH_MAX_PREVIEW042026);
         map.put("antigravity-preview-05-2026", ANTIGRAVITY_PREVIEW052026);
+        map.put("antigravity-preview-09-2026", ANTIGRAVITY_PREVIEW092026);
         return map;
     }
 
@@ -131,6 +133,7 @@ public class AgentOption {
         map.put("deep-research-preview-04-2026", AgentOptionEnum.DEEP_RESEARCH_PREVIEW042026);
         map.put("deep-research-max-preview-04-2026", AgentOptionEnum.DEEP_RESEARCH_MAX_PREVIEW042026);
         map.put("antigravity-preview-05-2026", AgentOptionEnum.ANTIGRAVITY_PREVIEW052026);
+        map.put("antigravity-preview-09-2026", AgentOptionEnum.ANTIGRAVITY_PREVIEW092026);
         return map;
     }
     
@@ -140,7 +143,8 @@ public class AgentOption {
         DEEP_RESEARCH_PRO_PREVIEW122025("deep-research-pro-preview-12-2025"),
         DEEP_RESEARCH_PREVIEW042026("deep-research-preview-04-2026"),
         DEEP_RESEARCH_MAX_PREVIEW042026("deep-research-max-preview-04-2026"),
-        ANTIGRAVITY_PREVIEW052026("antigravity-preview-05-2026"),;
+        ANTIGRAVITY_PREVIEW052026("antigravity-preview-05-2026"),
+        ANTIGRAVITY_PREVIEW092026("antigravity-preview-09-2026"),;
 
         private final String value;
 
