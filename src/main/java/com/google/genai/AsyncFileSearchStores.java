@@ -189,12 +189,11 @@ public final class AsyncFileSearchStores {
     HttpOptions httpOptions =
         UploadClient.buildResumableUploadHttpOptions(
             userHttpOptions, mimeTypeToUse, fileName, size);
+    UploadToFileSearchStoreConfig.Builder requestConfigBuilder =
+        config != null ? config.toBuilder() : UploadToFileSearchStoreConfig.builder();
     return privateUploadToFileSearchStore(
             fileSearchStoreName,
-            UploadToFileSearchStoreConfig.builder()
-                .httpOptions(httpOptions)
-                .shouldReturnHttpResponse(true)
-                .build())
+            requestConfigBuilder.httpOptions(httpOptions).shouldReturnHttpResponse(true).build())
         .thenApply(
             response ->
                 response
