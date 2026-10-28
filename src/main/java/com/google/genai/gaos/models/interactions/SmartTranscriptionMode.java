@@ -20,12 +20,16 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
+import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 /**
  * SmartTranscriptionMode
@@ -33,13 +37,37 @@ import java.lang.String;
  * <p>Configuration for smart transcription mode.
  */
 public class SmartTranscriptionMode implements TranscriptionMode {
+    /**
+     * The source text to be edited or rewritten via voice instructions.
+     * When provided, the model performs voice-driven editing and outputs the
+     * finalized replacement text.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("source_text")
+    private String sourceText;
+
 
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
-    public SmartTranscriptionMode() {
+    public SmartTranscriptionMode(
+            @JsonProperty("source_text") @Nullable String sourceText) {
+        this.sourceText = sourceText;
         this.type = Builder._SINGLETON_VALUE_Type.value();
+    }
+    
+    public SmartTranscriptionMode() {
+        this(null);
+    }
+
+    /**
+     * The source text to be edited or rewritten via voice instructions.
+     * When provided, the model performs voice-driven editing and outputs the
+     * finalized replacement text.
+     */
+    public Optional<String> sourceText() {
+        return Optional.ofNullable(this.sourceText);
     }
 
     @Override
@@ -49,6 +77,17 @@ public class SmartTranscriptionMode implements TranscriptionMode {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * The source text to be edited or rewritten via voice instructions.
+     * When provided, the model performs voice-driven editing and outputs the
+     * finalized replacement text.
+     */
+    public SmartTranscriptionMode withSourceText(@Nullable String sourceText) {
+        this.sourceText = sourceText;
+        return this;
     }
 
 
@@ -62,31 +101,45 @@ public class SmartTranscriptionMode implements TranscriptionMode {
         }
         SmartTranscriptionMode other = (SmartTranscriptionMode) o;
         return 
+            Utils.enhancedDeepEquals(this.sourceText, other.sourceText) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            type);
+            sourceText, type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(SmartTranscriptionMode.class,
+                "sourceText", sourceText,
                 "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String sourceText;
+
         private Builder() {
           // force use of static builder() method
         }
 
+        /**
+         * The source text to be edited or rewritten via voice instructions.
+         * When provided, the model performs voice-driven editing and outputs the
+         * finalized replacement text.
+         */
+        public Builder sourceText(@Nullable String sourceText) {
+            this.sourceText = sourceText;
+            return this;
+        }
+
         public SmartTranscriptionMode build() {
             return new SmartTranscriptionMode(
-                );
+                sourceText);
         }
 
 
