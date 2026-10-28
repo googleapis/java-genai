@@ -17,6 +17,8 @@
 package com.google.genai;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -135,6 +137,8 @@ public abstract class JsonSerializable {
     // Disable writing dates as timestamps to use ISO-8601 string format for Instant
     objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    // Skip JSON nulls: AutoValue setters call Optional.of.
+    objectMapper.setDefaultSetterInfo(JsonSetter.Value.forValueNulls(Nulls.SKIP));
 
     // Create a module for custom serializers/deserializers
     SimpleModule customModule = new SimpleModule();

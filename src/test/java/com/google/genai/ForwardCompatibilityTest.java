@@ -209,6 +209,19 @@ public class ForwardCompatibilityTest {
   }
 
   @Test
+  public void testExplicitNullFieldsInResponse() throws Exception {
+    /** Tests that explicit JSON nulls for optional fields are read as absent fields. */
+    ResponseBody responseBody =
+        ResponseBody.create(JsonSerializableTest.RESPONSE_WITH_EXPLICIT_NULLS, JSON);
+    when(mockedResponse.getBody()).thenReturn(responseBody);
+
+    GenerateContentResponse response =
+        new Models(mockedClient).generateContent(MODEL_ID, "What is your name?", null);
+
+    assertEquals("I am a large language model, trained by Google.", response.text());
+  }
+
+  @Test
   public void testInlineEnum() throws Exception {
     /** Tests instantiating an inline enum (ModelRoutingPreference) in the request. */
     GenerateContentConfig config =
