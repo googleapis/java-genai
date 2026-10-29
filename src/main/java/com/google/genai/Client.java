@@ -555,6 +555,7 @@ public final class Client implements AutoCloseable {
     }
 
     private static HttpResponse<InputStream> toResponse(HttpRequest request, Response response) {
+      HttpApiResponse.warnFromAgentMessageHeaders(response.headers());
       Headers headers = new Headers(response.headers().toMultimap());
       ResponseBody body = response.body();
       InputStream in = body == null ? new ByteArrayInputStream(new byte[0]) : body.byteStream();
