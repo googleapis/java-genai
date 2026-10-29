@@ -48,6 +48,7 @@ public class Task {
     public static final Task REFERENCE_TO_VIDEO = new Task("reference_to_video");
     public static final Task EDIT = new Task("edit");
     public static final Task EXTEND = new Task("extend");
+    public static final Task UPSCALE = new Task("upscale");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -126,6 +127,7 @@ public class Task {
         map.put("reference_to_video", REFERENCE_TO_VIDEO);
         map.put("edit", EDIT);
         map.put("extend", EXTEND);
+        map.put("upscale", UPSCALE);
         return map;
     }
 
@@ -136,6 +138,7 @@ public class Task {
         map.put("reference_to_video", TaskEnum.REFERENCE_TO_VIDEO);
         map.put("edit", TaskEnum.EDIT);
         map.put("extend", TaskEnum.EXTEND);
+        map.put("upscale", TaskEnum.UPSCALE);
         return map;
     }
     
@@ -146,7 +149,8 @@ public class Task {
         IMAGE_TO_VIDEO("image_to_video"),
         REFERENCE_TO_VIDEO("reference_to_video"),
         EDIT("edit"),
-        EXTEND("extend"),;
+        EXTEND("extend"),
+        UPSCALE("upscale"),;
 
         private final String value;
 
