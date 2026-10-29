@@ -18,12 +18,19 @@ package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.genai.errors.GenAiIOException;
+import com.google.genai.types.Candidate;
+import com.google.genai.types.FunctionCall;
+import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.Part;
+import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +40,21 @@ class JsonSerializableTest {
   private static final int DEFAULT_LIMIT = 20_000_000;
   // A new limit for testing
   private static final int NEW_LIMIT = 30_000_000;
+
+  /** A response body with explicit nulls, as re-serialized by some proxies. */
+  static final String RESPONSE_WITH_EXPLICIT_NULLS =
+      "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":"
+          + "\"I am a large language model, trained by Google.\","
+          + "\"inlineData\":null,\"functionCall\":null,\"functionResponse\":null,"
+          + "\"executableCode\":null,\"codeExecutionResult\":null}],\"role\":\"model\"},"
+          + "\"finishReason\":\"STOP\","
+          + "\"safetyRatings\":[{\"category\":\"HARM_CATEGORY_HATE_SPEECH\","
+          + "\"probability\":\"NEGLIGIBLE\",\"blocked\":null}],"
+          + "\"citationMetadata\":null,\"tokenCount\":null,\"groundingMetadata\":null,"
+          + "\"index\":null}],"
+          + "\"modelVersion\":\"gemini-2.0-flash-001\",\"promptFeedback\":null,"
+          + "\"usageMetadata\":{\"promptTokenCount\":5,\"candidatesTokenCount\":11,"
+          + "\"totalTokenCount\":16,\"cachedContentTokenCount\":null}}";
 
   /** A simple helper class that extends JsonSerializable for testing deserialization. */
   static class TestPayload extends JsonSerializable {
@@ -130,5 +152,68 @@ class JsonSerializableTest {
               JsonSerializable.setMaxReadLength(-100);
             });
     assertEquals("Invalid JSON max read length: -100", ex2.getMessage());
+  }
+
+  @Test
+  void fromJsonString_explicitNullForOptionalField_returnsEmpty() {
+    // Arrange
+    String json = "{\"text\":\"hello\",\"inlineData\":null,\"functionCall\":null,\"thought\":null}";
+
+    // Act
+    Part part = Part.fromJson(json);
+
+    // Assert
+    assertEquals(Optional.of("hello"), part.text());
+    assertEquals(Optional.empty(), part.inlineData());
+    assertEquals(Optional.empty(), part.functionCall());
+    assertEquals(Optional.empty(), part.thought());
+  }
+
+  @Test
+  void fromJsonString_responseWithExplicitNulls_deserializes() {
+    // Arrange
+    String json = RESPONSE_WITH_EXPLICIT_NULLS;
+
+    // Act
+    GenerateContentResponse response = GenerateContentResponse.fromJson(json);
+
+    // Assert
+    assertEquals("I am a large language model, trained by Google.", response.text());
+    assertEquals(Optional.of("gemini-2.0-flash-001"), response.modelVersion());
+    Candidate candidate = response.candidates().get().get(0);
+    assertEquals(Optional.empty(), candidate.index());
+    assertEquals(Optional.empty(), candidate.safetyRatings().get().get(0).blocked());
+    assertEquals(Optional.empty(), response.usageMetadata().get().cachedContentTokenCount());
+  }
+
+  @Test
+  void fromJsonString_explicitNullForListEnumAndMessageFields_returnsEmpty() {
+    // Arrange
+    String json = "{\"finishReason\":null,\"safetyRatings\":null,\"content\":null}";
+
+    // Act
+    Candidate candidate = Candidate.fromJson(json);
+
+    // Assert
+    assertEquals(Optional.empty(), candidate.finishReason());
+    assertEquals(Optional.empty(), candidate.safetyRatings());
+    assertEquals(Optional.empty(), candidate.content());
+  }
+
+  /** A null inside a map field is a value, so it must be kept rather than skipped. */
+  @Test
+  void fromJsonString_nullInsideMapField_isKept() {
+    // Arrange
+    String json = "{\"name\":\"f\",\"args\":{\"a\":null,\"b\":1},\"id\":null}";
+
+    // Act
+    FunctionCall functionCall = FunctionCall.fromJson(json);
+
+    // Assert
+    Map<String, Object> args = functionCall.args().get();
+    assertTrue(args.containsKey("a"));
+    assertNull(args.get("a"));
+    assertEquals(1, args.get("b"));
+    assertEquals(Optional.empty(), functionCall.id());
   }
 }
