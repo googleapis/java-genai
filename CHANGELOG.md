@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.80.0](https://github.com/googleapis/java-genai/compare/v1.79.0...v1.80.0) (2026-10-29)
+
+
+### Features
+
+* Add support for continuation_token and requires_continuation status ([79097b6](https://github.com/googleapis/java-genai/commit/79097b68a4c29dc671c919f902c8e0fae6b522fd))
+* add video upscale task parameter ([ff129dd](https://github.com/googleapis/java-genai/commit/ff129dd99b219800cca357b4f2ed6c1070a2c038))
+* **interactions:** add automaticContinuation to Interactions.create in the Java SDK ([5691ac2](https://github.com/googleapis/java-genai/commit/5691ac2db7b48e6e085475e8e76dbdccab740117))
+* **interactions:** declare continuation_ids on Interaction ([9695964](https://github.com/googleapis/java-genai/commit/96959647db3da4916bf6f040a437868cc1ebd014))
+* support video understanding in Gemini Developer API ([c6b8380](https://github.com/googleapis/java-genai/commit/c6b8380ba9d75ee625ec88e1f7ea1caaa2cd2479))
+
+
+### Bug Fixes
+
+* **interactions:** align SDK User-Agent and x-goog-api-client headers ([5a1389f](https://github.com/googleapis/java-genai/commit/5a1389f49b3e880b4e12690773de50097f9437ee))
+
 ## [1.79.0](https://github.com/googleapis/java-genai/compare/v1.78.0...v1.79.0) (2026-10-22)
 
 
