@@ -82,7 +82,7 @@ import java.util.stream.StreamSupport;
  *
  * @param <T> the type that SSE {@code data} fields will be deserialized into
  */
-public final class EventStream<T> implements Iterable<T>, AutoCloseable {
+public class EventStream<T> implements Iterable<T>, AutoCloseable {
 
     private static final SpeakeasyLogger logger = SpeakeasyLogger.getLogger(EventStream.class);
 
@@ -93,6 +93,18 @@ public final class EventStream<T> implements Iterable<T>, AutoCloseable {
     private final boolean dataRequired;
     private boolean terminated = false;
     private boolean closed = false;
+
+    /**
+     * For subclasses that produce events themselves (e.g. by combining several underlying
+     * streams) and override {@link #next()}, {@link #close()} and {@link #isClosed()}.
+     */
+    protected EventStream() {
+        this.parser = null;
+        this.typeReference = null;
+        this.mapper = null;
+        this.terminalMessage = Optional.empty();
+        this.dataRequired = false;
+    }
 
     // Internal use only
     public EventStream(InputStream in, TypeReference<T> typeReference, ObjectMapper mapper, Optional<String> terminalMessage) {
@@ -204,7 +216,9 @@ public final class EventStream<T> implements Iterable<T>, AutoCloseable {
     public void close() throws IOException {
         closed = true;
         logger.debug("EventStream closed");
-        parser.close();
+        if (parser != null) {
+            parser.close();
+        }
     }
 
     public boolean isClosed() {

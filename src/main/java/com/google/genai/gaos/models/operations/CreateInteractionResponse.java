@@ -110,13 +110,32 @@ public class CreateInteractionResponse implements Response {
     }
     // value overriden by x-speakeasy-sse-sentinel extension via reflection at runtime
     private Optional<String> _eventSentinel = Optional.empty();
+    // Set by automatic continuation to a stream spanning every continuation hop.
+    private EventStream<InteractionSSEStreamEvent> _events;
 
+    /**
+     * The server-sent events of a {@code stream=true} interaction.
+     *
+     * <p>With automatic continuation enabled (the default), the same stream instance is returned
+     * on every call and spans every continuation hop; see {@code Interactions.create}.
+     */
     public EventStream<InteractionSSEStreamEvent> events() {
+        if (_events != null) {
+            return _events;
+        }
         return new EventStream<InteractionSSEStreamEvent>(
             rawResponse.body(),
             new TypeReference<InteractionSSEStreamEvent>() {},
             Utils.mapper(),
             _eventSentinel);
+    }
+
+    /**
+     * Replaces the stream returned by {@link #events()} (used by automatic continuation).
+     */
+    public CreateInteractionResponse withEvents(@Nonnull EventStream<InteractionSSEStreamEvent> events) {
+        this._events = Utils.checkNotNull(events, "events");
+        return this;
     }
 
 

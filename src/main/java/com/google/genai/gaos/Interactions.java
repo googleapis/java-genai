@@ -35,7 +35,6 @@ import com.google.genai.gaos.models.operations.GetInteractionByIdRequest;
 import com.google.genai.gaos.models.operations.GetInteractionByIdRequestBuilder;
 import com.google.genai.gaos.models.operations.GetInteractionByIdResponse;
 import com.google.genai.gaos.operations.CancelInteractionById;
-import com.google.genai.gaos.operations.CreateInteraction;
 import com.google.genai.gaos.operations.DeleteInteraction;
 import com.google.genai.gaos.operations.GetInteractionById;
 import com.google.genai.gaos.utils.Headers;
@@ -87,6 +86,21 @@ public class Interactions {
     /**
      * Creates a new interaction.
      * 
+     * @param body The request body.
+     * @param automaticContinuation Whether to automatically continue decoding across
+     *     continuation hops; see {@link #create(CreateInteractionRequest, Options)}.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateInteractionResponse create(
+            @Nonnull CreateInteractionRequestBody body, boolean automaticContinuation) {
+        return create(
+            new CreateInteractionRequest(null, body, automaticContinuation, null), null);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
      * @param apiVersion API version for request routing.
      * @param body The request body.
      * @param options additional options
@@ -96,10 +110,90 @@ public class Interactions {
     public CreateInteractionResponse create(
             @Nullable String apiVersion, @Nonnull CreateInteractionRequestBody body,
             @Nullable Options options) {
-        CreateInteractionRequest request = new CreateInteractionRequest(apiVersion, body);
-        RequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
-              = new CreateInteraction.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(request));
+        return create(new CreateInteractionRequest(apiVersion, body), options);
+    }
+
+    /**
+     * Creates a new interaction.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateInteractionResponse create(@Nonnull CreateInteractionRequest request) {
+        return create(request, null);
+    }
+
+    /**
+     * Creates a new interaction.
+     *
+     * <p><b>Automatic continuation.</b> {@code request.automaticContinuation()} defaults to
+     * {@code true}. When enabled, the SDK automatically resumes decoding across multiple
+     * continuation hops whenever a response or stream stops at the per-request decode token
+     * limit ({@code status='requires_continuation'} with a {@code continuation_token}) until the
+     * interaction completes, reaches {@code incomplete} (e.g. {@code max_output_tokens}),
+     * requires action, or fails. Pass {@code automaticContinuation(false)} to disable; the
+     * server response is then returned as-is (field for field, continuation fields included) so
+     * the caller can resume manually, and a one-time warning is logged if it stopped at
+     * {@code requires_continuation}.
+     *
+     * <ul>
+     *   <li>For {@code stream=true}, events from all continuation hops are yielded sequentially
+     *       on the returned {@link CreateInteractionResponse#events()} stream, verbatim: each hop's
+     *       own {@code interaction.created} and {@code interaction.completed} (with status
+     *       {@code requires_continuation}) are included, so check {@code status} on
+     *       {@code interaction.completed} rather than treating the first one as the end.
+     *   <li>For {@code stream=false}, each continuation hop is a separate interaction on the
+     *       server that only contains that hop's output. The SDK merges the hops into one
+     *       {@code Interaction}: {@code steps} are concatenated in hop order, {@code usage} token
+     *       counts are summed across hops (with {@code usage.initial_input_tokens} set to the
+     *       first hop's input tokens), and all other fields ({@code id}, {@code status}, ...)
+     *       come from the final hop. The final hop's {@code id} can be passed as
+     *       {@code previous_interaction_id} to continue the conversation.
+     *       {@code continuation_ids} lists the ids of every hop in order (the last one is
+     *       {@code id}); note that {@code get(id)} and {@code delete(id)} act on a single hop.
+     *       {@code previous_interaction_id}, {@code created} and {@code input} come from the
+     *       first hop.
+     *   <li>With {@code store=true} (the default), each continuation hop sends the hop that
+     *       issued the {@code continuation_token} as {@code previous_interaction_id} and omits
+     *       {@code input} (the server already has it). With {@code store=false}, the original
+     *       {@code input} is resent with the token.
+     *   <li>Client-side continuation is skipped for {@code background=true} and agent
+     *       interactions ({@code agent} / {@code agent_config}), whose loops are managed by the
+     *       server. {@code background=true} with {@code automaticContinuation(false)} is rejected
+     *       with an {@link IllegalArgumentException} before any request is sent.
+     *   <li>Timeouts: {@code request.timeout()} is a wall-clock budget for the whole
+     *       {@code create()} call. Once it runs out no further hop starts (and no further stream
+     *       event is read) and the call stops with {@code ContinuationInterruptedException} (see
+     *       Errors) so the work so far can be resumed. Per-request HTTP timeouts (e.g.
+     *       {@code HttpOptions.timeout} on the client) and {@code RetryConfig} apply to each hop
+     *       separately: transient errors on a continuation hop retry that hop using the latest
+     *       {@code continuation_token} without restarting from the initial request.
+     *   <li>Billing note: with {@code background=false}, each continuation hop re-prefills the
+     *       conversation and generated prefix, so input tokens are billed on every hop (and
+     *       summed in {@code usage.total_input_tokens}). If an unrecoverable error occurs after
+     *       one or more hops have completed, those completed hops are still billed. For
+     *       server-managed continuation without client-side hop loops, use
+     *       {@code background=true} (with {@code store=true}).
+     *   <li>Errors: a failure on the first request is thrown as usual. A failure after progress
+     *       (a later hop, or a stream after a resumable checkpoint) throws
+     *       {@link com.google.genai.gaos.models.errors.ContinuationInterruptedException} (with
+     *       the failure as cause) carrying {@code continuationToken}, {@code interactionId} and
+     *       {@code continuationIds}, plus {@code partialInteraction} (the completed hops merged,
+     *       for {@code stream=false}), so the output already produced is not lost and the call
+     *       can be resumed manually. Running out of the per-call timeout after progress is
+     *       reported the same way.
+     * </ul>
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateInteractionResponse create(
+            @Nonnull CreateInteractionRequest request,
+            @Nullable Options options) {
+        return InteractionContinuation.create(sdkConfiguration, request, options, _headers);
     }
 
     /**
