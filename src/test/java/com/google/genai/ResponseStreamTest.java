@@ -16,22 +16,39 @@
 
 package com.google.genai;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableList;
+import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.Candidate;
 import com.google.genai.types.GenerateContentResponse;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import okhttp3.Headers;
 import okhttp3.MediaType;
+import okhttp3.Protocol;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.Buffer;
+import okio.Okio;
+import okio.Source;
+import okio.Timeout;
 import org.junit.jupiter.api.Test;
 
 public final class ResponseStreamTest {
@@ -208,7 +225,203 @@ public final class ResponseStreamTest {
     assertTrue(first.isConsumed());
   }
 
+  /**
+   * Pins that close() from another thread releases a read that is blocked waiting for bytes, by
+   * closing the HTTP response before it waits for the reader's lock.
+   */
+  @Test
+  public void testCloseClosesResponseWhileAnotherThreadIsReading() throws Exception {
+    BlockingSource source = new BlockingSource();
+    ResponseBody body =
+        ResponseBody.create(Okio.buffer(source), MediaType.parse("text/event-stream"), -1);
+    HttpApiResponse response =
+        new HttpApiResponse(
+            new Response.Builder()
+                .request(new Request.Builder().url("https://example.com/stream").build())
+                .protocol(Protocol.HTTP_1_1)
+                .code(200)
+                .message("OK")
+                .body(body)
+                .build());
+    ResponseStream<GenerateContentResponse> stream =
+        new ResponseStream<>(
+            GenerateContentResponse.class, response, new DummyConverter(), "convert");
+    ExecutorService executor = Executors.newFixedThreadPool(2);
+    try {
+      Future<Boolean> reading = executor.submit(() -> stream.iterator().hasNext());
+      // While the source blocks, BufferedReader.readLine() holds the reader lock.
+      assertTrue(source.readStarted.await(5, SECONDS), "The stream read did not start");
+
+      Future<?> closing = executor.submit(stream::close);
+
+      assertTrue(
+          source.closed.await(5, SECONDS),
+          "close() did not close the HTTP response while another thread was reading");
+      closing.get(5, SECONDS);
+      assertFalse(reading.get(5, SECONDS));
+    } finally {
+      // Release the read so a failing run does not leave threads blocked.
+      source.releaseRead.countDown();
+      executor.shutdownNow();
+      assertTrue(executor.awaitTermination(5, SECONDS));
+    }
+  }
+
+  /** Pins that close() still closes the reader when closing the HTTP response throws. */
+  @Test
+  public void testCloseClosesReaderWhenResponseCloseThrows() {
+    BlockingSource source = new BlockingSource();
+    ResponseBody body =
+        ResponseBody.create(Okio.buffer(source), MediaType.parse("text/event-stream"), -1);
+    ApiResponse response =
+        new ApiResponse() {
+          @Override
+          public ResponseBody getBody() {
+            return body;
+          }
+
+          @Override
+          public Headers getHeaders() {
+            return Headers.of();
+          }
+
+          @Override
+          public void close() {
+            throw new IllegalStateException("response close failed");
+          }
+        };
+    ResponseStream<GenerateContentResponse> stream =
+        new ResponseStream<>(
+            GenerateContentResponse.class, response, new DummyConverter(), "convert");
+
+    IllegalStateException e =
+        assertTimeoutPreemptively(
+            Duration.ofSeconds(5), () -> assertThrows(IllegalStateException.class, stream::close));
+
+    assertEquals("response close failed", e.getMessage());
+    assertEquals(0, source.closed.getCount(), "close() did not close the reader");
+  }
+
+  /** A read that fails because the stream was closed does not resume into a new request. */
+  @Test
+  public void testCloseStopsTheStreamFromResumingIntoANewRequest() {
+    ResponseStream<GenerateContentResponse> first = textStream("a", "b");
+    List<ResponseStream<GenerateContentResponse>> requested = new ArrayList<>();
+    first.setContinuation(
+        new ResponseStream.Continuation<GenerateContentResponse>() {
+          @Override
+          public void observe(GenerateContentResponse element) {}
+
+          @Override
+          public ResponseStream<GenerateContentResponse> next() {
+            ResponseStream<GenerateContentResponse> next = textStream("c");
+            requested.add(next);
+            return next;
+          }
+
+          @Override
+          public boolean canResume(RuntimeException error) {
+            return true;
+          }
+        });
+    Iterator<GenerateContentResponse> iterator = first.iterator();
+    assertEquals("a", iterator.next().text());
+
+    first.close();
+
+    assertThrows(GenAiIOException.class, iterator::hasNext);
+    assertEquals(0, requested.size(), "The stream sent a new request after close()");
+  }
+
+  /** close() during the continuation's request still closes the request it returns. */
+  @Test
+  public void testCloseDuringContinuationClosesTheNewRequest() {
+    ResponseStream<GenerateContentResponse> first = textStream("a");
+    ClosingTrackingResponse secondResponse = new ClosingTrackingResponse(textBody("b"));
+    first.setContinuation(
+        new ResponseStream.Continuation<GenerateContentResponse>() {
+          @Override
+          public void observe(GenerateContentResponse element) {}
+
+          @Override
+          public ResponseStream<GenerateContentResponse> next() {
+            // Stands in for close() from another thread while the next request is made.
+            first.close();
+            return new ResponseStream<>(
+                GenerateContentResponse.class, secondResponse, new DummyConverter(), "convert");
+          }
+        });
+    Iterator<GenerateContentResponse> iterator = first.iterator();
+    assertEquals("a", iterator.next().text());
+
+    assertFalse(iterator.hasNext());
+    assertTrue(secondResponse.closed, "The request started during close() was left open");
+  }
+
+  /** An ApiResponse that records whether it was closed. */
+  private static final class ClosingTrackingResponse extends ApiResponse {
+    private final ResponseBody body;
+    boolean closed = false;
+
+    ClosingTrackingResponse(ResponseBody body) {
+      this.body = body;
+    }
+
+    @Override
+    public ResponseBody getBody() {
+      return body;
+    }
+
+    @Override
+    public Headers getHeaders() {
+      return Headers.of();
+    }
+
+    @Override
+    public void close() {
+      closed = true;
+    }
+  }
+
+  /** A response body source whose read blocks until the source is closed. */
+  private static final class BlockingSource implements Source {
+    final CountDownLatch readStarted = new CountDownLatch(1);
+    final CountDownLatch releaseRead = new CountDownLatch(1);
+    final CountDownLatch closed = new CountDownLatch(1);
+
+    @Override
+    public long read(Buffer sink, long byteCount) throws IOException {
+      readStarted.countDown();
+      try {
+        releaseRead.await();
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        throw new IOException(e);
+      }
+      return -1;
+    }
+
+    @Override
+    public Timeout timeout() {
+      return Timeout.NONE;
+    }
+
+    @Override
+    public void close() {
+      closed.countDown();
+      releaseRead.countDown();
+    }
+  }
+
   private static ResponseStream<GenerateContentResponse> textStream(String... texts) {
+    return new ResponseStream<>(
+        GenerateContentResponse.class,
+        new FakeApiResponse(Headers.of(), textBody(texts)),
+        new DummyConverter(),
+        "convert");
+  }
+
+  private static ResponseBody textBody(String... texts) {
     StringBuilder sseData = new StringBuilder();
     for (String text : texts) {
       sseData
@@ -216,14 +429,7 @@ public final class ResponseStreamTest {
           .append(text)
           .append("\"}]}}]}\n\n");
     }
-    ResponseBody body =
-        ResponseBody.create(
-            sseData.toString().getBytes(StandardCharsets.UTF_8),
-            MediaType.parse("text/event-stream"));
-    return new ResponseStream<>(
-        GenerateContentResponse.class,
-        new FakeApiResponse(Headers.of(), body),
-        new DummyConverter(),
-        "convert");
+    return ResponseBody.create(
+        sseData.toString().getBytes(StandardCharsets.UTF_8), MediaType.parse("text/event-stream"));
   }
 }
