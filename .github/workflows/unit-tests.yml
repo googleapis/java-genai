@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  SPEAKEASY_VERSION: v2.952.4
+  SPEAKEASY_VERSION: v2.954.10
 
 jobs:
   unit-test:
