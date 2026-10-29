@@ -32,11 +32,17 @@ import okhttp3.OkHttpClient;
 @AutoValue
 @JsonDeserialize(builder = ClientOptions.Builder.class)
 public abstract class ClientOptions extends JsonSerializable {
-  /** The maximum number of connections allowed in the pool. */
+  /**
+   * The maximum number of asynchronous requests that run at the same time. Defaults to 64.
+   * Synchronous requests are not limited. Ignored when `customHttpClient` is set.
+   */
   @JsonProperty("maxConnections")
   public abstract Optional<Integer> maxConnections();
 
-  /** The maximum number of connections allowed per host. */
+  /**
+   * The maximum number of asynchronous requests to the same host that run at the same time.
+   * Defaults to 5. Synchronous requests are not limited. Ignored when `customHttpClient` is set.
+   */
   @JsonProperty("maxConnectionsPerHost")
   public abstract Optional<Integer> maxConnectionsPerHost();
 
@@ -69,7 +75,8 @@ public abstract class ClientOptions extends JsonSerializable {
     /**
      * Setter for maxConnections.
      *
-     * <p>maxConnections: The maximum number of connections allowed in the pool.
+     * <p>maxConnections: The maximum number of asynchronous requests that run at the same time.
+     * Defaults to 64. Synchronous requests are not limited. Ignored when `customHttpClient` is set.
      */
     @JsonProperty("maxConnections")
     public abstract Builder maxConnections(Integer maxConnections);
@@ -87,7 +94,9 @@ public abstract class ClientOptions extends JsonSerializable {
     /**
      * Setter for maxConnectionsPerHost.
      *
-     * <p>maxConnectionsPerHost: The maximum number of connections allowed per host.
+     * <p>maxConnectionsPerHost: The maximum number of asynchronous requests to the same host that
+     * run at the same time. Defaults to 5. Synchronous requests are not limited. Ignored when
+     * `customHttpClient` is set.
      */
     @JsonProperty("maxConnectionsPerHost")
     public abstract Builder maxConnectionsPerHost(Integer maxConnectionsPerHost);
