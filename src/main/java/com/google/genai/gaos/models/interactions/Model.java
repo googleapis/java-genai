@@ -69,6 +69,7 @@ public class Model {
     public static final Model GEMINI4_ARGON = new Model("gemini-4-argon");
     public static final Model GEMINI38_FLASH_TTS = new Model("gemini-3.8-flash-tts");
     public static final Model GEMINI38_FLASH_LITE_TTS = new Model("gemini-3.8-flash-lite-tts");
+    public static final Model GEMINI35_TRANSCRIBE = new Model("gemini-3.5-transcribe");
     public static final Model LYRIA3_CLIP_PREVIEW = new Model("lyria-3-clip-preview");
     public static final Model LYRIA3_PRO_PREVIEW = new Model("lyria-3-pro-preview");
     public static final Model GEMINI_ROBOTICS_ER16_PREVIEW = new Model("gemini-robotics-er-1.6-preview");
@@ -176,6 +177,7 @@ public class Model {
         map.put("gemini-4-argon", GEMINI4_ARGON);
         map.put("gemini-3.8-flash-tts", GEMINI38_FLASH_TTS);
         map.put("gemini-3.8-flash-lite-tts", GEMINI38_FLASH_LITE_TTS);
+        map.put("gemini-3.5-transcribe", GEMINI35_TRANSCRIBE);
         map.put("lyria-3-clip-preview", LYRIA3_CLIP_PREVIEW);
         map.put("lyria-3-pro-preview", LYRIA3_PRO_PREVIEW);
         map.put("gemini-robotics-er-1.6-preview", GEMINI_ROBOTICS_ER16_PREVIEW);
@@ -215,6 +217,7 @@ public class Model {
         map.put("gemini-4-argon", ModelEnum.GEMINI4_ARGON);
         map.put("gemini-3.8-flash-tts", ModelEnum.GEMINI38_FLASH_TTS);
         map.put("gemini-3.8-flash-lite-tts", ModelEnum.GEMINI38_FLASH_LITE_TTS);
+        map.put("gemini-3.5-transcribe", ModelEnum.GEMINI35_TRANSCRIBE);
         map.put("lyria-3-clip-preview", ModelEnum.LYRIA3_CLIP_PREVIEW);
         map.put("lyria-3-pro-preview", ModelEnum.LYRIA3_PRO_PREVIEW);
         map.put("gemini-robotics-er-1.6-preview", ModelEnum.GEMINI_ROBOTICS_ER16_PREVIEW);
@@ -255,6 +258,7 @@ public class Model {
         GEMINI4_ARGON("gemini-4-argon"),
         GEMINI38_FLASH_TTS("gemini-3.8-flash-tts"),
         GEMINI38_FLASH_LITE_TTS("gemini-3.8-flash-lite-tts"),
+        GEMINI35_TRANSCRIBE("gemini-3.5-transcribe"),
         LYRIA3_CLIP_PREVIEW("lyria-3-clip-preview"),
         LYRIA3_PRO_PREVIEW("lyria-3-pro-preview"),
         GEMINI_ROBOTICS_ER16_PREVIEW("gemini-robotics-er-1.6-preview"),
