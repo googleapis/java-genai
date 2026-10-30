@@ -85,6 +85,14 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
   @JsonProperty("mode")
   public abstract Optional<AudioTranscriptionConfigMode> mode();
 
+  /**
+   * Optional. The source text to be edited or rewritten via voice instructions. When provided in
+   * `SMART` mode, the model evaluates the audio input against this text and emits the complete
+   * replacement text in the candidate response rather than appending to it.
+   */
+  @JsonProperty("sourceText")
+  public abstract Optional<String> sourceText();
+
   /** Instantiates a builder for AudioTranscriptionConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -340,6 +348,26 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder mode(String mode) {
       return mode(new AudioTranscriptionConfigMode(mode));
+    }
+
+    /**
+     * Setter for sourceText.
+     *
+     * <p>sourceText: Optional. The source text to be edited or rewritten via voice instructions.
+     * When provided in `SMART` mode, the model evaluates the audio input against this text and
+     * emits the complete replacement text in the candidate response rather than appending to it.
+     */
+    @JsonProperty("sourceText")
+    public abstract Builder sourceText(String sourceText);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sourceText(Optional<String> sourceText);
+
+    /** Clears the value of sourceText field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSourceText() {
+      return sourceText(Optional.empty());
     }
 
     public abstract AudioTranscriptionConfig build();
