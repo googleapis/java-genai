@@ -30,10 +30,18 @@ import jakarta.annotation.Nullable;
 import java.lang.Double;
 import java.lang.Override;
 import java.lang.String;
+import java.util.List;
 import java.util.Optional;
 
 
 public class StaticMediaProcessing {
+    /**
+     * Optional. Content layers to extract from the video.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("content_layers")
+    private List<StaticMediaProcessingContentLayer> contentLayers;
+
     /**
      * Optional. Segment end time. Specified as a decimal number of seconds followed
      * by an 's' suffix, e.g., "30s". Must be non-negative and greater than
@@ -64,9 +72,11 @@ public class StaticMediaProcessing {
 
     @JsonCreator
     public StaticMediaProcessing(
+            @JsonProperty("content_layers") @Nullable List<StaticMediaProcessingContentLayer> contentLayers,
             @JsonProperty("end_offset") @Nullable String endOffset,
             @JsonProperty("fps") @Nullable Double fps,
             @JsonProperty("start_offset") @Nullable String startOffset) {
+        this.contentLayers = contentLayers;
         this.endOffset = endOffset;
         this.fps = fps;
         this.startOffset = startOffset;
@@ -74,7 +84,15 @@ public class StaticMediaProcessing {
     }
     
     public StaticMediaProcessing() {
-        this(null, null, null);
+        this(null, null, null,
+            null);
+    }
+
+    /**
+     * Optional. Content layers to extract from the video.
+     */
+    public Optional<List<StaticMediaProcessingContentLayer>> contentLayers() {
+        return Optional.ofNullable(this.contentLayers);
     }
 
     /**
@@ -107,6 +125,15 @@ public class StaticMediaProcessing {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Optional. Content layers to extract from the video.
+     */
+    public StaticMediaProcessing withContentLayers(@Nullable List<StaticMediaProcessingContentLayer> contentLayers) {
+        this.contentLayers = contentLayers;
+        return this;
     }
 
 
@@ -150,6 +177,7 @@ public class StaticMediaProcessing {
         }
         StaticMediaProcessing other = (StaticMediaProcessing) o;
         return 
+            Utils.enhancedDeepEquals(this.contentLayers, other.contentLayers) &&
             Utils.enhancedDeepEquals(this.endOffset, other.endOffset) &&
             Utils.enhancedDeepEquals(this.fps, other.fps) &&
             Utils.enhancedDeepEquals(this.startOffset, other.startOffset) &&
@@ -159,13 +187,14 @@ public class StaticMediaProcessing {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            endOffset, fps, startOffset,
-            type);
+            contentLayers, endOffset, fps,
+            startOffset, type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(StaticMediaProcessing.class,
+                "contentLayers", contentLayers,
                 "endOffset", endOffset,
                 "fps", fps,
                 "startOffset", startOffset,
@@ -175,6 +204,8 @@ public class StaticMediaProcessing {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private List<StaticMediaProcessingContentLayer> contentLayers;
+
         private String endOffset;
 
         private Double fps;
@@ -183,6 +214,14 @@ public class StaticMediaProcessing {
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Optional. Content layers to extract from the video.
+         */
+        public Builder contentLayers(@Nullable List<StaticMediaProcessingContentLayer> contentLayers) {
+            this.contentLayers = contentLayers;
+            return this;
         }
 
         /**
@@ -214,7 +253,8 @@ public class StaticMediaProcessing {
 
         public StaticMediaProcessing build() {
             return new StaticMediaProcessing(
-                endOffset, fps, startOffset);
+                contentLayers, endOffset, fps,
+                startOffset);
         }
 
 
