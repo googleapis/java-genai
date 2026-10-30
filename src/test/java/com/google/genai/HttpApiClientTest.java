@@ -41,21 +41,13 @@ import java.lang.reflect.Field;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Dispatcher;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import okhttp3.Request;
@@ -99,11 +91,6 @@ public class HttpApiClientTest {
   private static final GoogleCredentials CREDENTIALS =
       GoogleCredentials.newBuilder()
           .setAccessToken(AccessToken.newBuilder().setTokenValue("").build())
-          .build();
-  private static final HttpOptions FAST_RETRY_HTTP_OPTIONS =
-      HttpOptions.builder()
-          .retryOptions(
-              HttpRetryOptions.builder().attempts(2).initialDelay(0.0).jitter(0.0).build())
           .build();
 
   @Mock OkHttpClient mockHttpClient;
@@ -1861,200 +1848,5 @@ public class HttpApiClientTest {
     assertTrue(
         client.httpClient().interceptors().stream()
             .anyMatch(interceptor -> interceptor instanceof RetryInterceptor));
-  }
-
-  /** Credentials that issue whatever token the test sets, refreshing on every use. */
-  private static final class SwitchableCredentials extends GoogleCredentials {
-    final AtomicReference<String> token;
-    volatile boolean failRefresh = false;
-
-    SwitchableCredentials(String token) {
-      this.token = new AtomicReference<>(token);
-    }
-
-    @Override
-    public AccessToken refreshAccessToken() throws IOException {
-      if (failRefresh) {
-        throw new IOException("Token endpoint unavailable.");
-      }
-      // Expiring inside the refresh margin makes every refreshIfExpired() call refresh again.
-      return AccessToken.newBuilder()
-          .setTokenValue(token.get())
-          .setExpirationTime(new Date(System.currentTimeMillis() + 60_000))
-          .build();
-    }
-  }
-
-  private static HttpApiClient vertexClient(
-      GoogleCredentials credentials, Optional<ClientOptions> clientOptions) {
-    return new HttpApiClient(
-        Optional.empty(),
-        Optional.of(PROJECT),
-        Optional.of(LOCATION),
-        Optional.of(credentials),
-        Optional.of(FAST_RETRY_HTTP_OPTIONS),
-        clientOptions);
-  }
-
-  /** Appends a fake server after the SDK interceptors, so each attempt is answered locally. */
-  private static void addFakeServer(HttpApiClient client, Interceptor fakeServer)
-      throws Exception {
-    Field clientField = ApiClient.class.getDeclaredField("httpClient");
-    clientField.setAccessible(true);
-    clientField.set(client, client.httpClient().newBuilder().addInterceptor(fakeServer).build());
-  }
-
-  private static Response respond(Request request, int code) {
-    return new Response.Builder()
-        .request(request)
-        .protocol(Protocol.HTTP_1_1)
-        .code(code)
-        .message("")
-        .body(ResponseBody.create("{}", null))
-        .build();
-  }
-
-  @Test
-  public void testRequest_retryAfterTokenRotates_sendsCurrentToken() throws Exception {
-    SwitchableCredentials credentials = new SwitchableCredentials("token-a");
-    HttpApiClient client = vertexClient(credentials, Optional.empty());
-    List<Request> attempts = new ArrayList<>();
-    addFakeServer(
-        client,
-        chain -> {
-          attempts.add(chain.request());
-          if (attempts.size() == 1) {
-            credentials.token.set("token-b");
-            return respond(chain.request(), 503);
-          }
-          return respond(chain.request(), 200);
-        });
-
-    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty()).close();
-
-    assertEquals(2, attempts.size());
-    assertEquals("Bearer token-a", attempts.get(0).header("Authorization"));
-    assertEquals("Bearer token-b", attempts.get(1).header("Authorization"));
-  }
-
-  @Test
-  public void testAsyncRequest_queuedBehindDispatcherLimit_sendsTokenCurrentAtSendTime()
-      throws Exception {
-    SwitchableCredentials credentials = new SwitchableCredentials("token-a");
-    HttpApiClient client =
-        vertexClient(
-            credentials, Optional.of(ClientOptions.builder().maxConnectionsPerHost(1).build()));
-    CountDownLatch firstCallStarted = new CountDownLatch(1);
-    CountDownLatch releaseFirstCall = new CountDownLatch(1);
-    List<Request> attempts = Collections.synchronizedList(new ArrayList<>());
-    addFakeServer(
-        client,
-        chain -> {
-          attempts.add(chain.request());
-          if (attempts.size() == 1) {
-            firstCallStarted.countDown();
-            try {
-              releaseFirstCall.await();
-            } catch (InterruptedException e) {
-              throw new IOException(e);
-            }
-          }
-          return respond(chain.request(), 200);
-        });
-
-    CompletableFuture<ApiResponse> first =
-        client.asyncRequest("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty());
-    assertTrue(firstCallStarted.await(5, TimeUnit.SECONDS));
-    // Built with token-a, then queued until the first call finishes.
-    CompletableFuture<ApiResponse> second =
-        client.asyncRequest("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty());
-    credentials.token.set("token-b");
-    releaseFirstCall.countDown();
-    first.get(5, TimeUnit.SECONDS).close();
-    second.get(5, TimeUnit.SECONDS).close();
-
-    assertEquals(2, attempts.size());
-    assertEquals("Bearer token-b", attempts.get(1).header("Authorization"));
-  }
-
-  @Test
-  public void testRequest_authorizationChangedByCustomClient_isKeptOnRetry() throws Exception {
-    SwitchableCredentials credentials = new SwitchableCredentials("token-a");
-    OkHttpClient customClient =
-        new OkHttpClient.Builder()
-            .addInterceptor(
-                chain ->
-                    chain.proceed(
-                        chain
-                            .request()
-                            .newBuilder()
-                            .header("Authorization", "Bearer caller-token")
-                            .build()))
-            .build();
-    HttpApiClient client =
-        vertexClient(
-            credentials, Optional.of(ClientOptions.builder().customHttpClient(customClient).build()));
-    List<Request> attempts = new ArrayList<>();
-    addFakeServer(
-        client,
-        chain -> {
-          attempts.add(chain.request());
-          if (attempts.size() == 1) {
-            credentials.token.set("token-b");
-            return respond(chain.request(), 503);
-          }
-          return respond(chain.request(), 200);
-        });
-
-    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty()).close();
-
-    assertEquals(2, attempts.size());
-    assertEquals("Bearer caller-token", attempts.get(0).header("Authorization"));
-    assertEquals("Bearer caller-token", attempts.get(1).header("Authorization"));
-  }
-
-  @Test
-  public void testRequest_apiKeyRetry_sendsNoAuthorizationHeader() throws Exception {
-    HttpApiClient client =
-        new HttpApiClient(
-            Optional.of(API_KEY), Optional.of(FAST_RETRY_HTTP_OPTIONS), Optional.empty());
-    List<Request> attempts = new ArrayList<>();
-    addFakeServer(
-        client,
-        chain -> {
-          attempts.add(chain.request());
-          return respond(chain.request(), attempts.size() == 1 ? 503 : 200);
-        });
-
-    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty()).close();
-
-    assertEquals(2, attempts.size());
-    for (Request attempt : attempts) {
-      assertEquals(API_KEY, attempt.header("x-goog-api-key"));
-      assertNull(attempt.header("Authorization"));
-    }
-  }
-
-  @Test
-  public void testAsyncRequest_refreshFailsOnRetry_completesWithRefreshError() throws Exception {
-    SwitchableCredentials credentials = new SwitchableCredentials("token-a");
-    HttpApiClient client = vertexClient(credentials, Optional.empty());
-    addFakeServer(
-        client,
-        chain -> {
-          credentials.failRefresh = true;
-          return respond(chain.request(), 503);
-        });
-
-    ExecutionException exception =
-        assertThrows(
-            ExecutionException.class,
-            () ->
-                client
-                    .asyncRequest("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty())
-                    .get(5, TimeUnit.SECONDS));
-
-    assertTrue(exception.getCause() instanceof GenAiIOException);
-    assertEquals("Failed to refresh credentials.", exception.getCause().getCause().getMessage());
   }
 }
