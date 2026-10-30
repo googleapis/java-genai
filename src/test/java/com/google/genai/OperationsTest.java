@@ -32,7 +32,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class OperationsTest {
 
   @ParameterizedTest
-  @ValueSource(booleans = {false, true})
+  @ValueSource(booleans = {true})
   public void testGetVideosOperation(boolean vertexAI) throws Exception {
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";

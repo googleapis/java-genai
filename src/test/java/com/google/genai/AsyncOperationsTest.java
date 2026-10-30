@@ -34,7 +34,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class AsyncOperationsTest {
 
   @ParameterizedTest
-  @ValueSource(booleans = {false, true})
+  @ValueSource(booleans = {true})
   public void testAsyncGetVideosOperation(boolean vertexAI)
       throws ExecutionException, InterruptedException {
     // Arrange
@@ -79,7 +79,7 @@ public class AsyncOperationsTest {
   }
 
   @ParameterizedTest
-  @ValueSource(booleans = {false, true})
+  @ValueSource(booleans = {true})
   public void testTextToVideoPollAsync(boolean vertexAI)
       throws ExecutionException, InterruptedException {
     // Arrange
