@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.81.0](https://github.com/googleapis/java-genai/compare/v1.80.0...v1.81.0) (2026-10-30)
+
+
+### Features
+
+* **cli:** use gemini-3.5-transcribe as default model for transcribe command ([bc3779f](https://github.com/googleapis/java-genai/commit/bc3779fb69dc1946ee19b6a375253bde23c80db9))
+* Disable GenerateVideos for Gemini API, update tests/READMEs ([30cb945](https://github.com/googleapis/java-genai/commit/30cb9455fe107147d24a5304bc9d7c24a0013771))
+
+
+### Bug Fixes
+
+* refresh the access token on every HTTP attempt so retries and queued async calls do not send an expired token ([673ef4c](https://github.com/googleapis/java-genai/commit/673ef4c5957cf465ae59ccc40b1e7ea101484d87))
+* refresh the access token on every HTTP attempt so retries and queued async calls do not send an expired token ([7d4a83a](https://github.com/googleapis/java-genai/commit/7d4a83a36ff1134d1bbb7badeeed6bece98bbbb9))
+
 ## [1.80.0](https://github.com/googleapis/java-genai/compare/v1.79.0...v1.80.0) (2026-10-29)
 
 
