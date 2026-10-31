@@ -94,6 +94,41 @@ public class ClientTest {
   }
 
   @Test
+  public void testInitClientFromBuilder_withApiVersion() {
+    // Act
+    Client client =
+        Client.builder()
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .apiVersion("v1beta")
+            .build();
+
+    // Assert
+    assertEquals(API_KEY, client.apiKey());
+    assertFalse(client.vertexAI());
+  }
+
+  @Test
+  public void testInitClientFromBuilder_withApiVersionConflict_throwsException() {
+    // Act
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                Client.builder()
+                    .apiKey(API_KEY)
+                    .vertexAI(false)
+                    .apiVersion("v1beta")
+                    .httpOptions(HttpOptions.builder().apiVersion("v1").build())
+                    .build());
+
+    // Assert
+    assertEquals(
+        "apiVersion is set in both Client.Builder and HttpOptions. Please specify apiVersion in only one place.",
+        exception.getMessage());
+  }
+
+  @Test
   public void testReplayClient_mldev() {
     // Act
     Client client =
@@ -371,6 +406,71 @@ public class ClientTest {
           .thenReturn(ImmutableMap.of("googleApiKey", "api-key"));
       Client client = new Client();
       assertFalse(client.vertexAI());
+    }
+  }
+
+  @Test
+  void apiVersionEnvVar_isRespected_mldev() {
+    try (MockedStatic<ApiClient> mocked =
+        Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS)) {
+      mocked
+          .when(ApiClient::defaultEnvironmentVariables)
+          .thenReturn(ImmutableMap.of("googleApiKey", "api-key", "apiVersion", "v1alpha"));
+      Client client = new Client();
+      assertFalse(client.vertexAI());
+      assertEquals(Optional.of("v1alpha"), client.models.apiClient.httpOptions().apiVersion());
+    }
+  }
+
+  @Test
+  void apiVersionEnvVar_isRespected_vertex() {
+    try (MockedStatic<ApiClient> mocked =
+            Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS);
+        MockedStatic<GoogleCredentials> mockedCredentials =
+            Mockito.mockStatic(GoogleCredentials.class)) {
+      mockedCredentials.when(GoogleCredentials::getApplicationDefault).thenReturn(CREDENTIALS);
+
+      mocked
+          .when(ApiClient::defaultEnvironmentVariables)
+          .thenReturn(
+              ImmutableMap.of(
+                  "vertexAI",
+                  "true",
+                  "project",
+                  "project",
+                  "location",
+                  "location",
+                  "apiVersion",
+                  "v1"));
+      Client client = new Client();
+      assertTrue(client.vertexAI());
+      assertEquals(Optional.of("v1"), client.models.apiClient.httpOptions().apiVersion());
+    }
+  }
+
+  @Test
+  void explicitApiVersion_overridesEnvVar_withoutThrowing() {
+    try (MockedStatic<ApiClient> mocked =
+        Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS)) {
+      mocked
+          .when(ApiClient::defaultEnvironmentVariables)
+          .thenReturn(ImmutableMap.of("googleApiKey", "api-key", "apiVersion", "v1alpha"));
+
+      Client clientWithBuilderApiVersion =
+          Client.builder().apiKey(API_KEY).vertexAI(false).apiVersion("v1").build();
+      assertEquals(
+          Optional.of("v1"),
+          clientWithBuilderApiVersion.models.apiClient.httpOptions().apiVersion());
+
+      Client clientWithHttpOptionsApiVersion =
+          Client.builder()
+              .apiKey(API_KEY)
+              .vertexAI(false)
+              .httpOptions(HttpOptions.builder().apiVersion("v1beta").build())
+              .build();
+      assertEquals(
+          Optional.of("v1beta"),
+          clientWithHttpOptionsApiVersion.models.apiClient.httpOptions().apiVersion());
     }
   }
 
