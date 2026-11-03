@@ -43,6 +43,16 @@ public class DocumentContentMimeType {
 
     public static final DocumentContentMimeType APPLICATION_PDF = new DocumentContentMimeType("application/pdf");
     public static final DocumentContentMimeType TEXT_CSV = new DocumentContentMimeType("text/csv");
+    public static final DocumentContentMimeType APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION = new DocumentContentMimeType("application/vnd.openxmlformats-officedocument.presentationml.presentation");
+    public static final DocumentContentMimeType APPLICATION_VND_MS_POWERPOINT = new DocumentContentMimeType("application/vnd.ms-powerpoint");
+    public static final DocumentContentMimeType APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION = new DocumentContentMimeType("application/vnd.oasis.opendocument.presentation");
+    public static final DocumentContentMimeType APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = new DocumentContentMimeType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+    public static final DocumentContentMimeType APPLICATION_MSWORD = new DocumentContentMimeType("application/msword");
+    public static final DocumentContentMimeType APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE = new DocumentContentMimeType("application/vnd.openxmlformats-officedocument.wordprocessingml.template");
+    public static final DocumentContentMimeType APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT = new DocumentContentMimeType("application/vnd.oasis.opendocument.text");
+    public static final DocumentContentMimeType APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET = new DocumentContentMimeType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    public static final DocumentContentMimeType APPLICATION_VND_MS_EXCEL = new DocumentContentMimeType("application/vnd.ms-excel");
+    public static final DocumentContentMimeType APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET = new DocumentContentMimeType("application/vnd.oasis.opendocument.spreadsheet");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -118,6 +128,16 @@ public class DocumentContentMimeType {
         Map<String, DocumentContentMimeType> map = new LinkedHashMap<>();
         map.put("application/pdf", APPLICATION_PDF);
         map.put("text/csv", TEXT_CSV);
+        map.put("application/vnd.openxmlformats-officedocument.presentationml.presentation", APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION);
+        map.put("application/vnd.ms-powerpoint", APPLICATION_VND_MS_POWERPOINT);
+        map.put("application/vnd.oasis.opendocument.presentation", APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION);
+        map.put("application/vnd.openxmlformats-officedocument.wordprocessingml.document", APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT);
+        map.put("application/msword", APPLICATION_MSWORD);
+        map.put("application/vnd.openxmlformats-officedocument.wordprocessingml.template", APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE);
+        map.put("application/vnd.oasis.opendocument.text", APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT);
+        map.put("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET);
+        map.put("application/vnd.ms-excel", APPLICATION_VND_MS_EXCEL);
+        map.put("application/vnd.oasis.opendocument.spreadsheet", APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET);
         return map;
     }
 
@@ -125,6 +145,16 @@ public class DocumentContentMimeType {
         Map<String, DocumentContentMimeTypeEnum> map = new HashMap<>();
         map.put("application/pdf", DocumentContentMimeTypeEnum.APPLICATION_PDF);
         map.put("text/csv", DocumentContentMimeTypeEnum.TEXT_CSV);
+        map.put("application/vnd.openxmlformats-officedocument.presentationml.presentation", DocumentContentMimeTypeEnum.APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION);
+        map.put("application/vnd.ms-powerpoint", DocumentContentMimeTypeEnum.APPLICATION_VND_MS_POWERPOINT);
+        map.put("application/vnd.oasis.opendocument.presentation", DocumentContentMimeTypeEnum.APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION);
+        map.put("application/vnd.openxmlformats-officedocument.wordprocessingml.document", DocumentContentMimeTypeEnum.APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT);
+        map.put("application/msword", DocumentContentMimeTypeEnum.APPLICATION_MSWORD);
+        map.put("application/vnd.openxmlformats-officedocument.wordprocessingml.template", DocumentContentMimeTypeEnum.APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE);
+        map.put("application/vnd.oasis.opendocument.text", DocumentContentMimeTypeEnum.APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT);
+        map.put("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", DocumentContentMimeTypeEnum.APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET);
+        map.put("application/vnd.ms-excel", DocumentContentMimeTypeEnum.APPLICATION_VND_MS_EXCEL);
+        map.put("application/vnd.oasis.opendocument.spreadsheet", DocumentContentMimeTypeEnum.APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET);
         return map;
     }
     
@@ -132,7 +162,17 @@ public class DocumentContentMimeType {
     public enum DocumentContentMimeTypeEnum {
 
         APPLICATION_PDF("application/pdf"),
-        TEXT_CSV("text/csv"),;
+        TEXT_CSV("text/csv"),
+        APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION("application/vnd.openxmlformats-officedocument.presentationml.presentation"),
+        APPLICATION_VND_MS_POWERPOINT("application/vnd.ms-powerpoint"),
+        APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION("application/vnd.oasis.opendocument.presentation"),
+        APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+        APPLICATION_MSWORD("application/msword"),
+        APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE("application/vnd.openxmlformats-officedocument.wordprocessingml.template"),
+        APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT("application/vnd.oasis.opendocument.text"),
+        APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+        APPLICATION_VND_MS_EXCEL("application/vnd.ms-excel"),
+        APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET("application/vnd.oasis.opendocument.spreadsheet"),;
 
         private final String value;
 
