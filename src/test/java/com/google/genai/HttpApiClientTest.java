@@ -36,6 +36,8 @@ import com.google.genai.types.HttpOptions;
 import com.google.genai.types.HttpRetryOptions;
 import com.google.genai.types.ProxyOptions;
 import com.google.genai.types.ProxyType;
+import com.google.genai.types.UploadFileConfig;
+import com.google.genai.types.UploadToFileSearchStoreConfig;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.InetSocketAddress;
@@ -1817,6 +1819,182 @@ public class HttpApiClientTest {
         request.url().toString());
   }
 
+
+  /**
+   * Replaces the OkHttpClient of {@code client} with a mock that answers every request with a
+   * successful resumable upload response, and returns the mock so tests can capture the requests.
+   */
+  private static OkHttpClient setMockUploadClient(ApiClient client) throws Exception {
+    OkHttpClient mockClient = Mockito.mock(OkHttpClient.class);
+    Call call = Mockito.mock(Call.class);
+    when(mockClient.newCall(any())).thenReturn(call);
+    when(call.execute())
+        .thenAnswer(
+            invocation ->
+                new Response.Builder()
+                    .request(new Request.Builder().url("https://example.com").build())
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .header(
+                        "x-goog-upload-url",
+                        "https://generativelanguage.googleapis.com/upload-session?upload_id=1")
+                    .header("x-goog-upload-status", "final")
+                    .body(
+                        ResponseBody.create(
+                            "{\"file\": {\"name\": \"files/abc\"}, \"name\": \"operations/1\"}",
+                            null))
+                    .build());
+    Field clientField = ApiClient.class.getDeclaredField("httpClient");
+    clientField.setAccessible(true);
+    clientField.set(client, mockClient);
+    return mockClient;
+  }
+
+  /** Uploads bytes with files.upload and returns the URL of the resumable upload start request. */
+  private static String fileUploadStartUrl(Client client, UploadFileConfig config)
+      throws Exception {
+    OkHttpClient mockClient = setMockUploadClient(client.files.apiClient);
+    client.files.upload(new byte[] {1, 2, 3}, config);
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockClient, atLeastOnce()).newCall(requestCaptor.capture());
+    return requestCaptor.getAllValues().get(0).url().toString();
+  }
+
+  /**
+   * Uploads bytes with fileSearchStores.uploadToFileSearchStore and returns the URL of the
+   * resumable upload start request.
+   */
+  private static String fileSearchStoreUploadStartUrl(
+      Client client, UploadToFileSearchStoreConfig config) throws Exception {
+    OkHttpClient mockClient = setMockUploadClient(client.fileSearchStores.apiClient);
+    client.fileSearchStores.uploadToFileSearchStore(
+        "fileSearchStores/store-1", new byte[] {1, 2, 3}, config);
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockClient, atLeastOnce()).newCall(requestCaptor.capture());
+    return requestCaptor.getAllValues().get(0).url().toString();
+  }
+
+  private static String fileUploadStartPath(Client client, UploadFileConfig config)
+      throws Exception {
+    return java.net.URI.create(fileUploadStartUrl(client, config)).getRawPath();
+  }
+
+  private static String fileSearchStoreUploadStartPath(
+      Client client, UploadToFileSearchStoreConfig config) throws Exception {
+    return java.net.URI.create(fileSearchStoreUploadStartUrl(client, config)).getRawPath();
+  }
+
+  private static final UploadFileConfig UPLOAD_FILE_CONFIG =
+      UploadFileConfig.builder().mimeType("text/plain").build();
+  private static final UploadToFileSearchStoreConfig UPLOAD_TO_FILE_SEARCH_STORE_CONFIG =
+      UploadToFileSearchStoreConfig.builder().mimeType("text/plain").build();
+
+  @Test
+  public void testResolveApiVersionInPath_substitutesPlaceholder() {
+    assertEquals("upload/v1/files", ApiClient.resolveApiVersionInPath("upload/{api_version}/files", "v1"));
+    assertEquals("upload/v1alpha/files", ApiClient.resolveApiVersionInPath("upload/{api_version}/files", "v1alpha"));
+    assertEquals(
+        "upload/v1/fileSearchStores/s:uploadToFileSearchStore",
+        ApiClient.resolveApiVersionInPath(
+            "upload/{api_version}/fileSearchStores/s:uploadToFileSearchStore", "v1"));
+    assertEquals("upload/files", ApiClient.resolveApiVersionInPath("upload/{api_version}/files", ""));
+  }
+
+  @Test
+  public void testUpload_mldev_usesDefaultApiVersion() throws Exception {
+    Client client = Client.builder().apiKey(API_KEY).vertexAI(false).build();
+
+    assertEquals(
+        "/upload/" + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION + "/files",
+        fileUploadStartPath(client, UPLOAD_FILE_CONFIG));
+    assertEquals(
+        "/upload/"
+            + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION
+            + "/fileSearchStores/store-1:uploadToFileSearchStore",
+        fileSearchStoreUploadStartPath(client, UPLOAD_TO_FILE_SEARCH_STORE_CONFIG));
+  }
+
+  @Test
+  public void testUpload_mldev_usesHttpOptionsApiVersion() throws Exception {
+    Client client =
+        Client.builder()
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .httpOptions(HttpOptions.builder().apiVersion("v1alpha").build())
+            .build();
+
+    assertEquals("/upload/v1alpha/files", fileUploadStartPath(client, UPLOAD_FILE_CONFIG));
+    assertEquals(
+        "/upload/v1alpha/fileSearchStores/store-1:uploadToFileSearchStore",
+        fileSearchStoreUploadStartPath(client, UPLOAD_TO_FILE_SEARCH_STORE_CONFIG));
+  }
+
+  @Test
+  public void testUpload_mldev_usesRequestHttpOptionsApiVersion() throws Exception {
+    Client client = Client.builder().apiKey(API_KEY).vertexAI(false).build();
+    HttpOptions requestHttpOptions = HttpOptions.builder().apiVersion("v1alpha").build();
+
+    assertEquals(
+        "/upload/v1alpha/files",
+        fileUploadStartPath(
+            client, UPLOAD_FILE_CONFIG.toBuilder().httpOptions(requestHttpOptions).build()));
+    assertEquals(
+        "/upload/v1alpha/fileSearchStores/store-1:uploadToFileSearchStore",
+        fileSearchStoreUploadStartPath(
+            client,
+            UPLOAD_TO_FILE_SEARCH_STORE_CONFIG.toBuilder()
+                .httpOptions(requestHttpOptions)
+                .build()));
+  }
+
+  @Test
+  public void testUpload_mldev_usesApiVersionEnvVar(MockedStatic<ApiClient> mockedStaticApiClient)
+      throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of("googleApiKey", API_KEY, "apiVersion", "v1alpha"));
+    Client client = new Client();
+
+    assertEquals(
+        "/upload/v1alpha/files", fileUploadStartPath(client, UPLOAD_FILE_CONFIG));
+  }
+
+  @Test
+  public void testBuildRequest_vertexUploadPath_isUnchanged() {
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    Request request = client.buildRequest("POST", "upload/v1beta/files", "{}", Optional.empty());
+
+    assertEquals(
+        String.format(
+            "https://%s-aiplatform.googleapis.com/v1beta1/projects/%s/locations/%s/upload/v1beta/files",
+            LOCATION, PROJECT, LOCATION),
+        request.url().toString());
+  }
+
+  @Test
+  public void testUpload_mldev_customBaseUrl_usesApiVersion() throws Exception {
+    Client client =
+        Client.builder()
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .httpOptions(HttpOptions.builder().baseUrl("https://my-proxy.company.com/").build())
+            .build();
+
+    assertEquals(
+        "https://my-proxy.company.com/upload/"
+            + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION
+            + "/files",
+        fileUploadStartUrl(client, UPLOAD_FILE_CONFIG));
+  }
 
   @Test
   public void testCloseClient() {

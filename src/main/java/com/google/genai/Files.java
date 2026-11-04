@@ -344,9 +344,9 @@ public final class Files {
     } else {
       body = createFileParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
-        path = Common.formatMap("upload/v1beta/files", body.get("_url"));
+        path = Common.formatMap("upload/{api_version}/files", body.get("_url"));
       } else {
-        path = "upload/v1beta/files";
+        path = "upload/{api_version}/files";
       }
     }
     body.remove("_url");

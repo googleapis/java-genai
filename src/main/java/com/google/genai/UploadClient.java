@@ -77,7 +77,7 @@ final class UploadClient {
       headers.put("X-Goog-Upload-File-Name", fileName.get());
     }
 
-    return httpOptionsBuilder.apiVersion("").headers(headers).build();
+    return httpOptionsBuilder.headers(headers).build();
   }
 
   public ResponseBody upload(String uploadUrl, String filePath, Optional<HttpOptions> httpOptions) {

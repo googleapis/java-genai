@@ -66,6 +66,8 @@ public abstract class ApiClient implements AutoCloseable {
       "v1";
   private static final Logger logger = Logger.getLogger(ApiClient.class.getName());
 
+  private static final String API_VERSION_PLACEHOLDER = "{api_version}";
+
   private static final ImmutableSet<String> METHODS_WITH_BODY =
       ImmutableSet.of("POST", "PATCH", "PUT");
 
@@ -408,7 +410,9 @@ public abstract class ApiClient implements AutoCloseable {
             .apiVersion()
             .orElseThrow(() -> new IllegalStateException("apiVersion is required."));
 
-    if (apiVersion.isEmpty()) {
+    if (path.contains(API_VERSION_PLACEHOLDER)) {
+      requestUrl = String.format("%s/%s", baseUrl, resolveApiVersionInPath(path, apiVersion));
+    } else if (apiVersion.isEmpty()) {
       requestUrl = String.format("%s/%s", baseUrl, path);
     } else {
       requestUrl = String.format("%s/%s/%s", baseUrl, apiVersion, path);
@@ -512,6 +516,20 @@ public abstract class ApiClient implements AutoCloseable {
           "The request method with bytes is only supported for POST. Unsupported HTTP method: "
               + httpMethod);
     }
+  }
+
+  /**
+   * Substitutes {@code {api_version}} in a path template such as {@code
+   * upload/{api_version}/files}. When {@code apiVersion} is empty, omits the placeholder segment
+   * without leaving a double slash.
+   */
+  static String resolveApiVersionInPath(String path, String apiVersion) {
+    if (!apiVersion.isEmpty()) {
+      return path.replace(API_VERSION_PLACEHOLDER, apiVersion);
+    }
+    return path.replace(API_VERSION_PLACEHOLDER + "/", "")
+        .replace("/" + API_VERSION_PLACEHOLDER, "")
+        .replace(API_VERSION_PLACEHOLDER, "");
   }
 
   /** Sets the required headers (including auth) on the request object. */

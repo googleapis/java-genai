@@ -714,9 +714,10 @@ public final class FileSearchStores {
       if (body.get("_url") != null) {
         path =
             Common.formatMap(
-                "upload/v1beta/{file_search_store_name}:uploadToFileSearchStore", body.get("_url"));
+                "upload/{api_version}/{file_search_store_name}:uploadToFileSearchStore",
+                body.get("_url"));
       } else {
-        path = "upload/v1beta/{file_search_store_name}:uploadToFileSearchStore";
+        path = "upload/{api_version}/{file_search_store_name}:uploadToFileSearchStore";
       }
     }
     body.remove("_url");
