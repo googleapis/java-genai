@@ -47,10 +47,12 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 import okhttp3.Credentials;
 import okhttp3.Dispatcher;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import org.jspecify.annotations.Nullable;
 
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
@@ -307,6 +309,8 @@ public abstract class ApiClient implements AutoCloseable {
     HttpRetryOptions retryOptions =
         httpOptions.retryOptions().orElse(HttpRetryOptions.builder().build());
     builder.addInterceptor(new RetryInterceptor(retryOptions));
+    // Must come after RetryInterceptor so that it runs once per attempt.
+    builder.addInterceptor(new Reauthorizer());
 
     return builder.build();
   }
@@ -527,14 +531,56 @@ public abstract class ApiClient implements AutoCloseable {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to refresh credentials.", e);
       }
-      String accessToken = cred.getAccessToken().getTokenValue();
-      request.header("Authorization", "Bearer " + accessToken);
+      String authorization = "Bearer " + cred.getAccessToken().getTokenValue();
+      request.header("Authorization", authorization);
+      request.tag(SdkAuthorization.class, new SdkAuthorization(authorization));
 
       if (cred.getQuotaProjectId() != null) {
         request.header("x-goog-user-project", cred.getQuotaProjectId());
       }
     } else if (!customBaseUrl.isPresent()) {
       throw new IllegalStateException("credentials is required");
+    }
+  }
+
+  /**
+   * Re-applies credentials before each attempt, so that a retried or queued request does not
+   * carry an access token that expired after the request was built.
+   *
+   * <p>The refresh goes through {@link #setHeaders} for the same Boq conformance reason as {@link
+   * #refreshAndGetAccessToken}. A request whose Authorization header was changed after the SDK set
+   * it is sent unchanged.
+   *
+   * <p>This must stay a named class: Boq conformance treats a lambda or method reference as a call
+   * from where it is created, which would make {@link #setHeaders} reachable from constructing a
+   * {@link Client}.
+   */
+  private final class Reauthorizer implements Interceptor {
+    @Override
+    public Response intercept(Interceptor.Chain chain) throws IOException {
+      Request request = chain.request();
+      SdkAuthorization sdkAuthorization = request.tag(SdkAuthorization.class);
+      if (sdkAuthorization == null
+          || !sdkAuthorization.headerValue.equals(request.header("Authorization"))) {
+        return chain.proceed(request);
+      }
+      Request.Builder builder = request.newBuilder();
+      try {
+        setHeaders(builder, HttpOptions.builder().build());
+      } catch (GenAiIOException e) {
+        // OkHttp only reports IOExceptions to async callbacks; others kill the dispatcher thread.
+        throw new IOException(e.getMessage(), e);
+      }
+      return chain.proceed(builder.build());
+    }
+  }
+
+  /** The Authorization header value that {@link #setHeaders} set on a request. */
+  private static final class SdkAuthorization {
+    final String headerValue;
+
+    SdkAuthorization(String headerValue) {
+      this.headerValue = headerValue;
     }
   }
 
