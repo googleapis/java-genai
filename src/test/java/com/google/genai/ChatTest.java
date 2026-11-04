@@ -868,6 +868,69 @@ public class ChatTest {
         chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
   }
 
+  @Test
+  public void testCreateWithHistory_sendsTheHistoryBeforeTheMessage() throws Exception {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(jsonResponse(textResponse("You have 8 paws.", FinishReason.Known.STOP, null)));
+    Field apiClientField = Chats.class.getDeclaredField("apiClient");
+    apiClientField.setAccessible(true);
+    apiClientField.set(client.chats, apiClient);
+    List<Content> history =
+        ImmutableList.of(
+            Content.builder().role("user").parts(Part.fromText("I have 2 dogs.")).build(),
+            Content.builder().role("model").parts(Part.fromText("Nice!")).build());
+
+    Chat chat = client.chats.create(MODEL_ID, null, history);
+
+    assertEquals(history, chat.getHistory(true));
+    assertEquals(history, chat.getHistory(false));
+
+    GenerateContentResponse response = chat.sendMessage("How many paws?");
+
+    assertEquals("You have 8 paws.", response.text());
+
+    JsonNode contents =
+        JsonSerializable.stringToJsonNode(sentBodies(apiClient, 1).get(0)).get("contents");
+    assertEquals(3, contents.size());
+    assertEquals(
+        ImmutableList.of("user", "model", "user"),
+        ImmutableList.of(
+            contents.get(0).get("role").asText(),
+            contents.get(1).get("role").asText(),
+            contents.get(2).get("role").asText()));
+    assertEquals("I have 2 dogs.", contents.get(0).get("parts").get(0).get("text").asText());
+    assertEquals("How many paws?", contents.get(2).get("parts").get(0).get("text").asText());
+    assertEquals(
+        ImmutableList.of("I have 2 dogs.", "Nice!", "How many paws?", "You have 8 paws."),
+        chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
+  }
+
+  @Test
+  public void testCreateWithHistory_doesNotChangeWhenTheCallersListDoes() {
+    List<Content> history = new ArrayList<>();
+    history.add(Content.builder().role("user").parts(Part.fromText("Hello")).build());
+    history.add(Content.builder().role("model").parts(Part.fromText("Hi")).build());
+
+    Chat chat = client.chats.create(MODEL_ID, null, history);
+    history.clear();
+
+    assertEquals(2, chat.getHistory(true).size());
+    assertEquals(2, chat.getHistory(false).size());
+  }
+
+  @Test
+  public void testCreateWithHistoryThatStartsWithTheModel_throws() {
+    List<Content> history =
+        ImmutableList.of(Content.builder().role("model").parts(Part.fromText("Hi")).build());
+
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class, () -> client.chats.create(MODEL_ID, null, history));
+
+    assertEquals("The first message in the history must be from the user.", exception.getMessage());
+  }
+
   private static GenerateContentResponse textResponse(
       String text, FinishReason.Known finishReason, byte[] token) {
     Candidate.Builder candidate =

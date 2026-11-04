@@ -16,6 +16,7 @@
 
 package com.google.genai;
 
+import com.google.common.collect.ImmutableList;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentConfig;
@@ -47,7 +48,13 @@ public class AsyncChat extends ChatBase {
   private static final Logger logger = Logger.getLogger(AsyncChat.class.getName());
 
   AsyncChat(ApiClient apiClient, String model, GenerateContentConfig config) {
-    super(new ArrayList<>(), new ArrayList<>());
+    this(apiClient, model, config, ImmutableList.of());
+  }
+
+  AsyncChat(
+      ApiClient apiClient, String model, GenerateContentConfig config, List<Content> history) {
+    super(new ArrayList<>(history), new ArrayList<>());
+    curatedHistory.addAll(validateHistory(history));
     this.apiClient = apiClient;
     this.models = new AsyncModels(apiClient);
     this.model = model;
