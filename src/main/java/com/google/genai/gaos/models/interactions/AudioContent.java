@@ -61,6 +61,13 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
     private AudioContentMimeType mimeType;
 
     /**
+     * How the model processes this audio for understanding.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("processing")
+    private AudioProcessing processing;
+
+    /**
      * The sample rate of the audio.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -83,11 +90,13 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
             @JsonProperty("channels") @Nullable Integer channels,
             @JsonProperty("data") @Nullable String data,
             @JsonProperty("mime_type") @Nullable AudioContentMimeType mimeType,
+            @JsonProperty("processing") @Nullable AudioProcessing processing,
             @JsonProperty("sample_rate") @Nullable Integer sampleRate,
             @JsonProperty("uri") @Nullable String uri) {
         this.channels = channels;
         this.data = data;
         this.mimeType = mimeType;
+        this.processing = processing;
         this.sampleRate = sampleRate;
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
@@ -95,7 +104,7 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
     
     public AudioContent() {
         this(null, null, null,
-            null, null);
+            null, null, null);
     }
 
     /**
@@ -117,6 +126,13 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
      */
     public Optional<AudioContentMimeType> mimeType() {
         return Optional.ofNullable(this.mimeType);
+    }
+
+    /**
+     * How the model processes this audio for understanding.
+     */
+    public Optional<AudioProcessing> processing() {
+        return Optional.ofNullable(this.processing);
     }
 
     /**
@@ -171,6 +187,15 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
 
 
     /**
+     * How the model processes this audio for understanding.
+     */
+    public AudioContent withProcessing(@Nullable AudioProcessing processing) {
+        this.processing = processing;
+        return this;
+    }
+
+
+    /**
      * The sample rate of the audio.
      */
     public AudioContent withSampleRate(@Nullable Integer sampleRate) {
@@ -201,6 +226,7 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
             Utils.enhancedDeepEquals(this.channels, other.channels) &&
             Utils.enhancedDeepEquals(this.data, other.data) &&
             Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
+            Utils.enhancedDeepEquals(this.processing, other.processing) &&
             Utils.enhancedDeepEquals(this.sampleRate, other.sampleRate) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
             Utils.enhancedDeepEquals(this.uri, other.uri);
@@ -210,7 +236,8 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
     public int hashCode() {
         return Utils.enhancedHash(
             channels, data, mimeType,
-            sampleRate, type, uri);
+            processing, sampleRate, type,
+            uri);
     }
     
     @Override
@@ -219,6 +246,7 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
                 "channels", channels,
                 "data", data,
                 "mimeType", mimeType,
+                "processing", processing,
                 "sampleRate", sampleRate,
                 "type", type,
                 "uri", uri);
@@ -232,6 +260,8 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
         private String data;
 
         private AudioContentMimeType mimeType;
+
+        private AudioProcessing processing;
 
         private Integer sampleRate;
 
@@ -266,6 +296,14 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
         }
 
         /**
+         * How the model processes this audio for understanding.
+         */
+        public Builder processing(@Nullable AudioProcessing processing) {
+            this.processing = processing;
+            return this;
+        }
+
+        /**
          * The sample rate of the audio.
          */
         public Builder sampleRate(@Nullable Integer sampleRate) {
@@ -284,7 +322,7 @@ public class AudioContent implements Content, FunctionResultSubcontent, Decision
         public AudioContent build() {
             return new AudioContent(
                 channels, data, mimeType,
-                sampleRate, uri);
+                processing, sampleRate, uri);
         }
 
 
