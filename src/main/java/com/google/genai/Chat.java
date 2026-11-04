@@ -16,6 +16,7 @@
 
 package com.google.genai;
 
+import com.google.common.collect.ImmutableList;
 import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
@@ -43,7 +44,12 @@ public class Chat extends ChatBase {
   private final GenerateContentConfig config;
 
   Chat(ApiClient apiClient, String model, GenerateContentConfig config) {
-    super(new ArrayList<>(), new ArrayList<>());
+    this(apiClient, model, config, ImmutableList.of());
+  }
+
+  Chat(ApiClient apiClient, String model, GenerateContentConfig config, List<Content> history) {
+    super(new ArrayList<>(history), new ArrayList<>());
+    curatedHistory.addAll(validateHistory(history));
     this.apiClient = apiClient;
     this.models = new Models(apiClient);
     this.model = model;
