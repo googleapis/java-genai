@@ -7070,7 +7070,7 @@ public final class Models {
       logger.warning(
           "The generateImages method is deprecated and will be removed in the next major release"
               + " (not before Jan. 1 2027). Please use the generateContent method with image models"
-              + " instead. See https://ai.google.dev/gemini-api/docs/deprecations#imagen-models and"
+              + " instead. See https://aistudio.google.com/docs/deprecations#imagen-models and"
               + " https:/"
               + "/docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/image-generation#generate-images");
     }
