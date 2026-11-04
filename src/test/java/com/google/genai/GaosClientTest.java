@@ -157,6 +157,44 @@ public final class GaosClientTest {
   }
 
   @Test
+  public void testInteractionsUrl_gemini_explicitApiVersion() throws Exception {
+    Client client =
+        Client.builder()
+            .apiKey("test-api-key")
+            .vertexAI(false)
+            .httpOptions(com.google.genai.types.HttpOptions.builder().apiVersion("v1alpha").build())
+            .build();
+
+    AtomicReference<HttpRequest> capturedRequest = new AtomicReference<>();
+    HTTPClient mockClient =
+        new HTTPClient() {
+          @Override
+          public HttpResponse<InputStream> send(HttpRequest request) {
+            capturedRequest.set(request);
+            return createMockResponse(request, 200, "{\"status\": \"completed\"}");
+          }
+
+          @Override
+          public CompletableFuture<HttpResponse<InputStream>> sendAsync(HttpRequest request) {
+            return CompletableFuture.completedFuture(send(request));
+          }
+        };
+    setMockGaosClient(client, mockClient);
+
+    com.google.genai.gaos.models.interactions.CreateModelInteraction body =
+        com.google.genai.gaos.models.interactions.CreateModelInteraction.builder()
+            .model("gemini-2.5-flash")
+            .input(com.google.genai.gaos.models.interactions.InteractionsInput.of("test-input"))
+            .build();
+    client.interactions.create(CreateInteractionRequestBody.of(body));
+
+    HttpRequest req = capturedRequest.get();
+    assertNotNull(req);
+    assertEquals(
+        URI.create("https://generativelanguage.googleapis.com/v1alpha/interactions"), req.uri());
+  }
+
+  @Test
   public void testInteractionsUrl_gemini() throws Exception {
     Client client = Client.builder().apiKey("test-api-key").vertexAI(false).build();
 
@@ -189,7 +227,11 @@ public final class GaosClientTest {
     assertNotNull(req);
     assertEquals("POST", req.method());
 
-    URI expectedUri = URI.create("https://generativelanguage.googleapis.com/v1beta/interactions");
+    URI expectedUri =
+        URI.create(
+            "https://generativelanguage.googleapis.com/"
+                + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION
+                + "/interactions");
     assertEquals(expectedUri, req.uri());
     assertEquals("test-api-key", req.headers().firstValue("x-goog-api-key").orElse(null));
     assertTrue(req.headers().firstValue("user-agent").orElse("").contains("google-genai-sdk/"));
@@ -387,7 +429,8 @@ public final class GaosClientTest {
 
     String agentId = "test-agent-id";
     String webhookId = "test-webhook-id";
-    String expectedUrlPrefix = "https://generativelanguage.googleapis.com/v1beta";
+    String expectedUrlPrefix =
+        "https://generativelanguage.googleapis.com/" + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION;
 
     // 1. Test Get Agent
     client.agents.get(agentId);
@@ -434,7 +477,8 @@ public final class GaosClientTest {
 
     String credentialId = "test-credential-id";
     String triggerId = "test-trigger-id";
-    String expectedUrlPrefix = "https://generativelanguage.googleapis.com/v1beta";
+    String expectedUrlPrefix =
+        "https://generativelanguage.googleapis.com/" + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION;
 
     // 1. Test Get Credential
     client.credentials.get(credentialId);

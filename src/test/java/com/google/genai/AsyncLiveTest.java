@@ -121,6 +121,25 @@ public class AsyncLiveTest {
   }
 
   @Test
+  public void testGetWebSocketUri_GoogleAiDefaultApiVersion() throws Exception {
+    when(apiClient.vertexAI()).thenReturn(false);
+    when(apiClient.apiKey()).thenReturn("api-key");
+    when(apiClient.httpOptions())
+        .thenReturn(
+            HttpOptions.builder().baseUrl("https://generativelanguage.googleapis.com").build());
+
+    Method getWebSocketUri = AsyncLive.class.getDeclaredMethod("getWebSocketUri");
+    getWebSocketUri.setAccessible(true);
+    URI uri = (URI) getWebSocketUri.invoke(asyncLive);
+
+    assertEquals(
+        "wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage."
+            + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION
+            + ".GenerativeService.BidiGenerateContent",
+        uri.toString());
+  }
+
+  @Test
   public void testGetWebSocketHeaders_GoogleAiEphemeralToken() throws Exception {
     when(apiClient.vertexAI()).thenReturn(false);
     when(apiClient.apiKey()).thenReturn("auth_tokens/ephemeral-token");
