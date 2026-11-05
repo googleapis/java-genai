@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.api.core.InternalApi;
+import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.errors.GenAiIOException;
@@ -176,6 +177,16 @@ public final class ReplayApiClient extends ApiClient {
   public CompletableFuture<ApiResponse> asyncRequest(
       String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions) {
     throw new UnsupportedOperationException("Not implemented yet.");
+  }
+
+  /**
+   * Returns a credential with a fixed token that never expires. Replay never sends requests and
+   * request matching ignores auth headers, so a real token would only add a network call that can
+   * fail.
+   */
+  @Override
+  GoogleCredentials defaultCredentials() {
+    return GoogleCredentials.create(new AccessToken("replay-access-token", null));
   }
 
   /** Makes sure the replay request matches the actual request message. */
