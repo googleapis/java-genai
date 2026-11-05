@@ -47,6 +47,8 @@ import com.google.genai.gaos.models.interactions.Interaction;
 import com.google.genai.gaos.models.interactions.InteractionsInput;
 import com.google.genai.gaos.models.interactions.Model;
 import com.google.genai.gaos.models.interactions.ResponseFormat;
+import com.google.genai.gaos.models.interactions.TextResponseFormat;
+import com.google.genai.gaos.models.interactions.TextResponseFormatMimeType;
 import com.google.genai.gaos.models.operations.CreateInteractionRequestBody;
 import com.google.genai.gaos.models.operations.CreateInteractionResponse;
 import java.util.HashMap;
@@ -66,7 +68,12 @@ public class InteractionStructuredOutputJson {
             .model(Model.of(Constants.GEMINI_MODEL_NAME))
             .input(InteractionsInput.of("Which are the colors of a rainbow"))
             .responseFormat(
-                CreateModelInteractionResponseFormat.of(ResponseFormat.of(format)))
+                CreateModelInteractionResponseFormat.of(
+                    ResponseFormat.of(
+                        TextResponseFormat.builder()
+                            .mimeType(TextResponseFormatMimeType.APPLICATION_JSON)
+                            .schema(format)
+                            .build())))
             .build();
 
     CreateInteractionResponse response =
