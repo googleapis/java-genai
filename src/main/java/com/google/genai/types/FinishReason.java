@@ -97,7 +97,10 @@ public class FinishReason {
      * generation is not yet complete. The response can be continued by passing the returned
      * `continuation_token` in a subsequent request.
      */
-    CONTINUATION
+    CONTINUATION,
+
+    /** Token generation stopped because the response was malformed. */
+    MALFORMED_RESPONSE
   }
 
   private Known finishReasonEnum;
