@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.genai.errors.GenAiIOException;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.LiveConnectParameters;
 import com.google.genai.types.LiveServerMessage;
@@ -27,7 +28,9 @@ import com.google.genai.types.LiveServerSetupComplete;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -58,22 +61,20 @@ public class AsyncLive {
    *
    * @param model The model name to use.
    * @param config A {@link LiveConnectConfig} configuration for the live connection. May be null.
+   *     The {@code baseUrl}, {@code apiVersion} and {@code headers} in its {@code httpOptions}
+   *     override those of the client for this connection.
    * @return A {@link CompletableFuture} that resolves to an {@link AsyncSession} upon successful
    *     connection.
+   * @throws IllegalArgumentException if {@code config} sets any other {@code httpOptions} field.
    */
   public CompletableFuture<AsyncSession> connect(String model, LiveConnectConfig config) {
-    // TODO: b/404946806 - Support per request HTTP options.
-    if (config != null && config.httpOptions().isPresent()) {
-      throw new IllegalArgumentException(
-          "The AsyncLive module does not support httpOptions at request-level in LiveConnectConfig"
-              + " yet. Please use the client-level httpOptions configuration instead.");
-    }
+    HttpOptions httpOptions = mergeHttpOptions(config);
     CompletableFuture<AsyncSession> future = new CompletableFuture<>();
 
     GenAiWebSocketClient websocket =
         new GenAiWebSocketClient(
-            getWebSocketUri(),
-            getWebSocketHeaders(),
+            getWebSocketUri(httpOptions),
+            getWebSocketHeaders(httpOptions),
             getSetupRequest(model, config),
             future,
             apiClient);
@@ -83,9 +84,33 @@ public class AsyncLive {
     return future;
   }
 
+  /**
+   * Returns the client's HTTP options patched with those of {@code config}. A live connection uses
+   * only the base URL, API version and headers.
+   */
+  private HttpOptions mergeHttpOptions(@Nullable LiveConnectConfig config) {
+    if (config == null || !config.httpOptions().isPresent()) {
+      return apiClient.httpOptions();
+    }
+    HttpOptions requestHttpOptions = config.httpOptions().get();
+    // Clearing the supported fields leaves exactly the unsupported ones, including future fields.
+    HttpOptions unsupported =
+        requestHttpOptions.toBuilder().clearBaseUrl().clearApiVersion().clearHeaders().build();
+    List<String> unsupportedFields = new ArrayList<>();
+    JsonSerializable.toJsonNode(unsupported).fieldNames().forEachRemaining(unsupportedFields::add);
+    if (!unsupportedFields.isEmpty()) {
+      throw new IllegalArgumentException(
+          "AsyncLive.connect() only supports baseUrl, apiVersion and headers in"
+              + " LiveConnectConfig.httpOptions, but got: "
+              + String.join(", ", unsupportedFields)
+              + ".");
+    }
+    return apiClient.mergeHttpOptions(requestHttpOptions);
+  }
+
   /** Gets the URI for the websocket connection. */
-  private URI getWebSocketUri() {
-    String baseUrl = apiClient.httpOptions().baseUrl().orElse(null);
+  private URI getWebSocketUri(HttpOptions httpOptions) {
+    String baseUrl = httpOptions.baseUrl().orElse(null);
     if (baseUrl == null) {
       throw new IllegalArgumentException("No base URL provided in the client.");
     }
@@ -113,8 +138,7 @@ public class AsyncLive {
           logger.warning(
               "Warning: Ephemeral token support is experimental and may change in future"
                   + " versions.");
-          if (!apiClient
-              .httpOptions()
+          if (!httpOptions
               .apiVersion()
               .orElse(ApiClient.GOOGLE_AI_API_DEFAULT_VERSION)
               .equals("v1alpha")) {
@@ -131,16 +155,13 @@ public class AsyncLive {
             String.format(
                 "%s/ws/google.ai.generativelanguage.%s.GenerativeService.%s",
                 wsBaseUrl,
-                apiClient
-                    .httpOptions()
-                    .apiVersion()
-                    .orElse(ApiClient.GOOGLE_AI_API_DEFAULT_VERSION),
+                httpOptions.apiVersion().orElse(ApiClient.GOOGLE_AI_API_DEFAULT_VERSION),
                 method));
       } else {
         return new URI(
             String.format(
                 "%s/ws/google.cloud.aiplatform.%s.LlmBidiService/BidiGenerateContent",
-                wsBaseUrl, apiClient.httpOptions().apiVersion().orElse("v1beta1")));
+                wsBaseUrl, httpOptions.apiVersion().orElse("v1beta1")));
       }
     } catch (URISyntaxException e) {
       throw new IllegalStateException("Failed to parse URL.", e);
@@ -148,9 +169,9 @@ public class AsyncLive {
   }
 
   /** Gets the headers for the websocket connection. */
-  private Map<String, String> getWebSocketHeaders() {
+  private Map<String, String> getWebSocketHeaders(HttpOptions httpOptions) {
     Map<String, String> headers = new HashMap<>();
-    apiClient.httpOptions().headers().ifPresent(headers::putAll);
+    httpOptions.headers().ifPresent(headers::putAll);
 
     if (apiClient.vertexAI()) {
       if (apiClient.credentials() != null) {
