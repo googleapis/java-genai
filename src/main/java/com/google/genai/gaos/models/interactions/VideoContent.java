@@ -36,7 +36,7 @@ import java.util.Optional;
  * 
  * <p>A video content block.
  */
-public class VideoContent implements FunctionResultSubcontent, Content {
+public class VideoContent implements Content, FunctionResultSubcontent {
     /**
      * The video content.
      */

@@ -53,10 +53,10 @@ public class CodeExecutionResultStep implements Step {
     private Boolean isError;
 
     /**
-     * Required. The output of the code execution.
+     * The output of the code execution.
      */
     @JsonProperty("result")
-    private String result;
+    private CodeExecutionResultStepResult result;
 
     /**
      * A signature hash for backend validation.
@@ -73,7 +73,7 @@ public class CodeExecutionResultStep implements Step {
     public CodeExecutionResultStep(
             @JsonProperty("call_id") @Nonnull String callId,
             @JsonProperty("is_error") @Nullable Boolean isError,
-            @JsonProperty("result") @Nonnull String result,
+            @JsonProperty("result") @Nonnull CodeExecutionResultStepResult result,
             @JsonProperty("signature") @Nullable String signature) {
         this.callId = Optional.ofNullable(callId)
             .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
@@ -86,7 +86,7 @@ public class CodeExecutionResultStep implements Step {
     
     public CodeExecutionResultStep(
             @Nonnull String callId,
-            @Nonnull String result) {
+            @Nonnull CodeExecutionResultStepResult result) {
         this(callId, null, result,
             null);
     }
@@ -106,9 +106,9 @@ public class CodeExecutionResultStep implements Step {
     }
 
     /**
-     * Required. The output of the code execution.
+     * The output of the code execution.
      */
-    public Optional<String> result() {
+    public Optional<CodeExecutionResultStepResult> result() {
         return Optional.ofNullable(this.result);
     }
 
@@ -148,9 +148,9 @@ public class CodeExecutionResultStep implements Step {
 
 
     /**
-     * Required. The output of the code execution.
+     * The output of the code execution.
      */
-    public CodeExecutionResultStep withResult(@Nonnull String result) {
+    public CodeExecutionResultStep withResult(@Nonnull CodeExecutionResultStepResult result) {
         this.result = Utils.checkNotNull(result, "result");
         return this;
     }
@@ -206,7 +206,7 @@ public class CodeExecutionResultStep implements Step {
 
         private Boolean isError;
 
-        private String result;
+        private CodeExecutionResultStepResult result;
 
         private String signature;
 
@@ -231,9 +231,9 @@ public class CodeExecutionResultStep implements Step {
         }
 
         /**
-         * Required. The output of the code execution.
+         * The output of the code execution.
          */
-        public Builder result(@Nonnull String result) {
+        public Builder result(@Nonnull CodeExecutionResultStepResult result) {
             this.result = Utils.checkNotNull(result, "result");
             return this;
         }
