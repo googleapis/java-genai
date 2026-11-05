@@ -106,8 +106,8 @@ public class CreateModelInteraction {
     private Map<String, String> labels;
 
     /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+     * The model that will complete your prompt.\n\nSee [models](https://aistudio.google.com/docs/models)
+     * for additional details.
      */
     @JsonProperty("model")
     private Model model;
@@ -314,8 +314,8 @@ public class CreateModelInteraction {
     }
 
     /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+     * The model that will complete your prompt.\n\nSee [models](https://aistudio.google.com/docs/models)
+     * for additional details.
      */
     public Optional<Model> model() {
         return Optional.ofNullable(this.model);
@@ -487,8 +487,8 @@ public class CreateModelInteraction {
 
 
     /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+     * The model that will complete your prompt.\n\nSee [models](https://aistudio.google.com/docs/models)
+     * for additional details.
      */
     public CreateModelInteraction withModel(@Nonnull Model model) {
         this.model = Utils.checkNotNull(model, "model");
@@ -787,8 +787,8 @@ public class CreateModelInteraction {
         }
 
         /**
-         * The model that will complete your prompt.\n\nSee
-         * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+         * The model that will complete your prompt.\n\nSee [models](https://aistudio.google.com/docs/models)
+         * for additional details.
          */
         public Builder model(@Nonnull Model model) {
             this.model = Utils.checkNotNull(model, "model");

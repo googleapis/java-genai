@@ -154,8 +154,8 @@ public class Interaction {
     private Map<String, String> labels;
 
     /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+     * The model that will complete your prompt.\n\nSee [models](https://aistudio.google.com/docs/models)
+     * for additional details.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("model")
@@ -484,8 +484,8 @@ public class Interaction {
     }
 
     /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+     * The model that will complete your prompt.\n\nSee [models](https://aistudio.google.com/docs/models)
+     * for additional details.
      */
     public Optional<Model> model() {
         return Optional.ofNullable(this.model);
@@ -872,8 +872,8 @@ public class Interaction {
 
 
     /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+     * The model that will complete your prompt.\n\nSee [models](https://aistudio.google.com/docs/models)
+     * for additional details.
      */
     public Interaction withModel(@Nullable Model model) {
         this.model = model;
@@ -1334,8 +1334,8 @@ public class Interaction {
         }
 
         /**
-         * The model that will complete your prompt.\n\nSee
-         * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+         * The model that will complete your prompt.\n\nSee [models](https://aistudio.google.com/docs/models)
+         * for additional details.
          */
         public Builder model(@Nullable Model model) {
             this.model = model;
