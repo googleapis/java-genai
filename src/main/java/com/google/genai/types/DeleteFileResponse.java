@@ -34,6 +34,14 @@ public abstract class DeleteFileResponse extends JsonSerializable {
   @JsonProperty("sdkHttpResponse")
   public abstract Optional<HttpResponse> sdkHttpResponse();
 
+  /** The ID of the deleted file. */
+  @JsonProperty("id")
+  public abstract Optional<String> id();
+
+  /** The object type. Always `file_deleted`. */
+  @JsonProperty("type")
+  public abstract Optional<String> type();
+
   /** Instantiates a builder for DeleteFileResponse. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -78,6 +86,42 @@ public abstract class DeleteFileResponse extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSdkHttpResponse() {
       return sdkHttpResponse(Optional.empty());
+    }
+
+    /**
+     * Setter for id.
+     *
+     * <p>id: The ID of the deleted file.
+     */
+    @JsonProperty("id")
+    public abstract Builder id(String id);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder id(Optional<String> id);
+
+    /** Clears the value of id field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearId() {
+      return id(Optional.empty());
+    }
+
+    /**
+     * Setter for type.
+     *
+     * <p>type: The object type. Always `file_deleted`.
+     */
+    @JsonProperty("type")
+    public abstract Builder type(String type);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder type(Optional<String> type);
+
+    /** Clears the value of type field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearType() {
+      return type(Optional.empty());
     }
 
     public abstract DeleteFileResponse build();

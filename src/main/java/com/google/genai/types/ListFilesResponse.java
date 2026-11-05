@@ -38,13 +38,27 @@ public abstract class ListFilesResponse extends JsonSerializable {
   @JsonProperty("sdkHttpResponse")
   public abstract Optional<HttpResponse> sdkHttpResponse();
 
-  /** A token that can be sent as a `page_token` into a subsequent `ListFiles` call. */
+  /**
+   * A token that can be sent as a `page_token` into a subsequent `ListFiles` call. This field is
+   * not supported in Vertex AI.
+   */
   @JsonProperty("nextPageToken")
   public abstract Optional<String> nextPageToken();
 
-  /** The list of `File`s. */
+  /** The list of `File`s. This field is not supported in Vertex AI. */
   @JsonProperty("files")
   public abstract Optional<List<File>> files();
+
+  /** The files. This field is not supported in Gemini API. */
+  @JsonProperty("data")
+  public abstract Optional<List<ClaudeFile>> data();
+
+  /**
+   * Opaque cursor for the next page. Unset on the last page, and always unset when `ids` was
+   * supplied, since batch fetch is single-page. This field is not supported in Gemini API.
+   */
+  @JsonProperty("nextPage")
+  public abstract Optional<String> nextPage();
 
   /** Instantiates a builder for ListFilesResponse. */
   @ExcludeFromGeneratedCoverageReport
@@ -96,7 +110,7 @@ public abstract class ListFilesResponse extends JsonSerializable {
      * Setter for nextPageToken.
      *
      * <p>nextPageToken: A token that can be sent as a `page_token` into a subsequent `ListFiles`
-     * call.
+     * call. This field is not supported in Vertex AI.
      */
     @JsonProperty("nextPageToken")
     public abstract Builder nextPageToken(String nextPageToken);
@@ -114,7 +128,7 @@ public abstract class ListFilesResponse extends JsonSerializable {
     /**
      * Setter for files.
      *
-     * <p>files: The list of `File`s.
+     * <p>files: The list of `File`s. This field is not supported in Vertex AI.
      */
     @JsonProperty("files")
     public abstract Builder files(List<File> files);
@@ -122,7 +136,7 @@ public abstract class ListFilesResponse extends JsonSerializable {
     /**
      * Setter for files.
      *
-     * <p>files: The list of `File`s.
+     * <p>files: The list of `File`s. This field is not supported in Vertex AI.
      */
     @CanIgnoreReturnValue
     public Builder files(File... files) {
@@ -132,7 +146,7 @@ public abstract class ListFilesResponse extends JsonSerializable {
     /**
      * Setter for files builder.
      *
-     * <p>files: The list of `File`s.
+     * <p>files: The list of `File`s. This field is not supported in Vertex AI.
      */
     @CanIgnoreReturnValue
     public Builder files(File.Builder... filesBuilders) {
@@ -150,6 +164,67 @@ public abstract class ListFilesResponse extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearFiles() {
       return files(Optional.empty());
+    }
+
+    /**
+     * Setter for data.
+     *
+     * <p>data: The files. This field is not supported in Gemini API.
+     */
+    @JsonProperty("data")
+    public abstract Builder data(List<ClaudeFile> data);
+
+    /**
+     * Setter for data.
+     *
+     * <p>data: The files. This field is not supported in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder data(ClaudeFile... data) {
+      return data(Arrays.asList(data));
+    }
+
+    /**
+     * Setter for data builder.
+     *
+     * <p>data: The files. This field is not supported in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder data(ClaudeFile.Builder... dataBuilders) {
+      return data(
+          Arrays.asList(dataBuilders).stream()
+              .map(ClaudeFile.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder data(Optional<List<ClaudeFile>> data);
+
+    /** Clears the value of data field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearData() {
+      return data(Optional.empty());
+    }
+
+    /**
+     * Setter for nextPage.
+     *
+     * <p>nextPage: Opaque cursor for the next page. Unset on the last page, and always unset when
+     * `ids` was supplied, since batch fetch is single-page. This field is not supported in Gemini
+     * API.
+     */
+    @JsonProperty("nextPage")
+    public abstract Builder nextPage(String nextPage);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder nextPage(Optional<String> nextPage);
+
+    /** Clears the value of nextPage field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNextPage() {
+      return nextPage(Optional.empty());
     }
 
     public abstract ListFilesResponse build();
