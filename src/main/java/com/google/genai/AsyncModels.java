@@ -355,7 +355,7 @@ public final class AsyncModels {
   /**
    * Asynchronously fetches information about a model by name.
    *
-   * @example ```java Model model = client.models.get("gemini-flash-latest"); ```
+   * @example ```java Model model = client.models.get("gemini-3.8-flash"); ```
    */
   public CompletableFuture<Model> get(String model, GetModelConfig config) {
     GetModelParameters.Builder parameterBuilder = GetModelParameters.builder();

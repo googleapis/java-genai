@@ -308,7 +308,7 @@ public class GenerateContentWithTextInput {
     Client client = new Client();
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-flash-latest", "What is your name?", null);
+        client.models.generateContent("gemini-3.8-flash", "What is your name?", null);
 
     // Gets the text string from the response by the quick accessor method `text()`.
     System.out.println("Unary response: " + response.text());
@@ -348,7 +348,7 @@ public class GenerateContentWithImageInput {
             Part.fromUri("gs://path/to/image.jpg", "image/jpeg"));
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-flash-latest", content, null);
+        client.models.generateContent("gemini-3.8-flash", content, null);
 
     System.out.println("Response: " + response.text());
   }
@@ -409,7 +409,7 @@ public class GenerateContentWithConfigs {
             .build();
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-flash-latest", "Tell me the history of LLM", config);
+        client.models.generateContent("gemini-3.8-flash", "Tell me the history of LLM", config);
 
     System.out.println("Response: " + response.text());
   }
@@ -471,7 +471,7 @@ public class GenerateContentWithFunctionCall {
 
     GenerateContentResponse response =
         client.models.generateContent(
-            "gemini-flash-latest",
+            "gemini-3.8-flash",
             "What is the weather in Vancouver?",
             config);
 
@@ -499,7 +499,7 @@ public class StreamGeneration {
 
     ResponseStream<GenerateContentResponse> responseStream =
         client.models.generateContentStream(
-            "gemini-flash-latest", "Tell me a story in 300 words.", null);
+            "gemini-3.8-flash", "Tell me a story in 300 words.", null);
 
     System.out.println("Streaming response: ");
     for (GenerateContentResponse res : responseStream) {
@@ -530,7 +530,7 @@ public class GenerateContentAsync {
 
     CompletableFuture<GenerateContentResponse> responseFuture =
         client.async.models.generateContent(
-            "gemini-flash-latest", "Introduce Google AI Studio.", null);
+            "gemini-3.8-flash", "Introduce Google AI Studio.", null);
 
     responseFuture
         .thenAccept(
@@ -583,7 +583,7 @@ public class GenerateContentWithSchema {
             .build();
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-flash-latest", "Tell me your name", config);
+        client.models.generateContent("gemini-3.8-flash", "Tell me your name", config);
 
     System.out.println("Response: " + response.text());
   }
@@ -607,7 +607,7 @@ public class CountTokens {
     Client client = new Client();
 
     CountTokensResponse response =
-        client.models.countTokens("gemini-flash-latest", "What is your name?", null);
+        client.models.countTokens("gemini-3.8-flash", "What is your name?", null);
 
     System.out.println("Count tokens response: " + response);
   }
@@ -628,7 +628,7 @@ public class ComputeTokens {
     Client client = Client.builder().enterprise(true).build();
 
     ComputeTokensResponse response =
-        client.models.computeTokens("gemini-flash-latest", "What is your name?", null);
+        client.models.computeTokens("gemini-3.8-flash", "What is your name?", null);
 
     System.out.println("Compute tokens response: " + response);
   }
@@ -1003,7 +1003,7 @@ public final class FileOperations {
               Part.fromText("Summary this pdf."),
               Part.fromUri(file.name().get(), file.mimeType().get()));
       GenerateContentResponse response =
-          client.models.generateContent("gemini-flash-latest", content, null);
+          client.models.generateContent("gemini-3.8-flash", content, null);
 
       // Get the uploaded file.
       File retrievedFile = client.files.get(file.name().get(), null);
