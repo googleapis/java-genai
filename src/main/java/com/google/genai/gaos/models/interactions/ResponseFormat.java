@@ -19,169 +19,38 @@
  */
 package com.google.genai.gaos.models.interactions;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.genai.gaos.utils.OneOfDeserializer;
-import com.google.genai.gaos.utils.TypedObject;
-import com.google.genai.gaos.utils.Utils.JsonShape;
-import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-import com.google.genai.gaos.utils.Utils;
-import java.lang.Object;
-import java.lang.Override;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import java.lang.String;
-import java.lang.SuppressWarnings;
-import java.util.Map;
-import java.util.Optional;
 
-@JsonDeserialize(using = ResponseFormat._Deserializer.class)
-public class ResponseFormat {
+@JsonTypeInfo(
+        use = Id.CUSTOM,
+        property = "type",
+        include = As.EXISTING_PROPERTY,
+        visible = true,
+        defaultImpl = UnknownResponseFormat.class
+)
+@JsonTypeIdResolver(ResponseFormatTypeIdResolver.class)
+public interface ResponseFormat {
 
-    @JsonValue
-    private final TypedObject value;
-    
-    private ResponseFormat(TypedObject value) {
-        this.value = value;
-    }
+    String type();
 
-    public static ResponseFormat of(AudioResponseFormat value) {
-        Utils.checkNotNull(value, "value");
-        return new ResponseFormat(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<AudioResponseFormat>(){}));
+    static ResponseFormat of(AudioResponseFormat value) {
+        return value;
     }
 
-    public static ResponseFormat of(ImageResponseFormat value) {
-        Utils.checkNotNull(value, "value");
-        return new ResponseFormat(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<ImageResponseFormat>(){}));
+    static ResponseFormat of(ImageResponseFormat value) {
+        return value;
     }
 
-    public static ResponseFormat of(TextResponseFormat value) {
-        Utils.checkNotNull(value, "value");
-        return new ResponseFormat(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<TextResponseFormat>(){}));
+    static ResponseFormat of(TextResponseFormat value) {
+        return value;
     }
 
-    public static ResponseFormat of(VideoResponseFormat value) {
-        Utils.checkNotNull(value, "value");
-        return new ResponseFormat(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<VideoResponseFormat>(){}));
-    }
-
-    public static ResponseFormat of(Map<String, Object> value) {
-        Utils.checkNotNull(value, "value");
-        return new ResponseFormat(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Map<String, Object>>(){}));
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code AudioResponseFormat},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code AudioResponseFormat} value, or empty if not of this type
-     */
-    public Optional<AudioResponseFormat> audioResponseFormat() {
-        if (value.value() instanceof AudioResponseFormat) {
-            return Optional.of((AudioResponseFormat) value.value());
-        }
-        return Optional.empty();
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code ImageResponseFormat},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code ImageResponseFormat} value, or empty if not of this type
-     */
-    public Optional<ImageResponseFormat> imageResponseFormat() {
-        if (value.value() instanceof ImageResponseFormat) {
-            return Optional.of((ImageResponseFormat) value.value());
-        }
-        return Optional.empty();
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code TextResponseFormat},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code TextResponseFormat} value, or empty if not of this type
-     */
-    public Optional<TextResponseFormat> textResponseFormat() {
-        if (value.value() instanceof TextResponseFormat) {
-            return Optional.of((TextResponseFormat) value.value());
-        }
-        return Optional.empty();
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code VideoResponseFormat},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code VideoResponseFormat} value, or empty if not of this type
-     */
-    public Optional<VideoResponseFormat> videoResponseFormat() {
-        if (value.value() instanceof VideoResponseFormat) {
-            return Optional.of((VideoResponseFormat) value.value());
-        }
-        return Optional.empty();
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code Map<String, Object>},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code Map<String, Object>} value, or empty if not of this type
-     */
-    @SuppressWarnings("unchecked")
-    public Optional<Map<String, Object>> mapOfObject() {
-        if (value.value() instanceof Map) {
-            return Optional.of((Map<String, Object>) value.value());
-        }
-        return Optional.empty();
-    }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
-    @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ResponseFormat other = (ResponseFormat) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
-    }
-    
-    @Override
-    public int hashCode() {
-        return Utils.enhancedHash(value.value());
-    }
-    
-    @SuppressWarnings("serial")
-    public static final class _Deserializer extends OneOfDeserializer<ResponseFormat> {
-
-        public _Deserializer() {
-            super(ResponseFormat.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<AudioResponseFormat>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<ImageResponseFormat>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<TextResponseFormat>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<VideoResponseFormat>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Map<String, Object>>() {}, JsonShape.DEFAULT));
-        }
-    }
-    
-    @Override
-    public String toString() {
-        return Utils.toString(ResponseFormat.class,
-                "value", value);
+    static ResponseFormat of(VideoResponseFormat value) {
+        return value;
     }
 
 }
