@@ -36,7 +36,7 @@ public abstract class GaosClientException extends com.google.genai.errors.Client
     private HttpResponse<?> rawResponse;
 
     public GaosClientException(String message, int code, @Nullable byte[] body, HttpResponse<?> rawResponse, @Nullable Throwable cause) {
-        super(code, "", message, cause);
+        super(code, GaosBaseException.extractStatus(body), GaosBaseException.extractMessage(message, body), cause);
         this.body = body;
         this.rawResponse = rawResponse;
     }

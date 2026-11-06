@@ -36,12 +36,56 @@ public abstract class GaosBaseException extends com.google.genai.errors.ApiExcep
     private HttpResponse<?> rawResponse;
 
     public GaosBaseException(String message, int code, @Nullable byte[] body, HttpResponse<?> rawResponse, @Nullable Throwable cause) {
-        super(code, "", message, cause);
+        super(code, extractStatus(body), extractMessage(message, body), cause);
         Utils.checkNotNull(message, "message");
         Utils.checkNotNull(rawResponse, "rawResponse");
         this.body = body;
         this.code = code;
         this.rawResponse = rawResponse;
+    }
+
+    static String extractStatus(@Nullable byte[] body) {
+        if (body == null || body.length == 0) {
+            return "";
+        }
+        try {
+            com.fasterxml.jackson.databind.JsonNode errorNode =
+                    Utils.mapper().readTree(body).get("error");
+            if (errorNode != null && errorNode.isObject()) {
+                com.fasterxml.jackson.databind.JsonNode statusNode = errorNode.get("status");
+                if (statusNode != null && statusNode.isTextual() && !statusNode.asText().isEmpty()) {
+                    return statusNode.asText();
+                }
+                // The Interactions API reports a string `code` (e.g.
+                // "not_found") instead of a OnePlatform `status`.
+                com.fasterxml.jackson.databind.JsonNode codeNode = errorNode.get("code");
+                if (codeNode != null && codeNode.isTextual() && !codeNode.asText().isEmpty()) {
+                    return codeNode.asText();
+                }
+            }
+        } catch (Exception ignored) {
+            // Fall through to empty status.
+        }
+        return "";
+    }
+
+    static String extractMessage(String fallback, @Nullable byte[] body) {
+        if (body == null || body.length == 0) {
+            return fallback;
+        }
+        try {
+            com.fasterxml.jackson.databind.JsonNode errorNode =
+                    Utils.mapper().readTree(body).get("error");
+            if (errorNode != null && errorNode.isObject()) {
+                com.fasterxml.jackson.databind.JsonNode messageNode = errorNode.get("message");
+                if (messageNode != null && messageNode.isTextual() && !messageNode.asText().isEmpty()) {
+                    return messageNode.asText();
+                }
+            }
+        } catch (Exception ignored) {
+            // Fall through to fallback message.
+        }
+        return fallback;
     }
     
     public Optional<byte[]> body() {

@@ -36,7 +36,7 @@ public abstract class GaosServerException extends com.google.genai.errors.Server
     private HttpResponse<?> rawResponse;
 
     public GaosServerException(String message, int code, @Nullable byte[] body, HttpResponse<?> rawResponse, @Nullable Throwable cause) {
-        super(code, "", message, cause);
+        super(code, GaosBaseException.extractStatus(body), GaosBaseException.extractMessage(message, body), cause);
         this.body = body;
         this.rawResponse = rawResponse;
     }
