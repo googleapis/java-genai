@@ -1024,7 +1024,6 @@ public final class FileOperations {
 }
 ```
 
-
 ## Versioning
 
 This library follows [Semantic Versioning](http://semver.org/).
