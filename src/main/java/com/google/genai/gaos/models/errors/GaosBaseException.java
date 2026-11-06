@@ -36,7 +36,7 @@ public abstract class GaosBaseException extends com.google.genai.errors.ApiExcep
     private HttpResponse<?> rawResponse;
 
     public GaosBaseException(String message, int code, @Nullable byte[] body, HttpResponse<?> rawResponse, @Nullable Throwable cause) {
-        super(code, "", message, cause);
+        super(code, GaosErrorBody.status(body), GaosErrorBody.message(message, body), cause);
         Utils.checkNotNull(message, "message");
         Utils.checkNotNull(rawResponse, "rawResponse");
         this.body = body;
