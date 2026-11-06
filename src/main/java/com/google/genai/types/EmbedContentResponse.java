@@ -46,6 +46,17 @@ public abstract class EmbedContentResponse extends JsonSerializable {
   @JsonProperty("metadata")
   public abstract Optional<EmbedContentMetadata> metadata();
 
+  /**
+   * Whether the input content was truncated before generating the embedding. This field is not
+   * supported in Gemini API.
+   */
+  @JsonProperty("truncated")
+  public abstract Optional<Boolean> truncated();
+
+  /** Usage metadata about the response(s). */
+  @JsonProperty("usageMetadata")
+  public abstract Optional<UsageMetadata> usageMetadata();
+
   /** Instantiates a builder for EmbedContentResponse. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -162,6 +173,53 @@ public abstract class EmbedContentResponse extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMetadata() {
       return metadata(Optional.empty());
+    }
+
+    /**
+     * Setter for truncated.
+     *
+     * <p>truncated: Whether the input content was truncated before generating the embedding. This
+     * field is not supported in Gemini API.
+     */
+    @JsonProperty("truncated")
+    public abstract Builder truncated(boolean truncated);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder truncated(Optional<Boolean> truncated);
+
+    /** Clears the value of truncated field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTruncated() {
+      return truncated(Optional.empty());
+    }
+
+    /**
+     * Setter for usageMetadata.
+     *
+     * <p>usageMetadata: Usage metadata about the response(s).
+     */
+    @JsonProperty("usageMetadata")
+    public abstract Builder usageMetadata(UsageMetadata usageMetadata);
+
+    /**
+     * Setter for usageMetadata builder.
+     *
+     * <p>usageMetadata: Usage metadata about the response(s).
+     */
+    @CanIgnoreReturnValue
+    public Builder usageMetadata(UsageMetadata.Builder usageMetadataBuilder) {
+      return usageMetadata(usageMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder usageMetadata(Optional<UsageMetadata> usageMetadata);
+
+    /** Clears the value of usageMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUsageMetadata() {
+      return usageMetadata(Optional.empty());
     }
 
     public abstract EmbedContentResponse build();
