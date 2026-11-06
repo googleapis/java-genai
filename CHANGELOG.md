@@ -5,8 +5,34 @@
 
 ### ⚠ BREAKING CHANGES
 
-* **interactions:** In the typed SDKs, `CodeExecutionResultStep.result` changes from `string` to the `CodeExecutionResultStepResult` union. Code that reads `result` as a string must now check which variant is present and read the string from it. The JSON for text-only results is unchanged.
-* default Gemini API version to v1 instead of v1beta across SDKs
+* **Default Gemini Developer API version is now `v1` (was `v1beta`)** ([88bc413](https://github.com/googleapis/java-genai/commit/88bc413b83d969a04f9677d1d6024b453eb90720))
+  * Clients targeting the **Gemini Developer API** now default to API version `v1` instead of `v1beta`.
+  * **No effect on Gemini Enterprise Agent Platform (Vertex AI) defaults:** Clients with `.vertexAI(true)` are **unaffected** by this default change and continue to default to `v1beta1`.
+  * **How to configure or restore the previous default via environment variable:** Set `GOOGLE_GENAI_API_VERSION` (works for both Gemini Developer API and Enterprise / Vertex AI clients when no version is set in code):
+    ```bash
+    # Restores the beta default ('v1beta' on Gemini Developer API, 'v1beta1' on Enterprise / Vertex AI)
+    export GOOGLE_GENAI_API_VERSION=beta
+
+    # Or set an explicit API version string on either platform (e.g. 'v1', 'v1beta', 'v1beta1')
+    export GOOGLE_GENAI_API_VERSION=v1beta
+    ```
+  * **How to set the API version in code:** Pass `HttpOptions` when building the `Client` (takes precedence over `GOOGLE_GENAI_API_VERSION`):
+    ```java
+    import com.google.genai.Client;
+    import com.google.genai.types.HttpOptions;
+
+    Client client =
+        Client.builder()
+            .httpOptions(HttpOptions.builder().apiVersion("v1beta").build())
+            .build();
+    ```
+
+* **interactions:** `CodeExecutionResultStep.result` changed from `String` to the `CodeExecutionResultStepResult` union ([e551d17](https://github.com/googleapis/java-genai/commit/e551d17cfbb37e9f38e73edbd65683497e83b73e))
+  * The wire JSON for text-only results is unchanged, but Java code constructing or reading `CodeExecutionResultStep.result()` must now use `CodeExecutionResultStepResult`:
+    * **Constructing:** Use `CodeExecutionResultStepResult.of("...")` (or `CodeExecutionResultStepResult.of(contentList)` for multimodal outputs).
+    * **Reading:** Use `step.result().flatMap(CodeExecutionResultStepResult::string)` for a string result, or `step.result().flatMap(CodeExecutionResultStepResult::arrayOfContent)` for multimodal `List<Content>` output.
+
+    
 
 ### Features
 
