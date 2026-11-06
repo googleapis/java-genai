@@ -21,12 +21,18 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.SecuritySource;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import com.google.genai.gaos.models.shared.Security;
 import com.google.genai.gaos.utils.AsyncHooks;
+import com.google.genai.gaos.utils.Headers;
 import com.google.genai.gaos.utils.Hook;
 import com.google.genai.gaos.utils.Hooks;
 import com.google.genai.gaos.utils.transport.HttpRequest;
+import com.google.genai.gaos.utils.transport.HttpResponse;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -193,5 +199,44 @@ public final class SdkHooksTest {
     HttpRequest asyncPreset = asyncHooks.beforeRequest(context, presetRequest).get();
     assertEquals(
         "override-project", asyncPreset.headers().firstValue("x-goog-user-project").orElse(null));
+  }
+
+  private GaosApiException errorFromBody(int code, String json) {
+    byte[] body = json.getBytes(StandardCharsets.UTF_8);
+    HttpResponse<InputStream> rawResponse =
+        new HttpResponse<>(createBaseRequest(), code, new Headers(), new ByteArrayInputStream(body));
+    return new GaosApiException("API error occurred", code, body, rawResponse, null);
+  }
+
+  @Test
+  public void testGaosApiExceptionUsesInteractionsErrorBody() {
+    // Shape returned by the live Interactions-family endpoints: string `code`, no `status`.
+    GaosApiException ex =
+        errorFromBody(
+            400, "{\"error\":{\"message\":\"Model name cannot be empty.\",\"code\":\"invalid_request\"}}");
+
+    assertEquals(400, ex.code());
+    assertEquals("invalid_request", ex.status());
+    assertEquals("400 invalid_request. Model name cannot be empty.", ex.getMessage());
+  }
+
+  @Test
+  public void testGaosApiExceptionUsesOnePlatformErrorBody() {
+    GaosApiException ex =
+        errorFromBody(
+            400,
+            "{\"error\":{\"code\":400,\"message\":\"Bad thing\",\"status\":\"INVALID_ARGUMENT\"}}");
+
+    assertEquals("INVALID_ARGUMENT", ex.status());
+    assertEquals("400 INVALID_ARGUMENT. Bad thing", ex.getMessage());
+  }
+
+  @Test
+  public void testGaosApiExceptionFallsBackForNonJsonBody() {
+    GaosApiException ex = errorFromBody(502, "<html>Bad Gateway</html>");
+
+    assertEquals(502, ex.code());
+    assertEquals("", ex.status());
+    assertEquals("502 . API error occurred", ex.getMessage());
   }
 }
