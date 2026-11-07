@@ -41,7 +41,11 @@ public abstract class VoiceConfig extends JsonSerializable {
   @JsonProperty("prebuiltVoiceConfig")
   public abstract Optional<PrebuiltVoiceConfig> prebuiltVoiceConfig();
 
-  /** The speaker identifier for synthesis. */
+  /**
+   * Optional. The speaker identifier for synthesis. Supported formats: * Speaker name for prebuilt
+   * voices (for example, `Orus` or `Kore`). * Voice ID for stored voices (for example,
+   * `voice_xxx`). * Voice replication key (for example, `voicekey_xxx`).
+   */
   @JsonProperty("voice")
   public abstract Optional<String> voice();
 
@@ -127,7 +131,9 @@ public abstract class VoiceConfig extends JsonSerializable {
     /**
      * Setter for voice.
      *
-     * <p>voice: The speaker identifier for synthesis.
+     * <p>voice: Optional. The speaker identifier for synthesis. Supported formats: * Speaker name
+     * for prebuilt voices (for example, `Orus` or `Kore`). * Voice ID for stored voices (for
+     * example, `voice_xxx`). * Voice replication key (for example, `voicekey_xxx`).
      */
     @JsonProperty("voice")
     public abstract Builder voice(String voice);

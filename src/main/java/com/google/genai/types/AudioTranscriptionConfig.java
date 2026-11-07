@@ -54,24 +54,24 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
   public abstract Optional<LanguageHints> languageHints();
 
   /**
-   * A list of custom vocabulary phrases, which biases the ASR model to improve recognition of these
-   * specific terms.
+   * Optional. A list of custom vocabulary phrases to bias the speech recognition model toward
+   * recognizing specific terms.
    */
   @JsonProperty("customVocabulary")
   public abstract Optional<List<String>> customVocabulary();
 
   /**
-   * Deprecated. A list of phrases used for speech adaptation, which biases the ASR model to improve
-   * recognition of these specific terms.
+   * Optional. Deprecated: Use `custom_vocabulary` instead. A list of phrases to bias the speech
+   * recognition model towards.
    */
   @JsonProperty("adaptationPhrases")
   public abstract Optional<List<String>> adaptationPhrases();
 
-  /** Configures speaker diarization. */
+  /** Optional. Configures speaker diarization. */
   @JsonProperty("diarization")
   public abstract Optional<Boolean> diarization();
 
-  /** Configures word-level timestamp generation. */
+  /** Optional. Configures word-level timestamp generation. */
   @JsonProperty("wordTimestamp")
   public abstract Optional<Boolean> wordTimestamp();
 
@@ -204,8 +204,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for customVocabulary.
      *
-     * <p>customVocabulary: A list of custom vocabulary phrases, which biases the ASR model to
-     * improve recognition of these specific terms.
+     * <p>customVocabulary: Optional. A list of custom vocabulary phrases to bias the speech
+     * recognition model toward recognizing specific terms.
      */
     @JsonProperty("customVocabulary")
     public abstract Builder customVocabulary(List<String> customVocabulary);
@@ -213,8 +213,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for customVocabulary.
      *
-     * <p>customVocabulary: A list of custom vocabulary phrases, which biases the ASR model to
-     * improve recognition of these specific terms.
+     * <p>customVocabulary: Optional. A list of custom vocabulary phrases to bias the speech
+     * recognition model toward recognizing specific terms.
      */
     @CanIgnoreReturnValue
     public Builder customVocabulary(String... customVocabulary) {
@@ -234,8 +234,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for adaptationPhrases.
      *
-     * <p>adaptationPhrases: Deprecated. A list of phrases used for speech adaptation, which biases
-     * the ASR model to improve recognition of these specific terms.
+     * <p>adaptationPhrases: Optional. Deprecated: Use `custom_vocabulary` instead. A list of
+     * phrases to bias the speech recognition model towards.
      */
     @JsonProperty("adaptationPhrases")
     public abstract Builder adaptationPhrases(List<String> adaptationPhrases);
@@ -243,8 +243,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for adaptationPhrases.
      *
-     * <p>adaptationPhrases: Deprecated. A list of phrases used for speech adaptation, which biases
-     * the ASR model to improve recognition of these specific terms.
+     * <p>adaptationPhrases: Optional. Deprecated: Use `custom_vocabulary` instead. A list of
+     * phrases to bias the speech recognition model towards.
      */
     @CanIgnoreReturnValue
     public Builder adaptationPhrases(String... adaptationPhrases) {
@@ -264,7 +264,7 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for diarization.
      *
-     * <p>diarization: Configures speaker diarization.
+     * <p>diarization: Optional. Configures speaker diarization.
      */
     @JsonProperty("diarization")
     public abstract Builder diarization(boolean diarization);
@@ -282,7 +282,7 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for wordTimestamp.
      *
-     * <p>wordTimestamp: Configures word-level timestamp generation.
+     * <p>wordTimestamp: Optional. Configures word-level timestamp generation.
      */
     @JsonProperty("wordTimestamp")
     public abstract Builder wordTimestamp(boolean wordTimestamp);

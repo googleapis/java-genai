@@ -31,8 +31,10 @@ import java.util.Optional;
 @JsonDeserialize(builder = ThinkingConfig.Builder.class)
 public abstract class ThinkingConfig extends JsonSerializable {
   /**
-   * Indicates whether to include thoughts in the response. If true, thoughts are returned only if
-   * the model supports thought and thoughts are available.
+   * Optional. If true, the model will include its thoughts in the response. "Thoughts" are the
+   * intermediate steps the model takes to arrive at the final response. They can provide insights
+   * into the model's reasoning process and help with debugging. If this is true, thoughts are
+   * returned only when available.
    */
   @JsonProperty("includeThoughts")
   public abstract Optional<Boolean> includeThoughts();
@@ -69,8 +71,10 @@ public abstract class ThinkingConfig extends JsonSerializable {
     /**
      * Setter for includeThoughts.
      *
-     * <p>includeThoughts: Indicates whether to include thoughts in the response. If true, thoughts
-     * are returned only if the model supports thought and thoughts are available.
+     * <p>includeThoughts: Optional. If true, the model will include its thoughts in the response.
+     * "Thoughts" are the intermediate steps the model takes to arrive at the final response. They
+     * can provide insights into the model's reasoning process and help with debugging. If this is
+     * true, thoughts are returned only when available.
      */
     @JsonProperty("includeThoughts")
     public abstract Builder includeThoughts(boolean includeThoughts);

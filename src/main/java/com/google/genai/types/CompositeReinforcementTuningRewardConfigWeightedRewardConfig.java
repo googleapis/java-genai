@@ -26,7 +26,10 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Composite reinforcement tuning reward config weighted reward config. */
+/**
+ * Reward function configuration with a weight. The weight is used to combine the reward with other
+ * rewards. This data type is not supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(
     builder = CompositeReinforcementTuningRewardConfigWeightedRewardConfig.Builder.class)

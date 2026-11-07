@@ -37,7 +37,7 @@ public abstract class SpeechMetadata extends JsonSerializable {
   @JsonProperty("speaker")
   public abstract Optional<String> speaker();
 
-  /** The style instruction for how the voice should be synthesized (e.g. "excited, fast-paced"). */
+  /** Optional. Natural language description of the vocal style (e.g., "cheerful"). */
   @JsonProperty("style")
   public abstract Optional<String> style();
 
@@ -81,8 +81,7 @@ public abstract class SpeechMetadata extends JsonSerializable {
     /**
      * Setter for style.
      *
-     * <p>style: The style instruction for how the voice should be synthesized (e.g. "excited,
-     * fast-paced").
+     * <p>style: Optional. Natural language description of the vocal style (e.g., "cheerful").
      */
     @JsonProperty("style")
     public abstract Builder style(String style);
