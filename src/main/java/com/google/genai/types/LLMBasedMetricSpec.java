@@ -35,11 +35,11 @@ public abstract class LLMBasedMetricSpec extends JsonSerializable {
   @JsonProperty("metricPromptTemplate")
   public abstract Optional<String> metricPromptTemplate();
 
-  /** System instruction for the judge model. */
+  /** Optional. System instructions for the judge model. */
   @JsonProperty("systemInstruction")
   public abstract Optional<String> systemInstruction();
 
-  /** Optional configuration for the judge LLM (Autorater). */
+  /** Optional. Optional configuration for the judge LLM (Autorater). */
   @JsonProperty("judgeAutoraterConfig")
   public abstract Optional<AutoraterConfig> judgeAutoraterConfig();
 
@@ -105,7 +105,7 @@ public abstract class LLMBasedMetricSpec extends JsonSerializable {
     /**
      * Setter for systemInstruction.
      *
-     * <p>systemInstruction: System instruction for the judge model.
+     * <p>systemInstruction: Optional. System instructions for the judge model.
      */
     @JsonProperty("systemInstruction")
     public abstract Builder systemInstruction(String systemInstruction);
@@ -123,7 +123,7 @@ public abstract class LLMBasedMetricSpec extends JsonSerializable {
     /**
      * Setter for judgeAutoraterConfig.
      *
-     * <p>judgeAutoraterConfig: Optional configuration for the judge LLM (Autorater).
+     * <p>judgeAutoraterConfig: Optional. Optional configuration for the judge LLM (Autorater).
      */
     @JsonProperty("judgeAutoraterConfig")
     public abstract Builder judgeAutoraterConfig(AutoraterConfig judgeAutoraterConfig);
@@ -131,7 +131,7 @@ public abstract class LLMBasedMetricSpec extends JsonSerializable {
     /**
      * Setter for judgeAutoraterConfig builder.
      *
-     * <p>judgeAutoraterConfig: Optional configuration for the judge LLM (Autorater).
+     * <p>judgeAutoraterConfig: Optional. Optional configuration for the judge LLM (Autorater).
      */
     @CanIgnoreReturnValue
     public Builder judgeAutoraterConfig(AutoraterConfig.Builder judgeAutoraterConfigBuilder) {

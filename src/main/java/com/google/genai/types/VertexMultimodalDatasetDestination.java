@@ -38,7 +38,7 @@ public abstract class VertexMultimodalDatasetDestination extends JsonSerializabl
   @JsonProperty("bigqueryDestination")
   public abstract Optional<String> bigqueryDestination();
 
-  /** The display name of the multimodal dataset. */
+  /** Optional. Display name of the output dataset. */
   @JsonProperty("displayName")
   public abstract Optional<String> displayName();
 
@@ -84,7 +84,7 @@ public abstract class VertexMultimodalDatasetDestination extends JsonSerializabl
     /**
      * Setter for displayName.
      *
-     * <p>displayName: The display name of the multimodal dataset.
+     * <p>displayName: Optional. Display name of the output dataset.
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);

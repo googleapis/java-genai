@@ -53,15 +53,21 @@ public abstract class GroundingMetadata extends JsonSerializable {
   @JsonProperty("groundingSupports")
   public abstract Optional<List<GroundingSupport>> groundingSupports();
 
-  /** Metadata related to retrieval in the grounding flow. */
+  /** Optional. Output only. Metadata related to the retrieval grounding source. */
   @JsonProperty("retrievalMetadata")
   public abstract Optional<RetrievalMetadata> retrievalMetadata();
 
-  /** Optional. Google search entry for the following-up web searches. */
+  /**
+   * Optional. A web search entry point that can be used to display search results. This field is
+   * populated only when the grounding source is Google Search.
+   */
   @JsonProperty("searchEntryPoint")
   public abstract Optional<SearchEntryPoint> searchEntryPoint();
 
-  /** Web search queries for the following-up web search. */
+  /**
+   * Optional. The web search queries that were used to generate the content. This field is
+   * populated only when the grounding source is Google Search.
+   */
   @JsonProperty("webSearchQueries")
   public abstract Optional<List<String>> webSearchQueries();
 
@@ -231,7 +237,8 @@ public abstract class GroundingMetadata extends JsonSerializable {
     /**
      * Setter for retrievalMetadata.
      *
-     * <p>retrievalMetadata: Metadata related to retrieval in the grounding flow.
+     * <p>retrievalMetadata: Optional. Output only. Metadata related to the retrieval grounding
+     * source.
      */
     @JsonProperty("retrievalMetadata")
     public abstract Builder retrievalMetadata(RetrievalMetadata retrievalMetadata);
@@ -239,7 +246,8 @@ public abstract class GroundingMetadata extends JsonSerializable {
     /**
      * Setter for retrievalMetadata builder.
      *
-     * <p>retrievalMetadata: Metadata related to retrieval in the grounding flow.
+     * <p>retrievalMetadata: Optional. Output only. Metadata related to the retrieval grounding
+     * source.
      */
     @CanIgnoreReturnValue
     public Builder retrievalMetadata(RetrievalMetadata.Builder retrievalMetadataBuilder) {
@@ -259,7 +267,8 @@ public abstract class GroundingMetadata extends JsonSerializable {
     /**
      * Setter for searchEntryPoint.
      *
-     * <p>searchEntryPoint: Optional. Google search entry for the following-up web searches.
+     * <p>searchEntryPoint: Optional. A web search entry point that can be used to display search
+     * results. This field is populated only when the grounding source is Google Search.
      */
     @JsonProperty("searchEntryPoint")
     public abstract Builder searchEntryPoint(SearchEntryPoint searchEntryPoint);
@@ -267,7 +276,8 @@ public abstract class GroundingMetadata extends JsonSerializable {
     /**
      * Setter for searchEntryPoint builder.
      *
-     * <p>searchEntryPoint: Optional. Google search entry for the following-up web searches.
+     * <p>searchEntryPoint: Optional. A web search entry point that can be used to display search
+     * results. This field is populated only when the grounding source is Google Search.
      */
     @CanIgnoreReturnValue
     public Builder searchEntryPoint(SearchEntryPoint.Builder searchEntryPointBuilder) {
@@ -287,7 +297,8 @@ public abstract class GroundingMetadata extends JsonSerializable {
     /**
      * Setter for webSearchQueries.
      *
-     * <p>webSearchQueries: Web search queries for the following-up web search.
+     * <p>webSearchQueries: Optional. The web search queries that were used to generate the content.
+     * This field is populated only when the grounding source is Google Search.
      */
     @JsonProperty("webSearchQueries")
     public abstract Builder webSearchQueries(List<String> webSearchQueries);
@@ -295,7 +306,8 @@ public abstract class GroundingMetadata extends JsonSerializable {
     /**
      * Setter for webSearchQueries.
      *
-     * <p>webSearchQueries: Web search queries for the following-up web search.
+     * <p>webSearchQueries: Optional. The web search queries that were used to generate the content.
+     * This field is populated only when the grounding source is Google Search.
      */
     @CanIgnoreReturnValue
     public Builder webSearchQueries(String... webSearchQueries) {

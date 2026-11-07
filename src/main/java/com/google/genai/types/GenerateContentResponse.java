@@ -51,7 +51,10 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   @JsonProperty("candidates")
   public abstract Optional<List<Candidate>> candidates();
 
-  /** Timestamp when the request is made to the server. */
+  /**
+   * Output only. Timestamp when the request is made to the server. This field is not supported in
+   * Gemini API.
+   */
   @JsonProperty("createTime")
   public abstract Optional<Instant> createTime();
 
@@ -176,7 +179,8 @@ public abstract class GenerateContentResponse extends JsonSerializable {
     /**
      * Setter for createTime.
      *
-     * <p>createTime: Timestamp when the request is made to the server.
+     * <p>createTime: Output only. Timestamp when the request is made to the server. This field is
+     * not supported in Gemini API.
      */
     @JsonProperty("createTime")
     public abstract Builder createTime(Instant createTime);
