@@ -40,6 +40,7 @@ public class ThinkingLevel {
     public static final ThinkingLevel LOW = new ThinkingLevel("low");
     public static final ThinkingLevel MEDIUM = new ThinkingLevel("medium");
     public static final ThinkingLevel HIGH = new ThinkingLevel("high");
+    public static final ThinkingLevel XHIGH = new ThinkingLevel("xhigh");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -117,6 +118,7 @@ public class ThinkingLevel {
         map.put("low", LOW);
         map.put("medium", MEDIUM);
         map.put("high", HIGH);
+        map.put("xhigh", XHIGH);
         return map;
     }
 
@@ -126,6 +128,7 @@ public class ThinkingLevel {
         map.put("low", ThinkingLevelEnum.LOW);
         map.put("medium", ThinkingLevelEnum.MEDIUM);
         map.put("high", ThinkingLevelEnum.HIGH);
+        map.put("xhigh", ThinkingLevelEnum.XHIGH);
         return map;
     }
     
@@ -135,7 +138,8 @@ public class ThinkingLevel {
         MINIMAL("minimal"),
         LOW("low"),
         MEDIUM("medium"),
-        HIGH("high"),;
+        HIGH("high"),
+        XHIGH("xhigh"),;
 
         private final String value;
 
