@@ -1,5 +1,71 @@
 # Changelog
 
+## [2.0.0](https://github.com/googleapis/java-genai/compare/v1.80.0...v2.0.0) (2026-11-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **Default Gemini Developer API version is now `v1` (was `v1beta`)** ([88bc413](https://github.com/googleapis/java-genai/commit/88bc413b83d969a04f9677d1d6024b453eb90720))
+  * Clients targeting the **Gemini Developer API** now default to API version `v1` instead of `v1beta`.
+  * **No effect on Gemini Enterprise (Vertex AI) defaults:** Clients with `.vertexAI(true)` are **unaffected** by this default change and continue to default to `v1beta1`.
+  * **How to configure or restore the previous default via environment variable:** Set `GOOGLE_GENAI_API_VERSION` (works for both Gemini Developer API and Enterprise / Vertex AI clients when no version is set in code):
+    ```bash
+    # Restores the beta default ('v1beta' on Gemini Developer API, 'v1beta1' on Enterprise / Vertex AI)
+    export GOOGLE_GENAI_API_VERSION=beta
+
+    # Or set an explicit API version string on either platform (e.g. 'v1', 'v1beta', 'v1beta1')
+    export GOOGLE_GENAI_API_VERSION=v1beta
+    ```
+  * **How to set the API version in code:** Pass `HttpOptions` when building the `Client` (takes precedence over `GOOGLE_GENAI_API_VERSION`):
+    ```java
+    import com.google.genai.Client;
+    import com.google.genai.types.HttpOptions;
+
+    Client client =
+        Client.builder()
+            .httpOptions(HttpOptions.builder().apiVersion("v1beta").build())
+            .build();
+    ```
+
+* **interactions:** `CodeExecutionResultStep.result` changed from `String` to the `CodeExecutionResultStepResult` union ([e551d17](https://github.com/googleapis/java-genai/commit/e551d17cfbb37e9f38e73edbd65683497e83b73e))
+  * The wire JSON for text-only results is unchanged, but Java code constructing or reading `CodeExecutionResultStep.result()` must now use `CodeExecutionResultStepResult`:
+    * **Constructing:** Use `CodeExecutionResultStepResult.of("...")` (or `CodeExecutionResultStepResult.of(contentList)` for multimodal outputs).
+    * **Reading:** Use `step.result().flatMap(CodeExecutionResultStepResult::string)` for a string result, or `step.result().flatMap(CodeExecutionResultStepResult::arrayOfContent)` for multimodal `List<Content>` output.
+
+    
+
+### Features
+
+* Add `source_text` to `AudioTranscriptionConfig` and `SmartTranscriptionMode`. ([04a5b93](https://github.com/googleapis/java-genai/commit/04a5b93ed28ae10a3c0b4a2bf45d695ae6d11f90))
+* Add MALFORMED_RESPONSE to FinishReason ([f96561b](https://github.com/googleapis/java-genai/commit/f96561b3a9cf814c9a65873573fe133d4a589745)), refs [#2937](https://github.com/googleapis/java-genai/issues/2937)
+* **cli:** use gemini-3.5-transcribe as default model for transcribe command ([bc3779f](https://github.com/googleapis/java-genai/commit/bc3779fb69dc1946ee19b6a375253bde23c80db9))
+* default Gemini API version to v1 instead of v1beta across SDKs ([88bc413](https://github.com/googleapis/java-genai/commit/88bc413b83d969a04f9677d1d6024b453eb90720))
+* Disable GenerateVideos for Gemini API, update tests/READMEs ([30cb945](https://github.com/googleapis/java-genai/commit/30cb9455fe107147d24a5304bc9d7c24a0013771))
+* **interactions:** add Office and OpenDocument MIME types ([e8448b2](https://github.com/googleapis/java-genai/commit/e8448b2de3b7f4929b2228b1d014d9385ded0c7a))
+* **interactions:** support multimodal content in CodeExecutionResultStep.result ([e551d17](https://github.com/googleapis/java-genai/commit/e551d17cfbb37e9f38e73edbd65683497e83b73e))
+* support GOOGLE_GENAI_API_VERSION environment variable across SDKs ([88bc413](https://github.com/googleapis/java-genai/commit/88bc413b83d969a04f9677d1d6024b453eb90720))
+* update discovery doc ([9bd8ae3](https://github.com/googleapis/java-genai/commit/9bd8ae3fdb974845710493a1f38d5eeef4f993c5))
+
+
+### Bug Fixes
+
+* refresh the access token on every HTTP attempt so retries and queued async calls do not send an expired token ([eb3a674](https://github.com/googleapis/java-genai/commit/eb3a674362ed5a4e34948c174d728a88b87ca7a0))
+* refresh the access token on every HTTP attempt so retries and queued async calls do not send an expired token ([673ef4c](https://github.com/googleapis/java-genai/commit/673ef4c5957cf465ae59ccc40b1e7ea101484d87))
+* refresh the access token on every HTTP attempt so retries and queued async calls do not send an expired token ([7d4a83a](https://github.com/googleapis/java-genai/commit/7d4a83a36ff1134d1bbb7badeeed6bece98bbbb9))
+* respect configured and default API version for Gemini API file uploads across SDKs ([22ad0a9](https://github.com/googleapis/java-genai/commit/22ad0a9bdac4c2627f395da7066f7b75ac9fe825))
+* stop Vertex replay clients from fetching real OAuth tokens ([524d7c8](https://github.com/googleapis/java-genai/commit/524d7c8ca1ef0d8eb63efb11496f9b1a7499d489))
+
+
+### Documentation
+
+* clarify that ClientOptions.maxConnections and maxConnectionsPerHost only limit asynchronous requests ([e742930](https://github.com/googleapis/java-genai/commit/e742930fb116d4ea5849ed229f32d60c4d4ea648))
+* update remaining documentation links from ai.google.dev to aistudio.google.com. ([17d87f4](https://github.com/googleapis/java-genai/commit/17d87f431f895120f3510bd03015438a6baabfd6))
+
+
+### Miscellaneous Chores
+
+* set version to 2.0.0 ([6f06afe](https://github.com/googleapis/java-genai/commit/6f06afec98f22106db6b43b7bed1c94c312d5a65))
+
 ## [1.80.0](https://github.com/googleapis/java-genai/compare/v1.79.0...v1.80.0) (2026-10-29)
 
 
