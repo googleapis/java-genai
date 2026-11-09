@@ -16,7 +16,11 @@
 
 package com.google.genai;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -26,19 +30,29 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.genai.types.ClientOptions;
 import com.google.genai.types.Content;
 import com.google.genai.types.FunctionDeclaration;
 import com.google.genai.types.HttpOptions;
+import com.google.genai.types.HttpRetryOptions;
 import com.google.genai.types.LiveClientContextUpdate;
 import com.google.genai.types.LiveClientContextUpdateTools;
+import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.Part;
+import com.google.genai.types.ResourceScope;
 import com.google.genai.types.Tool;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.LinkedBlockingQueue;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -62,11 +76,13 @@ public class AsyncLiveTest {
     when(apiClient.project()).thenReturn(null);
     when(apiClient.location()).thenReturn(null);
     when(apiClient.apiKey()).thenReturn(null);
-    when(apiClient.httpOptions()).thenReturn(HttpOptions.builder().baseUrl("https://my-custom-endpoint.com").build());
+    when(apiClient.httpOptions())
+        .thenReturn(HttpOptions.builder().baseUrl("https://my-custom-endpoint.com").build());
 
-    Method getWebSocketUri = AsyncLive.class.getDeclaredMethod("getWebSocketUri");
+    Method getWebSocketUri =
+        AsyncLive.class.getDeclaredMethod("getWebSocketUri", HttpOptions.class);
     getWebSocketUri.setAccessible(true);
-    URI uri = (URI) getWebSocketUri.invoke(asyncLive);
+    URI uri = (URI) getWebSocketUri.invoke(asyncLive, apiClient.httpOptions());
 
     assertEquals("wss://my-custom-endpoint.com", uri.toString());
   }
@@ -74,16 +90,19 @@ public class AsyncLiveTest {
   @Test
   public void testGetWebSocketHeaders_VertexQuotaProject() throws Exception {
     GoogleCredentials credentials = mock(GoogleCredentials.class);
-    when(credentials.getAccessToken()).thenReturn(AccessToken.newBuilder().setTokenValue("test-token").build());
+    when(credentials.getAccessToken())
+        .thenReturn(AccessToken.newBuilder().setTokenValue("test-token").build());
     when(credentials.getQuotaProjectId()).thenReturn("test-quota-project");
 
     when(apiClient.vertexAI()).thenReturn(true);
     when(apiClient.credentials()).thenReturn(credentials);
     when(apiClient.httpOptions()).thenReturn(HttpOptions.builder().build());
 
-    Method getWebSocketHeaders = AsyncLive.class.getDeclaredMethod("getWebSocketHeaders");
+    Method getWebSocketHeaders =
+        AsyncLive.class.getDeclaredMethod("getWebSocketHeaders", HttpOptions.class);
     getWebSocketHeaders.setAccessible(true);
-    Map<String, String> headers = (Map<String, String>) getWebSocketHeaders.invoke(asyncLive);
+    Map<String, String> headers =
+        (Map<String, String>) getWebSocketHeaders.invoke(asyncLive, apiClient.httpOptions());
 
     assertEquals("Bearer test-token", headers.get("Authorization"));
     assertEquals("test-quota-project", headers.get("x-goog-user-project"));
@@ -96,9 +115,11 @@ public class AsyncLiveTest {
     when(apiClient.credentials()).thenReturn(null);
     when(apiClient.httpOptions()).thenReturn(HttpOptions.builder().build());
 
-    Method getWebSocketHeaders = AsyncLive.class.getDeclaredMethod("getWebSocketHeaders");
+    Method getWebSocketHeaders =
+        AsyncLive.class.getDeclaredMethod("getWebSocketHeaders", HttpOptions.class);
     getWebSocketHeaders.setAccessible(true);
-    Map<String, String> headers = (Map<String, String>) getWebSocketHeaders.invoke(asyncLive);
+    Map<String, String> headers =
+        (Map<String, String>) getWebSocketHeaders.invoke(asyncLive, apiClient.httpOptions());
 
     assertEquals("vertex-api-key", headers.get("x-goog-api-key"));
   }
@@ -112,9 +133,10 @@ public class AsyncLiveTest {
         .apiVersion("v1alpha")
         .build());
 
-    Method getWebSocketUri = AsyncLive.class.getDeclaredMethod("getWebSocketUri");
+    Method getWebSocketUri =
+        AsyncLive.class.getDeclaredMethod("getWebSocketUri", HttpOptions.class);
     getWebSocketUri.setAccessible(true);
-    URI uri = (URI) getWebSocketUri.invoke(asyncLive);
+    URI uri = (URI) getWebSocketUri.invoke(asyncLive, apiClient.httpOptions());
 
     assertTrue(uri.toString().contains("BidiGenerateContentConstrained"));
     assertTrue(uri.toString().contains("v1alpha"));
@@ -128,9 +150,10 @@ public class AsyncLiveTest {
         .thenReturn(
             HttpOptions.builder().baseUrl("https://generativelanguage.googleapis.com").build());
 
-    Method getWebSocketUri = AsyncLive.class.getDeclaredMethod("getWebSocketUri");
+    Method getWebSocketUri =
+        AsyncLive.class.getDeclaredMethod("getWebSocketUri", HttpOptions.class);
     getWebSocketUri.setAccessible(true);
-    URI uri = (URI) getWebSocketUri.invoke(asyncLive);
+    URI uri = (URI) getWebSocketUri.invoke(asyncLive, apiClient.httpOptions());
 
     assertEquals(
         "wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage."
@@ -145,12 +168,162 @@ public class AsyncLiveTest {
     when(apiClient.apiKey()).thenReturn("auth_tokens/ephemeral-token");
     when(apiClient.httpOptions()).thenReturn(HttpOptions.builder().build());
 
-    Method getWebSocketHeaders = AsyncLive.class.getDeclaredMethod("getWebSocketHeaders");
+    Method getWebSocketHeaders =
+        AsyncLive.class.getDeclaredMethod("getWebSocketHeaders", HttpOptions.class);
     getWebSocketHeaders.setAccessible(true);
-    Map<String, String> headers = (Map<String, String>) getWebSocketHeaders.invoke(asyncLive);
+    Map<String, String> headers =
+        (Map<String, String>) getWebSocketHeaders.invoke(asyncLive, apiClient.httpOptions());
 
     assertEquals("Token auth_tokens/ephemeral-token", headers.get("Authorization"));
   }
+
+  @Test
+  public void testMergeHttpOptions_NoRequestHttpOptions_UsesClientHttpOptions() throws Exception {
+    HttpOptions clientHttpOptions = HttpOptions.builder().apiVersion("v1beta").build();
+    when(apiClient.httpOptions()).thenReturn(clientHttpOptions);
+
+    assertEquals(clientHttpOptions, invokeMergeHttpOptions(asyncLive, null));
+    assertEquals(
+        clientHttpOptions, invokeMergeHttpOptions(asyncLive, LiveConnectConfig.builder().build()));
+  }
+
+  @Test
+  public void testConnect_RequestHttpOptionsOverrideClientHttpOptions() throws Exception {
+    Request handshake =
+        liveHandshake(
+            Client.builder()
+                .apiKey("api-key")
+                .vertexAI(false)
+                .httpOptions(
+                    HttpOptions.builder()
+                        .headers(
+                            ImmutableMap.of("x-goog-api-client", "client-lib/1.0", "X-Client", "c"))
+                        .build()),
+            LiveConnectConfig.builder()
+                .httpOptions(
+                    HttpOptions.builder()
+                        .baseUrl("https://example.com")
+                        .apiVersion("v1alpha")
+                        .headers(
+                            ImmutableMap.of(
+                                "x-goog-api-client", "request-lib/2.0", "X-Request", "r"))
+                        .build())
+                .build());
+
+    assertEquals(
+        "https://example.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService"
+            + ".BidiGenerateContent",
+        handshake.url().toString());
+    String apiClientHeader = handshake.header("x-goog-api-client");
+    assertTrue(apiClientHeader.startsWith("google-genai-sdk/"), apiClientHeader);
+    assertTrue(apiClientHeader.endsWith(" client-lib/1.0 request-lib/2.0"), apiClientHeader);
+    assertEquals("c", handshake.header("X-Client"));
+    assertEquals("r", handshake.header("X-Request"));
+    assertEquals("api-key", handshake.header("x-goog-api-key"));
+  }
+
+  @Test
+  public void testConnect_VertexRequestHttpOptionsOverrideClientHttpOptions() throws Exception {
+    Request handshake =
+        liveHandshake(
+            Client.builder().apiKey("api-key").vertexAI(true),
+            LiveConnectConfig.builder()
+                .httpOptions(
+                    HttpOptions.builder()
+                        .apiVersion("v1")
+                        .headers(ImmutableMap.of("x-goog-api-client", "request-lib/2.0"))
+                        .build())
+                .build());
+
+    assertEquals(
+        "https://aiplatform.googleapis.com/ws/google.cloud.aiplatform.v1.LlmBidiService"
+            + "/BidiGenerateContent",
+        handshake.url().toString());
+    String apiClientHeader = handshake.header("x-goog-api-client");
+    assertTrue(apiClientHeader.startsWith("google-genai-sdk/"), apiClientHeader);
+    assertTrue(apiClientHeader.endsWith(" request-lib/2.0"), apiClientHeader);
+    assertEquals("api-key", handshake.header("x-goog-api-key"));
+  }
+
+  /**
+   * Connects through a client built by {@code clientBuilder} and returns the live handshake request
+   * it sent, which it then fails.
+   */
+  private static Request liveHandshake(Client.Builder clientBuilder, LiveConnectConfig config)
+      throws Exception {
+    BlockingQueue<Request> handshakes = new LinkedBlockingQueue<>();
+    OkHttpClient httpClient =
+        new OkHttpClient.Builder()
+            .addInterceptor(
+                chain -> {
+                  handshakes.add(chain.request());
+                  throw new IOException("Live handshake recorded");
+                })
+            .build();
+    try (Client client =
+        clientBuilder
+            .clientOptions(ClientOptions.builder().customHttpClient(httpClient).build())
+            .build()) {
+      CompletableFuture<AsyncSession> unusedSession =
+          client.async.live.connect("gemini-live", config);
+      Request handshake = handshakes.poll(10, SECONDS);
+      assertNotNull(handshake);
+      return handshake;
+    }
+  }
+
+  @Test
+  public void testConnect_RequestHttpOptionsAreNotSentInSetupRequest() throws Exception {
+    AsyncLive live =
+        new AsyncLive(
+            new HttpApiClient(Optional.of("api-key"), Optional.empty(), Optional.empty()));
+    LiveConnectConfig config =
+        LiveConnectConfig.builder()
+            .httpOptions(
+                HttpOptions.builder()
+                    .headers(ImmutableMap.of("x-goog-api-client", "request-lib/2.0"))
+                    .build())
+            .build();
+
+    Method getSetupRequest =
+        AsyncLive.class.getDeclaredMethod("getSetupRequest", String.class, LiveConnectConfig.class);
+    getSetupRequest.setAccessible(true);
+    String setupRequest = (String) getSetupRequest.invoke(live, "gemini-live", config);
+
+    assertFalse(setupRequest.contains("httpOptions"), setupRequest);
+    assertFalse(setupRequest.contains("request-lib"), setupRequest);
+  }
+
+  @Test
+  public void testConnect_UnsupportedRequestHttpOptions_Throws() {
+    LiveConnectConfig config =
+        LiveConnectConfig.builder()
+            .httpOptions(
+                HttpOptions.builder()
+                    .headers(ImmutableMap.of("X-Request", "r"))
+                    .baseUrlResourceScope(ResourceScope.Known.COLLECTION)
+                    .timeout(1000)
+                    .extraBody(ImmutableMap.of("key", "value"))
+                    .retryOptions(HttpRetryOptions.builder().attempts(2).build())
+                    .build())
+            .build();
+
+    IllegalArgumentException e =
+        assertThrows(IllegalArgumentException.class, () -> asyncLive.connect("model", config));
+
+    assertTrue(
+        e.getMessage().endsWith("but got: baseUrlResourceScope, timeout, extraBody, retryOptions."),
+        e.getMessage());
+  }
+
+  private static HttpOptions invokeMergeHttpOptions(AsyncLive live, LiveConnectConfig config)
+      throws Exception {
+    Method mergeHttpOptions =
+        AsyncLive.class.getDeclaredMethod("mergeHttpOptions", LiveConnectConfig.class);
+    mergeHttpOptions.setAccessible(true);
+    return (HttpOptions) mergeHttpOptions.invoke(live, config);
+  }
+
   @Test
   public void testOnMessage_PopulatesSetupCompleteWithVoiceConsent() throws Exception {
     CompletableFuture<AsyncSession> future = new CompletableFuture<>();
@@ -170,7 +343,8 @@ public class AsyncLiveTest {
     assertTrue(session != null);
     assertTrue(session.setupComplete() != null);
     assertTrue(session.setupComplete().voiceConsentSignature().isPresent());
-    assertEquals("test_sig", session.setupComplete().voiceConsentSignature().get().signature().get());
+    assertEquals(
+        "test_sig", session.setupComplete().voiceConsentSignature().get().signature().get());
   }
 
   @ParameterizedTest
