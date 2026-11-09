@@ -1189,6 +1189,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"metadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"usageMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"usageMetadata"}));
+    }
+
     return toObject;
   }
 
@@ -1222,6 +1229,24 @@ public final class Models {
           toObject,
           new String[] {"metadata"},
           Common.getValueByPath(fromObject, new String[] {"metadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"truncated"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"truncated"},
+          Common.getValueByPath(fromObject, new String[] {"truncated"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"usageMetadata"},
+          usageMetadataFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"usageMetadata"})),
+              toObject,
+              rootObject));
     }
 
     if (rootObject != null
@@ -5027,6 +5052,90 @@ public final class Models {
             generatedImageFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode usageMetadataFromVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"promptTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"promptTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"promptTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"cachedContentTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"cachedContentTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"cachedContentTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"candidatesTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"candidatesTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolUsePromptTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolUsePromptTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"toolUsePromptTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtsTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtsTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtsTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"totalTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"totalTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"totalTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"promptTokensDetails"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"promptTokensDetails"},
+          Common.getValueByPath(fromObject, new String[] {"promptTokensDetails"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"cacheTokensDetails"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"cacheTokensDetails"},
+          Common.getValueByPath(fromObject, new String[] {"cacheTokensDetails"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"candidatesTokensDetails"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseTokensDetails"},
+          Common.getValueByPath(fromObject, new String[] {"candidatesTokensDetails"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolUsePromptTokensDetails"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolUsePromptTokensDetails"},
+          Common.getValueByPath(fromObject, new String[] {"toolUsePromptTokensDetails"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"trafficType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"trafficType"},
+          Common.getValueByPath(fromObject, new String[] {"trafficType"}));
     }
 
     return toObject;
