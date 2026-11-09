@@ -38,6 +38,14 @@ public abstract class ProactivityConfig extends JsonSerializable {
   @JsonProperty("proactiveAudio")
   public abstract Optional<Boolean> proactiveAudio();
 
+  /**
+   * If enabled, the system might trigger a generation on each received image. This requires that
+   * `proactive_audio` is enabled. The rate of generation depends on the rate of incoming images and
+   * can cause a significant increase in cost.
+   */
+  @JsonProperty("proactiveVideo")
+  public abstract Optional<Boolean> proactiveVideo();
+
   /** Instantiates a builder for ProactivityConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -74,6 +82,26 @@ public abstract class ProactivityConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearProactiveAudio() {
       return proactiveAudio(Optional.empty());
+    }
+
+    /**
+     * Setter for proactiveVideo.
+     *
+     * <p>proactiveVideo: If enabled, the system might trigger a generation on each received image.
+     * This requires that `proactive_audio` is enabled. The rate of generation depends on the rate
+     * of incoming images and can cause a significant increase in cost.
+     */
+    @JsonProperty("proactiveVideo")
+    public abstract Builder proactiveVideo(boolean proactiveVideo);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder proactiveVideo(Optional<Boolean> proactiveVideo);
+
+    /** Clears the value of proactiveVideo field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearProactiveVideo() {
+      return proactiveVideo(Optional.empty());
     }
 
     public abstract ProactivityConfig build();
