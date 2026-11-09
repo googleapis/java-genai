@@ -55,7 +55,7 @@ public abstract class HttpOptions extends JsonSerializable {
    * Extra parameters to add to the request body. The structure must match the backend API's request
    * structure. - Gemini Enterprise Agent Platform backend API docs:
    * https://cloud.google.com/vertex-ai/docs/reference/rest - GeminiAPI backend API docs:
-   * https://ai.google.dev/api/rest
+   * https://aistudio.google.com/api-reference
    */
   @JsonProperty("extraBody")
   public abstract Optional<Map<String, Object>> extraBody();
@@ -201,7 +201,7 @@ public abstract class HttpOptions extends JsonSerializable {
      * <p>extraBody: Extra parameters to add to the request body. The structure must match the
      * backend API's request structure. - Gemini Enterprise Agent Platform backend API docs:
      * https://cloud.google.com/vertex-ai/docs/reference/rest - GeminiAPI backend API docs:
-     * https://ai.google.dev/api/rest
+     * https://aistudio.google.com/api-reference
      */
     @JsonProperty("extraBody")
     public abstract Builder extraBody(Map<String, Object> extraBody);
