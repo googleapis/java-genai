@@ -27,7 +27,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
@@ -40,15 +39,6 @@ import java.util.Optional;
  * <p>Configuration for a custom environment.
  */
 public class Environment {
-    /**
-     * Optional. Arbitrary customer-defined JSON configuration passed through
-     * to the self-hosted environment poller. Only supported when `mode` is
-     * `SELF_HOSTED`.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("custom_config")
-    private Map<String, Object> customConfig;
-
     /**
      * Environment variables to set in the sandbox environment.
      */
@@ -63,13 +53,6 @@ public class Environment {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("environment_id")
     private String environmentId;
-
-    /**
-     * The compute lifecycle mode for an environment.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("mode")
-    private EnvironmentMode mode;
 
     /**
      * Network configuration for the environment.
@@ -89,16 +72,12 @@ public class Environment {
 
     @JsonCreator
     public Environment(
-            @JsonProperty("custom_config") @Nullable Map<String, Object> customConfig,
             @JsonProperty("env") @Nullable Map<String, Env> env,
             @JsonProperty("environment_id") @Nullable String environmentId,
-            @JsonProperty("mode") @Nullable EnvironmentMode mode,
             @JsonProperty("network") @Nullable Network network,
             @JsonProperty("sources") @Nullable List<Source> sources) {
-        this.customConfig = customConfig;
         this.env = env;
         this.environmentId = environmentId;
-        this.mode = mode;
         this.network = network;
         this.sources = sources;
         this.type = Builder._SINGLETON_VALUE_Type.value();
@@ -106,16 +85,7 @@ public class Environment {
     
     public Environment() {
         this(null, null, null,
-            null, null, null);
-    }
-
-    /**
-     * Optional. Arbitrary customer-defined JSON configuration passed through
-     * to the self-hosted environment poller. Only supported when `mode` is
-     * `SELF_HOSTED`.
-     */
-    public Optional<Map<String, Object>> customConfig() {
-        return Optional.ofNullable(this.customConfig);
+            null);
     }
 
     /**
@@ -131,13 +101,6 @@ public class Environment {
      */
     public Optional<String> environmentId() {
         return Optional.ofNullable(this.environmentId);
-    }
-
-    /**
-     * The compute lifecycle mode for an environment.
-     */
-    public Optional<EnvironmentMode> mode() {
-        return Optional.ofNullable(this.mode);
     }
 
     /**
@@ -161,17 +124,6 @@ public class Environment {
 
 
     /**
-     * Optional. Arbitrary customer-defined JSON configuration passed through
-     * to the self-hosted environment poller. Only supported when `mode` is
-     * `SELF_HOSTED`.
-     */
-    public Environment withCustomConfig(@Nullable Map<String, Object> customConfig) {
-        this.customConfig = customConfig;
-        return this;
-    }
-
-
-    /**
      * Environment variables to set in the sandbox environment.
      */
     public Environment withEnv(@Nullable Map<String, Env> env) {
@@ -186,15 +138,6 @@ public class Environment {
      */
     public Environment withEnvironmentId(@Nullable String environmentId) {
         this.environmentId = environmentId;
-        return this;
-    }
-
-
-    /**
-     * The compute lifecycle mode for an environment.
-     */
-    public Environment withMode(@Nullable EnvironmentMode mode) {
-        this.mode = mode;
         return this;
     }
 
@@ -224,10 +167,8 @@ public class Environment {
         }
         Environment other = (Environment) o;
         return 
-            Utils.enhancedDeepEquals(this.customConfig, other.customConfig) &&
             Utils.enhancedDeepEquals(this.env, other.env) &&
             Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
-            Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.network, other.network) &&
             Utils.enhancedDeepEquals(this.sources, other.sources) &&
             Utils.enhancedDeepEquals(this.type, other.type);
@@ -236,18 +177,15 @@ public class Environment {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            customConfig, env, environmentId,
-            mode, network, sources,
-            type);
+            env, environmentId, network,
+            sources, type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Environment.class,
-                "customConfig", customConfig,
                 "env", env,
                 "environmentId", environmentId,
-                "mode", mode,
                 "network", network,
                 "sources", sources,
                 "type", type);
@@ -256,13 +194,9 @@ public class Environment {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private Map<String, Object> customConfig;
-
         private Map<String, Env> env;
 
         private String environmentId;
-
-        private EnvironmentMode mode;
 
         private Network network;
 
@@ -270,16 +204,6 @@ public class Environment {
 
         private Builder() {
           // force use of static builder() method
-        }
-
-        /**
-         * Optional. Arbitrary customer-defined JSON configuration passed through
-         * to the self-hosted environment poller. Only supported when `mode` is
-         * `SELF_HOSTED`.
-         */
-        public Builder customConfig(@Nullable Map<String, Object> customConfig) {
-            this.customConfig = customConfig;
-            return this;
         }
 
         /**
@@ -300,14 +224,6 @@ public class Environment {
         }
 
         /**
-         * The compute lifecycle mode for an environment.
-         */
-        public Builder mode(@Nullable EnvironmentMode mode) {
-            this.mode = mode;
-            return this;
-        }
-
-        /**
          * Network configuration for the environment.
          */
         public Builder network(@Nullable Network network) {
@@ -322,8 +238,8 @@ public class Environment {
 
         public Environment build() {
             return new Environment(
-                customConfig, env, environmentId,
-                mode, network, sources);
+                env, environmentId, network,
+                sources);
         }
 
 

@@ -23,15 +23,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.genai.gaos.models.interactions.EnvironmentMode;
 import com.google.genai.gaos.models.interactions.Source;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -41,15 +38,6 @@ import java.util.Optional;
  */
 public class CreateEnvironmentRequest {
     /**
-     * Optional. Arbitrary customer-defined JSON configuration passed through
-     * to the self-hosted environment poller. Only supported when `mode` is
-     * `SELF_HOSTED`.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("custom_config")
-    private Map<String, Object> customConfig;
-
-    /**
      * Optional. The source environment to copy/fork from.
      * Format: `environments/{environment_id}` or `{environment_id}`.
      * When specified, `sources` and `env` must be empty.
@@ -57,13 +45,6 @@ public class CreateEnvironmentRequest {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("from_environment")
     private String fromEnvironment;
-
-    /**
-     * The compute lifecycle mode for an environment.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("mode")
-    private EnvironmentMode mode;
 
     /**
      * Network configuration for the environment.
@@ -79,43 +60,18 @@ public class CreateEnvironmentRequest {
     @JsonProperty("sources")
     private List<Source> sources;
 
-    /**
-     * Optional. System instruction applied to interactions running in this
-     * environment. Only supported for `SELF_HOSTED` environments, where it is
-     * recommended.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("system_instruction")
-    private String systemInstruction;
-
     @JsonCreator
     public CreateEnvironmentRequest(
-            @JsonProperty("custom_config") @Nullable Map<String, Object> customConfig,
             @JsonProperty("from_environment") @Nullable String fromEnvironment,
-            @JsonProperty("mode") @Nullable EnvironmentMode mode,
             @JsonProperty("network") @Nullable CreateEnvironmentRequestNetworkUnion network,
-            @JsonProperty("sources") @Nullable List<Source> sources,
-            @JsonProperty("system_instruction") @Nullable String systemInstruction) {
-        this.customConfig = customConfig;
+            @JsonProperty("sources") @Nullable List<Source> sources) {
         this.fromEnvironment = fromEnvironment;
-        this.mode = mode;
         this.network = network;
         this.sources = sources;
-        this.systemInstruction = systemInstruction;
     }
     
     public CreateEnvironmentRequest() {
-        this(null, null, null,
-            null, null, null);
-    }
-
-    /**
-     * Optional. Arbitrary customer-defined JSON configuration passed through
-     * to the self-hosted environment poller. Only supported when `mode` is
-     * `SELF_HOSTED`.
-     */
-    public Optional<Map<String, Object>> customConfig() {
-        return Optional.ofNullable(this.customConfig);
+        this(null, null, null);
     }
 
     /**
@@ -125,13 +81,6 @@ public class CreateEnvironmentRequest {
      */
     public Optional<String> fromEnvironment() {
         return Optional.ofNullable(this.fromEnvironment);
-    }
-
-    /**
-     * The compute lifecycle mode for an environment.
-     */
-    public Optional<EnvironmentMode> mode() {
-        return Optional.ofNullable(this.mode);
     }
 
     /**
@@ -148,28 +97,8 @@ public class CreateEnvironmentRequest {
         return Optional.ofNullable(this.sources);
     }
 
-    /**
-     * Optional. System instruction applied to interactions running in this
-     * environment. Only supported for `SELF_HOSTED` environments, where it is
-     * recommended.
-     */
-    public Optional<String> systemInstruction() {
-        return Optional.ofNullable(this.systemInstruction);
-    }
-
     public static Builder builder() {
         return new Builder();
-    }
-
-
-    /**
-     * Optional. Arbitrary customer-defined JSON configuration passed through
-     * to the self-hosted environment poller. Only supported when `mode` is
-     * `SELF_HOSTED`.
-     */
-    public CreateEnvironmentRequest withCustomConfig(@Nullable Map<String, Object> customConfig) {
-        this.customConfig = customConfig;
-        return this;
     }
 
 
@@ -180,15 +109,6 @@ public class CreateEnvironmentRequest {
      */
     public CreateEnvironmentRequest withFromEnvironment(@Nullable String fromEnvironment) {
         this.fromEnvironment = fromEnvironment;
-        return this;
-    }
-
-
-    /**
-     * The compute lifecycle mode for an environment.
-     */
-    public CreateEnvironmentRequest withMode(@Nullable EnvironmentMode mode) {
-        this.mode = mode;
         return this;
     }
 
@@ -211,17 +131,6 @@ public class CreateEnvironmentRequest {
     }
 
 
-    /**
-     * Optional. System instruction applied to interactions running in this
-     * environment. Only supported for `SELF_HOSTED` environments, where it is
-     * recommended.
-     */
-    public CreateEnvironmentRequest withSystemInstruction(@Nullable String systemInstruction) {
-        this.systemInstruction = systemInstruction;
-        return this;
-    }
-
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -232,59 +141,36 @@ public class CreateEnvironmentRequest {
         }
         CreateEnvironmentRequest other = (CreateEnvironmentRequest) o;
         return 
-            Utils.enhancedDeepEquals(this.customConfig, other.customConfig) &&
             Utils.enhancedDeepEquals(this.fromEnvironment, other.fromEnvironment) &&
-            Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.network, other.network) &&
-            Utils.enhancedDeepEquals(this.sources, other.sources) &&
-            Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction);
+            Utils.enhancedDeepEquals(this.sources, other.sources);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            customConfig, fromEnvironment, mode,
-            network, sources, systemInstruction);
+            fromEnvironment, network, sources);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CreateEnvironmentRequest.class,
-                "customConfig", customConfig,
                 "fromEnvironment", fromEnvironment,
-                "mode", mode,
                 "network", network,
-                "sources", sources,
-                "systemInstruction", systemInstruction);
+                "sources", sources);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private Map<String, Object> customConfig;
-
         private String fromEnvironment;
-
-        private EnvironmentMode mode;
 
         private CreateEnvironmentRequestNetworkUnion network;
 
         private List<Source> sources;
 
-        private String systemInstruction;
-
         private Builder() {
           // force use of static builder() method
-        }
-
-        /**
-         * Optional. Arbitrary customer-defined JSON configuration passed through
-         * to the self-hosted environment poller. Only supported when `mode` is
-         * `SELF_HOSTED`.
-         */
-        public Builder customConfig(@Nullable Map<String, Object> customConfig) {
-            this.customConfig = customConfig;
-            return this;
         }
 
         /**
@@ -294,14 +180,6 @@ public class CreateEnvironmentRequest {
          */
         public Builder fromEnvironment(@Nullable String fromEnvironment) {
             this.fromEnvironment = fromEnvironment;
-            return this;
-        }
-
-        /**
-         * The compute lifecycle mode for an environment.
-         */
-        public Builder mode(@Nullable EnvironmentMode mode) {
-            this.mode = mode;
             return this;
         }
 
@@ -321,20 +199,9 @@ public class CreateEnvironmentRequest {
             return this;
         }
 
-        /**
-         * Optional. System instruction applied to interactions running in this
-         * environment. Only supported for `SELF_HOSTED` environments, where it is
-         * recommended.
-         */
-        public Builder systemInstruction(@Nullable String systemInstruction) {
-            this.systemInstruction = systemInstruction;
-            return this;
-        }
-
         public CreateEnvironmentRequest build() {
             return new CreateEnvironmentRequest(
-                customConfig, fromEnvironment, mode,
-                network, sources, systemInstruction);
+                fromEnvironment, network, sources);
         }
 
     }
