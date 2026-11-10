@@ -75,6 +75,7 @@ public class Model {
     public static final Model GEMINI_ROBOTICS_ER16_PREVIEW = new Model("gemini-robotics-er-1.6-preview");
     public static final Model GEMINI_ROBOTICS_ER2_PREVIEW = new Model("gemini-robotics-er-2-preview");
     public static final Model LYRIA35 = new Model("lyria-3.5");
+    public static final Model GEMINI_OMNI12_FLASH = new Model("gemini-omni-1.2-flash");
     public static final Model GEMINI_OMNI11_FLASH = new Model("gemini-omni-1.1-flash");
     public static final Model GEMINI_OMNI_FLASH_PREVIEW = new Model("gemini-omni-flash-preview");
 
@@ -183,6 +184,7 @@ public class Model {
         map.put("gemini-robotics-er-1.6-preview", GEMINI_ROBOTICS_ER16_PREVIEW);
         map.put("gemini-robotics-er-2-preview", GEMINI_ROBOTICS_ER2_PREVIEW);
         map.put("lyria-3.5", LYRIA35);
+        map.put("gemini-omni-1.2-flash", GEMINI_OMNI12_FLASH);
         map.put("gemini-omni-1.1-flash", GEMINI_OMNI11_FLASH);
         map.put("gemini-omni-flash-preview", GEMINI_OMNI_FLASH_PREVIEW);
         return map;
@@ -223,6 +225,7 @@ public class Model {
         map.put("gemini-robotics-er-1.6-preview", ModelEnum.GEMINI_ROBOTICS_ER16_PREVIEW);
         map.put("gemini-robotics-er-2-preview", ModelEnum.GEMINI_ROBOTICS_ER2_PREVIEW);
         map.put("lyria-3.5", ModelEnum.LYRIA35);
+        map.put("gemini-omni-1.2-flash", ModelEnum.GEMINI_OMNI12_FLASH);
         map.put("gemini-omni-1.1-flash", ModelEnum.GEMINI_OMNI11_FLASH);
         map.put("gemini-omni-flash-preview", ModelEnum.GEMINI_OMNI_FLASH_PREVIEW);
         return map;
@@ -264,6 +267,7 @@ public class Model {
         GEMINI_ROBOTICS_ER16_PREVIEW("gemini-robotics-er-1.6-preview"),
         GEMINI_ROBOTICS_ER2_PREVIEW("gemini-robotics-er-2-preview"),
         LYRIA35("lyria-3.5"),
+        GEMINI_OMNI12_FLASH("gemini-omni-1.2-flash"),
         GEMINI_OMNI11_FLASH("gemini-omni-1.1-flash"),
         GEMINI_OMNI_FLASH_PREVIEW("gemini-omni-flash-preview"),;
 
