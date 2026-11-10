@@ -22,6 +22,7 @@ package com.google.genai.gaos;
 import static com.google.genai.gaos.operations.Operations.RequestOperation;
 
 import com.google.genai.gaos.models.environments.CreateEnvironmentRequest;
+import com.google.genai.gaos.models.interactions.EnvironmentMode;
 import com.google.genai.gaos.models.operations.CreateEnvironmentRequestBuilder;
 import com.google.genai.gaos.models.operations.CreateEnvironmentResponse;
 import com.google.genai.gaos.models.operations.DeleteEnvironmentRequest;
@@ -93,13 +94,14 @@ public class Environments {
      */
     public ListEnvironmentsResponse listEnvironmentsDirect() {
         return listEnvironments(null, null, null,
-            null);
+            null, null);
     }
 
     /**
      * Lists environments.
      * 
      * @param apiVersion API version for request routing.
+     * @param mode The compute lifecycle mode for an environment.
      * @param pageSize Optional. Maximum number of environments to return.
      *         If unspecified, defaults to 50. Maximum is 1000.
      * @param pageToken Optional. Pagination token.
@@ -108,9 +110,12 @@ public class Environments {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListEnvironmentsResponse listEnvironments(
-            @Nullable String apiVersion, @Nullable Integer pageSize,
-            @Nullable String pageToken, @Nullable Options options) {
-        ListEnvironmentsRequest request = new ListEnvironmentsRequest(apiVersion, pageSize, pageToken);
+            @Nullable String apiVersion, @Nullable EnvironmentMode mode,
+            @Nullable Integer pageSize, @Nullable String pageToken,
+            @Nullable Options options) {
+        ListEnvironmentsRequest request = new ListEnvironmentsRequest(
+                apiVersion, mode, pageSize,
+                pageToken);
         RequestOperation<ListEnvironmentsRequest, ListEnvironmentsResponse> operation
               = new ListEnvironments.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
