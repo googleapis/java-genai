@@ -32,7 +32,7 @@ If you're using Maven, add the following to your dependencies:
   <dependency>
     <groupId>com.google.genai</groupId>
     <artifactId>google-genai</artifactId>
-    <version>2.1.0</version>
+    <version>2.0.0</version>
   </dependency>
 </dependencies>
 ```
