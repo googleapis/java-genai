@@ -35,40 +35,40 @@ import java.util.Optional;
  * Use {@code asEnum()} for switch expressions.
  */
 /**
- * Mode
+ * FindRequestMode
  * 
  * <p>The mode of the find session.
  */
-public class Mode {
+public class FindRequestMode {
 
-    public static final Mode SCAN = new Mode("scan");
-    public static final Mode VERIFY = new Mode("verify");
+    public static final FindRequestMode SCAN = new FindRequestMode("scan");
+    public static final FindRequestMode VERIFY = new FindRequestMode("verify");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
     // careful). Keep this field lower case to avoid clashing with
     // generated member names which will always be upper cased (Java
     // convention)
-    private static final Map<String, Mode> values = createValuesMap();
-    private static final Map<String, ModeEnum> enums = createEnumsMap();
+    private static final Map<String, FindRequestMode> values = createValuesMap();
+    private static final Map<String, FindRequestModeEnum> enums = createEnumsMap();
 
     private final String value;
 
-    private Mode(String value) {
+    private FindRequestMode(String value) {
         this.value = value;
     }
 
     /**
-     * Returns a Mode with the given value. For a specific value the 
+     * Returns a FindRequestMode with the given value. For a specific value the 
      * returned object will always be a singleton so reference equality 
      * is satisfied when the values are the same.
      * 
-     * @param value value to be wrapped as Mode
+     * @param value value to be wrapped as FindRequestMode
      */ 
     @JsonCreator
-    public static Mode of(String value) {
-        synchronized (Mode.class) {
-            return values.computeIfAbsent(value, v -> new Mode(v));
+    public static FindRequestMode of(String value) {
+        synchronized (FindRequestMode.class) {
+            return values.computeIfAbsent(value, v -> new FindRequestMode(v));
         }
     }
 
@@ -77,7 +77,7 @@ public class Mode {
         return value;
     }
 
-    public Optional<ModeEnum> asEnum() {
+    public Optional<FindRequestModeEnum> asEnum() {
         return Optional.ofNullable(enums.getOrDefault(value, null));
     }
 
@@ -98,45 +98,45 @@ public class Mode {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Mode other = (Mode) obj;
+        FindRequestMode other = (FindRequestMode) obj;
         return Objects.equals(value, other.value);
     }
 
     @Override
     public String toString() {
-        return "Mode [value=" + value + "]";
+        return "FindRequestMode [value=" + value + "]";
     }
 
     // return an array just like an enum
-    public static Mode[] values() {
-        synchronized (Mode.class) {
-            return values.values().toArray(new Mode[] {});
+    public static FindRequestMode[] values() {
+        synchronized (FindRequestMode.class) {
+            return values.values().toArray(new FindRequestMode[] {});
         }
     }
 
-    private static final Map<String, Mode> createValuesMap() {
-        Map<String, Mode> map = new LinkedHashMap<>();
+    private static final Map<String, FindRequestMode> createValuesMap() {
+        Map<String, FindRequestMode> map = new LinkedHashMap<>();
         map.put("scan", SCAN);
         map.put("verify", VERIFY);
         return map;
     }
 
-    private static final Map<String, ModeEnum> createEnumsMap() {
-        Map<String, ModeEnum> map = new HashMap<>();
-        map.put("scan", ModeEnum.SCAN);
-        map.put("verify", ModeEnum.VERIFY);
+    private static final Map<String, FindRequestModeEnum> createEnumsMap() {
+        Map<String, FindRequestModeEnum> map = new HashMap<>();
+        map.put("scan", FindRequestModeEnum.SCAN);
+        map.put("verify", FindRequestModeEnum.VERIFY);
         return map;
     }
     
     
-    public enum ModeEnum {
+    public enum FindRequestModeEnum {
 
         SCAN("scan"),
         VERIFY("verify"),;
 
         private final String value;
 
-        private ModeEnum(String value) {
+        private FindRequestModeEnum(String value) {
             this.value = value;
         }
 

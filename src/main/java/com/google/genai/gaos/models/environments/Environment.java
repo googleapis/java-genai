@@ -47,6 +47,17 @@ public class Environment {
     private String created;
 
     /**
+     * Output only. OUTPUT_ONLY. Secret token generated upon environment creation for
+     * self_hosted environments. Used by the sandbox daemon to authenticate
+     * LeaseInteractions and CreateInteractionBidiStream. Only returned in the
+     * response of CreateEnvironment; never exposed in subsequent GetEnvironment
+     * calls.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("environment_key")
+    private String environmentKey;
+
+    /**
      * Output only. The number of files in the environment, output only.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -66,6 +77,13 @@ public class Environment {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("last_accessed")
     private String lastAccessed;
+
+    /**
+     * Output only. The compute lifecycle mode for this environment.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mode")
+    private EnvironmentMode mode;
 
     /**
      * Network configuration for the environment.
@@ -106,19 +124,23 @@ public class Environment {
     @JsonCreator
     public Environment(
             @JsonProperty("created") @Nullable String created,
+            @JsonProperty("environment_key") @Nullable String environmentKey,
             @JsonProperty("file_count") @Nullable String fileCount,
             @JsonProperty("id") @Nonnull String id,
             @JsonProperty("last_accessed") @Nullable String lastAccessed,
+            @JsonProperty("mode") @Nullable EnvironmentMode mode,
             @JsonProperty("network") @Nullable EnvironmentNetworkUnion network,
             @JsonProperty("size_bytes") @Nullable String sizeBytes,
             @JsonProperty("sources") @Nullable List<Source> sources,
             @JsonProperty("status") @Nullable Status status,
             @JsonProperty("updated") @Nullable String updated) {
         this.created = created;
+        this.environmentKey = environmentKey;
         this.fileCount = fileCount;
         this.id = Optional.ofNullable(id)
             .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.lastAccessed = lastAccessed;
+        this.mode = mode;
         this.network = network;
         this.sizeBytes = sizeBytes;
         this.sources = sources;
@@ -128,9 +150,10 @@ public class Environment {
     
     public Environment(
             @Nonnull String id) {
-        this(null, null, id,
+        this(null, null, null,
+            id, null, null,
             null, null, null,
-            null, null, null);
+            null, null);
     }
 
     /**
@@ -139,6 +162,17 @@ public class Environment {
      */
     public Optional<String> created() {
         return Optional.ofNullable(this.created);
+    }
+
+    /**
+     * Output only. OUTPUT_ONLY. Secret token generated upon environment creation for
+     * self_hosted environments. Used by the sandbox daemon to authenticate
+     * LeaseInteractions and CreateInteractionBidiStream. Only returned in the
+     * response of CreateEnvironment; never exposed in subsequent GetEnvironment
+     * calls.
+     */
+    public Optional<String> environmentKey() {
+        return Optional.ofNullable(this.environmentKey);
     }
 
     /**
@@ -161,6 +195,13 @@ public class Environment {
      */
     public Optional<String> lastAccessed() {
         return Optional.ofNullable(this.lastAccessed);
+    }
+
+    /**
+     * Output only. The compute lifecycle mode for this environment.
+     */
+    public Optional<EnvironmentMode> mode() {
+        return Optional.ofNullable(this.mode);
     }
 
     /**
@@ -215,6 +256,19 @@ public class Environment {
 
 
     /**
+     * Output only. OUTPUT_ONLY. Secret token generated upon environment creation for
+     * self_hosted environments. Used by the sandbox daemon to authenticate
+     * LeaseInteractions and CreateInteractionBidiStream. Only returned in the
+     * response of CreateEnvironment; never exposed in subsequent GetEnvironment
+     * calls.
+     */
+    public Environment withEnvironmentKey(@Nullable String environmentKey) {
+        this.environmentKey = environmentKey;
+        return this;
+    }
+
+
+    /**
      * Output only. The number of files in the environment, output only.
      */
     public Environment withFileCount(@Nullable String fileCount) {
@@ -238,6 +292,15 @@ public class Environment {
      */
     public Environment withLastAccessed(@Nullable String lastAccessed) {
         this.lastAccessed = lastAccessed;
+        return this;
+    }
+
+
+    /**
+     * Output only. The compute lifecycle mode for this environment.
+     */
+    public Environment withMode(@Nullable EnvironmentMode mode) {
+        this.mode = mode;
         return this;
     }
 
@@ -299,9 +362,11 @@ public class Environment {
         Environment other = (Environment) o;
         return 
             Utils.enhancedDeepEquals(this.created, other.created) &&
+            Utils.enhancedDeepEquals(this.environmentKey, other.environmentKey) &&
             Utils.enhancedDeepEquals(this.fileCount, other.fileCount) &&
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.lastAccessed, other.lastAccessed) &&
+            Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.network, other.network) &&
             Utils.enhancedDeepEquals(this.sizeBytes, other.sizeBytes) &&
             Utils.enhancedDeepEquals(this.sources, other.sources) &&
@@ -312,18 +377,21 @@ public class Environment {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            created, fileCount, id,
-            lastAccessed, network, sizeBytes,
-            sources, status, updated);
+            created, environmentKey, fileCount,
+            id, lastAccessed, mode,
+            network, sizeBytes, sources,
+            status, updated);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Environment.class,
                 "created", created,
+                "environmentKey", environmentKey,
                 "fileCount", fileCount,
                 "id", id,
                 "lastAccessed", lastAccessed,
+                "mode", mode,
                 "network", network,
                 "sizeBytes", sizeBytes,
                 "sources", sources,
@@ -336,11 +404,15 @@ public class Environment {
 
         private String created;
 
+        private String environmentKey;
+
         private String fileCount;
 
         private String id;
 
         private String lastAccessed;
+
+        private EnvironmentMode mode;
 
         private EnvironmentNetworkUnion network;
 
@@ -366,6 +438,18 @@ public class Environment {
         }
 
         /**
+         * Output only. OUTPUT_ONLY. Secret token generated upon environment creation for
+         * self_hosted environments. Used by the sandbox daemon to authenticate
+         * LeaseInteractions and CreateInteractionBidiStream. Only returned in the
+         * response of CreateEnvironment; never exposed in subsequent GetEnvironment
+         * calls.
+         */
+        public Builder environmentKey(@Nullable String environmentKey) {
+            this.environmentKey = environmentKey;
+            return this;
+        }
+
+        /**
          * Output only. The number of files in the environment, output only.
          */
         public Builder fileCount(@Nullable String fileCount) {
@@ -387,6 +471,14 @@ public class Environment {
          */
         public Builder lastAccessed(@Nullable String lastAccessed) {
             this.lastAccessed = lastAccessed;
+            return this;
+        }
+
+        /**
+         * Output only. The compute lifecycle mode for this environment.
+         */
+        public Builder mode(@Nullable EnvironmentMode mode) {
+            this.mode = mode;
             return this;
         }
 
@@ -433,9 +525,10 @@ public class Environment {
 
         public Environment build() {
             return new Environment(
-                created, fileCount, id,
-                lastAccessed, network, sizeBytes,
-                sources, status, updated);
+                created, environmentKey, fileCount,
+                id, lastAccessed, mode,
+                network, sizeBytes, sources,
+                status, updated);
         }
 
     }

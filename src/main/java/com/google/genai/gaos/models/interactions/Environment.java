@@ -55,6 +55,13 @@ public class Environment {
     private String environmentId;
 
     /**
+     * The compute lifecycle mode for this environment.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mode")
+    private EnvironmentMode mode;
+
+    /**
      * Network configuration for the environment.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -74,10 +81,12 @@ public class Environment {
     public Environment(
             @JsonProperty("env") @Nullable Map<String, Env> env,
             @JsonProperty("environment_id") @Nullable String environmentId,
+            @JsonProperty("mode") @Nullable EnvironmentMode mode,
             @JsonProperty("network") @Nullable Network network,
             @JsonProperty("sources") @Nullable List<Source> sources) {
         this.env = env;
         this.environmentId = environmentId;
+        this.mode = mode;
         this.network = network;
         this.sources = sources;
         this.type = Builder._SINGLETON_VALUE_Type.value();
@@ -85,7 +94,7 @@ public class Environment {
     
     public Environment() {
         this(null, null, null,
-            null);
+            null, null);
     }
 
     /**
@@ -101,6 +110,13 @@ public class Environment {
      */
     public Optional<String> environmentId() {
         return Optional.ofNullable(this.environmentId);
+    }
+
+    /**
+     * The compute lifecycle mode for this environment.
+     */
+    public Optional<EnvironmentMode> mode() {
+        return Optional.ofNullable(this.mode);
     }
 
     /**
@@ -143,6 +159,15 @@ public class Environment {
 
 
     /**
+     * The compute lifecycle mode for this environment.
+     */
+    public Environment withMode(@Nullable EnvironmentMode mode) {
+        this.mode = mode;
+        return this;
+    }
+
+
+    /**
      * Network configuration for the environment.
      */
     public Environment withNetwork(@Nullable Network network) {
@@ -169,6 +194,7 @@ public class Environment {
         return 
             Utils.enhancedDeepEquals(this.env, other.env) &&
             Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
+            Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.network, other.network) &&
             Utils.enhancedDeepEquals(this.sources, other.sources) &&
             Utils.enhancedDeepEquals(this.type, other.type);
@@ -177,8 +203,8 @@ public class Environment {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            env, environmentId, network,
-            sources, type);
+            env, environmentId, mode,
+            network, sources, type);
     }
     
     @Override
@@ -186,6 +212,7 @@ public class Environment {
         return Utils.toString(Environment.class,
                 "env", env,
                 "environmentId", environmentId,
+                "mode", mode,
                 "network", network,
                 "sources", sources,
                 "type", type);
@@ -197,6 +224,8 @@ public class Environment {
         private Map<String, Env> env;
 
         private String environmentId;
+
+        private EnvironmentMode mode;
 
         private Network network;
 
@@ -224,6 +253,14 @@ public class Environment {
         }
 
         /**
+         * The compute lifecycle mode for this environment.
+         */
+        public Builder mode(@Nullable EnvironmentMode mode) {
+            this.mode = mode;
+            return this;
+        }
+
+        /**
          * Network configuration for the environment.
          */
         public Builder network(@Nullable Network network) {
@@ -238,8 +275,8 @@ public class Environment {
 
         public Environment build() {
             return new Environment(
-                env, environmentId, network,
-                sources);
+                env, environmentId, mode,
+                network, sources);
         }
 
 

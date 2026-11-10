@@ -51,6 +51,12 @@ public class ListEnvironmentsRequestBuilder {
         return this;
     }
 
+    public ListEnvironmentsRequestBuilder mode(@Nullable Mode mode) {
+        this.pojoBuilder.mode(mode);
+        this._setterCalled = true;
+        return this;
+    }
+
     public ListEnvironmentsRequestBuilder pageSize(@Nullable Integer pageSize) {
         this.pojoBuilder.pageSize(pageSize);
         this._setterCalled = true;

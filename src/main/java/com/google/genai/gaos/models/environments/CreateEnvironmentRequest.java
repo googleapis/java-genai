@@ -47,6 +47,13 @@ public class CreateEnvironmentRequest {
     private String fromEnvironment;
 
     /**
+     * The compute lifecycle mode for this environment.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mode")
+    private CreateEnvironmentRequestMode mode;
+
+    /**
      * Network configuration for the environment.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -60,18 +67,32 @@ public class CreateEnvironmentRequest {
     @JsonProperty("sources")
     private List<Source> sources;
 
+    /**
+     * Optional. System instruction applied to interactions running in this
+     * environment. Only supported for `SELF_HOSTED` environments, where it is
+     * recommended.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("system_instruction")
+    private String systemInstruction;
+
     @JsonCreator
     public CreateEnvironmentRequest(
             @JsonProperty("from_environment") @Nullable String fromEnvironment,
+            @JsonProperty("mode") @Nullable CreateEnvironmentRequestMode mode,
             @JsonProperty("network") @Nullable CreateEnvironmentRequestNetworkUnion network,
-            @JsonProperty("sources") @Nullable List<Source> sources) {
+            @JsonProperty("sources") @Nullable List<Source> sources,
+            @JsonProperty("system_instruction") @Nullable String systemInstruction) {
         this.fromEnvironment = fromEnvironment;
+        this.mode = mode;
         this.network = network;
         this.sources = sources;
+        this.systemInstruction = systemInstruction;
     }
     
     public CreateEnvironmentRequest() {
-        this(null, null, null);
+        this(null, null, null,
+            null, null);
     }
 
     /**
@@ -81,6 +102,13 @@ public class CreateEnvironmentRequest {
      */
     public Optional<String> fromEnvironment() {
         return Optional.ofNullable(this.fromEnvironment);
+    }
+
+    /**
+     * The compute lifecycle mode for this environment.
+     */
+    public Optional<CreateEnvironmentRequestMode> mode() {
+        return Optional.ofNullable(this.mode);
     }
 
     /**
@@ -97,6 +125,15 @@ public class CreateEnvironmentRequest {
         return Optional.ofNullable(this.sources);
     }
 
+    /**
+     * Optional. System instruction applied to interactions running in this
+     * environment. Only supported for `SELF_HOSTED` environments, where it is
+     * recommended.
+     */
+    public Optional<String> systemInstruction() {
+        return Optional.ofNullable(this.systemInstruction);
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -109,6 +146,15 @@ public class CreateEnvironmentRequest {
      */
     public CreateEnvironmentRequest withFromEnvironment(@Nullable String fromEnvironment) {
         this.fromEnvironment = fromEnvironment;
+        return this;
+    }
+
+
+    /**
+     * The compute lifecycle mode for this environment.
+     */
+    public CreateEnvironmentRequest withMode(@Nullable CreateEnvironmentRequestMode mode) {
+        this.mode = mode;
         return this;
     }
 
@@ -131,6 +177,17 @@ public class CreateEnvironmentRequest {
     }
 
 
+    /**
+     * Optional. System instruction applied to interactions running in this
+     * environment. Only supported for `SELF_HOSTED` environments, where it is
+     * recommended.
+     */
+    public CreateEnvironmentRequest withSystemInstruction(@Nullable String systemInstruction) {
+        this.systemInstruction = systemInstruction;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -142,22 +199,27 @@ public class CreateEnvironmentRequest {
         CreateEnvironmentRequest other = (CreateEnvironmentRequest) o;
         return 
             Utils.enhancedDeepEquals(this.fromEnvironment, other.fromEnvironment) &&
+            Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.network, other.network) &&
-            Utils.enhancedDeepEquals(this.sources, other.sources);
+            Utils.enhancedDeepEquals(this.sources, other.sources) &&
+            Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            fromEnvironment, network, sources);
+            fromEnvironment, mode, network,
+            sources, systemInstruction);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CreateEnvironmentRequest.class,
                 "fromEnvironment", fromEnvironment,
+                "mode", mode,
                 "network", network,
-                "sources", sources);
+                "sources", sources,
+                "systemInstruction", systemInstruction);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -165,9 +227,13 @@ public class CreateEnvironmentRequest {
 
         private String fromEnvironment;
 
+        private CreateEnvironmentRequestMode mode;
+
         private CreateEnvironmentRequestNetworkUnion network;
 
         private List<Source> sources;
+
+        private String systemInstruction;
 
         private Builder() {
           // force use of static builder() method
@@ -180,6 +246,14 @@ public class CreateEnvironmentRequest {
          */
         public Builder fromEnvironment(@Nullable String fromEnvironment) {
             this.fromEnvironment = fromEnvironment;
+            return this;
+        }
+
+        /**
+         * The compute lifecycle mode for this environment.
+         */
+        public Builder mode(@Nullable CreateEnvironmentRequestMode mode) {
+            this.mode = mode;
             return this;
         }
 
@@ -199,9 +273,20 @@ public class CreateEnvironmentRequest {
             return this;
         }
 
+        /**
+         * Optional. System instruction applied to interactions running in this
+         * environment. Only supported for `SELF_HOSTED` environments, where it is
+         * recommended.
+         */
+        public Builder systemInstruction(@Nullable String systemInstruction) {
+            this.systemInstruction = systemInstruction;
+            return this;
+        }
+
         public CreateEnvironmentRequest build() {
             return new CreateEnvironmentRequest(
-                fromEnvironment, network, sources);
+                fromEnvironment, mode, network,
+                sources, systemInstruction);
         }
 
     }

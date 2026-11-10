@@ -37,6 +37,12 @@ public class ListEnvironmentsRequest {
     private String apiVersion;
 
     /**
+     * Optional. Filter environments by compute lifecycle mode.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=mode")
+    private Mode mode;
+
+    /**
      * Optional. Maximum number of environments to return.
      * If unspecified, defaults to 50. Maximum is 1000.
      */
@@ -52,15 +58,18 @@ public class ListEnvironmentsRequest {
     @JsonCreator
     public ListEnvironmentsRequest(
             @Nullable String apiVersion,
+            @Nullable Mode mode,
             @Nullable Integer pageSize,
             @Nullable String pageToken) {
         this.apiVersion = apiVersion;
+        this.mode = mode;
         this.pageSize = pageSize;
         this.pageToken = pageToken;
     }
     
     public ListEnvironmentsRequest() {
-        this(null, null, null);
+        this(null, null, null,
+            null);
     }
 
     /**
@@ -68,6 +77,13 @@ public class ListEnvironmentsRequest {
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
+    }
+
+    /**
+     * Optional. Filter environments by compute lifecycle mode.
+     */
+    public Optional<Mode> mode() {
+        return Optional.ofNullable(this.mode);
     }
 
     /**
@@ -95,6 +111,15 @@ public class ListEnvironmentsRequest {
      */
     public ListEnvironmentsRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
+        return this;
+    }
+
+
+    /**
+     * Optional. Filter environments by compute lifecycle mode.
+     */
+    public ListEnvironmentsRequest withMode(@Nullable Mode mode) {
+        this.mode = mode;
         return this;
     }
 
@@ -129,6 +154,7 @@ public class ListEnvironmentsRequest {
         ListEnvironmentsRequest other = (ListEnvironmentsRequest) o;
         return 
             Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
+            Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
             Utils.enhancedDeepEquals(this.pageToken, other.pageToken);
     }
@@ -136,13 +162,15 @@ public class ListEnvironmentsRequest {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            apiVersion, pageSize, pageToken);
+            apiVersion, mode, pageSize,
+            pageToken);
     }
     
     @Override
     public String toString() {
         return Utils.toString(ListEnvironmentsRequest.class,
                 "apiVersion", apiVersion,
+                "mode", mode,
                 "pageSize", pageSize,
                 "pageToken", pageToken);
     }
@@ -151,6 +179,8 @@ public class ListEnvironmentsRequest {
     public final static class Builder {
 
         private String apiVersion;
+
+        private Mode mode;
 
         private Integer pageSize;
 
@@ -165,6 +195,14 @@ public class ListEnvironmentsRequest {
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
+            return this;
+        }
+
+        /**
+         * Optional. Filter environments by compute lifecycle mode.
+         */
+        public Builder mode(@Nullable Mode mode) {
+            this.mode = mode;
             return this;
         }
 
@@ -187,7 +225,8 @@ public class ListEnvironmentsRequest {
 
         public ListEnvironmentsRequest build() {
             return new ListEnvironmentsRequest(
-                apiVersion, pageSize, pageToken);
+                apiVersion, mode, pageSize,
+                pageToken);
         }
 
     }

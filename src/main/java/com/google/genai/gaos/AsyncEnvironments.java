@@ -25,6 +25,7 @@ import com.google.genai.gaos.models.environments.CreateEnvironmentRequest;
 import com.google.genai.gaos.models.operations.DeleteEnvironmentRequest;
 import com.google.genai.gaos.models.operations.GetEnvironmentRequest;
 import com.google.genai.gaos.models.operations.ListEnvironmentsRequest;
+import com.google.genai.gaos.models.operations.Mode;
 import com.google.genai.gaos.models.operations.async.CreateEnvironmentRequestBuilder;
 import com.google.genai.gaos.models.operations.async.CreateEnvironmentResponse;
 import com.google.genai.gaos.models.operations.async.DeleteEnvironmentRequestBuilder;
@@ -96,13 +97,14 @@ public class AsyncEnvironments {
     public CompletableFuture<ListEnvironmentsResponse> listEnvironmentsDirect() {
         return listEnvironments(
                 null, null, null,
-                null);
+                null, null);
     }
 
     /**
      * Lists environments.
      * 
      * @param apiVersion API version for request routing.
+     * @param mode Optional. Filter environments by compute lifecycle mode.
      * @param pageSize Optional. Maximum number of environments to return.
      *         If unspecified, defaults to 50. Maximum is 1000.
      * @param pageToken Optional. Pagination token.
@@ -110,9 +112,12 @@ public class AsyncEnvironments {
      * @return {@code CompletableFuture<ListEnvironmentsResponse>} - The async response
      */
     public CompletableFuture<ListEnvironmentsResponse> listEnvironments(
-            @Nullable String apiVersion, @Nullable Integer pageSize,
-            @Nullable String pageToken, @Nullable Options options) {
-        ListEnvironmentsRequest request = new ListEnvironmentsRequest(apiVersion, pageSize, pageToken);
+            @Nullable String apiVersion, @Nullable Mode mode,
+            @Nullable Integer pageSize, @Nullable String pageToken,
+            @Nullable Options options) {
+        ListEnvironmentsRequest request = new ListEnvironmentsRequest(
+                apiVersion, mode, pageSize,
+                pageToken);
         AsyncRequestOperation<ListEnvironmentsRequest, ListEnvironmentsResponse> operation
               = new ListEnvironments.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
