@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.1.0](https://github.com/googleapis/java-genai/compare/v2.0.0...v2.1.0) (2026-11-10)
+
+
+### Features
+
+* add `gemini-omni-1.2-flash` and make it the `gemini-api video` default ([2df4536](https://github.com/googleapis/java-genai/commit/2df45362f3028a9fe7c8ffc6646b9c94317da410))
+* Add `proactive_video` to `ProactivityConfig` for the Live API. ([fee1478](https://github.com/googleapis/java-genai/commit/fee1478f73231f80a99ed0ad3a44fd144382f9dd))
+* add `xhigh` thinking level to Interactions ThinkingLevel ([bbae015](https://github.com/googleapis/java-genai/commit/bbae01598e4a7aa86b29d8569d5970b10aafca9a))
+* add usage_metadata (including traffic_type) and truncated to EmbedContentResponse for Gemini Enterprise API ([d411dd6](https://github.com/googleapis/java-genai/commit/d411dd65092b8bd847adb2f6c106097fcdae38d3))
+* **interactions:** add gemini-4-carbon and gemini-omni-1.2-flash to Model enum ([9c125d0](https://github.com/googleapis/java-genai/commit/9c125d06d0ef1faa4c55bad9ea75c193dec2a5f6))
+* **live:** support base URL, API version and headers in LiveConnectConfig.httpOptions ([8fcc127](https://github.com/googleapis/java-genai/commit/8fcc12794cb986ec6bd7bb6e56472c0cabc5e0eb))
+
+
+### Documentation
+
+* update documentation links from ai.google.dev to aistudio.google.com. ([8d80f7e](https://github.com/googleapis/java-genai/commit/8d80f7ec6f68c08327661b5ee3635c26f5d87754))
+
 ## [2.0.0](https://github.com/googleapis/java-genai/compare/v1.80.0...v2.0.0) (2026-11-06)
 
 
