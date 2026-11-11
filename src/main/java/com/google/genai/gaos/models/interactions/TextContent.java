@@ -24,6 +24,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.genai.gaos.models.decisions.DecisionInputContent;
+import com.google.genai.gaos.models.decisions.DecisionInstructionContent;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -38,7 +40,7 @@ import java.util.Optional;
  * 
  * <p>A text content block.
  */
-public class TextContent implements Content, FunctionResultSubcontent, ThoughtSummaryContent {
+public class TextContent implements Content, FunctionResultSubcontent, ThoughtSummaryContent, DecisionInstructionContent, DecisionInputContent {
     /**
      * Citation information for model-generated content.
      */

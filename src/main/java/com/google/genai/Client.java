@@ -25,6 +25,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.gaos.Agents;
 import com.google.genai.gaos.AsyncAgents;
 import com.google.genai.gaos.AsyncCredentials;
+import com.google.genai.gaos.AsyncDecisions;
 import com.google.genai.gaos.AsyncEnvironments;
 import com.google.genai.gaos.AsyncGenAI;
 import com.google.genai.gaos.AsyncInteractions;
@@ -32,6 +33,7 @@ import com.google.genai.gaos.AsyncTriggers;
 import com.google.genai.gaos.AsyncVoices;
 import com.google.genai.gaos.AsyncWebhooks;
 import com.google.genai.gaos.Credentials;
+import com.google.genai.gaos.Decisions;
 import com.google.genai.gaos.Environments;
 import com.google.genai.gaos.GenAI;
 import com.google.genai.gaos.Interactions;
@@ -91,6 +93,7 @@ public final class Client implements AutoCloseable {
     public final AsyncTriggers triggers;
     public final AsyncCredentials credentials;
     public final AsyncVoices voices;
+    public final AsyncDecisions decisions;
     // android:strip_end
 
     public Async(ApiClient apiClient) {
@@ -113,6 +116,7 @@ public final class Client implements AutoCloseable {
       this.triggers = asyncGaos.triggers();
       this.credentials = asyncGaos.credentials();
       this.voices = asyncGaos.voices();
+      this.decisions = asyncGaos.decisions();
       // android:strip_end
     }
   }
@@ -138,6 +142,7 @@ public final class Client implements AutoCloseable {
   public final Triggers triggers;
   public final Credentials credentials;
   public final Voices voices;
+  public final Decisions decisions;
   // android:strip_end
 
   /** Builder for {@link Client}. */
@@ -450,6 +455,7 @@ public final class Client implements AutoCloseable {
     this.triggers = gaosClient.triggers();
     this.credentials = gaosClient.credentials();
     this.voices = gaosClient.voices();
+    this.decisions = gaosClient.decisions();
     // android:strip_end
 
     async = new Async(this.apiClient);

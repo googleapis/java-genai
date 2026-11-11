@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.genai.gaos.models.decisions.DecisionInputContent;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -36,7 +37,7 @@ import java.util.Optional;
  * 
  * <p>A document content block.
  */
-public class DocumentContent implements Content, FunctionResultSubcontent {
+public class DocumentContent implements Content, FunctionResultSubcontent, DecisionInputContent {
     /**
      * The document content.
      */

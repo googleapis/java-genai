@@ -62,6 +62,9 @@ public class GenAI implements java.lang.AutoCloseable {
     private final Credentials credentials;
 
 
+    private final Decisions decisions;
+
+
     private final Interactions interactions;
 
 
@@ -86,6 +89,11 @@ public class GenAI implements java.lang.AutoCloseable {
 
     public Credentials credentials() {
         return credentials;
+    }
+
+
+    public Decisions decisions() {
+        return decisions;
     }
 
 
@@ -291,6 +299,7 @@ public class GenAI implements java.lang.AutoCloseable {
         this.environments = new Environments(sdkConfiguration);
         this.agents = new Agents(sdkConfiguration);
         this.credentials = new Credentials(sdkConfiguration);
+        this.decisions = new Decisions(sdkConfiguration);
         this.interactions = new Interactions(sdkConfiguration);
         this.triggers = new Triggers(sdkConfiguration);
         this.voices = new Voices(sdkConfiguration);
