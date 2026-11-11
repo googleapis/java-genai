@@ -41,7 +41,10 @@ public class ThinkingLevel {
     MEDIUM,
 
     /** High thinking level. */
-    HIGH
+    HIGH,
+
+    /** XHIGH thinking level. */
+    XHIGH
   }
 
   private Known thinkingLevelEnum;
