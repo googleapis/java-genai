@@ -56,13 +56,15 @@ import com.google.genai.gaos.models.interactions.TextContent;
 import com.google.genai.gaos.models.interactions.Tool;
 import com.google.genai.gaos.models.operations.CreateInteractionRequestBody;
 import com.google.genai.gaos.models.operations.CreateInteractionResponse;
+import com.google.genai.types.HttpOptions;
 
 /**
  * An example of using the Unified Gen AI Java SDK to create an interaction with computer use tool.
  */
 public final class InteractionToolCallWithComputerUse {
   public static void main(String[] args) {
-    Client client = new Client();
+    Client client =
+        Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1beta").build()).build();
 
     if (client.vertexAI()) {
       System.out.println("Interactions API is not yet supported on Vertex");
@@ -81,10 +83,10 @@ public final class InteractionToolCallWithComputerUse {
             .model(Model.of("gemini-2.5-computer-use-preview-10-2025"))
             .input(
                 InteractionsInput.of(
-                    "Search for highly rated smart fridges with touchscreen, 2 doors, around 25 cu ft,"
-                        + " priced below 4000 dollars on Google Shopping. Create a bulleted list of the"
-                        + " 3 cheapest options in the format of name, description, price in an"
-                        + " easy-to-read layout."))
+                    "Search for highly rated smart fridges with touchscreen, 2 doors, around 25 cu"
+                        + " ft, priced below 4000 dollars on Google Shopping. Create a bulleted"
+                        + " list of the 3 cheapest options in the format of name, description,"
+                        + " price in an easy-to-read layout."))
             .tools(ImmutableList.of(tool))
             .build();
 
@@ -104,7 +106,9 @@ public final class InteractionToolCallWithComputerUse {
           if (outputStep.content().isPresent()) {
             for (Content content : outputStep.content().get()) {
               if (content instanceof TextContent) {
-                ((TextContent) content).text().ifPresent(text -> System.out.println("Output: " + text));
+                ((TextContent) content)
+                    .text()
+                    .ifPresent(text -> System.out.println("Output: " + text));
               }
             }
           }

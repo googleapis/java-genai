@@ -49,18 +49,27 @@ package com.google.genai.examples;
 
 import com.google.genai.AsyncSession;
 import com.google.genai.Client;
-import com.google.genai.types.Blob;
 import com.google.genai.types.AutomaticActivityDetection;
+import com.google.genai.types.Blob;
 import com.google.genai.types.EndSensitivity;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.LiveSendRealtimeInputParameters;
 import com.google.genai.types.LiveServerMessage;
 import com.google.genai.types.Modality;
-import com.google.genai.types.RealtimeInputConfig;
 import com.google.genai.types.PrebuiltVoiceConfig;
+import com.google.genai.types.RealtimeInputConfig;
+import com.google.genai.types.ReplicatedVoiceConfig;
 import com.google.genai.types.SpeechConfig;
 import com.google.genai.types.StartSensitivity;
 import com.google.genai.types.VoiceConfig;
+import com.google.genai.types.VoiceConsentSignature;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -68,23 +77,15 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
-import java.io.ByteArrayOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioFileFormat;
-import com.google.genai.types.ReplicatedVoiceConfig;
-import com.google.genai.types.VoiceConsentSignature;
 
 /** Example of using the live module for a streaming audio conversation. */
 public final class LiveAudioConversationAsync {
@@ -164,6 +165,8 @@ public final class LiveAudioConversationAsync {
       System.out.println("Using Vertex AI");
     } else {
       System.out.println("Using Gemini Developer API");
+      client =
+          Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1beta").build()).build();
     }
 
     String getModelFromArgs = null;

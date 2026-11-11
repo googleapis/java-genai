@@ -47,6 +47,7 @@ import com.google.genai.types.CachedContent;
 import com.google.genai.types.Content;
 import com.google.genai.types.CreateCachedContentConfig;
 import com.google.genai.types.DeleteCachedContentResponse;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.ListCachedContentsConfig;
 import com.google.genai.types.Part;
 import com.google.genai.types.UpdateCachedContentConfig;
@@ -83,6 +84,8 @@ public final class CachedContentOperations {
       System.out.println("Using Vertex AI");
     } else {
       System.out.println("Using Gemini Developer API");
+      client =
+          Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1beta").build()).build();
     }
 
     // Create a cached content.

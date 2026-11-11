@@ -48,6 +48,7 @@ import com.google.genai.types.CachedContent;
 import com.google.genai.types.Content;
 import com.google.genai.types.CreateCachedContentConfig;
 import com.google.genai.types.DeleteCachedContentResponse;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.ListCachedContentsConfig;
 import com.google.genai.types.Part;
 import java.io.IOException;
@@ -81,12 +82,16 @@ public final class CachedContentOperationsAsync {
     // Note: Some services are only available in a specific API backend (Gemini or Vertex), you will
     // get a `UnsupportedOperationException` if you try to use a service that is not available in
     // the backend you are using.
-    Client client = new Client();
+    Client initialClient = new Client();
+    final Client client;
 
-    if (client.vertexAI()) {
+    if (initialClient.vertexAI()) {
       System.out.println("Using Vertex AI");
+      client = initialClient;
     } else {
       System.out.println("Using Gemini Developer API");
+      client =
+          Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1beta").build()).build();
     }
 
     // Download the PDF files for creating the cached content.

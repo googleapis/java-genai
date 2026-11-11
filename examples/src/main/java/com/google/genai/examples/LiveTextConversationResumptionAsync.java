@@ -53,6 +53,7 @@ package com.google.genai.examples;
 import com.google.genai.AsyncSession;
 import com.google.genai.Client;
 import com.google.genai.types.Content;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.LiveSendClientContentParameters;
 import com.google.genai.types.LiveServerContent;
@@ -110,6 +111,8 @@ public final class LiveTextConversationResumptionAsync {
       System.out.println("Using Vertex AI");
     } else {
       System.out.println("Using Gemini Developer API");
+      client =
+          Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1beta").build()).build();
     }
 
     final String modelId;
