@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.0](https://github.com/googleapis/java-genai/compare/v2.1.0...v2.2.0) (2026-11-11)
+
+
+### Features
+
+* add the Decisions API (`client.decisions.create`) to the GenAI SDKs ([237e9a3](https://github.com/googleapis/java-genai/commit/237e9a307db588cbf40d4051fdc717970b6165be))
+* **environments:** introduce self-hosted BYOS mode, system_instruction, custom_config, and environment_key in SDKs and CLI ([9470f2a](https://github.com/googleapis/java-genai/commit/9470f2a23f7c1caa3d748bf4c295b01a1a8be14e))
+
 ## [2.1.0](https://github.com/googleapis/java-genai/compare/v2.0.0...v2.1.0) (2026-11-10)
 
 
