@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.3.0](https://github.com/googleapis/java-genai/compare/v2.2.0...v2.3.0) (2026-11-12)
+
+
+### Features
+
+* Add `XHIGH` and `xhigh` to `ThinkingLevel` across GenAI SDKs and CLI. ([f5f483e](https://github.com/googleapis/java-genai/commit/f5f483e4a2d110f9112b732195eb885c2605e809))
+* Add missing enum values to FinishReason and ReinforcementTuningThinkingLevel ([db8f5b5](https://github.com/googleapis/java-genai/commit/db8f5b5002559246cbf87223dbc327aa1bee341c))
+* **interactions:** add gemini-4-hydrogen to Model enum ([d9bbad7](https://github.com/googleapis/java-genai/commit/d9bbad7674c01de0d26fd1f4d72b22c417cb77d9))
+
 ## [2.2.0](https://github.com/googleapis/java-genai/compare/v2.1.0...v2.2.0) (2026-11-11)
 
 
