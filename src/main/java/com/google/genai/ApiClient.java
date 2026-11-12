@@ -60,7 +60,7 @@ import org.jspecify.annotations.Nullable;
 public abstract class ApiClient implements AutoCloseable {
 
   // {x-version-update-start:google-genai:released}
-  private static final String SDK_VERSION = "2.2.0";
+  private static final String SDK_VERSION = "2.3.0";
   // {x-version-update-end:google-genai:released}
   static final String GOOGLE_AI_API_DEFAULT_VERSION =
       "v1";
@@ -746,9 +746,9 @@ public abstract class ApiClient implements AutoCloseable {
    * Merges two user agent values, handling a special case for vertex-genai-modules.
    *
    * <p>Example:
-   * <li>val1 = google-genai-sdk/2.2.0 gl-java/22.0.2
-   * <li>val2 = vertex-genai-modules/2.2.0
-   * <li>Result: google-genai-sdk/2.2.0+vertex-genai-modules/1.2.3 gl-java/22.0.2
+   * <li>val1 = google-genai-sdk/2.3.0 gl-java/22.0.2
+   * <li>val2 = vertex-genai-modules/2.3.0
+   * <li>Result: google-genai-sdk/2.3.0+vertex-genai-modules/1.2.3 gl-java/22.0.2
    *
    * @param val1 The first value.
    * @param val2 The second value.
