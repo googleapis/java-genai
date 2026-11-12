@@ -68,6 +68,7 @@ public class Model {
     public static final Model GEMINI38_FLASH = new Model("gemini-3.8-flash");
     public static final Model GEMINI4_ARGON = new Model("gemini-4-argon");
     public static final Model GEMINI4_CARBON = new Model("gemini-4-carbon");
+    public static final Model GEMINI4_HYDROGEN = new Model("gemini-4-hydrogen");
     public static final Model GEMINI38_FLASH_TTS = new Model("gemini-3.8-flash-tts");
     public static final Model GEMINI38_FLASH_LITE_TTS = new Model("gemini-3.8-flash-lite-tts");
     public static final Model GEMINI35_TRANSCRIBE = new Model("gemini-3.5-transcribe");
@@ -178,6 +179,7 @@ public class Model {
         map.put("gemini-3.8-flash", GEMINI38_FLASH);
         map.put("gemini-4-argon", GEMINI4_ARGON);
         map.put("gemini-4-carbon", GEMINI4_CARBON);
+        map.put("gemini-4-hydrogen", GEMINI4_HYDROGEN);
         map.put("gemini-3.8-flash-tts", GEMINI38_FLASH_TTS);
         map.put("gemini-3.8-flash-lite-tts", GEMINI38_FLASH_LITE_TTS);
         map.put("gemini-3.5-transcribe", GEMINI35_TRANSCRIBE);
@@ -220,6 +222,7 @@ public class Model {
         map.put("gemini-3.8-flash", ModelEnum.GEMINI38_FLASH);
         map.put("gemini-4-argon", ModelEnum.GEMINI4_ARGON);
         map.put("gemini-4-carbon", ModelEnum.GEMINI4_CARBON);
+        map.put("gemini-4-hydrogen", ModelEnum.GEMINI4_HYDROGEN);
         map.put("gemini-3.8-flash-tts", ModelEnum.GEMINI38_FLASH_TTS);
         map.put("gemini-3.8-flash-lite-tts", ModelEnum.GEMINI38_FLASH_LITE_TTS);
         map.put("gemini-3.5-transcribe", ModelEnum.GEMINI35_TRANSCRIBE);
@@ -263,6 +266,7 @@ public class Model {
         GEMINI38_FLASH("gemini-3.8-flash"),
         GEMINI4_ARGON("gemini-4-argon"),
         GEMINI4_CARBON("gemini-4-carbon"),
+        GEMINI4_HYDROGEN("gemini-4-hydrogen"),
         GEMINI38_FLASH_TTS("gemini-3.8-flash-tts"),
         GEMINI38_FLASH_LITE_TTS("gemini-3.8-flash-lite-tts"),
         GEMINI35_TRANSCRIBE("gemini-3.5-transcribe"),
