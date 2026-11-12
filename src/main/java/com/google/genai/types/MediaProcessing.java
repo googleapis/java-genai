@@ -23,12 +23,15 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** How the model processes input media for understanding. */
+/**
+ * How the model processes this part's media for understanding. Only meaningful for video parts
+ * (`inline_data` or `file_data` with video mime). Non-video parts ignore this field.
+ */
 public class MediaProcessing {
 
   /** Enum representing the known values for MediaProcessing. */
   public enum Known {
-    /** Default. Uses model-specific processing */
+    /** Defaults to model-specific processing. */
     MEDIA_PROCESSING_UNSPECIFIED,
 
     /** Fixed-rate frame extraction. All frames placed in context. */

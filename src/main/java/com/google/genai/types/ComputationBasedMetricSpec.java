@@ -31,7 +31,7 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = ComputationBasedMetricSpec.Builder.class)
 public abstract class ComputationBasedMetricSpec extends JsonSerializable {
-  /** The type of the computation based metric. */
+  /** Required. The type of the computation based metric. */
   @JsonProperty("type")
   public abstract Optional<ComputationBasedMetricType> type();
 
@@ -63,7 +63,7 @@ public abstract class ComputationBasedMetricSpec extends JsonSerializable {
     /**
      * Setter for type.
      *
-     * <p>type: The type of the computation based metric.
+     * <p>type: Required. The type of the computation based metric.
      */
     @JsonProperty("type")
     public abstract Builder type(ComputationBasedMetricType type);
@@ -81,7 +81,7 @@ public abstract class ComputationBasedMetricSpec extends JsonSerializable {
     /**
      * Setter for type given a known enum.
      *
-     * <p>type: The type of the computation based metric.
+     * <p>type: Required. The type of the computation based metric.
      */
     @CanIgnoreReturnValue
     public Builder type(ComputationBasedMetricType.Known knownType) {
@@ -91,7 +91,7 @@ public abstract class ComputationBasedMetricSpec extends JsonSerializable {
     /**
      * Setter for type given a string.
      *
-     * <p>type: The type of the computation based metric.
+     * <p>type: Required. The type of the computation based metric.
      */
     @CanIgnoreReturnValue
     public Builder type(String type) {

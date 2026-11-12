@@ -23,12 +23,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Represents the type of the computation based metric. */
+/** The type of the computation based metric. This enum is not supported in Gemini API. */
 public class ComputationBasedMetricType {
 
   /** Enum representing the known values for ComputationBasedMetricType. */
   public enum Known {
-    /** Computation based metric type is unspecified. */
+    /** Unspecified computation based metric type. */
     COMPUTATION_BASED_METRIC_TYPE_UNSPECIFIED,
 
     /** Exact match metric. */
