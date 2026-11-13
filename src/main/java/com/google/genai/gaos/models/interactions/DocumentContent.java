@@ -52,6 +52,18 @@ public class DocumentContent implements Content, FunctionResultSubcontent, Decis
     @JsonProperty("mime_type")
     private DocumentContentMimeType mimeType;
 
+    /**
+     * How the model processes this document for understanding.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("processing")
+    private DocumentProcessing processing;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("resolution")
+    private MediaResolution resolution;
+
 
     @JsonProperty("type")
     private String type;
@@ -67,15 +79,20 @@ public class DocumentContent implements Content, FunctionResultSubcontent, Decis
     public DocumentContent(
             @JsonProperty("data") @Nullable String data,
             @JsonProperty("mime_type") @Nullable DocumentContentMimeType mimeType,
+            @JsonProperty("processing") @Nullable DocumentProcessing processing,
+            @JsonProperty("resolution") @Nullable MediaResolution resolution,
             @JsonProperty("uri") @Nullable String uri) {
         this.data = data;
         this.mimeType = mimeType;
+        this.processing = processing;
+        this.resolution = resolution;
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
     }
     
     public DocumentContent() {
-        this(null, null, null);
+        this(null, null, null,
+            null, null);
     }
 
     /**
@@ -90,6 +107,17 @@ public class DocumentContent implements Content, FunctionResultSubcontent, Decis
      */
     public Optional<DocumentContentMimeType> mimeType() {
         return Optional.ofNullable(this.mimeType);
+    }
+
+    /**
+     * How the model processes this document for understanding.
+     */
+    public Optional<DocumentProcessing> processing() {
+        return Optional.ofNullable(this.processing);
+    }
+
+    public Optional<MediaResolution> resolution() {
+        return Optional.ofNullable(this.resolution);
     }
 
     @Override
@@ -128,6 +156,21 @@ public class DocumentContent implements Content, FunctionResultSubcontent, Decis
 
 
     /**
+     * How the model processes this document for understanding.
+     */
+    public DocumentContent withProcessing(@Nullable DocumentProcessing processing) {
+        this.processing = processing;
+        return this;
+    }
+
+
+    public DocumentContent withResolution(@Nullable MediaResolution resolution) {
+        this.resolution = resolution;
+        return this;
+    }
+
+
+    /**
      * The URI of the document.
      */
     public DocumentContent withUri(@Nullable String uri) {
@@ -148,6 +191,8 @@ public class DocumentContent implements Content, FunctionResultSubcontent, Decis
         return 
             Utils.enhancedDeepEquals(this.data, other.data) &&
             Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
+            Utils.enhancedDeepEquals(this.processing, other.processing) &&
+            Utils.enhancedDeepEquals(this.resolution, other.resolution) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
             Utils.enhancedDeepEquals(this.uri, other.uri);
     }
@@ -155,8 +200,8 @@ public class DocumentContent implements Content, FunctionResultSubcontent, Decis
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            data, mimeType, type,
-            uri);
+            data, mimeType, processing,
+            resolution, type, uri);
     }
     
     @Override
@@ -164,6 +209,8 @@ public class DocumentContent implements Content, FunctionResultSubcontent, Decis
         return Utils.toString(DocumentContent.class,
                 "data", data,
                 "mimeType", mimeType,
+                "processing", processing,
+                "resolution", resolution,
                 "type", type,
                 "uri", uri);
     }
@@ -174,6 +221,10 @@ public class DocumentContent implements Content, FunctionResultSubcontent, Decis
         private String data;
 
         private DocumentContentMimeType mimeType;
+
+        private DocumentProcessing processing;
+
+        private MediaResolution resolution;
 
         private String uri;
 
@@ -198,6 +249,19 @@ public class DocumentContent implements Content, FunctionResultSubcontent, Decis
         }
 
         /**
+         * How the model processes this document for understanding.
+         */
+        public Builder processing(@Nullable DocumentProcessing processing) {
+            this.processing = processing;
+            return this;
+        }
+
+        public Builder resolution(@Nullable MediaResolution resolution) {
+            this.resolution = resolution;
+            return this;
+        }
+
+        /**
          * The URI of the document.
          */
         public Builder uri(@Nullable String uri) {
@@ -207,7 +271,8 @@ public class DocumentContent implements Content, FunctionResultSubcontent, Decis
 
         public DocumentContent build() {
             return new DocumentContent(
-                data, mimeType, uri);
+                data, mimeType, processing,
+                resolution, uri);
         }
 
 
