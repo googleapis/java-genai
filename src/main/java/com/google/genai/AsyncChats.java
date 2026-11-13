@@ -16,7 +16,10 @@
 
 package com.google.genai;
 
+import com.google.common.collect.ImmutableList;
+import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentConfig;
+import java.util.List;
 
 /** A class for creating async chat sessions. */
 public class AsyncChats {
@@ -27,6 +30,24 @@ public class AsyncChats {
   }
 
   /**
+   * Creates a new async chat session that starts with the given history.
+   *
+   * <p>The history is sent to the model with every message, as if the turns in it had already taken
+   * place in this session. It must start with a {@code user} turn, and every turn must have the
+   * role {@code user} or {@code model}.
+   *
+   * @param model The model to use for the async chat session.
+   * @param config The configuration for the async chat session, or null.
+   * @param history The turns to start the session with.
+   * @return The async chat session.
+   * @throws IllegalArgumentException if the history does not start with a {@code user} turn, or has
+   *     a turn whose role is not {@code user} or {@code model}.
+   */
+  public AsyncChat create(String model, GenerateContentConfig config, List<Content> history) {
+    return privateCreate(model, config, history);
+  }
+
+  /**
    * Creates a new async chat session.
    *
    * @param model The model to use for the async chat session.
@@ -34,7 +55,7 @@ public class AsyncChats {
    * @return The async chat session.
    */
   public AsyncChat create(String model, GenerateContentConfig config) {
-    return privateCreate(model, config);
+    return privateCreate(model, config, ImmutableList.of());
   }
 
   /**
@@ -44,10 +65,11 @@ public class AsyncChats {
    * @return The async chat session.
    */
   public AsyncChat create(String model) {
-    return privateCreate(model, null);
+    return privateCreate(model, null, ImmutableList.of());
   }
 
-  private AsyncChat privateCreate(String model, GenerateContentConfig config) {
-    return new AsyncChat(apiClient, model, config);
+  private AsyncChat privateCreate(
+      String model, GenerateContentConfig config, List<Content> history) {
+    return new AsyncChat(apiClient, model, config, history);
   }
 }
