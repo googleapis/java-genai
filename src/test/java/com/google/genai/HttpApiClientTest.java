@@ -111,6 +111,14 @@ public class HttpApiClientTest {
   @Mock OkHttpClient mockHttpClient;
   @Mock Call mockCall;
 
+  private static RetryInterceptor retryInterceptor(OkHttpClient httpClient) {
+    return (RetryInterceptor)
+        httpClient.interceptors().stream()
+            .filter(interceptor -> interceptor instanceof RetryInterceptor)
+            .findFirst()
+            .get();
+  }
+
   private void setMockClient(HttpApiClient client) throws Exception {
     mockHttpClient = Mockito.mock(OkHttpClient.class);
     mockCall = Mockito.mock(Call.class);
@@ -289,11 +297,6 @@ public class HttpApiClientTest {
         new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
     setMockClient(client);
 
-    okhttp3.OkHttpClient.Builder mockBuilder = Mockito.mock(okhttp3.OkHttpClient.Builder.class);
-    when(mockHttpClient.newBuilder()).thenReturn(mockBuilder);
-    when(mockBuilder.callTimeout(any(java.time.Duration.class))).thenReturn(mockBuilder);
-    when(mockBuilder.build()).thenReturn(mockHttpClient);
-
     Optional<HttpOptions> requestOptions =
         Optional.of(HttpOptions.builder().timeout(30000).build());
 
@@ -301,10 +304,11 @@ public class HttpApiClientTest {
     client.request("POST", TEST_PATH, TEST_REQUEST_JSON, requestOptions);
 
     // Assert
-    verify(mockHttpClient).newBuilder();
-    verify(mockBuilder).callTimeout(java.time.Duration.ofMillis(30000));
-    verify(mockBuilder).build();
-    verify(mockHttpClient).newCall(any(okhttp3.Request.class));
+    // RetryInterceptor reads the timeout from the request, so no client is rebuilt for it.
+    verify(mockHttpClient, never()).newBuilder();
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    assertEquals(Optional.of(30000), requestCaptor.getValue().tag(HttpOptions.class).timeout());
   }
 
   @Test
@@ -1105,7 +1109,8 @@ public class HttpApiClientTest {
     OkHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
-    assertEquals(5000, httpClient.callTimeoutMillis());
+    assertEquals(0, httpClient.callTimeoutMillis());
+    assertEquals(Optional.of(5000), retryInterceptor(httpClient).timeout());
     assertEquals(API_KEY, client.apiKey());
     assertFalse(client.vertexAI());
   }
@@ -1125,7 +1130,8 @@ public class HttpApiClientTest {
     OkHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
-    assertEquals(4999, httpClient.callTimeoutMillis());
+    assertEquals(0, httpClient.callTimeoutMillis());
+    assertEquals(Optional.of(4999), retryInterceptor(httpClient).timeout());
     assertEquals(PROJECT, client.project());
     assertEquals(LOCATION, client.location());
     assertTrue(client.vertexAI());

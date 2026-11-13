@@ -32,12 +32,18 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.google.common.collect.ImmutableList;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.HttpRetryOptions;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.SocketTimeoutException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -104,7 +110,6 @@ class RetryInterceptorTest {
     // An IOException
     ioException = new IOException("Network failed");
   }
-
 
   /** Helper to create mock OkHttp Responses. */
   private Response createMockResponse(int code) {
@@ -337,6 +342,96 @@ class RetryInterceptorTest {
   }
 
   @Test
+  void testIntercept_Timeout_AppliesToEveryAttempt() throws Exception {
+    RetryInterceptor interceptor = new RetryInterceptor(fastRetryOptions(), Optional.of(1234));
+
+    List<List<Integer>> timeouts =
+        attemptTimeouts(new OkHttpClient.Builder(), interceptor, baseRequest);
+
+    assertEquals(
+        ImmutableList.of(ImmutableList.of(1234, 1234, 1234), ImmutableList.of(1234, 1234, 1234)),
+        timeouts);
+  }
+
+  @Test
+  void testIntercept_PerRequestTimeout_OverridesClientTimeout() throws Exception {
+    RetryInterceptor interceptor = new RetryInterceptor(fastRetryOptions(), Optional.of(1234));
+    Request request =
+        baseRequest
+            .newBuilder()
+            .tag(HttpOptions.class, HttpOptions.builder().timeout(500).build())
+            .build();
+
+    List<List<Integer>> timeouts =
+        attemptTimeouts(new OkHttpClient.Builder(), interceptor, request);
+
+    assertEquals(
+        ImmutableList.of(ImmutableList.of(500, 500, 500), ImmutableList.of(500, 500, 500)),
+        timeouts);
+  }
+
+  @Test
+  void testIntercept_NoTimeout_KeepsClientTimeouts() throws Exception {
+    RetryInterceptor interceptor = new RetryInterceptor(fastRetryOptions());
+    OkHttpClient.Builder clientBuilder =
+        new OkHttpClient.Builder()
+            .connectTimeout(Duration.ofMillis(1001))
+            .readTimeout(Duration.ofMillis(1002))
+            .writeTimeout(Duration.ofMillis(1003));
+
+    List<List<Integer>> timeouts = attemptTimeouts(clientBuilder, interceptor, baseRequest);
+
+    assertEquals(
+        ImmutableList.of(ImmutableList.of(1001, 1002, 1003), ImmutableList.of(1001, 1002, 1003)),
+        timeouts);
+  }
+
+  @Test
+  void testIntercept_AttemptTimesOut_IsNotRetried() throws Exception {
+    AtomicInteger attempts = new AtomicInteger();
+    // Accepts connections through the listen backlog but never responds.
+    try (ServerSocket server = new ServerSocket(0, 50, InetAddress.getByName("127.0.0.1"))) {
+      OkHttpClient client =
+          new OkHttpClient.Builder()
+              .addInterceptor(new RetryInterceptor(fastRetryOptions(), Optional.of(200)))
+              .addInterceptor(countingInterceptor(attempts))
+              .build();
+      Request request =
+          new Request.Builder().url("http://127.0.0.1:" + server.getLocalPort()).build();
+
+      assertTimeoutPreemptively(
+          Duration.ofSeconds(5),
+          () ->
+              assertThrows(SocketTimeoutException.class, () -> client.newCall(request).execute()));
+    }
+
+    assertEquals(1, attempts.get());
+  }
+
+  @Test
+  void testIntercept_ClientReadTimeoutWithoutHttpOptionsTimeout_IsRetried() throws Exception {
+    AtomicInteger attempts = new AtomicInteger();
+    // Accepts connections through the listen backlog but never responds.
+    try (ServerSocket server = new ServerSocket(0, 50, InetAddress.getByName("127.0.0.1"))) {
+      OkHttpClient client =
+          new OkHttpClient.Builder()
+              .readTimeout(Duration.ofMillis(200))
+              .addInterceptor(new RetryInterceptor(fastRetryOptions()))
+              .addInterceptor(countingInterceptor(attempts))
+              .build();
+      Request request =
+          new Request.Builder().url("http://127.0.0.1:" + server.getLocalPort()).build();
+
+      assertTimeoutPreemptively(
+          Duration.ofSeconds(5),
+          () ->
+              assertThrows(SocketTimeoutException.class, () -> client.newCall(request).execute()));
+    }
+
+    assertEquals(2, attempts.get());
+  }
+
+  @Test
   void testCalculateDelay_FirstAttempt() {
     RetryInterceptor interceptor = new RetryInterceptor(retryOptions, random);
     random.setNextDouble(0.5);
@@ -387,6 +482,49 @@ class RetryInterceptorTest {
 
     // Default maxDelay is 60.0
     assertEquals(60000L, delayMs);
+  }
+
+  /** Two attempts on 503 with no backoff delay. */
+  private static HttpRetryOptions fastRetryOptions() {
+    return HttpRetryOptions.builder().attempts(2).httpStatusCodes(503).initialDelay(0.0).build();
+  }
+
+  /**
+   * Sends {@code request} through a client whose last interceptor answers 503 and then 200 without
+   * a network call, and returns the connect, read and write timeouts each attempt ran with.
+   */
+  private static List<List<Integer>> attemptTimeouts(
+      OkHttpClient.Builder clientBuilder, RetryInterceptor retryInterceptor, Request request)
+      throws IOException {
+    List<List<Integer>> timeouts = new ArrayList<>();
+    OkHttpClient client =
+        clientBuilder
+            .addInterceptor(retryInterceptor)
+            .addInterceptor(
+                attemptChain -> {
+                  timeouts.add(
+                      ImmutableList.of(
+                          attemptChain.connectTimeoutMillis(),
+                          attemptChain.readTimeoutMillis(),
+                          attemptChain.writeTimeoutMillis()));
+                  return new Response.Builder()
+                      .request(attemptChain.request())
+                      .protocol(Protocol.HTTP_1_1)
+                      .code(timeouts.size() == 1 ? 503 : 200)
+                      .message("Fake response")
+                      .body(ResponseBody.create("", MediaType.get("application/json")))
+                      .build();
+                })
+            .build();
+    client.newCall(request).execute().close();
+    return timeouts;
+  }
+
+  private static Interceptor countingInterceptor(AtomicInteger attempts) {
+    return attemptChain -> {
+      attempts.incrementAndGet();
+      return attemptChain.proceed(attemptChain.request());
+    };
   }
 
   private static class FakeRandom extends Random {

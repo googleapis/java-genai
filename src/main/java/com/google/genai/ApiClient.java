@@ -306,11 +306,10 @@ public abstract class ApiClient implements AutoCloseable {
           });
     }
 
-    httpOptions.timeout().ifPresent(timeout -> builder.callTimeout(Duration.ofMillis(timeout)));
-
     HttpRetryOptions retryOptions =
         httpOptions.retryOptions().orElse(HttpRetryOptions.builder().build());
-    builder.addInterceptor(new RetryInterceptor(retryOptions));
+    // RetryInterceptor applies HttpOptions.timeout to each attempt.
+    builder.addInterceptor(new RetryInterceptor(retryOptions, httpOptions.timeout()));
     // Must come after RetryInterceptor so that it runs once per attempt.
     builder.addInterceptor(new Reauthorizer());
 

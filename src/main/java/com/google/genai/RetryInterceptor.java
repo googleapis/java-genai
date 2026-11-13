@@ -17,9 +17,12 @@
 package com.google.genai;
 
 import com.google.common.collect.ImmutableList;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.HttpRetryOptions;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
@@ -50,16 +53,30 @@ class RetryInterceptor implements Interceptor {
   private static final long CANCELLATION_CHECK_INTERVAL_MILLIS = 100;
 
   private final HttpRetryOptions retryOptions;
+  private final Optional<Integer> timeout;
   private final Random random;
 
   /** Creates an interceptor with a retry strategy. */
   RetryInterceptor(HttpRetryOptions retryOptions) {
-    this(retryOptions, new Random());
+    this(retryOptions, Optional.empty());
+  }
+
+  /**
+   * Creates an interceptor with a retry strategy and a timeout in milliseconds for each attempt.
+   */
+  RetryInterceptor(HttpRetryOptions retryOptions, Optional<Integer> timeout) {
+    this(retryOptions, timeout, new Random());
   }
 
   /** Constructor for testing. Allows injecting a mock Random. */
   RetryInterceptor(HttpRetryOptions retryOptions, Random random) {
+    this(retryOptions, Optional.empty(), random);
+  }
+
+  private RetryInterceptor(
+      HttpRetryOptions retryOptions, Optional<Integer> timeout, Random random) {
     this.retryOptions = retryOptions;
+    this.timeout = timeout;
     this.random = random;
   }
 
@@ -73,8 +90,26 @@ class RetryInterceptor implements Interceptor {
     // Use per-request options if present, otherwise fall back to client-default options.
     HttpRetryOptions options = (perRequestOptions != null) ? perRequestOptions : this.retryOptions;
 
+    // A per-request timeout overrides the client-level one.
+    HttpOptions perRequestHttpOptions = request.tag(HttpOptions.class);
+    Optional<Integer> attemptTimeout =
+        (perRequestHttpOptions != null && perRequestHttpOptions.timeout().isPresent())
+            ? perRequestHttpOptions.timeout()
+            : this.timeout;
+    Chain attemptChain = chain;
+    if (attemptTimeout.isPresent()) {
+      // Timeouts set on the chain bound each attempt. OkHttp's callTimeout would instead cancel the
+      // whole call, and every retry with it.
+      int timeoutMillis = attemptTimeout.get();
+      attemptChain =
+          chain
+              .withConnectTimeout(timeoutMillis, TimeUnit.MILLISECONDS)
+              .withReadTimeout(timeoutMillis, TimeUnit.MILLISECONDS)
+              .withWriteTimeout(timeoutMillis, TimeUnit.MILLISECONDS);
+    }
+
     if (options == null) {
-      return chain.proceed(request);
+      return attemptChain.proceed(request);
     }
 
     Call call = chain.call();
@@ -84,12 +119,12 @@ class RetryInterceptor implements Interceptor {
     List<Integer> httpStatusCodes = options.httpStatusCodes().orElse(RETRY_HTTP_STATUS_CODES);
 
     for (int attempt = 1; attempt <= maxAttempts; attempt++) {
-      // A canceled call, for example one whose HttpOptions.timeout expired, can never succeed.
+      // A canceled call, for example one whose OkHttp callTimeout expired, can never succeed.
       if (call.isCanceled()) {
         throw new IOException("Canceled");
       }
       try {
-        response = chain.proceed(request);
+        response = attemptChain.proceed(request);
         // If the response is successful, the response code is not in the retry list, or this was
         // the last attempt, exit the attempt loop.
         if (response.isSuccessful()
@@ -101,7 +136,11 @@ class RetryInterceptor implements Interceptor {
         // attempt.
         response.close();
       } catch (IOException e) {
-        if (attempt == maxAttempts || call.isCanceled()) {
+        // An attempt that ran out of time is not retried, so that retries don't multiply how long
+        // the caller waits.
+        if (attempt == maxAttempts
+            || call.isCanceled()
+            || (attemptTimeout.isPresent() && e instanceof SocketTimeoutException)) {
           throw e;
         }
       }
@@ -134,6 +173,11 @@ class RetryInterceptor implements Interceptor {
   /** Returns the client-level retry options. */
   HttpRetryOptions retryOptions() {
     return retryOptions;
+  }
+
+  /** Returns the client-level timeout in milliseconds for each attempt. */
+  Optional<Integer> timeout() {
+    return timeout;
   }
 
   /** Sleeps for the given delay, returning early if the call is canceled in the meantime. */
