@@ -17,6 +17,7 @@
 package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -529,5 +530,33 @@ public class TransformersTest {
   @Test
   public void camelToSnake_withNumbers() {
     assertEquals("test_string123", Transformers.camelToSnake("testString123"));
+  }
+
+  @Test
+  public void tIsVertexEmbedContentModel_routesGeminiAndMaasByModelId() {
+    assertTrue(Transformers.tIsVertexEmbedContentModel("gemini-embedding-001"));
+    assertTrue(Transformers.tIsVertexEmbedContentModel("gemini-embedding-2"));
+    assertTrue(
+        Transformers.tIsVertexEmbedContentModel("publishers/google/models/gemini-embedding-001"));
+    assertTrue(
+        Transformers.tIsVertexEmbedContentModel(
+            "publishers/intfloat/models/multilingual-e5-large-instruct-maas"));
+    assertFalse(Transformers.tIsVertexEmbedContentModel("text-embedding-005"));
+    assertFalse(Transformers.tIsVertexEmbedContentModel("text-embedding-004"));
+    assertFalse(Transformers.tIsVertexEmbedContentModel("text-multilingual-embedding-002"));
+    assertFalse(Transformers.tIsVertexEmbedContentModel("textembedding-gecko@003"));
+    assertFalse(
+        Transformers.tIsVertexEmbedContentModel(
+            "projects/my-gemini-app/locations/us-central1/publishers/google/models/text-embedding-005"));
+    assertFalse(
+        Transformers.tIsVertexEmbedContentModel(
+            "projects/my-gemini-app/locations/us-central1/endpoints/12345"));
+    assertTrue(
+        Transformers.tIsVertexMaasModel(
+            "publishers/intfloat/models/multilingual-e5-large-instruct-maas"));
+    assertFalse(Transformers.tIsVertexMaasModel("gemini-embedding-001"));
+    assertFalse(
+        Transformers.tIsVertexMaasModel(
+            "projects/my-maas-app/locations/us-central1/publishers/google/models/gemini-embedding-001"));
   }
 }

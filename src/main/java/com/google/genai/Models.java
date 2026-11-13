@@ -7511,19 +7511,15 @@ public final class Models {
    */
   public EmbedContentResponse embedContent(
       String model, Content content, EmbedContentConfig config) {
-    List<Content> contents = new ArrayList<>();
-    contents.add(content);
-    boolean isVertexEmbedContentModel =
-        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
-    if (isVertexEmbedContentModel && contents.size() > 1) {
-      throw new IllegalArgumentException(
-          "The embedContent API for this model only supports one content at a time.");
+    if (!this.apiClient.vertexAI()) {
+      return privateEmbedContent(model, ImmutableList.of(content), null, null, null, config);
     }
-    EmbeddingApiType apiType =
-        isVertexEmbedContentModel
-            ? new EmbeddingApiType("EMBED_CONTENT")
-            : new EmbeddingApiType("PREDICT");
-    return privateEmbedContent(model, contents, content, apiType, null, config);
+    if (Transformers.tIsVertexEmbedContentModel(model)) {
+      return privateEmbedContent(
+          model, null, content, new EmbeddingApiType("EMBED_CONTENT"), null, config);
+    }
+    return privateEmbedContent(
+        model, ImmutableList.of(content), null, new EmbeddingApiType("PREDICT"), null, config);
   }
 
   /**
@@ -7540,21 +7536,24 @@ public final class Models {
     for (String text : texts) {
       contents.add(Content.fromParts(Part.fromText(text)));
     }
-    Content content = null;
-    if (!contents.isEmpty()) {
-      content = contents.get(0);
+    if (!this.apiClient.vertexAI()) {
+      return privateEmbedContent(model, contents, null, null, null, config);
     }
-    boolean isVertexEmbedContentModel =
-        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
-    if (isVertexEmbedContentModel && contents.size() > 1) {
-      throw new IllegalArgumentException(
-          "The embedContent API for this model only supports one content at a time.");
+    if (Transformers.tIsVertexEmbedContentModel(model)) {
+      if (contents.size() > 1) {
+        if (Transformers.tIsVertexMaasModel(model)) {
+          throw new IllegalArgumentException(
+              "The embedContent API for this model only supports one content at a time.");
+        }
+        return privateEmbedContent(
+            model, null, null, new EmbeddingApiType("BATCH_EMBED_CONTENTS"), contents, config);
+      }
+      Content content = contents.isEmpty() ? null : contents.get(0);
+      return privateEmbedContent(
+          model, null, content, new EmbeddingApiType("EMBED_CONTENT"), null, config);
     }
-    EmbeddingApiType apiType =
-        isVertexEmbedContentModel
-            ? new EmbeddingApiType("EMBED_CONTENT")
-            : new EmbeddingApiType("PREDICT");
-    return privateEmbedContent(model, contents, content, apiType, null, config);
+    return privateEmbedContent(
+        model, contents, null, new EmbeddingApiType("PREDICT"), null, config);
   }
 
   /**
@@ -7568,27 +7567,34 @@ public final class Models {
     } else if (contents instanceof List) {
       List<?> contentsObjectList = (List<?>) contents;
       for (Object item : contentsObjectList) {
-        contentList.add(JsonSerializable.objectMapper.convertValue(item, Content.class));
+        if (item instanceof String) {
+          contentList.add(Content.fromParts(Part.fromText((String) item)));
+        } else {
+          contentList.add(JsonSerializable.objectMapper.convertValue(item, Content.class));
+        }
       }
     } else {
       throw new IllegalArgumentException("Unsupported contents type: " + contents.getClass());
     }
 
-    Content content = null;
-    if (contentList != null && !contentList.isEmpty()) {
-      content = contentList.get(0);
+    if (!this.apiClient.vertexAI()) {
+      return privateEmbedContent(model, contentList, null, null, null, config);
     }
-    boolean isVertexEmbedContentModel =
-        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
-    if (isVertexEmbedContentModel && contentList.size() > 1) {
-      throw new IllegalArgumentException(
-          "The embedContent API for this model only supports one content at a time.");
+    if (Transformers.tIsVertexEmbedContentModel(model)) {
+      if (contentList.size() > 1) {
+        if (Transformers.tIsVertexMaasModel(model)) {
+          throw new IllegalArgumentException(
+              "The embedContent API for this model only supports one content at a time.");
+        }
+        return privateEmbedContent(
+            model, null, null, new EmbeddingApiType("BATCH_EMBED_CONTENTS"), contentList, config);
+      }
+      Content content = contentList.isEmpty() ? null : contentList.get(0);
+      return privateEmbedContent(
+          model, null, content, new EmbeddingApiType("EMBED_CONTENT"), null, config);
     }
-    EmbeddingApiType apiType =
-        isVertexEmbedContentModel
-            ? new EmbeddingApiType("EMBED_CONTENT")
-            : new EmbeddingApiType("PREDICT");
-    return privateEmbedContent(model, contentList, content, apiType, null, config);
+    return privateEmbedContent(
+        model, contentList, null, new EmbeddingApiType("PREDICT"), null, config);
   }
 
   /**

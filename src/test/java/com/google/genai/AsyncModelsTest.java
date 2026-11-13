@@ -1065,6 +1065,70 @@ public class AsyncModelsTest {
     assertTrue(bodies.getAllValues().get(2).contains("functionResponse"));
   }
 
+  @Test
+  public void testEmbedContentAsync_vertexRouting() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.vertexAI()).thenReturn(true);
+    when(apiClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(
+                new FakeApiResponse(
+                    Headers.of(),
+                    ResponseBody.create(
+                        "{\"embedding\":{\"values\":[0.1,0.2]}}",
+                        MediaType.get("application/json")))),
+            CompletableFuture.completedFuture(
+                new FakeApiResponse(
+                    Headers.of(),
+                    ResponseBody.create(
+                        "{\"embeddings\":[{\"values\":[0.1]},{\"values\":[0.2]}]}",
+                        MediaType.get("application/json")))),
+            CompletableFuture.completedFuture(
+                new FakeApiResponse(
+                    Headers.of(),
+                    ResponseBody.create(
+                        "{\"predictions\":[{\"embeddings\":{\"values\":[0.5]}}]}",
+                        MediaType.get("application/json")))));
+    AsyncModels asyncModels = new AsyncModels(apiClient);
+
+    EmbedContentResponse single =
+        asyncModels
+            .embedContent("gemini-embedding-001", Content.fromParts(Part.fromText("hi")), null)
+            .join();
+    EmbedContentResponse batch =
+        asyncModels.embedContent("gemini-embedding-2", ImmutableList.of("a", "b"), null).join();
+    EmbedContentResponse predict =
+        asyncModels
+            .embedContent("text-embedding-005", Content.fromParts(Part.fromText("hi")), null)
+            .join();
+
+    ArgumentCaptor<String> paths = ArgumentCaptor.forClass(String.class);
+    verify(apiClient, times(3)).asyncRequest(anyString(), paths.capture(), anyString(), any());
+    assertEquals(
+        "publishers/google/models/gemini-embedding-001:embedContent", paths.getAllValues().get(0));
+    assertEquals(
+        "publishers/google/models/gemini-embedding-2:batchEmbedContents",
+        paths.getAllValues().get(1));
+    assertEquals(
+        "publishers/google/models/text-embedding-005:predict", paths.getAllValues().get(2));
+    assertEquals(1, single.embeddings().get().size());
+    assertEquals(2, batch.embeddings().get().size());
+    assertEquals(1, predict.embeddings().get().size());
+
+    IllegalArgumentException maasEx =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                asyncModels.embedContent(
+                    "publishers/intfloat/models/multilingual-e5-large-instruct-maas",
+                    ImmutableList.of("a", "b"),
+                    null));
+    assertEquals(
+        "The embedContent API for this model only supports one content at a time.",
+        maasEx.getMessage());
+    verify(apiClient, times(3)).asyncRequest(anyString(), anyString(), anyString(), any());
+  }
+
   public static String describeTopic(String topic) {
     return topic + " translate code";
   }

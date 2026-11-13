@@ -1056,21 +1056,24 @@ public final class AsyncModels {
     for (String text : texts) {
       contents.add(Content.fromParts(Part.fromText(text)));
     }
-    Content content = null;
-    if (!contents.isEmpty()) {
-      content = contents.get(0);
+    if (!this.apiClient.vertexAI()) {
+      return privateEmbedContent(model, contents, null, null, null, config);
     }
-    boolean isVertexEmbedContentModel =
-        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
-    if (isVertexEmbedContentModel && contents.size() > 1) {
-      throw new IllegalArgumentException(
-          "The embedContent API for this model only supports one content at a time.");
+    if (Transformers.tIsVertexEmbedContentModel(model)) {
+      if (contents.size() > 1) {
+        if (Transformers.tIsVertexMaasModel(model)) {
+          throw new IllegalArgumentException(
+              "The embedContent API for this model only supports one content at a time.");
+        }
+        return privateEmbedContent(
+            model, null, null, new EmbeddingApiType("BATCH_EMBED_CONTENTS"), contents, config);
+      }
+      Content content = contents.isEmpty() ? null : contents.get(0);
+      return privateEmbedContent(
+          model, null, content, new EmbeddingApiType("EMBED_CONTENT"), null, config);
     }
-    EmbeddingApiType apiType =
-        isVertexEmbedContentModel
-            ? new EmbeddingApiType("EMBED_CONTENT")
-            : new EmbeddingApiType("PREDICT");
-    return privateEmbedContent(model, contents, content, apiType, null, config);
+    return privateEmbedContent(
+        model, contents, null, new EmbeddingApiType("PREDICT"), null, config);
   }
 
   /**
@@ -1083,19 +1086,15 @@ public final class AsyncModels {
    */
   public CompletableFuture<EmbedContentResponse> embedContent(
       String model, Content content, EmbedContentConfig config) {
-    List<Content> contents = new ArrayList<>();
-    contents.add(content);
-    boolean isVertexEmbedContentModel =
-        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
-    if (isVertexEmbedContentModel && contents.size() > 1) {
-      throw new IllegalArgumentException(
-          "The embedContent API for this model only supports one content at a time.");
+    if (!this.apiClient.vertexAI()) {
+      return privateEmbedContent(model, ImmutableList.of(content), null, null, null, config);
     }
-    EmbeddingApiType apiType =
-        isVertexEmbedContentModel
-            ? new EmbeddingApiType("EMBED_CONTENT")
-            : new EmbeddingApiType("PREDICT");
-    return privateEmbedContent(model, contents, content, apiType, null, config);
+    if (Transformers.tIsVertexEmbedContentModel(model)) {
+      return privateEmbedContent(
+          model, null, content, new EmbeddingApiType("EMBED_CONTENT"), null, config);
+    }
+    return privateEmbedContent(
+        model, ImmutableList.of(content), null, new EmbeddingApiType("PREDICT"), null, config);
   }
 
   /**

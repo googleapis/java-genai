@@ -779,9 +779,20 @@ public final class Transformers {
    * @return True if the model is a Vertex AI embed content model, false otherwise.
    */
   public static boolean tIsVertexEmbedContentModel(String model) {
-    // Gemini Embeddings except gemini-embedding-001.
-    return (model.contains("gemini") && !model.contains("gemini-embedding-001"))
-        // Open-source MaaS embedding models.
-        || model.contains("maas");
+    int lastSlash = model.lastIndexOf('/');
+    String modelId = lastSlash >= 0 ? model.substring(lastSlash + 1) : model;
+    return modelId.contains("gemini") || modelId.contains("maas");
+  }
+
+  /**
+   * Checks if a given model name is a third-party MaaS model on Gemini Enterprise API.
+   *
+   * @param model The model name to check.
+   * @return True if the model ID contains "maas", false otherwise.
+   */
+  public static boolean tIsVertexMaasModel(String model) {
+    int lastSlash = model.lastIndexOf('/');
+    String modelId = lastSlash >= 0 ? model.substring(lastSlash + 1) : model;
+    return modelId.contains("maas");
   }
 }

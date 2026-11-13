@@ -932,6 +932,109 @@ public class ModelsTest {
     sentBodies(apiClient, 1);
   }
 
+  @Test
+  public void testEmbedContent_vertexRoutingAndPayloads() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.vertexAI()).thenReturn(true);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            rawJsonResponse(
+                "{\"embedding\":{\"values\":[0.1,0.2]},"
+                    + "\"usageMetadata\":{\"promptTokenCount\":4,\"trafficType\":\"PROVISIONED_THROUGHPUT\"},"
+                    + "\"truncated\":false}"),
+            rawJsonResponse(
+                "{\"embeddings\":[{\"values\":[0.1,0.2]},{\"values\":[0.3,0.4]}],"
+                    + "\"usageMetadata\":{\"promptTokenCount\":8,\"trafficType\":\"ON_DEMAND\"}}"),
+            rawJsonResponse(
+                "{\"predictions\":[{\"embeddings\":{\"values\":[0.5,0.6],"
+                    + "\"statistics\":{\"token_count\":3,\"truncated\":false}}}],"
+                    + "\"metadata\":{\"billableCharacterCount\":10}}"),
+            rawJsonResponse("{\"predictions\":[{\"embeddings\":{\"values\":[0.7,0.8]}}]}"));
+    Models models = new Models(apiClient);
+    EmbedContentConfig config =
+        EmbedContentConfig.builder()
+            .outputDimensionality(2)
+            .taskType("RETRIEVAL_DOCUMENT")
+            .title("doc")
+            .autoTruncate(true)
+            .build();
+
+    EmbedContentResponse singleResp =
+        models.embedContent("gemini-embedding-001", Content.fromParts(Part.fromText("hi")), config);
+    EmbedContentResponse batchResp =
+        models.embedContent("gemini-embedding-001", ImmutableList.of("one", "two"), config);
+    EmbedContentResponse predictResp = models.embedContent("text-embedding-005", "legacy", config);
+    EmbedContentResponse projectPathPredictResp =
+        models.embedContent(
+            "projects/my-gemini-app/locations/us-central1/publishers/google/models/text-embedding-005",
+            Content.fromParts(Part.fromText("legacy")),
+            null);
+
+    ArgumentCaptor<String> paths = ArgumentCaptor.forClass(String.class);
+    ArgumentCaptor<String> bodies = ArgumentCaptor.forClass(String.class);
+    verify(apiClient, times(4)).request(anyString(), paths.capture(), bodies.capture(), any());
+
+    assertEquals(
+        "publishers/google/models/gemini-embedding-001:embedContent", paths.getAllValues().get(0));
+    ObjectNode singleBody =
+        (ObjectNode) JsonSerializable.stringToJsonNode(bodies.getAllValues().get(0));
+    assertTrue(singleBody.has("content"));
+    assertFalse(singleBody.has("instances"));
+    assertFalse(singleBody.has("requests"));
+    assertEquals(2, singleBody.get("embedContentConfig").get("outputDimensionality").asInt());
+    assertEquals(1, singleResp.embeddings().get().size());
+    assertEquals(
+        "PROVISIONED_THROUGHPUT", singleResp.usageMetadata().get().trafficType().get().toString());
+
+    assertEquals(
+        "publishers/google/models/gemini-embedding-001:batchEmbedContents",
+        paths.getAllValues().get(1));
+    ObjectNode batchBody =
+        (ObjectNode) JsonSerializable.stringToJsonNode(bodies.getAllValues().get(1));
+    assertFalse(batchBody.has("content"));
+    assertFalse(batchBody.has("instances"));
+    assertEquals(2, batchBody.get("requests").size());
+    assertEquals(
+        "one",
+        batchBody.get("requests").get(0).get("content").get("parts").get(0).get("text").asText());
+    assertEquals(
+        "RETRIEVAL_DOCUMENT",
+        batchBody.get("requests").get(1).get("embedContentConfig").get("taskType").asText());
+    assertEquals(2, batchResp.embeddings().get().size());
+    assertEquals("ON_DEMAND", batchResp.usageMetadata().get().trafficType().get().toString());
+
+    assertEquals(
+        "publishers/google/models/text-embedding-005:predict", paths.getAllValues().get(2));
+    ObjectNode predictBody =
+        (ObjectNode) JsonSerializable.stringToJsonNode(bodies.getAllValues().get(2));
+    assertTrue(predictBody.has("instances"));
+    assertTrue(predictBody.has("parameters"));
+    assertEquals(1, predictResp.embeddings().get().size());
+
+    assertEquals(
+        "projects/my-gemini-app/locations/us-central1/publishers/google/models/text-embedding-005:predict",
+        paths.getAllValues().get(3));
+    assertEquals(1, projectPathPredictResp.embeddings().get().size());
+
+    IllegalArgumentException maasEx =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                models.embedContent(
+                    "publishers/intfloat/models/multilingual-e5-large-instruct-maas",
+                    ImmutableList.of("one", "two"),
+                    config));
+    assertEquals(
+        "The embedContent API for this model only supports one content at a time.",
+        maasEx.getMessage());
+    verify(apiClient, times(4)).request(anyString(), anyString(), anyString(), any());
+  }
+
+  private static ApiResponse rawJsonResponse(String json) {
+    return new FakeApiResponse(
+        Headers.of(), ResponseBody.create(json, MediaType.get("application/json")));
+  }
+
   public static String describeTopic(String topic) {
     return topic + " translate code";
   }
