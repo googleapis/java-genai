@@ -1835,6 +1835,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"store"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"testGithubActionsField"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"testGithubActionsField"},
+          Common.getValueByPath(fromObject, new String[] {"testGithubActionsField"}));
+    }
+
     return toObject;
   }
 
@@ -2113,6 +2120,13 @@ public final class Models {
       throw new IllegalArgumentException(
           "store parameter is only supported in Gemini Developer API mode, not in Gemini Enterprise"
               + " Agent Platform mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"testGithubActionsField"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"testGithubActionsField"},
+          Common.getValueByPath(fromObject, new String[] {"testGithubActionsField"}));
     }
 
     return toObject;

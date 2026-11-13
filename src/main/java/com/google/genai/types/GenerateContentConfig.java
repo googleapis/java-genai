@@ -273,6 +273,10 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("store")
   public abstract Optional<Boolean> store();
 
+  /** Temporary test field to trigger Copybara GitHub PRs and verify GitHub Actions. */
+  @JsonProperty("testGithubActionsField")
+  public abstract Optional<String> testGithubActionsField();
+
   /** Instantiates a builder for GenerateContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -1298,6 +1302,25 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearStore() {
       return store(Optional.empty());
+    }
+
+    /**
+     * Setter for testGithubActionsField.
+     *
+     * <p>testGithubActionsField: Temporary test field to trigger Copybara GitHub PRs and verify
+     * GitHub Actions.
+     */
+    @JsonProperty("testGithubActionsField")
+    public abstract Builder testGithubActionsField(String testGithubActionsField);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder testGithubActionsField(Optional<String> testGithubActionsField);
+
+    /** Clears the value of testGithubActionsField field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTestGithubActionsField() {
+      return testGithubActionsField(Optional.empty());
     }
 
     public abstract GenerateContentConfig build();

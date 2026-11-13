@@ -1415,6 +1415,13 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"store"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"testGithubActionsField"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"testGithubActionsField"},
+          Common.getValueByPath(fromObject, new String[] {"testGithubActionsField"}));
+    }
+
     return toObject;
   }
 
