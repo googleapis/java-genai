@@ -55,6 +55,10 @@ public abstract class EmbedContentParametersPrivate extends JsonSerializable {
   @JsonProperty("embeddingApiType")
   public abstract Optional<EmbeddingApiType> embeddingApiType();
 
+  /** The multiple contents to embed. */
+  @JsonProperty("batchContents")
+  public abstract Optional<List<Content>> batchContents();
+
   /** Configuration that contains optional parameters. */
   @JsonProperty("config")
   public abstract Optional<EmbedContentConfig> config();
@@ -203,6 +207,47 @@ public abstract class EmbedContentParametersPrivate extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder embeddingApiType(String embeddingApiType) {
       return embeddingApiType(new EmbeddingApiType(embeddingApiType));
+    }
+
+    /**
+     * Setter for batchContents.
+     *
+     * <p>batchContents: The multiple contents to embed.
+     */
+    @JsonProperty("batchContents")
+    public abstract Builder batchContents(List<Content> batchContents);
+
+    /**
+     * Setter for batchContents.
+     *
+     * <p>batchContents: The multiple contents to embed.
+     */
+    @CanIgnoreReturnValue
+    public Builder batchContents(Content... batchContents) {
+      return batchContents(Arrays.asList(batchContents));
+    }
+
+    /**
+     * Setter for batchContents builder.
+     *
+     * <p>batchContents: The multiple contents to embed.
+     */
+    @CanIgnoreReturnValue
+    public Builder batchContents(Content.Builder... batchContentsBuilders) {
+      return batchContents(
+          Arrays.asList(batchContentsBuilders).stream()
+              .map(Content.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder batchContents(Optional<List<Content>> batchContents);
+
+    /** Clears the value of batchContents field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBatchContents() {
+      return batchContents(Optional.empty());
     }
 
     /**

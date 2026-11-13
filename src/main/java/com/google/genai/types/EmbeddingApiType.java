@@ -34,6 +34,9 @@ public class EmbeddingApiType {
     /** embedContent API Endpoint */
     EMBED_CONTENT,
 
+    /** batchEmbedContents API Endpoint */
+    BATCH_EMBED_CONTENTS,
+
     EMBEDDING_API_TYPE_UNSPECIFIED
   }
 

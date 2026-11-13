@@ -52,6 +52,27 @@ public class CommonTest {
   }
 
   @Test
+  public void testSetValueByPath_arrayNodeParallel() {
+    ObjectNode data = JsonSerializable.objectMapper.createObjectNode();
+    ArrayNode contents = JsonSerializable.objectMapper.createArrayNode();
+    contents.addObject().put("text", "first");
+    contents.addObject().put("text", "second");
+    Common.setValueByPath(data, new String[] {"requests[]", "content"}, contents);
+    Common.setValueByPath(
+        data, new String[] {"requests[]", "embedContentConfig", "outputDimensionality"}, 10);
+
+    assertEquals(2, data.get("requests").size());
+    assertEquals("first", data.get("requests").get(0).get("content").get("text").asText());
+    assertEquals("second", data.get("requests").get(1).get("content").get("text").asText());
+    assertEquals(
+        10,
+        data.get("requests").get(0).get("embedContentConfig").get("outputDimensionality").asInt());
+    assertEquals(
+        10,
+        data.get("requests").get(1).get("embedContentConfig").get("outputDimensionality").asInt());
+  }
+
+  @Test
   public void testSetValueByPath_arrayObject_existing() {
     ObjectNode data = JsonSerializable.objectMapper.createObjectNode();
     List<String> values = Arrays.asList("v1", "v2");

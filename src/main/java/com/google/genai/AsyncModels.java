@@ -151,6 +151,7 @@ public final class AsyncModels {
       List<Content> contents,
       Content content,
       EmbeddingApiType embeddingApiType,
+      List<Content> batchContents,
       EmbedContentConfig config) {
     EmbedContentParametersPrivate.Builder parameterBuilder =
         EmbedContentParametersPrivate.builder();
@@ -167,13 +168,16 @@ public final class AsyncModels {
     if (!Common.isZero(embeddingApiType)) {
       parameterBuilder.embeddingApiType(embeddingApiType);
     }
+    if (!Common.isZero(batchContents)) {
+      parameterBuilder.batchContents(batchContents);
+    }
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
     JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateEmbedContent(
-            model, contents, content, embeddingApiType, config);
+            model, contents, content, embeddingApiType, batchContents, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
@@ -1066,7 +1070,7 @@ public final class AsyncModels {
         isVertexEmbedContentModel
             ? new EmbeddingApiType("EMBED_CONTENT")
             : new EmbeddingApiType("PREDICT");
-    return privateEmbedContent(model, contents, content, apiType, config);
+    return privateEmbedContent(model, contents, content, apiType, null, config);
   }
 
   /**
@@ -1091,7 +1095,7 @@ public final class AsyncModels {
         isVertexEmbedContentModel
             ? new EmbeddingApiType("EMBED_CONTENT")
             : new EmbeddingApiType("PREDICT");
-    return privateEmbedContent(model, contents, content, apiType, config);
+    return privateEmbedContent(model, contents, content, apiType, null, config);
   }
 
   /**

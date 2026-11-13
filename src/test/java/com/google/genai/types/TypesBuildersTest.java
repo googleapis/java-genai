@@ -538,10 +538,18 @@ public class TypesBuildersTest {
     EmbedContentParametersPrivate embedPrivate =
         EmbedContentParametersPrivate.builder()
             .content(Content.builder().parts(Part.builder().text("embed text").build()))
+            .batchContents(
+                Arrays.asList(
+                    Content.builder().parts(Part.builder().text("batch text").build()).build()))
+            .embeddingApiType(EmbeddingApiType.Known.BATCH_EMBED_CONTENTS)
             .model("models/embedding-001")
             .build();
     assertNotNull(embedPrivate);
     assertEquals("models/embedding-001", embedPrivate.model().get());
     assertEquals("embed text", embedPrivate.content().get().parts().get().get(0).text().get());
+    assertEquals(1, embedPrivate.batchContents().get().size());
+    assertEquals(
+        EmbeddingApiType.Known.BATCH_EMBED_CONTENTS,
+        embedPrivate.embeddingApiType().get().knownEnum());
   }
 }

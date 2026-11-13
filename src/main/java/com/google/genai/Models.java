@@ -952,6 +952,13 @@ public final class Models {
             new String[] {"embedContentConfig", "taskType"},
             Common.getValueByPath(fromObject, new String[] {"taskType"}));
       }
+    } else if (discriminatorValueTaskType.equals("BATCH_EMBED_CONTENTS")) {
+      if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"requests[]", "embedContentConfig", "taskType"},
+            Common.getValueByPath(fromObject, new String[] {"taskType"}));
+      }
     }
 
     JsonNode discriminatorTitle =
@@ -970,6 +977,13 @@ public final class Models {
         Common.setValueByPath(
             parentObject,
             new String[] {"embedContentConfig", "title"},
+            Common.getValueByPath(fromObject, new String[] {"title"}));
+      }
+    } else if (discriminatorValueTitle.equals("BATCH_EMBED_CONTENTS")) {
+      if (Common.getValueByPath(fromObject, new String[] {"title"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"requests[]", "embedContentConfig", "title"},
             Common.getValueByPath(fromObject, new String[] {"title"}));
       }
     }
@@ -992,6 +1006,13 @@ public final class Models {
         Common.setValueByPath(
             parentObject,
             new String[] {"embedContentConfig", "outputDimensionality"},
+            Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}));
+      }
+    } else if (discriminatorValueOutputDimensionality.equals("BATCH_EMBED_CONTENTS")) {
+      if (Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"requests[]", "embedContentConfig", "outputDimensionality"},
             Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}));
       }
     }
@@ -1027,6 +1048,13 @@ public final class Models {
             new String[] {"embedContentConfig", "autoTruncate"},
             Common.getValueByPath(fromObject, new String[] {"autoTruncate"}));
       }
+    } else if (discriminatorValueAutoTruncate.equals("BATCH_EMBED_CONTENTS")) {
+      if (Common.getValueByPath(fromObject, new String[] {"autoTruncate"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"requests[]", "embedContentConfig", "autoTruncate"},
+            Common.getValueByPath(fromObject, new String[] {"autoTruncate"}));
+      }
     }
 
     JsonNode discriminatorDocumentOcr =
@@ -1038,6 +1066,13 @@ public final class Models {
         Common.setValueByPath(
             parentObject,
             new String[] {"embedContentConfig", "documentOcr"},
+            Common.getValueByPath(fromObject, new String[] {"documentOcr"}));
+      }
+    } else if (discriminatorValueDocumentOcr.equals("BATCH_EMBED_CONTENTS")) {
+      if (Common.getValueByPath(fromObject, new String[] {"documentOcr"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"requests[]", "embedContentConfig", "documentOcr"},
             Common.getValueByPath(fromObject, new String[] {"documentOcr"}));
       }
     }
@@ -1053,6 +1088,13 @@ public final class Models {
         Common.setValueByPath(
             parentObject,
             new String[] {"embedContentConfig", "audioTrackExtraction"},
+            Common.getValueByPath(fromObject, new String[] {"audioTrackExtraction"}));
+      }
+    } else if (discriminatorValueAudioTrackExtraction.equals("BATCH_EMBED_CONTENTS")) {
+      if (Common.getValueByPath(fromObject, new String[] {"audioTrackExtraction"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"requests[]", "embedContentConfig", "audioTrackExtraction"},
             Common.getValueByPath(fromObject, new String[] {"audioTrackExtraction"}));
       }
     }
@@ -1088,6 +1130,12 @@ public final class Models {
                       Common.getValueByPath(fromObject, new String[] {"content"}))),
               toObject,
               rootObject);
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"batchContents"}))) {
+      throw new IllegalArgumentException(
+          "batchContents parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
@@ -1152,6 +1200,25 @@ public final class Models {
       }
     }
 
+    JsonNode discriminatorBatchContents =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
+    String discriminatorValueBatchContents =
+        discriminatorBatchContents == null ? "PREDICT" : discriminatorBatchContents.asText();
+    if (discriminatorValueBatchContents.equals("BATCH_EMBED_CONTENTS")) {
+      if (Common.getValueByPath(fromObject, new String[] {"batchContents"}) != null) {
+        ArrayNode keyArray =
+            (ArrayNode)
+                Transformers.tContents(
+                    Common.getValueByPath(fromObject, new String[] {"batchContents"}));
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayNode result = objectMapper.createArrayNode();
+
+        for (JsonNode item : keyArray) {
+          result.add(contentToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        }
+        Common.setValueByPath(toObject, new String[] {"requests[]", "content"}, result);
+      }
+    }
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           embedContentConfigToVertex(
@@ -1273,6 +1340,21 @@ public final class Models {
         ArrayNode embeddings = JsonSerializable.objectMapper.createArrayNode();
         embeddings.add(embedding);
         Common.setValueByPath(toObject, new String[] {"embeddings"}, embeddings);
+      }
+    } else if (rootObject != null
+        && Common.getValueByPath(rootObject, new String[] {"embeddingApiType"}) != null
+        && ((JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"}))
+            .asText()
+            .equals("BATCH_EMBED_CONTENTS")) {
+      JsonNode embeddingsNode =
+          (JsonNode) Common.getValueByPath(fromObject, new String[] {"embeddings"});
+      if (embeddingsNode != null && embeddingsNode.isArray()) {
+        ArrayNode result = JsonSerializable.objectMapper.createArrayNode();
+        for (JsonNode item : (ArrayNode) embeddingsNode) {
+          result.add(
+              contentEmbeddingFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        }
+        Common.setValueByPath(toObject, new String[] {"embeddings"}, result);
       }
     }
 
@@ -5488,6 +5570,7 @@ public final class Models {
       List<Content> contents,
       Content content,
       EmbeddingApiType embeddingApiType,
+      List<Content> batchContents,
       EmbedContentConfig config) {
 
     EmbedContentParametersPrivate.Builder parameterBuilder =
@@ -5505,6 +5588,9 @@ public final class Models {
     if (!Common.isZero(embeddingApiType)) {
       parameterBuilder.embeddingApiType(embeddingApiType);
     }
+    if (!Common.isZero(batchContents)) {
+      parameterBuilder.batchContents(batchContents);
+    }
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
@@ -5515,12 +5601,13 @@ public final class Models {
     if (this.apiClient.vertexAI()) {
       body =
           embedContentParametersPrivateToVertex(this.apiClient, parameterNode, null, parameterNode);
+      JsonNode apiTypeNode =
+          (JsonNode) Common.getValueByPath(parameterNode, new String[] {"embeddingApiType"});
+      String apiType = apiTypeNode == null ? "PREDICT" : apiTypeNode.asText();
       String endpointUrl =
-          Transformers.tIsVertexEmbedContentModel(
-                  ((JsonNode) Common.getValueByPath(parameterNode, new String[] {"model"}))
-                      .asText())
-              ? "{model}:embedContent"
-              : "{model}:predict";
+          apiType.equals("BATCH_EMBED_CONTENTS")
+              ? "{model}:batchEmbedContents"
+              : (apiType.equals("EMBED_CONTENT") ? "{model}:embedContent" : "{model}:predict");
       path = Common.formatMap(endpointUrl, body.get("_url"));
     } else {
       body =
@@ -5587,6 +5674,7 @@ public final class Models {
       List<Content> contents,
       Content content,
       EmbeddingApiType embeddingApiType,
+      List<Content> batchContents,
       EmbedContentConfig config) {
     EmbedContentParametersPrivate.Builder parameterBuilder =
         EmbedContentParametersPrivate.builder();
@@ -5603,12 +5691,16 @@ public final class Models {
     if (!Common.isZero(embeddingApiType)) {
       parameterBuilder.embeddingApiType(embeddingApiType);
     }
+    if (!Common.isZero(batchContents)) {
+      parameterBuilder.batchContents(batchContents);
+    }
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
     JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
-        buildRequestForPrivateEmbedContent(model, contents, content, embeddingApiType, config);
+        buildRequestForPrivateEmbedContent(
+            model, contents, content, embeddingApiType, batchContents, config);
 
     try (ApiResponse response =
         this.apiClient.request(
@@ -7431,7 +7523,7 @@ public final class Models {
         isVertexEmbedContentModel
             ? new EmbeddingApiType("EMBED_CONTENT")
             : new EmbeddingApiType("PREDICT");
-    return privateEmbedContent(model, contents, content, apiType, config);
+    return privateEmbedContent(model, contents, content, apiType, null, config);
   }
 
   /**
@@ -7462,7 +7554,7 @@ public final class Models {
         isVertexEmbedContentModel
             ? new EmbeddingApiType("EMBED_CONTENT")
             : new EmbeddingApiType("PREDICT");
-    return privateEmbedContent(model, contents, content, apiType, config);
+    return privateEmbedContent(model, contents, content, apiType, null, config);
   }
 
   /**
@@ -7496,7 +7588,7 @@ public final class Models {
         isVertexEmbedContentModel
             ? new EmbeddingApiType("EMBED_CONTENT")
             : new EmbeddingApiType("PREDICT");
-    return privateEmbedContent(model, contentList, content, apiType, config);
+    return privateEmbedContent(model, contentList, content, apiType, null, config);
   }
 
   /**

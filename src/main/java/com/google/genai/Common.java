@@ -107,6 +107,20 @@ public final class Common {
                 Arrays.copyOfRange(path, i + 1, path.length),
                 listValue.get(j));
           }
+        } else if (value instanceof ArrayNode) {
+          ArrayNode arrayValue = (ArrayNode) value;
+          if (arrayNode.size() != arrayValue.size()) {
+            arrayNode.removeAll();
+            for (int j = 0; j < arrayValue.size(); j++) {
+              arrayNode.addObject();
+            }
+          }
+          for (int j = 0; j < arrayNode.size(); j++) {
+            setValueByPath(
+                (ObjectNode) arrayNode.get(j),
+                Arrays.copyOfRange(path, i + 1, path.length),
+                arrayValue.get(j));
+          }
         } else {
           if (arrayNode.size() == 0) {
             arrayNode.addObject();
