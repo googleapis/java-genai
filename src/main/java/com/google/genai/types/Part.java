@@ -140,6 +140,27 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("speechMetadata")
   public abstract Optional<SpeechMetadata> speechMetadata();
 
+  /**
+   * Document metadata. The metadata should only be specified while the document data is presented
+   * in inline_data or file_data.
+   */
+  @JsonProperty("documentMetadata")
+  public abstract Optional<DocumentMetadata> documentMetadata();
+
+  /**
+   * Spreadsheet metadata. The metadata should only be specified while the spreadsheet data is
+   * presented in inline_data or file_data.
+   */
+  @JsonProperty("spreadsheetMetadata")
+  public abstract Optional<SpreadsheetMetadata> spreadsheetMetadata();
+
+  /**
+   * Audio metadata. The metadata should only be specified while the audio data is presented in
+   * inline_data or file_data.
+   */
+  @JsonProperty("audioMetadata")
+  public abstract Optional<AudioMetadata> audioMetadata();
+
   /** Instantiates a builder for Part. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -633,6 +654,96 @@ public abstract class Part extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSpeechMetadata() {
       return speechMetadata(Optional.empty());
+    }
+
+    /**
+     * Setter for documentMetadata.
+     *
+     * <p>documentMetadata: Document metadata. The metadata should only be specified while the
+     * document data is presented in inline_data or file_data.
+     */
+    @JsonProperty("documentMetadata")
+    public abstract Builder documentMetadata(DocumentMetadata documentMetadata);
+
+    /**
+     * Setter for documentMetadata builder.
+     *
+     * <p>documentMetadata: Document metadata. The metadata should only be specified while the
+     * document data is presented in inline_data or file_data.
+     */
+    @CanIgnoreReturnValue
+    public Builder documentMetadata(DocumentMetadata.Builder documentMetadataBuilder) {
+      return documentMetadata(documentMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder documentMetadata(Optional<DocumentMetadata> documentMetadata);
+
+    /** Clears the value of documentMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDocumentMetadata() {
+      return documentMetadata(Optional.empty());
+    }
+
+    /**
+     * Setter for spreadsheetMetadata.
+     *
+     * <p>spreadsheetMetadata: Spreadsheet metadata. The metadata should only be specified while the
+     * spreadsheet data is presented in inline_data or file_data.
+     */
+    @JsonProperty("spreadsheetMetadata")
+    public abstract Builder spreadsheetMetadata(SpreadsheetMetadata spreadsheetMetadata);
+
+    /**
+     * Setter for spreadsheetMetadata builder.
+     *
+     * <p>spreadsheetMetadata: Spreadsheet metadata. The metadata should only be specified while the
+     * spreadsheet data is presented in inline_data or file_data.
+     */
+    @CanIgnoreReturnValue
+    public Builder spreadsheetMetadata(SpreadsheetMetadata.Builder spreadsheetMetadataBuilder) {
+      return spreadsheetMetadata(spreadsheetMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder spreadsheetMetadata(Optional<SpreadsheetMetadata> spreadsheetMetadata);
+
+    /** Clears the value of spreadsheetMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSpreadsheetMetadata() {
+      return spreadsheetMetadata(Optional.empty());
+    }
+
+    /**
+     * Setter for audioMetadata.
+     *
+     * <p>audioMetadata: Audio metadata. The metadata should only be specified while the audio data
+     * is presented in inline_data or file_data.
+     */
+    @JsonProperty("audioMetadata")
+    public abstract Builder audioMetadata(AudioMetadata audioMetadata);
+
+    /**
+     * Setter for audioMetadata builder.
+     *
+     * <p>audioMetadata: Audio metadata. The metadata should only be specified while the audio data
+     * is presented in inline_data or file_data.
+     */
+    @CanIgnoreReturnValue
+    public Builder audioMetadata(AudioMetadata.Builder audioMetadataBuilder) {
+      return audioMetadata(audioMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audioMetadata(Optional<AudioMetadata> audioMetadata);
+
+    /** Clears the value of audioMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudioMetadata() {
+      return audioMetadata(Optional.empty());
     }
 
     public abstract Part build();

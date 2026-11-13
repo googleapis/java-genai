@@ -1972,6 +1972,27 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"speechMetadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"documentMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"documentMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"documentMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"spreadsheetMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"spreadsheetMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"spreadsheetMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"audioMetadata"}));
+    }
+
     return toObject;
   }
 
