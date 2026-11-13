@@ -30,7 +30,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Composite reinforcement tuning reward config. */
+/**
+ * Composite reward function configuration for reinforcement tuning. This data type is not supported
+ * in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = CompositeReinforcementTuningRewardConfig.Builder.class)
 public abstract class CompositeReinforcementTuningRewardConfig extends JsonSerializable {
