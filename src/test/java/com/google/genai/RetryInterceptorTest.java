@@ -16,10 +16,17 @@
 
 package com.google.genai;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -27,20 +34,31 @@ import static org.mockito.Mockito.when;
 
 import com.google.genai.types.HttpRetryOptions;
 import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.time.Duration;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import okhttp3.Call;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class RetryInterceptorTest {
 
   private Interceptor.Chain chain;
+  private Call call;
+  private AtomicBoolean canceled;
   private FakeRandom random;
 
   private Request baseRequest;
@@ -53,10 +71,14 @@ class RetryInterceptorTest {
   @BeforeEach
   void setUp() {
     chain = mock(Interceptor.Chain.class);
+    call = mock(Call.class);
+    canceled = new AtomicBoolean(false);
     random = new FakeRandom();
     // A base request that our mock chain will return
     baseRequest = new Request.Builder().url("http://localhost").build();
     lenient().when(chain.request()).thenReturn(baseRequest);
+    lenient().when(chain.call()).thenReturn(call);
+    lenient().when(call.isCanceled()).thenAnswer(invocation -> canceled.get());
 
     // Default retry options
     retryOptions =
@@ -140,6 +162,7 @@ class RetryInterceptorTest {
     Response response = interceptorSpy.intercept(chain);
 
     verify(chain, times(3)).proceed(baseRequest);
+    verify(interceptorSpy, times(2)).calculateDelay(any(), anyInt());
     assertEquals(503, response.code());
   }
 
@@ -228,6 +251,89 @@ class RetryInterceptorTest {
 
     verify(chain, times(2)).proceed(customRequest);
     assertEquals(503, response.code());
+  }
+
+  @Test
+  void testIntercept_IOExceptionAfterCancel_RethrowsWithoutRetry() throws Exception {
+    RetryInterceptor interceptorSpy = spy(new RetryInterceptor(retryOptions));
+    when(chain.proceed(baseRequest))
+        .thenAnswer(
+            invocation -> {
+              canceled.set(true);
+              throw ioException;
+            });
+
+    IOException thrown = assertThrows(IOException.class, () -> interceptorSpy.intercept(chain));
+
+    assertSame(ioException, thrown);
+    verify(chain, times(1)).proceed(baseRequest);
+    verify(interceptorSpy, never()).calculateDelay(any(), anyInt());
+  }
+
+  @Test
+  void testIntercept_RetryableErrorAfterCancel_ThrowsWithoutRetry() throws Exception {
+    RetryInterceptor interceptorSpy = spy(new RetryInterceptor(retryOptions));
+    when(chain.proceed(baseRequest))
+        .thenAnswer(
+            invocation -> {
+              canceled.set(true);
+              return retryableErrorResponse;
+            });
+
+    IOException thrown = assertThrows(IOException.class, () -> interceptorSpy.intercept(chain));
+
+    assertEquals("Canceled", thrown.getMessage());
+    verify(chain, times(1)).proceed(baseRequest);
+  }
+
+  @Test
+  void testIntercept_CanceledDuringBackoff_StopsWithoutWaitingOutTheDelay() throws Exception {
+    RetryInterceptor interceptorSpy = spy(new RetryInterceptor(retryOptions));
+    when(chain.proceed(baseRequest)).thenReturn(retryableErrorResponse);
+    doReturn(30_000L).when(interceptorSpy).calculateDelay(any(), anyInt());
+    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    try {
+      executor.schedule(() -> canceled.set(true), 200, MILLISECONDS);
+
+      IOException thrown =
+          assertTimeoutPreemptively(
+              Duration.ofSeconds(5),
+              () -> assertThrows(IOException.class, () -> interceptorSpy.intercept(chain)));
+
+      assertEquals("Canceled", thrown.getMessage());
+      verify(chain, times(1)).proceed(baseRequest);
+    } finally {
+      executor.shutdownNow();
+    }
+  }
+
+  @Test
+  void testIntercept_CallTimeoutExpires_StopsRetrying() throws Exception {
+    HttpRetryOptions slowRetryOptions =
+        HttpRetryOptions.builder().attempts(3).initialDelay(30.0).jitter(0.0).build();
+    AtomicInteger attempts = new AtomicInteger();
+    // Accepts connections through the listen backlog but never responds.
+    try (ServerSocket server = new ServerSocket(0, 50, InetAddress.getByName("127.0.0.1"))) {
+      OkHttpClient client =
+          new OkHttpClient.Builder()
+              .callTimeout(Duration.ofMillis(200))
+              .addInterceptor(new RetryInterceptor(slowRetryOptions))
+              .addInterceptor(
+                  attemptChain -> {
+                    attempts.incrementAndGet();
+                    return attemptChain.proceed(attemptChain.request());
+                  })
+              .build();
+      Request request =
+          new Request.Builder().url("http://127.0.0.1:" + server.getLocalPort()).build();
+
+      assertTimeoutPreemptively(
+          Duration.ofSeconds(10),
+          () ->
+              assertThrows(InterruptedIOException.class, () -> client.newCall(request).execute()));
+    }
+
+    assertEquals(1, attempts.get());
   }
 
   @Test

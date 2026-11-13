@@ -21,6 +21,8 @@ import com.google.genai.types.HttpRetryOptions;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import okhttp3.Call;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -43,6 +45,9 @@ class RetryInterceptor implements Interceptor {
           503, // Service unavailable.
           504 // Gateway timeout
           );
+
+  // How often a backoff sleep checks whether the call was canceled.
+  private static final long CANCELLATION_CHECK_INTERVAL_MILLIS = 100;
 
   private final HttpRetryOptions retryOptions;
   private final Random random;
@@ -72,32 +77,37 @@ class RetryInterceptor implements Interceptor {
       return chain.proceed(request);
     }
 
+    Call call = chain.call();
     Response response = null;
     int maxAttempts = options.attempts().orElse(RETRY_MAX_ATTEMPTS);
     maxAttempts = Math.max(maxAttempts, 1);
     List<Integer> httpStatusCodes = options.httpStatusCodes().orElse(RETRY_HTTP_STATUS_CODES);
 
     for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+      // A canceled call, for example one whose HttpOptions.timeout expired, can never succeed.
+      if (call.isCanceled()) {
+        throw new IOException("Canceled");
+      }
       try {
         response = chain.proceed(request);
-        // If the response is successful or the response code is not in the retry list, exist the
-        // attempt loop.
-        if (response.isSuccessful() || !httpStatusCodes.contains(response.code())) {
+        // If the response is successful, the response code is not in the retry list, or this was
+        // the last attempt, exit the attempt loop.
+        if (response.isSuccessful()
+            || !httpStatusCodes.contains(response.code())
+            || attempt == maxAttempts) {
           break;
-        } else if (attempt < maxAttempts) {
-          // Close the unsuccessful response so that the connection can be reused for the next
-          // attempt.
-          response.close();
         }
+        // Close the unsuccessful response so that the connection can be reused for the next
+        // attempt.
+        response.close();
       } catch (IOException e) {
-        if (attempt == maxAttempts) {
+        if (attempt == maxAttempts || call.isCanceled()) {
           throw e;
         }
       }
 
       try {
-        // Blocking sleep before retrying.
-        Thread.sleep(calculateDelay(options, attempt));
+        sleepUnlessCanceled(call, calculateDelay(options, attempt));
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
         throw new IOException("Retry was interrupted.", e);
@@ -124,5 +134,17 @@ class RetryInterceptor implements Interceptor {
   /** Returns the client-level retry options. */
   HttpRetryOptions retryOptions() {
     return retryOptions;
+  }
+
+  /** Sleeps for the given delay, returning early if the call is canceled in the meantime. */
+  private static void sleepUnlessCanceled(Call call, long delayMillis) throws InterruptedException {
+    long deadlineNanos = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(delayMillis);
+    while (!call.isCanceled()) {
+      long remainingMillis = TimeUnit.NANOSECONDS.toMillis(deadlineNanos - System.nanoTime());
+      if (remainingMillis <= 0) {
+        return;
+      }
+      Thread.sleep(Math.min(remainingMillis, CANCELLATION_CHECK_INTERVAL_MILLIS));
+    }
   }
 }
