@@ -75,7 +75,10 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
   private @Nullable Continuation<T> continuation;
 
   // The stream of the request being read once the stream has gone on past its first request.
-  private @Nullable ResponseStream<T> following;
+  private volatile @Nullable ResponseStream<T> following;
+
+  // Set by close(), which may run on another thread than the one reading the stream.
+  private volatile boolean closed = false;
 
   /** Iterator for the ResponseStream. */
   class ResponseStreamIterator implements Iterator<T> {
@@ -149,11 +152,10 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
       try {
         response = following != null ? following.iterator.next() : readCurrent();
       } catch (RuntimeException e) {
-        if (continuation != null && continuation.canResume(e)) {
+        if (!closed && continuation != null && continuation.canResume(e)) {
           closeCurrentHop();
           ResponseStream<T> next = continuation.next();
-          if (next != null) {
-            following = next;
+          if (next != null && follow(next)) {
             return next();
           }
         }
@@ -190,24 +192,40 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
             }
           }
         } catch (RuntimeException e) {
-          if (continuation != null && continuation.canResume(e)) {
+          if (!closed && continuation != null && continuation.canResume(e)) {
             closeCurrentHop();
             ResponseStream<T> next = continuation.next();
-            if (next != null) {
-              following = next;
+            if (next != null && follow(next)) {
               continue;
             }
           }
           throw e;
         }
 
-        ResponseStream<T> next = continuation == null ? null : continuation.next();
+        ResponseStream<T> next = continuation == null || closed ? null : continuation.next();
         if (next == null) {
           return false;
         }
         closeCurrentHop();
-        following = next;
+        if (!follow(next)) {
+          return false;
+        }
       }
+    }
+
+    // Makes next the request being read. If the stream was closed meanwhile, close() may have
+    // missed next, so this closes it and returns false.
+    private boolean follow(ResponseStream<T> next) {
+      following = next;
+      if (closed) {
+        try {
+          next.close();
+        } catch (RuntimeException ignored) {
+          // Suppress secondary exceptions when closing a request the stream no longer reads.
+        }
+        return false;
+      }
+      return true;
     }
 
     private void closeCurrentHop() {
@@ -350,6 +368,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
 
   @Override
   public void close() {
+    closed = true;
     try {
       closeOwnResponse();
     } finally {
@@ -360,17 +379,18 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
   }
 
   private void closeOwnResponse() {
+    // A blocked readLine() holds the reader's lock; closing the response ends it.
     try {
+      if (response != null) {
+        response.close();
+      }
+    } finally {
       if (reader != null) {
         try {
           reader.close();
         } catch (IOException e) {
           throw new GenAiIOException("Failed to close the response stream.", e);
         }
-      }
-    } finally {
-      if (response != null) {
-        response.close();
       }
     }
   }
