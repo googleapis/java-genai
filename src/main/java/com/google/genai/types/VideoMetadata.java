@@ -18,13 +18,18 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -48,6 +53,10 @@ public abstract class VideoMetadata extends JsonSerializable {
   /** Optional. The start offset of the video. */
   @JsonProperty("startOffset")
   public abstract Optional<Duration> startOffset();
+
+  /** Content layers to return. If empty, defaults to [FRAMES, AUDIO]. */
+  @JsonProperty("contentLayers")
+  public abstract Optional<List<VideoMetadataContentLayer>> contentLayers();
 
   /** Instantiates a builder for VideoMetadata. */
   @ExcludeFromGeneratedCoverageReport
@@ -120,6 +129,78 @@ public abstract class VideoMetadata extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearStartOffset() {
       return startOffset(Optional.empty());
+    }
+
+    /**
+     * Setter for contentLayers.
+     *
+     * <p>contentLayers: Content layers to return. If empty, defaults to [FRAMES, AUDIO].
+     */
+    @JsonProperty("contentLayers")
+    public abstract Builder contentLayers(List<VideoMetadataContentLayer> contentLayers);
+
+    /**
+     * Setter for contentLayers.
+     *
+     * <p>contentLayers: Content layers to return. If empty, defaults to [FRAMES, AUDIO].
+     */
+    @CanIgnoreReturnValue
+    public Builder contentLayers(VideoMetadataContentLayer... contentLayers) {
+      return contentLayers(Arrays.asList(contentLayers));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder contentLayers(Optional<List<VideoMetadataContentLayer>> contentLayers);
+
+    /** Clears the value of contentLayers field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearContentLayers() {
+      return contentLayers(Optional.empty());
+    }
+
+    /**
+     * Setter for contentLayers given a varargs of strings.
+     *
+     * <p>contentLayers: Content layers to return. If empty, defaults to [FRAMES, AUDIO].
+     */
+    @CanIgnoreReturnValue
+    public Builder contentLayers(String... contentLayers) {
+      return contentLayersFromString(Arrays.asList(contentLayers));
+    }
+
+    /**
+     * Setter for contentLayers given a varargs of known enums.
+     *
+     * <p>contentLayers: Content layers to return. If empty, defaults to [FRAMES, AUDIO].
+     */
+    @CanIgnoreReturnValue
+    public Builder contentLayers(VideoMetadataContentLayer.Known... knownTypes) {
+      return contentLayersFromKnown(Arrays.asList(knownTypes));
+    }
+
+    /**
+     * Setter for contentLayers given a list of known enums.
+     *
+     * <p>contentLayers: Content layers to return. If empty, defaults to [FRAMES, AUDIO].
+     */
+    @CanIgnoreReturnValue
+    public Builder contentLayersFromKnown(List<VideoMetadataContentLayer.Known> knownTypes) {
+      ImmutableList<VideoMetadataContentLayer> listItems =
+          knownTypes.stream().map(VideoMetadataContentLayer::new).collect(toImmutableList());
+      return contentLayers(listItems);
+    }
+
+    /**
+     * Setter for contentLayers given a list of strings.
+     *
+     * <p>contentLayers: Content layers to return. If empty, defaults to [FRAMES, AUDIO].
+     */
+    @CanIgnoreReturnValue
+    public Builder contentLayersFromString(List<String> contentLayers) {
+      ImmutableList<VideoMetadataContentLayer> listItems =
+          contentLayers.stream().map(VideoMetadataContentLayer::new).collect(toImmutableList());
+      return contentLayers(listItems);
     }
 
     public abstract VideoMetadata build();

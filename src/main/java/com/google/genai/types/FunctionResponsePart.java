@@ -27,8 +27,9 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * A datatype containing media that is part of a `FunctionResponse` message. A
- * `FunctionResponsePart` consists of data which has an associated datatype. A
+ * A datatype containing media that is part of a `FunctionResponse` message.
+ *
+ * <p>A `FunctionResponsePart` consists of data which has an associated datatype. A
  * `FunctionResponsePart` can only contain one of the accepted types in `FunctionResponsePart.data`.
  * A `FunctionResponsePart` must have a fixed IANA MIME type identifying the type and subtype of the
  * media if the `inline_data` field is filled with raw bytes.
@@ -51,6 +52,38 @@ public abstract class FunctionResponsePart extends JsonSerializable {
    */
   @JsonProperty("mediaProcessing")
   public abstract Optional<MediaProcessing> mediaProcessing();
+
+  /** Media resolution for the input media. */
+  @JsonProperty("mediaResolution")
+  public abstract Optional<PartMediaResolution> mediaResolution();
+
+  /**
+   * Video metadata. The metadata should only be specified while the video data is presented in
+   * inline_data or file_data.
+   */
+  @JsonProperty("videoMetadata")
+  public abstract Optional<VideoMetadata> videoMetadata();
+
+  /**
+   * Document metadata. The metadata should only be specified while the document data is presented
+   * in inline_data or file_data.
+   */
+  @JsonProperty("documentMetadata")
+  public abstract Optional<DocumentMetadata> documentMetadata();
+
+  /**
+   * Spreadsheet metadata. The metadata should only be specified while the spreadsheet data is
+   * presented in inline_data or file_data.
+   */
+  @JsonProperty("spreadsheetMetadata")
+  public abstract Optional<SpreadsheetMetadata> spreadsheetMetadata();
+
+  /**
+   * Audio metadata. The metadata should only be specified while the audio data is presented in
+   * inline_data or file_data.
+   */
+  @JsonProperty("audioMetadata")
+  public abstract Optional<AudioMetadata> audioMetadata();
 
   /** Instantiates a builder for FunctionResponsePart. */
   @ExcludeFromGeneratedCoverageReport
@@ -168,6 +201,154 @@ public abstract class FunctionResponsePart extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder mediaProcessing(String mediaProcessing) {
       return mediaProcessing(new MediaProcessing(mediaProcessing));
+    }
+
+    /**
+     * Setter for mediaResolution.
+     *
+     * <p>mediaResolution: Media resolution for the input media.
+     */
+    @JsonProperty("mediaResolution")
+    public abstract Builder mediaResolution(PartMediaResolution mediaResolution);
+
+    /**
+     * Setter for mediaResolution builder.
+     *
+     * <p>mediaResolution: Media resolution for the input media.
+     */
+    @CanIgnoreReturnValue
+    public Builder mediaResolution(PartMediaResolution.Builder mediaResolutionBuilder) {
+      return mediaResolution(mediaResolutionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mediaResolution(Optional<PartMediaResolution> mediaResolution);
+
+    /** Clears the value of mediaResolution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMediaResolution() {
+      return mediaResolution(Optional.empty());
+    }
+
+    /**
+     * Setter for videoMetadata.
+     *
+     * <p>videoMetadata: Video metadata. The metadata should only be specified while the video data
+     * is presented in inline_data or file_data.
+     */
+    @JsonProperty("videoMetadata")
+    public abstract Builder videoMetadata(VideoMetadata videoMetadata);
+
+    /**
+     * Setter for videoMetadata builder.
+     *
+     * <p>videoMetadata: Video metadata. The metadata should only be specified while the video data
+     * is presented in inline_data or file_data.
+     */
+    @CanIgnoreReturnValue
+    public Builder videoMetadata(VideoMetadata.Builder videoMetadataBuilder) {
+      return videoMetadata(videoMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder videoMetadata(Optional<VideoMetadata> videoMetadata);
+
+    /** Clears the value of videoMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVideoMetadata() {
+      return videoMetadata(Optional.empty());
+    }
+
+    /**
+     * Setter for documentMetadata.
+     *
+     * <p>documentMetadata: Document metadata. The metadata should only be specified while the
+     * document data is presented in inline_data or file_data.
+     */
+    @JsonProperty("documentMetadata")
+    public abstract Builder documentMetadata(DocumentMetadata documentMetadata);
+
+    /**
+     * Setter for documentMetadata builder.
+     *
+     * <p>documentMetadata: Document metadata. The metadata should only be specified while the
+     * document data is presented in inline_data or file_data.
+     */
+    @CanIgnoreReturnValue
+    public Builder documentMetadata(DocumentMetadata.Builder documentMetadataBuilder) {
+      return documentMetadata(documentMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder documentMetadata(Optional<DocumentMetadata> documentMetadata);
+
+    /** Clears the value of documentMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDocumentMetadata() {
+      return documentMetadata(Optional.empty());
+    }
+
+    /**
+     * Setter for spreadsheetMetadata.
+     *
+     * <p>spreadsheetMetadata: Spreadsheet metadata. The metadata should only be specified while the
+     * spreadsheet data is presented in inline_data or file_data.
+     */
+    @JsonProperty("spreadsheetMetadata")
+    public abstract Builder spreadsheetMetadata(SpreadsheetMetadata spreadsheetMetadata);
+
+    /**
+     * Setter for spreadsheetMetadata builder.
+     *
+     * <p>spreadsheetMetadata: Spreadsheet metadata. The metadata should only be specified while the
+     * spreadsheet data is presented in inline_data or file_data.
+     */
+    @CanIgnoreReturnValue
+    public Builder spreadsheetMetadata(SpreadsheetMetadata.Builder spreadsheetMetadataBuilder) {
+      return spreadsheetMetadata(spreadsheetMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder spreadsheetMetadata(Optional<SpreadsheetMetadata> spreadsheetMetadata);
+
+    /** Clears the value of spreadsheetMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSpreadsheetMetadata() {
+      return spreadsheetMetadata(Optional.empty());
+    }
+
+    /**
+     * Setter for audioMetadata.
+     *
+     * <p>audioMetadata: Audio metadata. The metadata should only be specified while the audio data
+     * is presented in inline_data or file_data.
+     */
+    @JsonProperty("audioMetadata")
+    public abstract Builder audioMetadata(AudioMetadata audioMetadata);
+
+    /**
+     * Setter for audioMetadata builder.
+     *
+     * <p>audioMetadata: Audio metadata. The metadata should only be specified while the audio data
+     * is presented in inline_data or file_data.
+     */
+    @CanIgnoreReturnValue
+    public Builder audioMetadata(AudioMetadata.Builder audioMetadataBuilder) {
+      return audioMetadata(audioMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audioMetadata(Optional<AudioMetadata> audioMetadata);
+
+    /** Clears the value of audioMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudioMetadata() {
+      return audioMetadata(Optional.empty());
     }
 
     public abstract FunctionResponsePart build();
