@@ -21,6 +21,21 @@ public final class TestUtils {
   static final String PROJECT = "project";
   static final String LOCATION = "location";
 
+  /** A generateContent response body with explicit nulls for optional fields. */
+  static final String RESPONSE_WITH_EXPLICIT_NULLS =
+      "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":"
+          + "\"I am a large language model, trained by Google.\","
+          + "\"inlineData\":null,\"functionCall\":null,\"functionResponse\":null,"
+          + "\"executableCode\":null,\"codeExecutionResult\":null}],\"role\":\"model\"},"
+          + "\"finishReason\":\"STOP\","
+          + "\"safetyRatings\":[{\"category\":\"HARM_CATEGORY_HATE_SPEECH\","
+          + "\"probability\":\"NEGLIGIBLE\",\"blocked\":null}],"
+          + "\"citationMetadata\":null,\"tokenCount\":null,\"groundingMetadata\":null,"
+          + "\"index\":null}],"
+          + "\"modelVersion\":\"gemini-2.0-flash-001\",\"promptFeedback\":null,"
+          + "\"usageMetadata\":{\"promptTokenCount\":5,\"candidatesTokenCount\":11,"
+          + "\"totalTokenCount\":16,\"cachedContentTokenCount\":null}}";
+
   private TestUtils() {}
 
   /** Creates a client given the vertexAI and replayId. Can be used in replay tests. */
