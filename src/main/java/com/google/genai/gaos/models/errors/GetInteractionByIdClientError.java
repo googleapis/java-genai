@@ -49,7 +49,7 @@ public class GetInteractionByIdClientError extends GaosClientException {
                 HttpResponse<?> rawResponse,
                 @Nullable Data data,
                 @Nullable Throwable deserializationException) {
-        super("API error occurred", code, body, rawResponse, null);
+        super(Utils.valueOrElse(Optional.ofNullable(data).map(v0 -> Utils.valueOrNull(v0.error())).map(v1 -> Utils.valueOrNull(v1.message())).orElse(null), "API error occurred"), code, body, rawResponse, null);
         this.data = data;
         this.deserializationException = deserializationException;
     }
