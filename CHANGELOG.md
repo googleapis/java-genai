@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.4.0](https://github.com/googleapis/java-genai/compare/v2.3.0...v2.4.0) (2026-11-14)
+
+
+### Features
+
+* support batch inputs and usage metadata for Gemini embedding models on Gemini Enterprise API ([748c819](https://github.com/googleapis/java-genai/commit/748c819bf14b4ec878ec06bbd604971b3faee4f3))
+
+
+### Bug Fixes
+
+* apply HttpOptions.timeout to each attempt instead of the whole operation ([0fc5993](https://github.com/googleapis/java-genai/commit/0fc5993032c3315bd4ae1cef24c45eb3e66bc9f3))
+* forward UploadToFileSearchStoreConfig fields in the uploadToFileSearchStore start request ([ab9b8bb](https://github.com/googleapis/java-genai/commit/ab9b8bbda2cc3d456dc45640e017cb16790f5c0e)), refs [#821](https://github.com/googleapis/java-genai/issues/821)
+* stop retry backoff after the last attempt or once the HTTP call is canceled ([5946bbc](https://github.com/googleapis/java-genai/commit/5946bbc182d8590c0d5976488eba3c87d91485f0))
+
 ## [2.3.0](https://github.com/googleapis/java-genai/compare/v2.2.0...v2.3.0) (2026-11-12)
 
 

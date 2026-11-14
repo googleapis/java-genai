@@ -1,4 +1,4 @@
 # Format:
 # module:released-version:current-version
 
-google-genai:2.3.0:2.4.0-SNAPSHOT
+google-genai:2.4.0:2.4.0
