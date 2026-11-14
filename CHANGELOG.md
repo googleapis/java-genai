@@ -42,6 +42,7 @@
 * **Default Gemini Developer API version is now `v1` (was `v1beta`)** ([88bc413](https://github.com/googleapis/java-genai/commit/88bc413b83d969a04f9677d1d6024b453eb90720))
   * Clients targeting the **Gemini Developer API** now default to API version `v1` instead of `v1beta`.
   * **No effect on Gemini Enterprise (Vertex AI) defaults:** Clients with `.vertexAI(true)` are **unaffected** by this default change and continue to default to `v1beta1`.
+  * **Some models are not available on `v1`, notably:** the `gemini-flash-latest`, `gemini-flash-lite-latest` and `gemini-pro-latest` aliases, and some `-preview` models. They exist only on `v1beta`. To keep using them, use a specific stable model version, or switch back to `v1beta` as shown below.
   * **How to configure or restore the previous default via environment variable:** Set `GOOGLE_GENAI_API_VERSION` (works for both Gemini Developer API and Enterprise / Vertex AI clients when no version is set in code):
     ```bash
     # Restores the beta default ('v1beta' on Gemini Developer API, 'v1beta1' on Enterprise / Vertex AI)
