@@ -58,6 +58,8 @@ public class StepTypeIdResolver extends GenericTypeIdResolver<Step> {
         registerType("retrieval_call", RetrievalCallStep.class);
         registerType("retrieval_result", RetrievalResultStep.class);
         registerType("thought", ThoughtStep.class);
+        registerType("tool_search_call", ToolSearchCallStep.class);
+        registerType("tool_search_result", ToolSearchResultStep.class);
         registerType("url_context_call", URLContextCallStep.class);
         registerType("url_context_result", URLContextResultStep.class);
         registerType("user_input", UserInputStep.class);

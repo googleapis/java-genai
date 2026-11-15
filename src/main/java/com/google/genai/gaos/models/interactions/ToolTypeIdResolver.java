@@ -48,6 +48,7 @@ public class ToolTypeIdResolver extends GenericTypeIdResolver<Tool> {
         registerType("google_search", GoogleSearch.class);
         registerType("mcp_server", MCPServer.class);
         registerType("retrieval", Retrieval.class);
+        registerType("tool_search", ToolSearch.class);
         registerType("url_context", URLContext.class);
     }
 

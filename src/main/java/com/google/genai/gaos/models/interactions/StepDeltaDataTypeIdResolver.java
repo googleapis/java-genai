@@ -58,6 +58,8 @@ public class StepDeltaDataTypeIdResolver extends GenericTypeIdResolver<StepDelta
         registerType("text", TextDelta.class);
         registerType("thought_signature", ThoughtSignatureDelta.class);
         registerType("thought_summary", ThoughtSummaryDelta.class);
+        registerType("tool_search_call", ToolSearchCallDelta.class);
+        registerType("tool_search_result", ToolSearchResultDelta.class);
         registerType("url_context_call", URLContextCallDelta.class);
         registerType("url_context_result", URLContextResultDelta.class);
         registerType("video", VideoDelta.class);

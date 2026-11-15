@@ -28,6 +28,7 @@ import com.google.genai.gaos.models.agents.AgentTool;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
+import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -38,7 +39,14 @@ import java.util.Optional;
  * 
  * <p>A tool that can be used by the model.
  */
-public class Function implements Tool, AgentTool {
+public class Function implements FunctionResultSubcontent, Tool, AgentTool {
+    /**
+     * If true, the function's loading is deferred.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("defer_loading")
+    private Boolean deferLoading;
+
     /**
      * A description of the function.
      */
@@ -64,23 +72,43 @@ public class Function implements Tool, AgentTool {
     @JsonProperty("parameters")
     private Object parameters;
 
+    /**
+     * A brief description of the function, shown to the model as a
+     * short summary of functions with `defer_loading` set to true.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("short_description")
+    private String shortDescription;
+
 
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
     public Function(
+            @JsonProperty("defer_loading") @Nullable Boolean deferLoading,
             @JsonProperty("description") @Nullable String description,
             @JsonProperty("name") @Nullable String name,
-            @JsonProperty("parameters") @Nullable Object parameters) {
+            @JsonProperty("parameters") @Nullable Object parameters,
+            @JsonProperty("short_description") @Nullable String shortDescription) {
+        this.deferLoading = deferLoading;
         this.description = description;
         this.name = name;
         this.parameters = parameters;
+        this.shortDescription = shortDescription;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
     public Function() {
-        this(null, null, null);
+        this(null, null, null,
+            null, null);
+    }
+
+    /**
+     * If true, the function's loading is deferred.
+     */
+    public Optional<Boolean> deferLoading() {
+        return Optional.ofNullable(this.deferLoading);
     }
 
     /**
@@ -108,6 +136,14 @@ public class Function implements Tool, AgentTool {
         return Optional.ofNullable(this.parameters);
     }
 
+    /**
+     * A brief description of the function, shown to the model as a
+     * short summary of functions with `defer_loading` set to true.
+     */
+    public Optional<String> shortDescription() {
+        return Optional.ofNullable(this.shortDescription);
+    }
+
     @Override
     public String type() {
         return Utils.discriminatorToString(type);
@@ -115,6 +151,15 @@ public class Function implements Tool, AgentTool {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * If true, the function's loading is deferred.
+     */
+    public Function withDeferLoading(@Nullable Boolean deferLoading) {
+        this.deferLoading = deferLoading;
+        return this;
     }
 
 
@@ -149,6 +194,16 @@ public class Function implements Tool, AgentTool {
     }
 
 
+    /**
+     * A brief description of the function, shown to the model as a
+     * short summary of functions with `defer_loading` set to true.
+     */
+    public Function withShortDescription(@Nullable String shortDescription) {
+        this.shortDescription = shortDescription;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -159,30 +214,36 @@ public class Function implements Tool, AgentTool {
         }
         Function other = (Function) o;
         return 
+            Utils.enhancedDeepEquals(this.deferLoading, other.deferLoading) &&
             Utils.enhancedDeepEquals(this.description, other.description) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.parameters, other.parameters) &&
+            Utils.enhancedDeepEquals(this.shortDescription, other.shortDescription) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            description, name, parameters,
-            type);
+            deferLoading, description, name,
+            parameters, shortDescription, type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Function.class,
+                "deferLoading", deferLoading,
                 "description", description,
                 "name", name,
                 "parameters", parameters,
+                "shortDescription", shortDescription,
                 "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
+
+        private Boolean deferLoading;
 
         private String description;
 
@@ -190,8 +251,18 @@ public class Function implements Tool, AgentTool {
 
         private Object parameters;
 
+        private String shortDescription;
+
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * If true, the function's loading is deferred.
+         */
+        public Builder deferLoading(@Nullable Boolean deferLoading) {
+            this.deferLoading = deferLoading;
+            return this;
         }
 
         /**
@@ -222,9 +293,19 @@ public class Function implements Tool, AgentTool {
             return this;
         }
 
+        /**
+         * A brief description of the function, shown to the model as a
+         * short summary of functions with `defer_loading` set to true.
+         */
+        public Builder shortDescription(@Nullable String shortDescription) {
+            this.shortDescription = shortDescription;
+            return this;
+        }
+
         public Function build() {
             return new Function(
-                description, name, parameters);
+                deferLoading, description, name,
+                parameters, shortDescription);
         }
 
 
