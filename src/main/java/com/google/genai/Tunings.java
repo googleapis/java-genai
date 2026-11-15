@@ -2129,6 +2129,13 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"gcsMetricsUri"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"omniLoraTuningSpec"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"omniLoraTuningSpec"},
+          Common.getValueByPath(fromObject, new String[] {"omniLoraTuningSpec"}));
+    }
+
     return toObject;
   }
 

@@ -42,6 +42,7 @@ public abstract class GoogleMapsGroundingTypes extends JsonSerializable {
 
   /**
    * Optional. Enables grounding with Google Maps Routing APIs (ComputeRoutes and SearchAlongRoute).
+   * Also enabled by default for Gemini 4 and later models when no `GroundingTypes` are specified.
    */
   @JsonProperty("routing")
   public abstract Optional<GoogleMapsRouting> routing();
@@ -98,7 +99,8 @@ public abstract class GoogleMapsGroundingTypes extends JsonSerializable {
      * Setter for routing.
      *
      * <p>routing: Optional. Enables grounding with Google Maps Routing APIs (ComputeRoutes and
-     * SearchAlongRoute).
+     * SearchAlongRoute). Also enabled by default for Gemini 4 and later models when no
+     * `GroundingTypes` are specified.
      */
     @JsonProperty("routing")
     public abstract Builder routing(GoogleMapsRouting routing);
@@ -107,7 +109,8 @@ public abstract class GoogleMapsGroundingTypes extends JsonSerializable {
      * Setter for routing builder.
      *
      * <p>routing: Optional. Enables grounding with Google Maps Routing APIs (ComputeRoutes and
-     * SearchAlongRoute).
+     * SearchAlongRoute). Also enabled by default for Gemini 4 and later models when no
+     * `GroundingTypes` are specified.
      */
     @CanIgnoreReturnValue
     public Builder routing(GoogleMapsRouting.Builder routingBuilder) {

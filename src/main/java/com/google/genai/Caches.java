@@ -483,116 +483,6 @@ public final class Caches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionResponsePartToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileData"},
-          Common.getValueByPath(fromObject, new String[] {"fileData"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}))) {
-      throw new IllegalArgumentException(
-          "mediaProcessing parameter is only supported in Gemini Developer API mode, not in Gemini"
-              + " Enterprise Agent Platform mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mediaResolution"},
-          Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"videoMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"documentMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"documentMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"documentMetadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"spreadsheetMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"spreadsheetMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"spreadsheetMetadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"audioMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"audioMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"audioMetadata"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionResponseToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"willContinue"}))) {
-      throw new IllegalArgumentException(
-          "willContinue parameter is only supported in Gemini Developer API mode, not in Gemini"
-              + " Enterprise Agent Platform mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"scheduling"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"scheduling"},
-          Common.getValueByPath(fromObject, new String[] {"scheduling"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(functionResponsePartToVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"parts"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode getCachedContentParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -1017,10 +907,7 @@ public final class Caches {
       Common.setValueByPath(
           toObject,
           new String[] {"functionResponse"},
-          functionResponseToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionResponse"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {

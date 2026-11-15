@@ -221,6 +221,10 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("gcsMetricsUri")
   public abstract Optional<String> gcsMetricsUri();
 
+  /** Optional. Tuning Spec for Omni LoRA Tuning. */
+  @JsonProperty("omniLoraTuningSpec")
+  public abstract Optional<OmniLoraTuningSpec> omniLoraTuningSpec();
+
   /** Instantiates a builder for TuningJob. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -1142,6 +1146,34 @@ public abstract class TuningJob extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearGcsMetricsUri() {
       return gcsMetricsUri(Optional.empty());
+    }
+
+    /**
+     * Setter for omniLoraTuningSpec.
+     *
+     * <p>omniLoraTuningSpec: Optional. Tuning Spec for Omni LoRA Tuning.
+     */
+    @JsonProperty("omniLoraTuningSpec")
+    public abstract Builder omniLoraTuningSpec(OmniLoraTuningSpec omniLoraTuningSpec);
+
+    /**
+     * Setter for omniLoraTuningSpec builder.
+     *
+     * <p>omniLoraTuningSpec: Optional. Tuning Spec for Omni LoRA Tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder omniLoraTuningSpec(OmniLoraTuningSpec.Builder omniLoraTuningSpecBuilder) {
+      return omniLoraTuningSpec(omniLoraTuningSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder omniLoraTuningSpec(Optional<OmniLoraTuningSpec> omniLoraTuningSpec);
+
+    /** Clears the value of omniLoraTuningSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOmniLoraTuningSpec() {
+      return omniLoraTuningSpec(Optional.empty());
     }
 
     public abstract TuningJob build();
