@@ -533,6 +533,20 @@ public class TransformersTest {
   }
 
   @Test
+  public void tIsVertexEmbedContentModel_keepsGeminiEmbedding001OffGlobal() {
+    assertFalse(Transformers.tIsVertexEmbedContentModel("gemini-embedding-001", "global"));
+    assertFalse(
+        Transformers.tIsVertexEmbedContentModel(
+            "publishers/google/models/gemini-embedding-001", "global"));
+    assertTrue(Transformers.tIsVertexEmbedContentModel("gemini-embedding-001", "us-central1"));
+    assertTrue(Transformers.tIsVertexEmbedContentModel("gemini-embedding-001", null));
+    assertTrue(Transformers.tIsVertexEmbedContentModel("gemini-embedding-2", "global"));
+    assertTrue(
+        Transformers.tIsVertexEmbedContentModel(
+            "publishers/intfloat/models/multilingual-e5-large-instruct-maas", "global"));
+  }
+
+  @Test
   public void tIsVertexEmbedContentModel_routesGeminiAndMaasByModelId() {
     assertTrue(Transformers.tIsVertexEmbedContentModel("gemini-embedding-001"));
     assertTrue(Transformers.tIsVertexEmbedContentModel("gemini-embedding-2"));

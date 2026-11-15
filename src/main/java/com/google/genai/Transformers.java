@@ -44,6 +44,7 @@ import com.google.genai.types.VoiceConfig;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -779,8 +780,25 @@ public final class Transformers {
    * @return True if the model is a Vertex AI embed content model, false otherwise.
    */
   public static boolean tIsVertexEmbedContentModel(String model) {
+    return tIsVertexEmbedContentModel(model, null);
+  }
+
+  /**
+   * Checks if a given model name is a Vertex AI embed content model at the given location.
+   *
+   * @param model The model name to check.
+   * @param location The Vertex AI location of the client, or null if unknown.
+   * @return True if the model is a Vertex AI embed content model, false otherwise.
+   */
+  public static boolean tIsVertexEmbedContentModel(String model, @Nullable String location) {
     int lastSlash = model.lastIndexOf('/');
     String modelId = lastSlash >= 0 ? model.substring(lastSlash + 1) : model;
+    // The global endpoint does not serve embedContent for gemini-embedding-001, so it stays on
+    // predict there. Regional endpoints serve it, and Provisioned Throughput needs it
+    // (b/580981789).
+    if (Objects.equals(location, "global") && modelId.startsWith("gemini-embedding-001")) {
+      return false;
+    }
     return modelId.contains("gemini") || modelId.contains("maas");
   }
 

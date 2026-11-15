@@ -1129,6 +1129,32 @@ public class AsyncModelsTest {
     verify(apiClient, times(3)).asyncRequest(anyString(), anyString(), anyString(), any());
   }
 
+  @Test
+  public void testEmbedContentAsync_geminiEmbedding001UsesPredictOnGlobal() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.vertexAI()).thenReturn(true);
+    when(apiClient.location()).thenReturn("global");
+    when(apiClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(
+                new FakeApiResponse(
+                    Headers.of(),
+                    ResponseBody.create(
+                        "{\"predictions\":[{\"embeddings\":{\"values\":[0.5]}}]}",
+                        MediaType.get("application/json")))));
+    AsyncModels asyncModels = new AsyncModels(apiClient);
+
+    EmbedContentResponse resp =
+        asyncModels
+            .embedContent("gemini-embedding-001", Content.fromParts(Part.fromText("hi")), null)
+            .join();
+
+    ArgumentCaptor<String> paths = ArgumentCaptor.forClass(String.class);
+    verify(apiClient).asyncRequest(anyString(), paths.capture(), anyString(), any());
+    assertEquals("publishers/google/models/gemini-embedding-001:predict", paths.getValue());
+    assertEquals(1, resp.embeddings().get().size());
+  }
+
   public static String describeTopic(String topic) {
     return topic + " translate code";
   }

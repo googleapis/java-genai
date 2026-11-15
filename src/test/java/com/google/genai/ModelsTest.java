@@ -1030,6 +1030,60 @@ public class ModelsTest {
     verify(apiClient, times(4)).request(anyString(), anyString(), anyString(), any());
   }
 
+  @Test
+  public void testEmbedContent_geminiEmbedding001UsesPredictOnGlobal() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.vertexAI()).thenReturn(true);
+    when(apiClient.location()).thenReturn("global");
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            rawJsonResponse("{\"predictions\":[{\"embeddings\":{\"values\":[0.1,0.2]}}]}"),
+            rawJsonResponse(
+                "{\"predictions\":[{\"embeddings\":{\"values\":[0.1]}},"
+                    + "{\"embeddings\":{\"values\":[0.2]}}]}"),
+            rawJsonResponse("{\"embedding\":{\"values\":[0.3,0.4]}}"));
+    Models models = new Models(apiClient);
+
+    EmbedContentResponse singleResp =
+        models.embedContent("gemini-embedding-001", Content.fromParts(Part.fromText("hi")), null);
+    EmbedContentResponse listResp =
+        models.embedContent("gemini-embedding-001", ImmutableList.of("hello", "world"), null);
+    EmbedContentResponse ge2Resp = models.embedContent("gemini-embedding-2", "hi", null);
+
+    ArgumentCaptor<String> paths = ArgumentCaptor.forClass(String.class);
+    ArgumentCaptor<String> bodies = ArgumentCaptor.forClass(String.class);
+    verify(apiClient, times(3)).request(anyString(), paths.capture(), bodies.capture(), any());
+    assertEquals(
+        "publishers/google/models/gemini-embedding-001:predict", paths.getAllValues().get(0));
+    assertEquals(1, singleResp.embeddings().get().size());
+    assertEquals(
+        "publishers/google/models/gemini-embedding-001:predict", paths.getAllValues().get(1));
+    ObjectNode listBody =
+        (ObjectNode) JsonSerializable.stringToJsonNode(bodies.getAllValues().get(1));
+    assertEquals(2, listBody.get("instances").size());
+    assertEquals(2, listResp.embeddings().get().size());
+    assertEquals(
+        "publishers/google/models/gemini-embedding-2:embedContent", paths.getAllValues().get(2));
+    assertEquals(1, ge2Resp.embeddings().get().size());
+  }
+
+  @Test
+  public void testEmbedContent_geminiEmbedding001UsesEmbedContentInRegion() {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.vertexAI()).thenReturn(true);
+    when(apiClient.location()).thenReturn("us-central1");
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(rawJsonResponse("{\"embedding\":{\"values\":[0.1,0.2]}}"));
+    Models models = new Models(apiClient);
+
+    EmbedContentResponse resp = models.embedContent("gemini-embedding-001", "hi", null);
+
+    ArgumentCaptor<String> paths = ArgumentCaptor.forClass(String.class);
+    verify(apiClient).request(anyString(), paths.capture(), anyString(), any());
+    assertEquals("publishers/google/models/gemini-embedding-001:embedContent", paths.getValue());
+    assertEquals(1, resp.embeddings().get().size());
+  }
+
   private static ApiResponse rawJsonResponse(String json) {
     return new FakeApiResponse(
         Headers.of(), ResponseBody.create(json, MediaType.get("application/json")));

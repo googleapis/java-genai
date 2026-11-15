@@ -7514,7 +7514,7 @@ public final class Models {
     if (!this.apiClient.vertexAI()) {
       return privateEmbedContent(model, ImmutableList.of(content), null, null, null, config);
     }
-    if (Transformers.tIsVertexEmbedContentModel(model)) {
+    if (Transformers.tIsVertexEmbedContentModel(model, this.apiClient.location())) {
       return privateEmbedContent(
           model, null, content, new EmbeddingApiType("EMBED_CONTENT"), null, config);
     }
@@ -7539,7 +7539,7 @@ public final class Models {
     if (!this.apiClient.vertexAI()) {
       return privateEmbedContent(model, contents, null, null, null, config);
     }
-    if (Transformers.tIsVertexEmbedContentModel(model)) {
+    if (Transformers.tIsVertexEmbedContentModel(model, this.apiClient.location())) {
       if (contents.size() > 1) {
         if (Transformers.tIsVertexMaasModel(model)) {
           throw new IllegalArgumentException(
@@ -7580,7 +7580,7 @@ public final class Models {
     if (!this.apiClient.vertexAI()) {
       return privateEmbedContent(model, contentList, null, null, null, config);
     }
-    if (Transformers.tIsVertexEmbedContentModel(model)) {
+    if (Transformers.tIsVertexEmbedContentModel(model, this.apiClient.location())) {
       if (contentList.size() > 1) {
         if (Transformers.tIsVertexMaasModel(model)) {
           throw new IllegalArgumentException(
