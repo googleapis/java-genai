@@ -214,7 +214,9 @@ public final class TableTest {
       List<String> parameterNames,
       String replayId) {
 
-    Client client = createClient(vertexAI, testName);
+    String model =
+        testTableItem.parameters().map(p -> p.get("model")).map(Object::toString).orElse(null);
+    Client client = createClient(vertexAI, testName, model);
     if (testTableItem.hasUnion().isPresent() && testTableItem.hasUnion().get()) {
       String msg = " => Test skipped: parameters contain unsupported union type";
       return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
@@ -492,8 +494,15 @@ public final class TableTest {
     return createClient(vertexAI, "");
   }
 
-  /** {@code testId} identifies the test, so that a case can be pinned to a supported location. */
   static Client createClient(boolean vertexAI, String testId) {
+    return createClient(vertexAI, testId, null);
+  }
+
+  /**
+   * {@code testId} and {@code model} identify the test, so that a case can be pinned to a supported
+   * location.
+   */
+  static Client createClient(boolean vertexAI, String testId, String model) {
     String replaysPath = System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY");
     if (replaysPath == null) {
       throw new RuntimeException("GOOGLE_GENAI_REPLAYS_DIRECTORY is not set");
@@ -534,6 +543,13 @@ public final class TableTest {
         && testId.contains("tunings")
         && "global".equals(System.getenv("GOOGLE_CLOUD_LOCATION"))) {
       // Fine-tuning is not offered on the global endpoint.
+      builder.location("us-central1");
+    }
+    if (vertexAI
+        && "gemini-embedding-001".equals(model)
+        && "global".equals(System.getenv("GOOGLE_CLOUD_LOCATION"))) {
+      // gemini-embedding-001 is not served on the Vertex global endpoint, so its Vertex case runs
+      // in us-central1.
       builder.location("us-central1");
     }
     return builder.build();
