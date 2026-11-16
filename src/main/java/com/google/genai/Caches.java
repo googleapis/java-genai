@@ -505,6 +505,41 @@ public final class Caches {
               + " Enterprise Agent Platform mode.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mediaResolution"},
+          Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"videoMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"documentMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"documentMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"documentMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"spreadsheetMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"spreadsheetMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"spreadsheetMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"audioMetadata"}));
+    }
+
     return toObject;
   }
 
@@ -916,6 +951,27 @@ public final class Caches {
           Common.getValueByPath(fromObject, new String[] {"speechMetadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"documentMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"documentMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"documentMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"spreadsheetMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"spreadsheetMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"spreadsheetMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"audioMetadata"}));
+    }
+
     return toObject;
   }
 
@@ -1039,6 +1095,27 @@ public final class Caches {
           toObject,
           new String[] {"speechMetadata"},
           Common.getValueByPath(fromObject, new String[] {"speechMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"documentMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"documentMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"documentMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"spreadsheetMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"spreadsheetMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"spreadsheetMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"audioMetadata"}));
     }
 
     return toObject;
