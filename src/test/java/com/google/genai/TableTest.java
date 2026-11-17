@@ -470,6 +470,17 @@ public final class TableTest {
                 throw new RuntimeException(e);
               }
             });
+    String loadOnly = System.getenv("GOOGLE_GENAI_TESTS_LOAD_ONLY");
+    if (loadOnly != null && !loadOnly.isEmpty()) {
+      // Every test above was built (clients from the environment, methods, parameters) but none
+      // runs, so the SDK presubmit can load the nightly API-mode suite with a dummy key without
+      // calling the API.
+      String name =
+          String.format(
+              "Built %d tests without running them (GOOGLE_GENAI_TESTS_LOAD_ONLY is set)",
+              dynamicTests.size());
+      return Collections.singletonList(DynamicTest.dynamicTest(name, () -> {}));
+    }
     return dynamicTests;
   }
 
