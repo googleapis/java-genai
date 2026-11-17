@@ -22,6 +22,7 @@ package com.google.genai.gaos.models.operations;
 import static com.google.genai.gaos.operations.Operations.RequestOperation;
 
 import com.google.genai.gaos.SDKConfiguration;
+import com.google.genai.gaos.models.interactions.EnvironmentMode;
 import com.google.genai.gaos.operations.ListEnvironments;
 import com.google.genai.gaos.utils.Headers;
 import com.google.genai.gaos.utils.Options;
@@ -47,6 +48,12 @@ public class ListEnvironmentsRequestBuilder {
 
     public ListEnvironmentsRequestBuilder apiVersion(@Nullable String apiVersion) {
         this.pojoBuilder.apiVersion(apiVersion);
+        this._setterCalled = true;
+        return this;
+    }
+
+    public ListEnvironmentsRequestBuilder mode(@Nullable EnvironmentMode mode) {
+        this.pojoBuilder.mode(mode);
         this._setterCalled = true;
         return this;
     }

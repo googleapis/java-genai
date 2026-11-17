@@ -23,13 +23,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.genai.gaos.models.interactions.EnvironmentMode;
 import com.google.genai.gaos.models.interactions.Source;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -45,6 +48,26 @@ public class Environment {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("created")
     private String created;
+
+    /**
+     * Output only. Arbitrary customer-defined JSON configuration passed through to the
+     * self-hosted environment poller. Only populated for `self_hosted`
+     * environments when configured.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("custom_config")
+    private Map<String, Object> customConfig;
+
+    /**
+     * Output only. Secret token generated upon environment creation for self_hosted
+     * environments. Used by the self-hosted sandbox daemon to authenticate
+     * polling and streaming requests. Only returned in the CreateEnvironment
+     * response; omitted from subsequent GetEnvironment and ListEnvironments
+     * calls.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("environment_key")
+    private String environmentKey;
 
     /**
      * Output only. The number of files in the environment, output only.
@@ -66,6 +89,13 @@ public class Environment {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("last_accessed")
     private String lastAccessed;
+
+    /**
+     * The compute lifecycle mode for an environment.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mode")
+    private EnvironmentMode mode;
 
     /**
      * Network configuration for the environment.
@@ -106,19 +136,25 @@ public class Environment {
     @JsonCreator
     public Environment(
             @JsonProperty("created") @Nullable String created,
+            @JsonProperty("custom_config") @Nullable Map<String, Object> customConfig,
+            @JsonProperty("environment_key") @Nullable String environmentKey,
             @JsonProperty("file_count") @Nullable String fileCount,
             @JsonProperty("id") @Nonnull String id,
             @JsonProperty("last_accessed") @Nullable String lastAccessed,
+            @JsonProperty("mode") @Nullable EnvironmentMode mode,
             @JsonProperty("network") @Nullable EnvironmentNetworkUnion network,
             @JsonProperty("size_bytes") @Nullable String sizeBytes,
             @JsonProperty("sources") @Nullable List<Source> sources,
             @JsonProperty("status") @Nullable Status status,
             @JsonProperty("updated") @Nullable String updated) {
         this.created = created;
+        this.customConfig = customConfig;
+        this.environmentKey = environmentKey;
         this.fileCount = fileCount;
         this.id = Optional.ofNullable(id)
             .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.lastAccessed = lastAccessed;
+        this.mode = mode;
         this.network = network;
         this.sizeBytes = sizeBytes;
         this.sources = sources;
@@ -128,7 +164,8 @@ public class Environment {
     
     public Environment(
             @Nonnull String id) {
-        this(null, null, id,
+        this(null, null, null,
+            null, id, null,
             null, null, null,
             null, null, null);
     }
@@ -139,6 +176,26 @@ public class Environment {
      */
     public Optional<String> created() {
         return Optional.ofNullable(this.created);
+    }
+
+    /**
+     * Output only. Arbitrary customer-defined JSON configuration passed through to the
+     * self-hosted environment poller. Only populated for `self_hosted`
+     * environments when configured.
+     */
+    public Optional<Map<String, Object>> customConfig() {
+        return Optional.ofNullable(this.customConfig);
+    }
+
+    /**
+     * Output only. Secret token generated upon environment creation for self_hosted
+     * environments. Used by the self-hosted sandbox daemon to authenticate
+     * polling and streaming requests. Only returned in the CreateEnvironment
+     * response; omitted from subsequent GetEnvironment and ListEnvironments
+     * calls.
+     */
+    public Optional<String> environmentKey() {
+        return Optional.ofNullable(this.environmentKey);
     }
 
     /**
@@ -161,6 +218,13 @@ public class Environment {
      */
     public Optional<String> lastAccessed() {
         return Optional.ofNullable(this.lastAccessed);
+    }
+
+    /**
+     * The compute lifecycle mode for an environment.
+     */
+    public Optional<EnvironmentMode> mode() {
+        return Optional.ofNullable(this.mode);
     }
 
     /**
@@ -215,6 +279,30 @@ public class Environment {
 
 
     /**
+     * Output only. Arbitrary customer-defined JSON configuration passed through to the
+     * self-hosted environment poller. Only populated for `self_hosted`
+     * environments when configured.
+     */
+    public Environment withCustomConfig(@Nullable Map<String, Object> customConfig) {
+        this.customConfig = customConfig;
+        return this;
+    }
+
+
+    /**
+     * Output only. Secret token generated upon environment creation for self_hosted
+     * environments. Used by the self-hosted sandbox daemon to authenticate
+     * polling and streaming requests. Only returned in the CreateEnvironment
+     * response; omitted from subsequent GetEnvironment and ListEnvironments
+     * calls.
+     */
+    public Environment withEnvironmentKey(@Nullable String environmentKey) {
+        this.environmentKey = environmentKey;
+        return this;
+    }
+
+
+    /**
      * Output only. The number of files in the environment, output only.
      */
     public Environment withFileCount(@Nullable String fileCount) {
@@ -238,6 +326,15 @@ public class Environment {
      */
     public Environment withLastAccessed(@Nullable String lastAccessed) {
         this.lastAccessed = lastAccessed;
+        return this;
+    }
+
+
+    /**
+     * The compute lifecycle mode for an environment.
+     */
+    public Environment withMode(@Nullable EnvironmentMode mode) {
+        this.mode = mode;
         return this;
     }
 
@@ -299,9 +396,12 @@ public class Environment {
         Environment other = (Environment) o;
         return 
             Utils.enhancedDeepEquals(this.created, other.created) &&
+            Utils.enhancedDeepEquals(this.customConfig, other.customConfig) &&
+            Utils.enhancedDeepEquals(this.environmentKey, other.environmentKey) &&
             Utils.enhancedDeepEquals(this.fileCount, other.fileCount) &&
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.lastAccessed, other.lastAccessed) &&
+            Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.network, other.network) &&
             Utils.enhancedDeepEquals(this.sizeBytes, other.sizeBytes) &&
             Utils.enhancedDeepEquals(this.sources, other.sources) &&
@@ -312,8 +412,9 @@ public class Environment {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            created, fileCount, id,
-            lastAccessed, network, sizeBytes,
+            created, customConfig, environmentKey,
+            fileCount, id, lastAccessed,
+            mode, network, sizeBytes,
             sources, status, updated);
     }
     
@@ -321,9 +422,12 @@ public class Environment {
     public String toString() {
         return Utils.toString(Environment.class,
                 "created", created,
+                "customConfig", customConfig,
+                "environmentKey", environmentKey == null ? null : "[REDACTED]",
                 "fileCount", fileCount,
                 "id", id,
                 "lastAccessed", lastAccessed,
+                "mode", mode,
                 "network", network,
                 "sizeBytes", sizeBytes,
                 "sources", sources,
@@ -336,11 +440,17 @@ public class Environment {
 
         private String created;
 
+        private Map<String, Object> customConfig;
+
+        private String environmentKey;
+
         private String fileCount;
 
         private String id;
 
         private String lastAccessed;
+
+        private EnvironmentMode mode;
 
         private EnvironmentNetworkUnion network;
 
@@ -366,6 +476,28 @@ public class Environment {
         }
 
         /**
+         * Output only. Arbitrary customer-defined JSON configuration passed through to the
+         * self-hosted environment poller. Only populated for `self_hosted`
+         * environments when configured.
+         */
+        public Builder customConfig(@Nullable Map<String, Object> customConfig) {
+            this.customConfig = customConfig;
+            return this;
+        }
+
+        /**
+         * Output only. Secret token generated upon environment creation for self_hosted
+         * environments. Used by the self-hosted sandbox daemon to authenticate
+         * polling and streaming requests. Only returned in the CreateEnvironment
+         * response; omitted from subsequent GetEnvironment and ListEnvironments
+         * calls.
+         */
+        public Builder environmentKey(@Nullable String environmentKey) {
+            this.environmentKey = environmentKey;
+            return this;
+        }
+
+        /**
          * Output only. The number of files in the environment, output only.
          */
         public Builder fileCount(@Nullable String fileCount) {
@@ -387,6 +519,14 @@ public class Environment {
          */
         public Builder lastAccessed(@Nullable String lastAccessed) {
             this.lastAccessed = lastAccessed;
+            return this;
+        }
+
+        /**
+         * The compute lifecycle mode for an environment.
+         */
+        public Builder mode(@Nullable EnvironmentMode mode) {
+            this.mode = mode;
             return this;
         }
 
@@ -433,8 +573,9 @@ public class Environment {
 
         public Environment build() {
             return new Environment(
-                created, fileCount, id,
-                lastAccessed, network, sizeBytes,
+                created, customConfig, environmentKey,
+                fileCount, id, lastAccessed,
+                mode, network, sizeBytes,
                 sources, status, updated);
         }
 

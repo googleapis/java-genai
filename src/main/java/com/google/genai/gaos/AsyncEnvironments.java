@@ -22,6 +22,7 @@ package com.google.genai.gaos;
 import static com.google.genai.gaos.operations.Operations.AsyncRequestOperation;
 
 import com.google.genai.gaos.models.environments.CreateEnvironmentRequest;
+import com.google.genai.gaos.models.interactions.EnvironmentMode;
 import com.google.genai.gaos.models.operations.DeleteEnvironmentRequest;
 import com.google.genai.gaos.models.operations.GetEnvironmentRequest;
 import com.google.genai.gaos.models.operations.ListEnvironmentsRequest;
@@ -96,13 +97,14 @@ public class AsyncEnvironments {
     public CompletableFuture<ListEnvironmentsResponse> listEnvironmentsDirect() {
         return listEnvironments(
                 null, null, null,
-                null);
+                null, null);
     }
 
     /**
      * Lists environments.
      * 
      * @param apiVersion API version for request routing.
+     * @param mode The compute lifecycle mode for an environment.
      * @param pageSize Optional. Maximum number of environments to return.
      *         If unspecified, defaults to 50. Maximum is 1000.
      * @param pageToken Optional. Pagination token.
@@ -110,15 +112,37 @@ public class AsyncEnvironments {
      * @return {@code CompletableFuture<ListEnvironmentsResponse>} - The async response
      */
     public CompletableFuture<ListEnvironmentsResponse> listEnvironments(
-            @Nullable String apiVersion, @Nullable Integer pageSize,
-            @Nullable String pageToken, @Nullable Options options) {
-        ListEnvironmentsRequest request = new ListEnvironmentsRequest(apiVersion, pageSize, pageToken);
+            @Nullable String apiVersion, @Nullable EnvironmentMode mode,
+            @Nullable Integer pageSize, @Nullable String pageToken,
+            @Nullable Options options) {
+        ListEnvironmentsRequest request = new ListEnvironmentsRequest(
+                apiVersion, mode, pageSize,
+                pageToken);
         AsyncRequestOperation<ListEnvironmentsRequest, ListEnvironmentsResponse> operation
               = new ListEnvironments.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
             operation::handleResponse), operation);
+    }
+
+    /**
+     * Lists environments.
+     *
+     * @param apiVersion API version for request routing.
+     * @param pageSize Optional. Maximum number of environments to return.
+     *         If unspecified, defaults to 50. Maximum is 1000.
+     * @param pageToken Optional. Pagination token.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListEnvironmentsResponse>} - The async response
+     * @deprecated Use {@link #listEnvironments()} (the request builder) or
+     *     {@link #listEnvironments(String, EnvironmentMode, Integer, String, Options)}.
+     */
+    @Deprecated
+    public CompletableFuture<ListEnvironmentsResponse> listEnvironments(
+            @Nullable String apiVersion, @Nullable Integer pageSize,
+            @Nullable String pageToken, @Nullable Options options) {
+        return listEnvironments(apiVersion, null, pageSize, pageToken, options);
     }
 
 
