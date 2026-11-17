@@ -105,6 +105,18 @@ public class Function implements FunctionResultSubcontent, Tool, AgentTool {
     }
 
     /**
+     * Retained for source and binary compatibility with SDK versions that predate
+     * {@code defer_loading} and {@code short_description}. Prefer {@link #builder()}.
+     */
+    public Function(
+            @Nullable String description,
+            @Nullable String name,
+            @Nullable Object parameters) {
+        this(null, description, name,
+            parameters, null);
+    }
+
+    /**
      * If true, the function's loading is deferred.
      */
     public Optional<Boolean> deferLoading() {
