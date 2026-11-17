@@ -179,6 +179,13 @@ public final class Models {
               rootObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"finishMessage"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"finishMessage"},
+          Common.getValueByPath(fromObject, new String[] {"finishMessage"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"tokenCount"}) != null) {
       Common.setValueByPath(
           toObject,
