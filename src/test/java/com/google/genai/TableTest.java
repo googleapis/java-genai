@@ -534,11 +534,17 @@ public final class TableTest {
       return client;
     }
 
+    HttpOptions.Builder httpOptionsBuilder =
+        HttpOptions.builder().retryOptions(SHARED_TEST_RETRY_OPTIONS);
+    if (!vertexAI && testId.contains("caches")) {
+      // The Gemini API only serves cachedContents on v1beta.
+      httpOptionsBuilder.apiVersion("v1beta");
+    }
     Client.Builder builder =
         Client.builder()
             .vertexAI(vertexAI)
             .debugConfig(debugConfig)
-            .httpOptions(HttpOptions.builder().retryOptions(SHARED_TEST_RETRY_OPTIONS).build());
+            .httpOptions(httpOptionsBuilder.build());
     if (vertexAI
         && testId.contains("tunings")
         && "global".equals(System.getenv("GOOGLE_CLOUD_LOCATION"))) {

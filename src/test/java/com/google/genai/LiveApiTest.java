@@ -25,6 +25,7 @@ import com.google.genai.types.Content;
 import com.google.genai.types.FunctionCall;
 import com.google.genai.types.FunctionDeclaration;
 import com.google.genai.types.FunctionResponse;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.LiveSendClientContentParameters;
 import com.google.genai.types.LiveSendToolResponseParameters;
@@ -205,7 +206,11 @@ public class LiveApiTest {
     Client client =
         backend.isVertex
             ? Client.builder().vertexAI(true).location(backend.location).build()
-            : Client.builder().apiKey(System.getenv("GOOGLE_API_KEY")).build();
+            // The Gemini API only serves the Live WebSocket on v1beta.
+            : Client.builder()
+                .apiKey(System.getenv("GOOGLE_API_KEY"))
+                .httpOptions(HttpOptions.builder().apiVersion("v1beta").build())
+                .build();
     clients.add(client);
     return client;
   }
