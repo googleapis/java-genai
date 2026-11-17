@@ -176,11 +176,11 @@ class ChatBase {
     List<Content> curatedHistory = new ArrayList<>();
     int i = 0;
     while (i < history.size()) {
-      String role = history.get(i).role().orElse(null);
-      if ("user".equals(role)) {
+      String role = history.get(i).role().orElse("");
+      if (role.equals("user")) {
         curatedHistory.add(history.get(i));
         i++;
-      } else if ("model".equals(role)) {
+      } else if (role.equals("model")) {
         List<Content> modelOutput = new ArrayList<>();
         boolean isValid = true;
         while (i < history.size() && history.get(i).role().orElse("").equals("model")) {
