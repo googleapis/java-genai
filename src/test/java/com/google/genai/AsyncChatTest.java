@@ -27,6 +27,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.types.Candidate;
 import com.google.genai.types.Content;
@@ -186,10 +187,9 @@ public class AsyncChatTest {
     CompletableFuture<GenerateContentResponse> responseFuture =
         chat.sendMessage("Can you tell me a story?");
 
-    responseFuture.thenAccept(
-        response -> {
-          assertNotNull(response.text());
-        });
+    responseFuture.thenAccept(response -> {
+      assertNotNull(response.text());
+    });
   }
 
   @Test
@@ -263,18 +263,17 @@ public class AsyncChatTest {
 
     // Iterate over the stream
     responseStreamFuture
-        .thenAccept(
-            responseStream -> {
-              Iterator<GenerateContentResponse> iterator = responseStream.iterator();
-              while (iterator.hasNext()) {
-                GenerateContentResponse responseChunk = iterator.next();
-                assertNotNull(responseChunk.text());
-                int currentChunkIndex = chunkCount.getAndIncrement();
-                if (currentChunkIndex == 0) {
-                  assert responseChunk.text().equals(STREAMING_RESPONSE_CHUNK_1);
-                }
-              }
-            })
+        .thenAccept(responseStream -> {
+          Iterator<GenerateContentResponse> iterator = responseStream.iterator();
+          while (iterator.hasNext()) {
+            GenerateContentResponse responseChunk = iterator.next();
+            assertNotNull(responseChunk.text());
+            int currentChunkIndex = chunkCount.getAndIncrement();
+            if (currentChunkIndex == 0) {
+              assert responseChunk.text().equals(STREAMING_RESPONSE_CHUNK_1);
+            }
+          }
+        })
         .join();
 
     assert chunkCount.get() == 3;
@@ -286,14 +285,13 @@ public class AsyncChatTest {
 
     // Iterate over the second stream so we can add it to history
     responseStreamFuture2
-        .thenAccept(
-            responseStream -> {
-              Iterator<GenerateContentResponse> iterator = responseStream.iterator();
-              while (iterator.hasNext()) {
-                GenerateContentResponse responseChunk = iterator.next();
-                assertNotNull(responseChunk.text());
-              }
-            })
+        .thenAccept(responseStream -> {
+          Iterator<GenerateContentResponse> iterator = responseStream.iterator();
+          while (iterator.hasNext()) {
+            GenerateContentResponse responseChunk = iterator.next();
+            assertNotNull(responseChunk.text());
+          }
+        })
         .join();
 
     List<Content> historyAfterSecondStreamCall = chatSession.getHistory(false);
@@ -471,6 +469,116 @@ public class AsyncChatTest {
     assertEquals(
         ImmutableList.of("Tell me a story.", "Once upon "),
         chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
+  }
+
+  @Test
+  public void testCreateWithHistory_sendsTheHistoryBeforeTheMessage() throws Exception {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(
+                jsonResponse(textResponse("You have 8 paws.", FinishReason.Known.STOP, null))));
+    Field apiClientField = AsyncChats.class.getDeclaredField("apiClient");
+    apiClientField.setAccessible(true);
+    apiClientField.set(client.async.chats, apiClient);
+    List<Content> history =
+        ImmutableList.of(
+            Content.builder().role("user").parts(Part.fromText("I have 2 dogs.")).build(),
+            Content.builder().role("model").parts(Part.fromText("Nice!")).build());
+
+    AsyncChat chat = client.async.chats.create(MODEL_ID, null, history);
+
+    assertEquals(history, chat.getHistory(true));
+    assertEquals(history, chat.getHistory(false));
+
+    GenerateContentResponse response = chat.sendMessage("How many paws?").join();
+
+    assertEquals("You have 8 paws.", response.text());
+
+    JsonNode contents =
+        JsonSerializable.stringToJsonNode(sentBodies(apiClient, 1).get(0)).get("contents");
+    assertEquals(3, contents.size());
+    assertEquals(
+        ImmutableList.of("user", "model", "user"),
+        ImmutableList.of(
+            contents.get(0).get("role").asText(),
+            contents.get(1).get("role").asText(),
+            contents.get(2).get("role").asText()));
+    assertEquals("I have 2 dogs.", contents.get(0).get("parts").get(0).get("text").asText());
+    assertEquals("How many paws?", contents.get(2).get("parts").get(0).get("text").asText());
+    assertEquals(
+        ImmutableList.of("I have 2 dogs.", "Nice!", "How many paws?", "You have 8 paws."),
+        chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
+  }
+
+  @Test
+  public void testCreateWithHistory_acceptsAHistoryThatStartsWithTheModel() {
+    List<Content> history = ImmutableList.of(turn("model", "Hi"), turn("user", "Hello"));
+
+    AsyncChat chat = client.async.chats.create(MODEL_ID, null, history);
+
+    assertEquals(history, chat.getHistory(true));
+  }
+
+  @Test
+  public void testCreateWithHistory_keepsATrailingUserTurn() {
+    List<Content> history =
+        ImmutableList.of(turn("user", "Hello"), turn("model", "Hi"), turn("user", "Still there?"));
+
+    AsyncChat chat = client.async.chats.create(MODEL_ID, null, history);
+
+    assertEquals(history, chat.getHistory(true));
+    assertEquals(history, chat.getHistory(false));
+  }
+
+  @Test
+  public void testCreateWithHistory_dropsAnInvalidModelTurnAndTheUserTurnBeforeIt() {
+    Content user1 = turn("user", "Hello");
+    Content user2 = turn("user", "Are you there?");
+    Content model2 = turn("model", "Yes.");
+    List<Content> history = ImmutableList.of(user1, invalidModelTurn(), user2, model2);
+
+    AsyncChat chat = client.async.chats.create(MODEL_ID, null, history);
+
+    assertEquals(ImmutableList.of(user2, model2), chat.getHistory(true));
+    assertEquals(history, chat.getHistory(false));
+  }
+
+  @Test
+  public void testCreateWithHistory_throwsForATurnWithoutARole() {
+    List<Content> history =
+        ImmutableList.of(
+            turn("user", "Hello"), Content.builder().parts(Part.fromText("Hi")).build());
+
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> client.async.chats.create(MODEL_ID, null, history));
+
+    assertEquals(
+        "The role of the message must be either 'user' or 'model'.", exception.getMessage());
+  }
+
+  @Test
+  public void testCreateWithHistory_throwsForAnUnknownRole() {
+    List<Content> history = ImmutableList.of(turn("user", "Hello"), turn("cheesemonger", "Gouda"));
+
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> client.async.chats.create(MODEL_ID, null, history));
+
+    assertEquals(
+        "The role of the message must be either 'user' or 'model'.", exception.getMessage());
+  }
+
+  private static Content turn(String role, String text) {
+    return Content.builder().role(role).parts(Part.fromText(text)).build();
+  }
+
+  /** A model turn with an empty part, which the chat does not send back to the model. */
+  private static Content invalidModelTurn() {
+    return Content.builder().role("model").parts(Part.builder().build()).build();
   }
 
   private static GenerateContentResponse textResponse(

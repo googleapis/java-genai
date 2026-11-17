@@ -127,7 +127,7 @@ class ChatBase {
         throw new IllegalArgumentException(
             "The first message in the history must be from the user.");
       }
-      if (!validRoles.contains(history.get(i).role().get())) {
+      if (!history.get(i).role().isPresent() || !validRoles.contains(history.get(i).role().get())) {
         throw new IllegalArgumentException(
             "The role of the message must be either 'user' or 'model'.");
       }
@@ -150,12 +150,59 @@ class ChatBase {
         if (isValid) {
           validatedHistory.addAll(currentInput);
           validatedHistory.addAll(currentOutput);
-          currentInput = new ArrayList<>();
-          currentOutput = new ArrayList<>();
         }
+        // Start the next turn afresh either way, so the inputs and outputs of a turn with an
+        // invalid model response are never carried into the next turn.
+        currentInput = new ArrayList<>();
+        currentOutput = new ArrayList<>();
       }
     }
     return validatedHistory;
+  }
+
+  /**
+   * Returns the turns of a chat's initial history that are sent to the model.
+   *
+   * <p>Like the Python, Go and JavaScript SDKs, this only checks roles: the history may start with
+   * a {@code model} turn or end with a {@code user} turn. A {@code model} turn with invalid content
+   * is left out, together with the {@code user} turn before it.
+   *
+   * @param history The history the chat is created with.
+   * @return The curated history.
+   * @throws IllegalArgumentException If a turn has no role, or a role other than {@code user} or
+   *     {@code model}.
+   */
+  protected List<Content> extractCuratedHistory(List<Content> history) {
+    List<Content> curatedHistory = new ArrayList<>();
+    int i = 0;
+    while (i < history.size()) {
+      String role = history.get(i).role().orElse(null);
+      if ("user".equals(role)) {
+        curatedHistory.add(history.get(i));
+        i++;
+      } else if ("model".equals(role)) {
+        List<Content> modelOutput = new ArrayList<>();
+        boolean isValid = true;
+        while (i < history.size() && history.get(i).role().orElse("").equals("model")) {
+          modelOutput.add(history.get(i));
+          if (isValid && !validateContent(history.get(i))) {
+            isValid = false;
+          }
+          i++;
+        }
+        if (isValid) {
+          curatedHistory.addAll(modelOutput);
+        } else if (!curatedHistory.isEmpty()
+            && Iterables.getLast(curatedHistory).role().orElse("").equals("user")) {
+          // Leave out the user turn that the invalid model turn answered.
+          curatedHistory.remove(curatedHistory.size() - 1);
+        }
+      } else {
+        throw new IllegalArgumentException(
+            "The role of the message must be either 'user' or 'model'.");
+      }
+    }
+    return curatedHistory;
   }
 
   /**

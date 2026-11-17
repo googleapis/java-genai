@@ -868,6 +868,152 @@ public class ChatTest {
         chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
   }
 
+  @Test
+  public void testCreateWithHistory_sendsTheHistoryBeforeTheMessage() throws Exception {
+    ApiClient apiClient = Mockito.mock(ApiClient.class);
+    when(apiClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(jsonResponse(textResponse("You have 8 paws.", FinishReason.Known.STOP, null)));
+    Field apiClientField = Chats.class.getDeclaredField("apiClient");
+    apiClientField.setAccessible(true);
+    apiClientField.set(client.chats, apiClient);
+    List<Content> history =
+        ImmutableList.of(
+            Content.builder().role("user").parts(Part.fromText("I have 2 dogs.")).build(),
+            Content.builder().role("model").parts(Part.fromText("Nice!")).build());
+
+    Chat chat = client.chats.create(MODEL_ID, null, history);
+
+    assertEquals(history, chat.getHistory(true));
+    assertEquals(history, chat.getHistory(false));
+
+    GenerateContentResponse response = chat.sendMessage("How many paws?");
+
+    assertEquals("You have 8 paws.", response.text());
+
+    JsonNode contents =
+        JsonSerializable.stringToJsonNode(sentBodies(apiClient, 1).get(0)).get("contents");
+    assertEquals(3, contents.size());
+    assertEquals(
+        ImmutableList.of("user", "model", "user"),
+        ImmutableList.of(
+            contents.get(0).get("role").asText(),
+            contents.get(1).get("role").asText(),
+            contents.get(2).get("role").asText()));
+    assertEquals("I have 2 dogs.", contents.get(0).get("parts").get(0).get("text").asText());
+    assertEquals("How many paws?", contents.get(2).get("parts").get(0).get("text").asText());
+    assertEquals(
+        ImmutableList.of("I have 2 dogs.", "Nice!", "How many paws?", "You have 8 paws."),
+        chat.getHistory(true).stream().map(Content::text).collect(Collectors.toList()));
+  }
+
+  @Test
+  public void testCreateWithHistory_doesNotChangeWhenTheCallersListDoes() {
+    List<Content> history = new ArrayList<>();
+    history.add(Content.builder().role("user").parts(Part.fromText("Hello")).build());
+    history.add(Content.builder().role("model").parts(Part.fromText("Hi")).build());
+
+    Chat chat = client.chats.create(MODEL_ID, null, history);
+    history.clear();
+
+    assertEquals(2, chat.getHistory(true).size());
+    assertEquals(2, chat.getHistory(false).size());
+  }
+
+  @Test
+  public void testCreateWithHistory_acceptsAHistoryThatStartsWithTheModel() {
+    List<Content> history = ImmutableList.of(turn("model", "Hi"), turn("user", "Hello"));
+
+    Chat chat = client.chats.create(MODEL_ID, null, history);
+
+    assertEquals(history, chat.getHistory(true));
+  }
+
+  @Test
+  public void testCreateWithHistory_keepsATrailingUserTurn() {
+    List<Content> history =
+        ImmutableList.of(turn("user", "Hello"), turn("model", "Hi"), turn("user", "Still there?"));
+
+    Chat chat = client.chats.create(MODEL_ID, null, history);
+
+    assertEquals(history, chat.getHistory(true));
+    assertEquals(history, chat.getHistory(false));
+  }
+
+  @Test
+  public void testCreateWithHistory_dropsAnInvalidModelTurnAndTheUserTurnBeforeIt() {
+    Content user1 = turn("user", "Hello");
+    Content user2 = turn("user", "Are you there?");
+    Content model2 = turn("model", "Yes.");
+    List<Content> history = ImmutableList.of(user1, invalidModelTurn(), user2, model2);
+
+    Chat chat = client.chats.create(MODEL_ID, null, history);
+
+    assertEquals(ImmutableList.of(user2, model2), chat.getHistory(true));
+    assertEquals(history, chat.getHistory(false));
+  }
+
+  @Test
+  public void testCreateWithHistory_throwsForATurnWithoutARole() {
+    List<Content> history =
+        ImmutableList.of(
+            turn("user", "Hello"), Content.builder().parts(Part.fromText("Hi")).build());
+
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class, () -> client.chats.create(MODEL_ID, null, history));
+
+    assertEquals(
+        "The role of the message must be either 'user' or 'model'.", exception.getMessage());
+  }
+
+  @Test
+  public void testCreateWithHistory_throwsForAnUnknownRole() {
+    List<Content> history = ImmutableList.of(turn("user", "Hello"), turn("cheesemonger", "Gouda"));
+
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class, () -> client.chats.create(MODEL_ID, null, history));
+
+    assertEquals(
+        "The role of the message must be either 'user' or 'model'.", exception.getMessage());
+  }
+
+  @Test
+  public void testValidateHistory_doesNotCarryATurnWithAnInvalidResponseIntoTheNextTurn() {
+    Content user2 = turn("user", "Are you there?");
+    Content model2 = turn("model", "Yes.");
+    Chat chat = new Chat(mockedClient, MODEL_ID, null);
+
+    List<Content> validated =
+        chat.validateHistory(
+            ImmutableList.of(turn("user", "Hello"), invalidModelTurn(), user2, model2));
+
+    assertEquals(ImmutableList.of(user2, model2), validated);
+  }
+
+  @Test
+  public void testValidateHistory_throwsForATurnWithoutARole() {
+    Chat chat = new Chat(mockedClient, MODEL_ID, null);
+    List<Content> history =
+        ImmutableList.of(
+            turn("user", "Hello"), Content.builder().parts(Part.fromText("Hi")).build());
+
+    IllegalArgumentException exception =
+        assertThrows(IllegalArgumentException.class, () -> chat.validateHistory(history));
+
+    assertEquals(
+        "The role of the message must be either 'user' or 'model'.", exception.getMessage());
+  }
+
+  private static Content turn(String role, String text) {
+    return Content.builder().role(role).parts(Part.fromText(text)).build();
+  }
+
+  /** A model turn with an empty part, which the chat does not send back to the model. */
+  private static Content invalidModelTurn() {
+    return Content.builder().role("model").parts(Part.builder().build()).build();
+  }
+
   private static GenerateContentResponse textResponse(
       String text, FinishReason.Known finishReason, byte[] token) {
     Candidate.Builder candidate =

@@ -16,7 +16,10 @@
 
 package com.google.genai;
 
+import com.google.common.collect.ImmutableList;
+import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentConfig;
+import java.util.List;
 
 /** A class for creating chat sessions. */
 public class Chats {
@@ -27,6 +30,24 @@ public class Chats {
   }
 
   /**
+   * Creates a new chat session that starts with the given history.
+   *
+   * <p>The history is sent to the model with every message, as if the turns in it had already taken
+   * place in this session. Every turn must have the role {@code user} or {@code model}. A {@code
+   * model} turn with invalid content is not sent, and neither is the {@code user} turn before it.
+   *
+   * @param model The model to use for the chat session.
+   * @param config The configuration for the chat session, or null.
+   * @param history The turns to start the session with.
+   * @return The chat session.
+   * @throws IllegalArgumentException if a turn has no role, or a role other than {@code user} or
+   *     {@code model}.
+   */
+  public Chat create(String model, GenerateContentConfig config, List<Content> history) {
+    return privateCreate(model, config, history);
+  }
+
+  /**
    * Creates a new chat session.
    *
    * @param model The model to use for the chat session.
@@ -34,7 +55,7 @@ public class Chats {
    * @return The chat session.
    */
   public Chat create(String model, GenerateContentConfig config) {
-    return privateCreate(model, config);
+    return privateCreate(model, config, ImmutableList.of());
   }
 
   /**
@@ -44,10 +65,10 @@ public class Chats {
    * @return The chat session.
    */
   public Chat create(String model) {
-    return privateCreate(model, null);
+    return privateCreate(model, null, ImmutableList.of());
   }
 
-  private Chat privateCreate(String model, GenerateContentConfig config) {
-    return new Chat(apiClient, model, config);
+  private Chat privateCreate(String model, GenerateContentConfig config, List<Content> history) {
+    return new Chat(apiClient, model, config, history);
   }
 }
