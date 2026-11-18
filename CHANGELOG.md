@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.5.0](https://github.com/googleapis/java-genai/compare/v2.4.0...v2.5.0) (2026-11-18)
+
+
+### Features
+
+* Add a history parameter to Chats.create and AsyncChats.create ([a0c58aa](https://github.com/googleapis/java-genai/commit/a0c58aa5da1763ee6f65e5678a1512937c5e03cd))
+* **environments:** introduce self-hosted BYOS mode, system_instruction, custom_config, and environment_key in SDKs and CLI ([cbcfc03](https://github.com/googleapis/java-genai/commit/cbcfc03c3a4e4227bcd2ff034e965a6c2b8cf8e2))
+* **sdk:** Add tool retrieval and function result schemas in public SDK ([1893dbe](https://github.com/googleapis/java-genai/commit/1893dbe36a9f6786ea91c57391c178c357ff7bf3))
+
+
+### Bug Fixes
+
+* Chat history no longer reorders turns after an invalid model response, ([a0c58aa](https://github.com/googleapis/java-genai/commit/a0c58aa5da1763ee6f65e5678a1512937c5e03cd))
+* **interactions:** preserve 3-arg Function constructor in Java SDK ([d19d94e](https://github.com/googleapis/java-genai/commit/d19d94e5b4a29072953a5935d36ce141467a4943))
+* Override transitive commons-codec 1.11 with 1.18.0 ([367f859](https://github.com/googleapis/java-genai/commit/367f85994c3c634f740c345b0505b3c359d00621)), refs [#896](https://github.com/googleapis/java-genai/issues/896)
+
+
+### Documentation
+
+* note that the Live API and caches are not available on v1 ([e5dc84c](https://github.com/googleapis/java-genai/commit/e5dc84c4feb3e9b3b3981f90bbf70c74945ef5b7))
+
 ## [2.4.0](https://github.com/googleapis/java-genai/compare/v2.3.0...v2.4.0) (2026-11-16)
 
 
