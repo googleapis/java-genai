@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.models.agents.AgentTool;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,6 +35,12 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
+// TODO(b/575963651): Remove once the server emits "type": "function" in
+// ToolSearchResultStep.result. Function is deserialized directly there, so
+// disable the @JsonTypeInfo inherited from Tool/AgentTool/FunctionResultSubcontent.
+// (Placed above the Javadoc so this patch also applies to the internal SDK,
+// where the implements clause is ordered differently.)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
 /**
  * Function
  * 

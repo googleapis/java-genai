@@ -28,6 +28,7 @@ import com.google.genai.gaos.models.agents.AgentTool;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
+import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
@@ -46,6 +47,13 @@ public class MCPServer implements Tool, AgentTool {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("allowed_tools")
     private List<AllowedTools> allowedTools;
+
+    /**
+     * If true, loading of tools on this MCP server is deferred.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("defer_loading")
+    private Boolean deferLoading;
 
     /**
      * Optional: Fields for authentication headers, timeouts, etc., if needed.
@@ -76,10 +84,12 @@ public class MCPServer implements Tool, AgentTool {
     @JsonCreator
     public MCPServer(
             @JsonProperty("allowed_tools") @Nullable List<AllowedTools> allowedTools,
+            @JsonProperty("defer_loading") @Nullable Boolean deferLoading,
             @JsonProperty("headers") @Nullable Map<String, String> headers,
             @JsonProperty("name") @Nullable String name,
             @JsonProperty("url") @Nullable String url) {
         this.allowedTools = allowedTools;
+        this.deferLoading = deferLoading;
         this.headers = headers;
         this.name = name;
         this.type = Builder._SINGLETON_VALUE_Type.value();
@@ -88,7 +98,20 @@ public class MCPServer implements Tool, AgentTool {
     
     public MCPServer() {
         this(null, null, null,
-            null);
+            null, null);
+    }
+
+    /**
+     * Retained for source and binary compatibility with SDK versions that predate
+     * {@code defer_loading}. Prefer {@link #builder()}.
+     */
+    public MCPServer(
+            @Nullable List<AllowedTools> allowedTools,
+            @Nullable Map<String, String> headers,
+            @Nullable String name,
+            @Nullable String url) {
+        this(allowedTools, null, headers,
+            name, url);
     }
 
     /**
@@ -96,6 +119,13 @@ public class MCPServer implements Tool, AgentTool {
      */
     public Optional<List<AllowedTools>> allowedTools() {
         return Optional.ofNullable(this.allowedTools);
+    }
+
+    /**
+     * If true, loading of tools on this MCP server is deferred.
+     */
+    public Optional<Boolean> deferLoading() {
+        return Optional.ofNullable(this.deferLoading);
     }
 
     /**
@@ -140,6 +170,15 @@ public class MCPServer implements Tool, AgentTool {
 
 
     /**
+     * If true, loading of tools on this MCP server is deferred.
+     */
+    public MCPServer withDeferLoading(@Nullable Boolean deferLoading) {
+        this.deferLoading = deferLoading;
+        return this;
+    }
+
+
+    /**
      * Optional: Fields for authentication headers, timeouts, etc., if needed.
      */
     public MCPServer withHeaders(@Nullable Map<String, String> headers) {
@@ -178,6 +217,7 @@ public class MCPServer implements Tool, AgentTool {
         MCPServer other = (MCPServer) o;
         return 
             Utils.enhancedDeepEquals(this.allowedTools, other.allowedTools) &&
+            Utils.enhancedDeepEquals(this.deferLoading, other.deferLoading) &&
             Utils.enhancedDeepEquals(this.headers, other.headers) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
@@ -187,14 +227,15 @@ public class MCPServer implements Tool, AgentTool {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            allowedTools, headers, name,
-            type, url);
+            allowedTools, deferLoading, headers,
+            name, type, url);
     }
     
     @Override
     public String toString() {
         return Utils.toString(MCPServer.class,
                 "allowedTools", allowedTools,
+                "deferLoading", deferLoading,
                 "headers", headers,
                 "name", name,
                 "type", type,
@@ -205,6 +246,8 @@ public class MCPServer implements Tool, AgentTool {
     public final static class Builder {
 
         private List<AllowedTools> allowedTools;
+
+        private Boolean deferLoading;
 
         private Map<String, String> headers;
 
@@ -221,6 +264,14 @@ public class MCPServer implements Tool, AgentTool {
          */
         public Builder allowedTools(@Nullable List<AllowedTools> allowedTools) {
             this.allowedTools = allowedTools;
+            return this;
+        }
+
+        /**
+         * If true, loading of tools on this MCP server is deferred.
+         */
+        public Builder deferLoading(@Nullable Boolean deferLoading) {
+            this.deferLoading = deferLoading;
             return this;
         }
 
@@ -251,8 +302,8 @@ public class MCPServer implements Tool, AgentTool {
 
         public MCPServer build() {
             return new MCPServer(
-                allowedTools, headers, name,
-                url);
+                allowedTools, deferLoading, headers,
+                name, url);
         }
 
 
