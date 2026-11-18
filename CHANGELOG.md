@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.0](https://github.com/googleapis/java-genai/compare/v2.5.0...v2.6.0) (2026-11-18)
+
+
+### Bug Fixes
+
+* update sdk enum ([624da9a](https://github.com/googleapis/java-genai/commit/624da9ae3e104c22b17237b1d8c7f1620f23c207))
+
 ## [2.5.0](https://github.com/googleapis/java-genai/compare/v2.4.0...v2.5.0) (2026-11-18)
 
 
