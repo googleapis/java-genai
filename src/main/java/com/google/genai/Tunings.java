@@ -1655,6 +1655,12 @@ public final class Tunings {
               rootObject));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"textNormalization"}))) {
+      throw new IllegalArgumentException(
+          "textNormalization parameter is only supported in Gemini Developer API mode, not in"
+              + " Gemini Enterprise Agent Platform mode.");
+    }
+
     return toObject;
   }
 

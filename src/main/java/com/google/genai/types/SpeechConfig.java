@@ -45,6 +45,13 @@ public abstract class SpeechConfig extends JsonSerializable {
   @JsonProperty("multiSpeakerVoiceConfig")
   public abstract Optional<MultiSpeakerVoiceConfig> multiSpeakerVoiceConfig();
 
+  /**
+   * Optional. Controls text normalization before speech synthesis. This field is not supported in
+   * Vertex AI.
+   */
+  @JsonProperty("textNormalization")
+  public abstract Optional<TextNormalization> textNormalization();
+
   /** Instantiates a builder for SpeechConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -140,6 +147,47 @@ public abstract class SpeechConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMultiSpeakerVoiceConfig() {
       return multiSpeakerVoiceConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for textNormalization.
+     *
+     * <p>textNormalization: Optional. Controls text normalization before speech synthesis. This
+     * field is not supported in Vertex AI.
+     */
+    @JsonProperty("textNormalization")
+    public abstract Builder textNormalization(TextNormalization textNormalization);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder textNormalization(Optional<TextNormalization> textNormalization);
+
+    /** Clears the value of textNormalization field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTextNormalization() {
+      return textNormalization(Optional.empty());
+    }
+
+    /**
+     * Setter for textNormalization given a known enum.
+     *
+     * <p>textNormalization: Optional. Controls text normalization before speech synthesis. This
+     * field is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder textNormalization(TextNormalization.Known knownType) {
+      return textNormalization(new TextNormalization(knownType));
+    }
+
+    /**
+     * Setter for textNormalization given a string.
+     *
+     * <p>textNormalization: Optional. Controls text normalization before speech synthesis. This
+     * field is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder textNormalization(String textNormalization) {
+      return textNormalization(new TextNormalization(textNormalization));
     }
 
     public abstract SpeechConfig build();

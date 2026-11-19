@@ -43,14 +43,31 @@ public class SpeakerConfig {
     @JsonProperty("speakers")
     private List<SpeechConfig> speakers;
 
+    /**
+     * Controls text normalization before speech synthesis.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("text_normalization")
+    private TextNormalization textNormalization;
+
     @JsonCreator
     public SpeakerConfig(
-            @JsonProperty("speakers") @Nullable List<SpeechConfig> speakers) {
+            @JsonProperty("speakers") @Nullable List<SpeechConfig> speakers,
+            @JsonProperty("text_normalization") @Nullable TextNormalization textNormalization) {
         this.speakers = speakers;
+        this.textNormalization = textNormalization;
     }
     
     public SpeakerConfig() {
-        this(null);
+        this(null, null);
+    }
+
+    /**
+     * Retained for source and binary compatibility with SDK versions that predate
+     * {@code text_normalization}. Prefer {@link #builder()}.
+     */
+    public SpeakerConfig(@Nullable List<SpeechConfig> speakers) {
+        this(speakers, null);
     }
 
     /**
@@ -58,6 +75,13 @@ public class SpeakerConfig {
      */
     public Optional<List<SpeechConfig>> speakers() {
         return Optional.ofNullable(this.speakers);
+    }
+
+    /**
+     * Controls text normalization before speech synthesis.
+     */
+    public Optional<TextNormalization> textNormalization() {
+        return Optional.ofNullable(this.textNormalization);
     }
 
     public static Builder builder() {
@@ -74,6 +98,15 @@ public class SpeakerConfig {
     }
 
 
+    /**
+     * Controls text normalization before speech synthesis.
+     */
+    public SpeakerConfig withTextNormalization(@Nullable TextNormalization textNormalization) {
+        this.textNormalization = textNormalization;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -84,25 +117,29 @@ public class SpeakerConfig {
         }
         SpeakerConfig other = (SpeakerConfig) o;
         return 
-            Utils.enhancedDeepEquals(this.speakers, other.speakers);
+            Utils.enhancedDeepEquals(this.speakers, other.speakers) &&
+            Utils.enhancedDeepEquals(this.textNormalization, other.textNormalization);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            speakers);
+            speakers, textNormalization);
     }
     
     @Override
     public String toString() {
         return Utils.toString(SpeakerConfig.class,
-                "speakers", speakers);
+                "speakers", speakers,
+                "textNormalization", textNormalization);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
         private List<SpeechConfig> speakers;
+
+        private TextNormalization textNormalization;
 
         private Builder() {
           // force use of static builder() method
@@ -116,9 +153,17 @@ public class SpeakerConfig {
             return this;
         }
 
+        /**
+         * Controls text normalization before speech synthesis.
+         */
+        public Builder textNormalization(@Nullable TextNormalization textNormalization) {
+            this.textNormalization = textNormalization;
+            return this;
+        }
+
         public SpeakerConfig build() {
             return new SpeakerConfig(
-                speakers);
+                speakers, textNormalization);
         }
 
     }
