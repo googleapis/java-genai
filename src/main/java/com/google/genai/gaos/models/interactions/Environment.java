@@ -58,7 +58,9 @@ public class Environment {
 
     /**
      * Optional. The environment ID for the interaction. If specified, the request will
-     * update the existing environment instead of creating a new one.
+     * update the existing environment instead of creating a new one;
+     * creation-only fields (`env` and `sources`) cannot be updated when resuming
+     * an existing environment.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("environment_id")
@@ -127,7 +129,9 @@ public class Environment {
 
     /**
      * Optional. The environment ID for the interaction. If specified, the request will
-     * update the existing environment instead of creating a new one.
+     * update the existing environment instead of creating a new one;
+     * creation-only fields (`env` and `sources`) cannot be updated when resuming
+     * an existing environment.
      */
     public Optional<String> environmentId() {
         return Optional.ofNullable(this.environmentId);
@@ -182,7 +186,9 @@ public class Environment {
 
     /**
      * Optional. The environment ID for the interaction. If specified, the request will
-     * update the existing environment instead of creating a new one.
+     * update the existing environment instead of creating a new one;
+     * creation-only fields (`env` and `sources`) cannot be updated when resuming
+     * an existing environment.
      */
     public Environment withEnvironmentId(@Nullable String environmentId) {
         this.environmentId = environmentId;
@@ -292,7 +298,9 @@ public class Environment {
 
         /**
          * Optional. The environment ID for the interaction. If specified, the request will
-         * update the existing environment instead of creating a new one.
+         * update the existing environment instead of creating a new one;
+         * creation-only fields (`env` and `sources`) cannot be updated when resuming
+         * an existing environment.
          */
         public Builder environmentId(@Nullable String environmentId) {
             this.environmentId = environmentId;

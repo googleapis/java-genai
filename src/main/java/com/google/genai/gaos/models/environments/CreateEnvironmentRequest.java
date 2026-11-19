@@ -50,6 +50,13 @@ public class CreateEnvironmentRequest {
     private Map<String, Object> customConfig;
 
     /**
+     * Environment variables to set in the sandbox environment.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("env")
+    private Map<String, Env> env;
+
+    /**
      * Optional. The source environment to copy/fork from.
      * Format: `environments/{environment_id}` or `{environment_id}`.
      * When specified, `sources` and `env` must be empty.
@@ -91,12 +98,14 @@ public class CreateEnvironmentRequest {
     @JsonCreator
     public CreateEnvironmentRequest(
             @JsonProperty("custom_config") @Nullable Map<String, Object> customConfig,
+            @JsonProperty("env") @Nullable Map<String, Env> env,
             @JsonProperty("from_environment") @Nullable String fromEnvironment,
             @JsonProperty("mode") @Nullable EnvironmentMode mode,
             @JsonProperty("network") @Nullable CreateEnvironmentRequestNetworkUnion network,
             @JsonProperty("sources") @Nullable List<Source> sources,
             @JsonProperty("system_instruction") @Nullable String systemInstruction) {
         this.customConfig = customConfig;
+        this.env = env;
         this.fromEnvironment = fromEnvironment;
         this.mode = mode;
         this.network = network;
@@ -106,7 +115,8 @@ public class CreateEnvironmentRequest {
     
     public CreateEnvironmentRequest() {
         this(null, null, null,
-            null, null, null);
+            null, null, null,
+            null);
     }
 
     /**
@@ -116,6 +126,13 @@ public class CreateEnvironmentRequest {
      */
     public Optional<Map<String, Object>> customConfig() {
         return Optional.ofNullable(this.customConfig);
+    }
+
+    /**
+     * Environment variables to set in the sandbox environment.
+     */
+    public Optional<Map<String, Env>> env() {
+        return Optional.ofNullable(this.env);
     }
 
     /**
@@ -169,6 +186,15 @@ public class CreateEnvironmentRequest {
      */
     public CreateEnvironmentRequest withCustomConfig(@Nullable Map<String, Object> customConfig) {
         this.customConfig = customConfig;
+        return this;
+    }
+
+
+    /**
+     * Environment variables to set in the sandbox environment.
+     */
+    public CreateEnvironmentRequest withEnv(@Nullable Map<String, Env> env) {
+        this.env = env;
         return this;
     }
 
@@ -233,6 +259,7 @@ public class CreateEnvironmentRequest {
         CreateEnvironmentRequest other = (CreateEnvironmentRequest) o;
         return 
             Utils.enhancedDeepEquals(this.customConfig, other.customConfig) &&
+            Utils.enhancedDeepEquals(this.env, other.env) &&
             Utils.enhancedDeepEquals(this.fromEnvironment, other.fromEnvironment) &&
             Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.network, other.network) &&
@@ -243,14 +270,16 @@ public class CreateEnvironmentRequest {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            customConfig, fromEnvironment, mode,
-            network, sources, systemInstruction);
+            customConfig, env, fromEnvironment,
+            mode, network, sources,
+            systemInstruction);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CreateEnvironmentRequest.class,
                 "customConfig", customConfig,
+                "env", env,
                 "fromEnvironment", fromEnvironment,
                 "mode", mode,
                 "network", network,
@@ -262,6 +291,8 @@ public class CreateEnvironmentRequest {
     public final static class Builder {
 
         private Map<String, Object> customConfig;
+
+        private Map<String, Env> env;
 
         private String fromEnvironment;
 
@@ -284,6 +315,14 @@ public class CreateEnvironmentRequest {
          */
         public Builder customConfig(@Nullable Map<String, Object> customConfig) {
             this.customConfig = customConfig;
+            return this;
+        }
+
+        /**
+         * Environment variables to set in the sandbox environment.
+         */
+        public Builder env(@Nullable Map<String, Env> env) {
+            this.env = env;
             return this;
         }
 
@@ -333,8 +372,9 @@ public class CreateEnvironmentRequest {
 
         public CreateEnvironmentRequest build() {
             return new CreateEnvironmentRequest(
-                customConfig, fromEnvironment, mode,
-                network, sources, systemInstruction);
+                customConfig, env, fromEnvironment,
+                mode, network, sources,
+                systemInstruction);
         }
 
     }
