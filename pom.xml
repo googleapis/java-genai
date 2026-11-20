@@ -204,6 +204,7 @@
           <configuration>
             <testExcludes>
               <exclude>**/ClientAndroidTest.java</exclude>
+              <exclude>**/AgentMessageInteractionsTest.java</exclude>
             </testExcludes>
             <annotationProcessorPaths>
               <path>

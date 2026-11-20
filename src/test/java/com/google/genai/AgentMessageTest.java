@@ -1,0 +1,247 @@
+/*
+ * Copyright 2026 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.genai;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.google.genai.errors.ClientException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.Protocol;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+/** Tests for Agent-Message response header parsing and warning emission. */
+public final class AgentMessageTest {
+
+  // Synchronized: async GAOS responses are handled on OkHttp dispatcher threads.
+  private final List<String> recordedWarnings = Collections.synchronizedList(new ArrayList<>());
+  private Handler testHandler;
+  private static final String WARNING_PREFIX = "[Gemini API] ";
+
+  private Logger httpResponseLogger;
+
+  @BeforeEach
+  public void setUp() {
+    HttpApiResponse.clearSeenAgentMessages();
+    recordedWarnings.clear();
+
+    testHandler =
+        new Handler() {
+          @Override
+          public void publish(LogRecord record) {
+            if (record.getLevel().intValue() >= Level.WARNING.intValue()) {
+              // Strip the expected prefix. Exceptions thrown here are swallowed by the SDK,
+              // so a missing prefix is recorded in a form that fails the comparison.
+              String message = record.getMessage();
+              recordedWarnings.add(
+                  message.startsWith(WARNING_PREFIX)
+                      ? message.substring(WARNING_PREFIX.length())
+                      : "missing prefix: " + message);
+            }
+          }
+
+          @Override
+          public void flush() {}
+
+          @Override
+          public void close() {}
+        };
+
+    httpResponseLogger = Logger.getLogger(HttpApiResponse.class.getName());
+    httpResponseLogger.addHandler(testHandler);
+  }
+
+  @AfterEach
+  public void tearDown() {
+    if (httpResponseLogger != null && testHandler != null) {
+      httpResponseLogger.removeHandler(testHandler);
+    }
+    HttpApiResponse.clearSeenAgentMessages();
+  }
+
+  @Test
+  public void testParseSingleStructuredItem() {
+    String header =
+        "field_ignored;field=\"temperature\";"
+            + "msg=%\"temperature is ignored by Gemini 3.6+ models and will be removed"
+            + " in a future release.\"";
+    assertEquals(
+        Collections.singletonList(
+            "temperature is ignored by Gemini 3.6+ models and will be removed in a future"
+                + " release."),
+        HttpApiResponse.parseAgentMessageHeader(header));
+  }
+
+  @Test
+  public void testParseMultipleCommaSeparatedItems() {
+    String header =
+        "field_ignored;field=\"temperature\";"
+            + "msg=%\"temperature is ignored, using default.\", "
+            + "field_ignored;field=\"top_k\";"
+            + "msg=%\"top_k is ignored; see docs.\"";
+    assertEquals(
+        Arrays.asList("temperature is ignored, using default.", "top_k is ignored; see docs."),
+        HttpApiResponse.parseAgentMessageHeader(header));
+  }
+
+  @Test
+  public void testParseItemWithoutFieldAndUnknownParams() {
+    String header =
+        "legacy_usage;severity=\"warn\";experimental;"
+            + "msg=%\"generateContent is a legacy endpoint. Use the Interactions API"
+            + " for new development.\"";
+    assertEquals(
+        Collections.singletonList(
+            "generateContent is a legacy endpoint. Use the Interactions API for new development."),
+        HttpApiResponse.parseAgentMessageHeader(header));
+  }
+
+  @Test
+  public void testParsePercentEncodedUtf8AndQuotedString() {
+    String header =
+        "field_ignored;msg=%\"use %22max_output_tokens%22 %E2%80%94 100%25\", "
+            + "other_code;msg=\"plain \\\"quoted\\\" \\\\ string\"";
+    assertEquals(
+        Arrays.asList("use \"max_output_tokens\" \u2014 100%", "plain \"quoted\" \\ string"),
+        HttpApiResponse.parseAgentMessageHeader(header));
+  }
+
+  @Test
+  public void testParseMalformedHeadersGracefullyIgnored() {
+    assertTrue(HttpApiResponse.parseAgentMessageHeader(null).isEmpty());
+    assertTrue(HttpApiResponse.parseAgentMessageHeader("").isEmpty());
+    assertTrue(HttpApiResponse.parseAgentMessageHeader("   ").isEmpty());
+    assertTrue(HttpApiResponse.parseAgentMessageHeader(";;;").isEmpty());
+    assertTrue(HttpApiResponse.parseAgentMessageHeader("field_ignored").isEmpty());
+    assertTrue(
+        HttpApiResponse.parseAgentMessageHeader("field_ignored;field=\"temperature\"").isEmpty());
+    assertTrue(HttpApiResponse.parseAgentMessageHeader("field_ignored;msg=unquoted").isEmpty());
+    assertTrue(
+        HttpApiResponse.parseAgentMessageHeader("field_ignored;msg=%\"unterminated").isEmpty());
+    assertTrue(HttpApiResponse.parseAgentMessageHeader("bad code;msg=%\"not a token\"").isEmpty());
+  }
+
+  @Test
+  public void testParseSkipsMalformedSiblingItem() {
+    String header =
+        "field_ignored;field=\"temperature\", "
+            + "field_ignored;field=\"top_k\";msg=%\"top_k is ignored.\"";
+    assertEquals(
+        Collections.singletonList("top_k is ignored."),
+        HttpApiResponse.parseAgentMessageHeader(header));
+  }
+
+  @Test
+  public void testParsePlainStringFallback() {
+    String header = "generation_config.temperature is ignored, using default value.";
+    assertEquals(
+        Collections.singletonList("generation_config.temperature is ignored, using default value."),
+        HttpApiResponse.parseAgentMessageHeader(header));
+  }
+
+  @Test
+  public void testWarningsStopAfterMaxSeenMessages() {
+    // Bounds memory and output if the server puts per-request values in messages.
+    for (int i = 0; i < 1005; i++) {
+      HttpApiResponse.warnFromAgentMessageHeaders(
+          Headers.of("Agent-Message", "code;msg=%\"message " + i + "\""));
+    }
+
+    assertEquals(1000, recordedWarnings.size());
+  }
+
+  @Test
+  public void testHttpResponseEmitsWarningAndDeduplicates() {
+    String header =
+        "field_ignored;field=\"temperature\";"
+            + "msg=%\"temperature is ignored by Gemini 3.6+ models.\"";
+
+    createHttpApiResponse(Headers.of("Agent-Message", header)).close();
+    createHttpApiResponse(Headers.of("agent-message", header)).close();
+    createHttpApiResponse(
+            Headers.of(
+                "AGENT-MESSAGE",
+                "field_ignored;field=\"top_k\";msg=%\"top_k is ignored by Gemini 3.6+ models.\""))
+        .close();
+
+    assertEquals(
+        Arrays.asList(
+            "temperature is ignored by Gemini 3.6+ models.",
+            "top_k is ignored by Gemini 3.6+ models."),
+        recordedWarnings);
+  }
+
+  @Test
+  public void testMultipleAgentMessageHeaders() {
+    Headers headers =
+        new Headers.Builder()
+            .add("Agent-Message", "field_ignored;msg=%\"first warning\"")
+            .add("agent-message", "field_ignored;msg=%\"second warning\"")
+            .build();
+
+    createHttpApiResponse(headers).close();
+
+    assertEquals(Arrays.asList("first warning", "second warning"), recordedWarnings);
+  }
+
+  @Test
+  public void testGenerateContentErrorResponseEmitsWarningAndStillThrows() {
+    HttpApiResponse response =
+        createHttpApiResponse(
+            Headers.of("Agent-Message", "field_ignored;msg=%\"gc error warning\""),
+            400,
+            "{\"error\": {\"code\": 400, \"message\": \"bad\", \"status\": \"INVALID_ARGUMENT\"}}");
+
+    assertThrows(ClientException.class, response::getBody);
+    response.close();
+
+    assertEquals(Collections.singletonList("gc error warning"), recordedWarnings);
+  }
+
+  private static HttpApiResponse createHttpApiResponse(Headers headers) {
+    return createHttpApiResponse(headers, 200, "{}");
+  }
+
+  private static HttpApiResponse createHttpApiResponse(Headers headers, int code, String body) {
+    Request request = new Request.Builder().url("https://example.com/v1beta/models").build();
+    Response response =
+        new Response.Builder()
+            .request(request)
+            .protocol(Protocol.HTTP_1_1)
+            .code(code)
+            .message("OK")
+            .headers(headers)
+            .body(ResponseBody.create(body, MediaType.parse("application/json")))
+            .build();
+    return new HttpApiResponse(response);
+  }
+}
