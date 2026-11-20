@@ -236,7 +236,7 @@ public class MCPServer implements Tool, AgentTool {
         return Utils.toString(MCPServer.class,
                 "allowedTools", allowedTools,
                 "deferLoading", deferLoading,
-                "headers", headers,
+                "headers", headers == null ? null : "[REDACTED]",
                 "name", name,
                 "type", type,
                 "url", url);
