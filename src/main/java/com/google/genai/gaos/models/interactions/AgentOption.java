@@ -41,7 +41,6 @@ import java.util.Optional;
  */
 public class AgentOption {
 
-    public static final AgentOption DEEP_RESEARCH_PRO_PREVIEW122025 = new AgentOption("deep-research-pro-preview-12-2025");
     public static final AgentOption DEEP_RESEARCH_PREVIEW042026 = new AgentOption("deep-research-preview-04-2026");
     public static final AgentOption DEEP_RESEARCH_MAX_PREVIEW042026 = new AgentOption("deep-research-max-preview-04-2026");
     public static final AgentOption ANTIGRAVITY_PREVIEW052026 = new AgentOption("antigravity-preview-05-2026");
@@ -119,7 +118,6 @@ public class AgentOption {
 
     private static final Map<String, AgentOption> createValuesMap() {
         Map<String, AgentOption> map = new LinkedHashMap<>();
-        map.put("deep-research-pro-preview-12-2025", DEEP_RESEARCH_PRO_PREVIEW122025);
         map.put("deep-research-preview-04-2026", DEEP_RESEARCH_PREVIEW042026);
         map.put("deep-research-max-preview-04-2026", DEEP_RESEARCH_MAX_PREVIEW042026);
         map.put("antigravity-preview-05-2026", ANTIGRAVITY_PREVIEW052026);
@@ -129,7 +127,6 @@ public class AgentOption {
 
     private static final Map<String, AgentOptionEnum> createEnumsMap() {
         Map<String, AgentOptionEnum> map = new HashMap<>();
-        map.put("deep-research-pro-preview-12-2025", AgentOptionEnum.DEEP_RESEARCH_PRO_PREVIEW122025);
         map.put("deep-research-preview-04-2026", AgentOptionEnum.DEEP_RESEARCH_PREVIEW042026);
         map.put("deep-research-max-preview-04-2026", AgentOptionEnum.DEEP_RESEARCH_MAX_PREVIEW042026);
         map.put("antigravity-preview-05-2026", AgentOptionEnum.ANTIGRAVITY_PREVIEW052026);
@@ -140,7 +137,6 @@ public class AgentOption {
     
     public enum AgentOptionEnum {
 
-        DEEP_RESEARCH_PRO_PREVIEW122025("deep-research-pro-preview-12-2025"),
         DEEP_RESEARCH_PREVIEW042026("deep-research-preview-04-2026"),
         DEEP_RESEARCH_MAX_PREVIEW042026("deep-research-max-preview-04-2026"),
         ANTIGRAVITY_PREVIEW052026("antigravity-preview-05-2026"),
