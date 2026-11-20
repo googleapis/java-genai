@@ -339,7 +339,7 @@ public class Webhook {
                 "createTime", createTime,
                 "id", id,
                 "name", name,
-                "newSigningSecret", newSigningSecret,
+                "newSigningSecret", newSigningSecret == null ? null : "[REDACTED]",
                 "signingSecrets", signingSecrets,
                 "state", state,
                 "subscribedEvents", subscribedEvents,

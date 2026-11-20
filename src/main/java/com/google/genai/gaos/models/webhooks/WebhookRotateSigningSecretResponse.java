@@ -95,7 +95,7 @@ public class WebhookRotateSigningSecretResponse {
     @Override
     public String toString() {
         return Utils.toString(WebhookRotateSigningSecretResponse.class,
-                "secret", secret);
+                "secret", secret == null ? null : "[REDACTED]");
     }
 
     @SuppressWarnings("UnusedReturnValue")
