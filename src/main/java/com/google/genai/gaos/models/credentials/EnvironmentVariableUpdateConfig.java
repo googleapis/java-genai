@@ -183,7 +183,7 @@ public class EnvironmentVariableUpdateConfig implements CredentialUpdate {
                 "injectionLocation", injectionLocation,
                 "trustedDomains", trustedDomains,
                 "type", type,
-                "value", value);
+                "value", value == null ? null : "[REDACTED]");
     }
 
     @SuppressWarnings("UnusedReturnValue")
