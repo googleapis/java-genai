@@ -157,7 +157,7 @@ public class AllowlistEntry {
         return Utils.toString(AllowlistEntry.class,
                 "credential", credential,
                 "domain", domain,
-                "transform", transform);
+                "transform", transform == null ? null : "[REDACTED]");
     }
 
     @SuppressWarnings("UnusedReturnValue")
