@@ -33,7 +33,7 @@ import java.util.Optional;
 /**
  * GetEnvironmentFilesResponse
  * 
- * <p>Response for `GetEnvironmentFiles`.
+ * <p>Response for getting an environment's files.
  */
 public class GetEnvironmentFilesResponse {
     /**

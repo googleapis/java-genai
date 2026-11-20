@@ -45,7 +45,7 @@ public class ListWebhooksRequest {
     private Integer pageSize;
 
     /**
-     * Optional. A page token, received from a previous `ListWebhooks` call.
+     * Optional. A page token, received from a previous call to list webhooks.
      * Provide this to retrieve the subsequent page.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_token")
@@ -82,7 +82,7 @@ public class ListWebhooksRequest {
     }
 
     /**
-     * Optional. A page token, received from a previous `ListWebhooks` call.
+     * Optional. A page token, received from a previous call to list webhooks.
      * Provide this to retrieve the subsequent page.
      */
     public Optional<String> pageToken() {
@@ -115,7 +115,7 @@ public class ListWebhooksRequest {
 
 
     /**
-     * Optional. A page token, received from a previous `ListWebhooks` call.
+     * Optional. A page token, received from a previous call to list webhooks.
      * Provide this to retrieve the subsequent page.
      */
     public ListWebhooksRequest withPageToken(@Nullable String pageToken) {
@@ -185,7 +185,7 @@ public class ListWebhooksRequest {
         }
 
         /**
-         * Optional. A page token, received from a previous `ListWebhooks` call.
+         * Optional. A page token, received from a previous call to list webhooks.
          * Provide this to retrieve the subsequent page.
          */
         public Builder pageToken(@Nullable String pageToken) {

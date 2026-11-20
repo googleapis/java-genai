@@ -33,12 +33,12 @@ import java.util.Optional;
 /**
  * ListTriggerExecutionsResponse
  * 
- * <p>Response message for TriggerService.ListTriggerExecutions.
+ * <p>Response for listing trigger executions.
  */
 public class ListTriggerExecutionsResponse {
     /**
-     * A page token, received from a previous `ListTriggerExecutions` call.
-     * Provide this to retrieve the subsequent page.
+     * A token to retrieve the next page of trigger executions. Pass it as
+     * `page_token` in the next request. If empty, there are no more pages.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("next_page_token")
@@ -64,8 +64,8 @@ public class ListTriggerExecutionsResponse {
     }
 
     /**
-     * A page token, received from a previous `ListTriggerExecutions` call.
-     * Provide this to retrieve the subsequent page.
+     * A token to retrieve the next page of trigger executions. Pass it as
+     * `page_token` in the next request. If empty, there are no more pages.
      */
     public Optional<String> nextPageToken() {
         return Optional.ofNullable(this.nextPageToken);
@@ -84,8 +84,8 @@ public class ListTriggerExecutionsResponse {
 
 
     /**
-     * A page token, received from a previous `ListTriggerExecutions` call.
-     * Provide this to retrieve the subsequent page.
+     * A token to retrieve the next page of trigger executions. Pass it as
+     * `page_token` in the next request. If empty, there are no more pages.
      */
     public ListTriggerExecutionsResponse withNextPageToken(@Nullable String nextPageToken) {
         this.nextPageToken = nextPageToken;
@@ -141,8 +141,8 @@ public class ListTriggerExecutionsResponse {
         }
 
         /**
-         * A page token, received from a previous `ListTriggerExecutions` call.
-         * Provide this to retrieve the subsequent page.
+         * A token to retrieve the next page of trigger executions. Pass it as
+         * `page_token` in the next request. If empty, there are no more pages.
          */
         public Builder nextPageToken(@Nullable String nextPageToken) {
             this.nextPageToken = nextPageToken;

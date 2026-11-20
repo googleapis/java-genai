@@ -158,7 +158,7 @@ public class AsyncEnvironments {
     /**
      * Creates an environment.
      * 
-     * @param body Request for `CreateEnvironment`.
+     * @param body Request for creating an environment.
      * @return {@code CompletableFuture<CreateEnvironmentResponse>} - The async response
      */
     public CompletableFuture<CreateEnvironmentResponse> createEnvironment(@Nonnull CreateEnvironmentRequest body) {
@@ -169,7 +169,7 @@ public class AsyncEnvironments {
      * Creates an environment.
      * 
      * @param apiVersion API version for request routing.
-     * @param body Request for `CreateEnvironment`.
+     * @param body Request for creating an environment.
      * @param options additional options
      * @return {@code CompletableFuture<CreateEnvironmentResponse>} - The async response
      */

@@ -116,7 +116,7 @@ public class Voices {
      * (`VOICE_TYPE_PROMPTED`) or from reference and consent audio recordings
      * (`VOICE_TYPE_REPLICATED`).
      * 
-     * @param body Request message for `VoicesService.CreateVoice`.
+     * @param body Request for creating a voice.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -130,7 +130,7 @@ public class Voices {
      * (`VOICE_TYPE_REPLICATED`).
      * 
      * @param apiVersion API version for request routing.
-     * @param body Request message for `VoicesService.CreateVoice`.
+     * @param body Request for creating a voice.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -189,8 +189,8 @@ public class Voices {
 
     /**
      * Gets a custom stored voice (`store = true`) by resource name.
-     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) cannot be retrieved via
-     * `GetVoice`; use `ListVoices` instead.
+     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) can't be retrieved this
+     * way; list voices instead.
      * 
      * @return The call builder
      */
@@ -200,8 +200,8 @@ public class Voices {
 
     /**
      * Gets a custom stored voice (`store = true`) by resource name.
-     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) cannot be retrieved via
-     * `GetVoice`; use `ListVoices` instead.
+     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) can't be retrieved this
+     * way; list voices instead.
      * 
      * @param id Required. The resource name of the custom stored voice to retrieve
      *         (for example, `voices/voice_abc123def456`).
@@ -214,8 +214,8 @@ public class Voices {
 
     /**
      * Gets a custom stored voice (`store = true`) by resource name.
-     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) cannot be retrieved via
-     * `GetVoice`; use `ListVoices` instead.
+     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) can't be retrieved this
+     * way; list voices instead.
      * 
      * @param apiVersion API version for request routing.
      * @param id Required. The resource name of the custom stored voice to retrieve

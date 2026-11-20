@@ -64,7 +64,8 @@ public class CreateModelInteraction {
     /**
      * Opaque token to resume a long decode. Output: set when status is
      * REQUIRES_CONTINUATION and decoding can be resumed. Input: pass the latest
-     * token back unchanged in CreateInteraction to continue decoding.
+     * token back unchanged when creating the next interaction to continue
+     * decoding.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("continuation_token")
@@ -272,7 +273,8 @@ public class CreateModelInteraction {
     /**
      * Opaque token to resume a long decode. Output: set when status is
      * REQUIRES_CONTINUATION and decoding can be resumed. Input: pass the latest
-     * token back unchanged in CreateInteraction to continue decoding.
+     * token back unchanged when creating the next interaction to continue
+     * decoding.
      */
     public Optional<String> continuationToken() {
         return Optional.ofNullable(this.continuationToken);
@@ -435,7 +437,8 @@ public class CreateModelInteraction {
     /**
      * Opaque token to resume a long decode. Output: set when status is
      * REQUIRES_CONTINUATION and decoding can be resumed. Input: pass the latest
-     * token back unchanged in CreateInteraction to continue decoding.
+     * token back unchanged when creating the next interaction to continue
+     * decoding.
      */
     public CreateModelInteraction withContinuationToken(@Nullable String continuationToken) {
         this.continuationToken = continuationToken;
@@ -740,7 +743,8 @@ public class CreateModelInteraction {
         /**
          * Opaque token to resume a long decode. Output: set when status is
          * REQUIRES_CONTINUATION and decoding can be resumed. Input: pass the latest
-         * token back unchanged in CreateInteraction to continue decoding.
+         * token back unchanged when creating the next interaction to continue
+         * decoding.
          */
         public Builder continuationToken(@Nullable String continuationToken) {
             this.continuationToken = continuationToken;

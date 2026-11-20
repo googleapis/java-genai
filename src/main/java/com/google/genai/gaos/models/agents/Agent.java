@@ -33,7 +33,7 @@ import java.util.Optional;
 /**
  * Agent
  * 
- * <p>An agent definition for the CreateAgent API.
+ * <p>An agent definition, used when creating an agent.
  * This message is the target for annotation-parser-based JSON parsing.
  * New format:
  * {

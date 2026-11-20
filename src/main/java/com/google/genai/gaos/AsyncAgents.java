@@ -127,7 +127,7 @@ public class AsyncAgents {
     /**
      * Creates a new Agent (Typed version for SDK).
      * 
-     * @param body An agent definition for the CreateAgent API.
+     * @param body An agent definition, used when creating an agent.
      *         This message is the target for annotation-parser-based JSON parsing.
      *         New format:
      *           {
@@ -147,7 +147,7 @@ public class AsyncAgents {
      * Creates a new Agent (Typed version for SDK).
      * 
      * @param apiVersion API version for request routing.
-     * @param body An agent definition for the CreateAgent API.
+     * @param body An agent definition, used when creating an agent.
      *         This message is the target for annotation-parser-based JSON parsing.
      *         New format:
      *           {

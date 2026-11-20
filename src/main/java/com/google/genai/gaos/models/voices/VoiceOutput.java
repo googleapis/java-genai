@@ -35,8 +35,8 @@ import java.util.Optional;
 /**
  * VoiceOutput
  * 
- * <p>A voice resource representing either a custom voice (created via
- * `CreateVoice`) or a prebuilt system voice (returned by `ListVoices`).
+ * <p>A voice resource representing either a custom voice that you create or a
+ * prebuilt system voice (returned when listing voices).
  */
 public class VoiceOutput {
     /**
@@ -73,8 +73,8 @@ public class VoiceOutput {
      * Output only. The timestamp at which a custom stored voice (`store = true`)
      * or replicated voice key (`store = false`) expires. For custom stored voices
      * (`store = true`), this expiration time is extended when the voice is used
-     * for speech synthesis or as a `base_voice` in `CreateVoice`. Unset for
-     * prebuilt catalog voices (`"prebuilt"`), which do not expire.
+     * for speech synthesis or as a `base_voice` when creating another voice.
+     * Unset for prebuilt catalog voices (`"prebuilt"`), which do not expire.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("expire_time")
@@ -93,12 +93,12 @@ public class VoiceOutput {
      * 
      * <p>* For Google-managed custom voices (`store = true`), this is a generated ID
      * with prefix `voice_` (for example, `voice_abc123def456`). Pass
-     * `voices/{id}` as the `name` in `GetVoice` and `DeleteVoice`, and pass
+     * `voices/{id}` as the `name` when getting or deleting the voice, and pass
      * `{id}` directly to `SpeechConfig.voice_config.voice` (or
      * `SpeechConfig.voice`) during speech synthesis.
-     * * For prebuilt catalog voices (`"prebuilt"` returned by `ListVoices`), this
-     * is the speaker name (for example, `Puck` or `Charon`).
-     * * Unset when `CreateVoice` is called with `store = false`.
+     * * For prebuilt catalog voices (`"prebuilt"` returned when listing voices),
+     * this is the speaker name (for example, `Puck` or `Charon`).
+     * * Unset when the voice is created with `store = false`.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("id")
@@ -106,9 +106,10 @@ public class VoiceOutput {
 
     /**
      * Output only. The client-managed voice replication key (with prefix
-     * `voicekey_`). Returned only by `CreateVoice` when `type` is `"replicated"`
-     * and `store` is `false`. Pass this key to `SpeechConfig.voice_config.voice`
-     * (or `SpeechConfig.voice`) during speech synthesis.
+     * `voicekey_`). Returned only when creating a voice with `type`
+     * `"replicated"` and `store` `false`. Pass this key to
+     * `SpeechConfig.voice_config.voice` (or `SpeechConfig.voice`) during speech
+     * synthesis.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("key")
@@ -123,9 +124,9 @@ public class VoiceOutput {
 
     /**
      * Optional. The model used to design or replicate the voice.
-     * If omitted in `CreateVoice`, defaults to the latest supported voice design
-     * model. Returned in `CreateVoice`, `GetVoice`, and `ListVoices` responses
-     * for custom voices (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
+     * If omitted when creating a voice, defaults to the latest supported voice
+     * design model. Returned when creating, getting, or listing custom voices
+     * (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
      * voices. Created voices can be synthesized across any supported TTS
      * synthesis model.
      */
@@ -148,8 +149,8 @@ public class VoiceOutput {
 
     /**
      * Parameters for prompted voice generation.
-     * Required in `CreateVoice` when `type` is `"prompted"`. Returned in
-     * `CreateVoice`, `GetVoice`, and `ListVoices` responses for prompted voices.
+     * Required when creating a voice with `type` `"prompted"`. Returned when
+     * creating, getting, or listing prompted voices.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("prompted")
@@ -264,8 +265,8 @@ public class VoiceOutput {
      * Output only. The timestamp at which a custom stored voice (`store = true`)
      * or replicated voice key (`store = false`) expires. For custom stored voices
      * (`store = true`), this expiration time is extended when the voice is used
-     * for speech synthesis or as a `base_voice` in `CreateVoice`. Unset for
-     * prebuilt catalog voices (`"prebuilt"`), which do not expire.
+     * for speech synthesis or as a `base_voice` when creating another voice.
+     * Unset for prebuilt catalog voices (`"prebuilt"`), which do not expire.
      */
     public Optional<OffsetDateTime> expireTime() {
         return Optional.ofNullable(this.expireTime);
@@ -284,12 +285,12 @@ public class VoiceOutput {
      * 
      * <p>* For Google-managed custom voices (`store = true`), this is a generated ID
      * with prefix `voice_` (for example, `voice_abc123def456`). Pass
-     * `voices/{id}` as the `name` in `GetVoice` and `DeleteVoice`, and pass
+     * `voices/{id}` as the `name` when getting or deleting the voice, and pass
      * `{id}` directly to `SpeechConfig.voice_config.voice` (or
      * `SpeechConfig.voice`) during speech synthesis.
-     * * For prebuilt catalog voices (`"prebuilt"` returned by `ListVoices`), this
-     * is the speaker name (for example, `Puck` or `Charon`).
-     * * Unset when `CreateVoice` is called with `store = false`.
+     * * For prebuilt catalog voices (`"prebuilt"` returned when listing voices),
+     * this is the speaker name (for example, `Puck` or `Charon`).
+     * * Unset when the voice is created with `store = false`.
      */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
@@ -297,9 +298,10 @@ public class VoiceOutput {
 
     /**
      * Output only. The client-managed voice replication key (with prefix
-     * `voicekey_`). Returned only by `CreateVoice` when `type` is `"replicated"`
-     * and `store` is `false`. Pass this key to `SpeechConfig.voice_config.voice`
-     * (or `SpeechConfig.voice`) during speech synthesis.
+     * `voicekey_`). Returned only when creating a voice with `type`
+     * `"replicated"` and `store` `false`. Pass this key to
+     * `SpeechConfig.voice_config.voice` (or `SpeechConfig.voice`) during speech
+     * synthesis.
      */
     public Optional<String> key() {
         return Optional.ofNullable(this.key);
@@ -314,9 +316,9 @@ public class VoiceOutput {
 
     /**
      * Optional. The model used to design or replicate the voice.
-     * If omitted in `CreateVoice`, defaults to the latest supported voice design
-     * model. Returned in `CreateVoice`, `GetVoice`, and `ListVoices` responses
-     * for custom voices (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
+     * If omitted when creating a voice, defaults to the latest supported voice
+     * design model. Returned when creating, getting, or listing custom voices
+     * (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
      * voices. Created voices can be synthesized across any supported TTS
      * synthesis model.
      */
@@ -338,8 +340,8 @@ public class VoiceOutput {
 
     /**
      * Parameters for prompted voice generation.
-     * Required in `CreateVoice` when `type` is `"prompted"`. Returned in
-     * `CreateVoice`, `GetVoice`, and `ListVoices` responses for prompted voices.
+     * Required when creating a voice with `type` `"prompted"`. Returned when
+     * creating, getting, or listing prompted voices.
      */
     public Optional<PromptedVoice> prompted() {
         return Optional.ofNullable(this.prompted);
@@ -418,8 +420,8 @@ public class VoiceOutput {
      * Output only. The timestamp at which a custom stored voice (`store = true`)
      * or replicated voice key (`store = false`) expires. For custom stored voices
      * (`store = true`), this expiration time is extended when the voice is used
-     * for speech synthesis or as a `base_voice` in `CreateVoice`. Unset for
-     * prebuilt catalog voices (`"prebuilt"`), which do not expire.
+     * for speech synthesis or as a `base_voice` when creating another voice.
+     * Unset for prebuilt catalog voices (`"prebuilt"`), which do not expire.
      */
     public VoiceOutput withExpireTime(@Nullable OffsetDateTime expireTime) {
         this.expireTime = expireTime;
@@ -442,12 +444,12 @@ public class VoiceOutput {
      * 
      * <p>* For Google-managed custom voices (`store = true`), this is a generated ID
      * with prefix `voice_` (for example, `voice_abc123def456`). Pass
-     * `voices/{id}` as the `name` in `GetVoice` and `DeleteVoice`, and pass
+     * `voices/{id}` as the `name` when getting or deleting the voice, and pass
      * `{id}` directly to `SpeechConfig.voice_config.voice` (or
      * `SpeechConfig.voice`) during speech synthesis.
-     * * For prebuilt catalog voices (`"prebuilt"` returned by `ListVoices`), this
-     * is the speaker name (for example, `Puck` or `Charon`).
-     * * Unset when `CreateVoice` is called with `store = false`.
+     * * For prebuilt catalog voices (`"prebuilt"` returned when listing voices),
+     * this is the speaker name (for example, `Puck` or `Charon`).
+     * * Unset when the voice is created with `store = false`.
      */
     public VoiceOutput withId(@Nullable String id) {
         this.id = id;
@@ -457,9 +459,10 @@ public class VoiceOutput {
 
     /**
      * Output only. The client-managed voice replication key (with prefix
-     * `voicekey_`). Returned only by `CreateVoice` when `type` is `"replicated"`
-     * and `store` is `false`. Pass this key to `SpeechConfig.voice_config.voice`
-     * (or `SpeechConfig.voice`) during speech synthesis.
+     * `voicekey_`). Returned only when creating a voice with `type`
+     * `"replicated"` and `store` `false`. Pass this key to
+     * `SpeechConfig.voice_config.voice` (or `SpeechConfig.voice`) during speech
+     * synthesis.
      */
     public VoiceOutput withKey(@Nullable String key) {
         this.key = key;
@@ -478,9 +481,9 @@ public class VoiceOutput {
 
     /**
      * Optional. The model used to design or replicate the voice.
-     * If omitted in `CreateVoice`, defaults to the latest supported voice design
-     * model. Returned in `CreateVoice`, `GetVoice`, and `ListVoices` responses
-     * for custom voices (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
+     * If omitted when creating a voice, defaults to the latest supported voice
+     * design model. Returned when creating, getting, or listing custom voices
+     * (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
      * voices. Created voices can be synthesized across any supported TTS
      * synthesis model.
      */
@@ -508,8 +511,8 @@ public class VoiceOutput {
 
     /**
      * Parameters for prompted voice generation.
-     * Required in `CreateVoice` when `type` is `"prompted"`. Returned in
-     * `CreateVoice`, `GetVoice`, and `ListVoices` responses for prompted voices.
+     * Required when creating a voice with `type` `"prompted"`. Returned when
+     * creating, getting, or listing prompted voices.
      */
     public VoiceOutput withPrompted(@Nullable PromptedVoice prompted) {
         this.prompted = prompted;
@@ -692,8 +695,8 @@ public class VoiceOutput {
          * Output only. The timestamp at which a custom stored voice (`store = true`)
          * or replicated voice key (`store = false`) expires. For custom stored voices
          * (`store = true`), this expiration time is extended when the voice is used
-         * for speech synthesis or as a `base_voice` in `CreateVoice`. Unset for
-         * prebuilt catalog voices (`"prebuilt"`), which do not expire.
+         * for speech synthesis or as a `base_voice` when creating another voice.
+         * Unset for prebuilt catalog voices (`"prebuilt"`), which do not expire.
          */
         public Builder expireTime(@Nullable OffsetDateTime expireTime) {
             this.expireTime = expireTime;
@@ -714,12 +717,12 @@ public class VoiceOutput {
          * 
          * <p>* For Google-managed custom voices (`store = true`), this is a generated ID
          * with prefix `voice_` (for example, `voice_abc123def456`). Pass
-         * `voices/{id}` as the `name` in `GetVoice` and `DeleteVoice`, and pass
+         * `voices/{id}` as the `name` when getting or deleting the voice, and pass
          * `{id}` directly to `SpeechConfig.voice_config.voice` (or
          * `SpeechConfig.voice`) during speech synthesis.
-         * * For prebuilt catalog voices (`"prebuilt"` returned by `ListVoices`), this
-         * is the speaker name (for example, `Puck` or `Charon`).
-         * * Unset when `CreateVoice` is called with `store = false`.
+         * * For prebuilt catalog voices (`"prebuilt"` returned when listing voices),
+         * this is the speaker name (for example, `Puck` or `Charon`).
+         * * Unset when the voice is created with `store = false`.
          */
         public Builder id(@Nullable String id) {
             this.id = id;
@@ -728,9 +731,10 @@ public class VoiceOutput {
 
         /**
          * Output only. The client-managed voice replication key (with prefix
-         * `voicekey_`). Returned only by `CreateVoice` when `type` is `"replicated"`
-         * and `store` is `false`. Pass this key to `SpeechConfig.voice_config.voice`
-         * (or `SpeechConfig.voice`) during speech synthesis.
+         * `voicekey_`). Returned only when creating a voice with `type`
+         * `"replicated"` and `store` `false`. Pass this key to
+         * `SpeechConfig.voice_config.voice` (or `SpeechConfig.voice`) during speech
+         * synthesis.
          */
         public Builder key(@Nullable String key) {
             this.key = key;
@@ -747,9 +751,9 @@ public class VoiceOutput {
 
         /**
          * Optional. The model used to design or replicate the voice.
-         * If omitted in `CreateVoice`, defaults to the latest supported voice design
-         * model. Returned in `CreateVoice`, `GetVoice`, and `ListVoices` responses
-         * for custom voices (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
+         * If omitted when creating a voice, defaults to the latest supported voice
+         * design model. Returned when creating, getting, or listing custom voices
+         * (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
          * voices. Created voices can be synthesized across any supported TTS
          * synthesis model.
          */
@@ -774,8 +778,8 @@ public class VoiceOutput {
 
         /**
          * Parameters for prompted voice generation.
-         * Required in `CreateVoice` when `type` is `"prompted"`. Returned in
-         * `CreateVoice`, `GetVoice`, and `ListVoices` responses for prompted voices.
+         * Required when creating a voice with `type` `"prompted"`. Returned when
+         * creating, getting, or listing prompted voices.
          */
         public Builder prompted(@Nullable PromptedVoice prompted) {
             this.prompted = prompted;

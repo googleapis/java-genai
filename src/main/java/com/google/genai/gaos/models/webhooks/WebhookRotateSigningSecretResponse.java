@@ -32,7 +32,7 @@ import java.util.Optional;
 /**
  * WebhookRotateSigningSecretResponse
  * 
- * <p>Response message for WebhookService.RotateSigningSecret.
+ * <p>Response for rotating a webhook's signing secret.
  */
 public class WebhookRotateSigningSecretResponse {
     /**

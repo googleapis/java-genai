@@ -105,7 +105,7 @@ public class Webhooks {
      * @param pageSize Optional. The maximum number of webhooks to return. The service may return
      *         fewer than this value. If unspecified, at most 50 webhooks will be
      *         returned. The maximum value is 1000.
-     * @param pageToken Optional. A page token, received from a previous `ListWebhooks` call.
+     * @param pageToken Optional. A page token, received from a previous call to list webhooks.
      *         Provide this to retrieve the subsequent page.
      * @param options additional options
      * @return The response from the API call
@@ -305,7 +305,7 @@ public class Webhooks {
      * 
      * @param apiVersion API version for request routing.
      * @param id Required. The ID of the webhook to ping.
-     * @param body Request message for WebhookService.PingWebhook.
+     * @param body Request for pinging a webhook.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -332,7 +332,7 @@ public class Webhooks {
      * Generates a new signing secret for a Webhook.
      * 
      * @param id Required. The ID of the webhook for which to generate a signing secret.
-     * @param body Request message for WebhookService.RotateSigningSecret.
+     * @param body Request for rotating a webhook's signing secret.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -346,7 +346,7 @@ public class Webhooks {
      * 
      * @param apiVersion API version for request routing.
      * @param id Required. The ID of the webhook for which to generate a signing secret.
-     * @param body Request message for WebhookService.RotateSigningSecret.
+     * @param body Request for rotating a webhook's signing secret.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails

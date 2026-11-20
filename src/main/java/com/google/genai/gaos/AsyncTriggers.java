@@ -107,7 +107,7 @@ public class AsyncTriggers {
      * @param apiVersion API version for request routing.
      * @param filter Optional. Filter expression (e.g., by state).
      * @param pageSize Optional. The maximum number of triggers to return per page.
-     * @param pageToken Optional. A page token from a previous ListTriggers call.
+     * @param pageToken Optional. A page token from a previous call to list triggers.
      * @param options additional options
      * @return {@code CompletableFuture<ListTriggersResponse>} - The async response
      */
@@ -320,7 +320,7 @@ public class AsyncTriggers {
      * 
      * @param apiVersion API version for request routing.
      * @param pageSize The maximum number of executions to return per page.
-     * @param pageToken A page token from a previous ListTriggerExecutions call.
+     * @param pageToken A page token from a previous call to list trigger executions.
      * @param triggerId Required. The trigger ID to list executions from.
      * @param options additional options
      * @return {@code CompletableFuture<ListTriggerExecutionsResponse>} - The async response

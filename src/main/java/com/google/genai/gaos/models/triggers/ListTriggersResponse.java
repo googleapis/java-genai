@@ -33,12 +33,12 @@ import java.util.Optional;
 /**
  * ListTriggersResponse
  * 
- * <p>Response message for TriggerService.ListTriggers.
+ * <p>Response for listing triggers.
  */
 public class ListTriggersResponse {
     /**
-     * A page token, received from a previous `ListTriggers` call.
-     * Provide this to retrieve the subsequent page.
+     * A token to retrieve the next page of triggers. Pass it as `page_token` in
+     * the next request. If empty, there are no more pages.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("next_page_token")
@@ -64,8 +64,8 @@ public class ListTriggersResponse {
     }
 
     /**
-     * A page token, received from a previous `ListTriggers` call.
-     * Provide this to retrieve the subsequent page.
+     * A token to retrieve the next page of triggers. Pass it as `page_token` in
+     * the next request. If empty, there are no more pages.
      */
     public Optional<String> nextPageToken() {
         return Optional.ofNullable(this.nextPageToken);
@@ -84,8 +84,8 @@ public class ListTriggersResponse {
 
 
     /**
-     * A page token, received from a previous `ListTriggers` call.
-     * Provide this to retrieve the subsequent page.
+     * A token to retrieve the next page of triggers. Pass it as `page_token` in
+     * the next request. If empty, there are no more pages.
      */
     public ListTriggersResponse withNextPageToken(@Nullable String nextPageToken) {
         this.nextPageToken = nextPageToken;
@@ -141,8 +141,8 @@ public class ListTriggersResponse {
         }
 
         /**
-         * A page token, received from a previous `ListTriggers` call.
-         * Provide this to retrieve the subsequent page.
+         * A token to retrieve the next page of triggers. Pass it as `page_token` in
+         * the next request. If empty, there are no more pages.
          */
         public Builder nextPageToken(@Nullable String nextPageToken) {
             this.nextPageToken = nextPageToken;

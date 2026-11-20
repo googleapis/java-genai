@@ -79,8 +79,8 @@ public class ListVoicesRequest {
     private Integer pageSize;
 
     /**
-     * Optional. A page token received from a previous `ListVoices` call. Provide
-     * this to retrieve the subsequent page.
+     * Optional. A page token received from a previous call to list voices.
+     * Provide this to retrieve the subsequent page.
      * 
      * <p>When paginating, all filter query parameters (`language_code`,
      * `region_code`, `accent`, `persona`, `context`, `gender`, `pitch`, `type`,
@@ -220,8 +220,8 @@ public class ListVoicesRequest {
     }
 
     /**
-     * Optional. A page token received from a previous `ListVoices` call. Provide
-     * this to retrieve the subsequent page.
+     * Optional. A page token received from a previous call to list voices.
+     * Provide this to retrieve the subsequent page.
      * 
      * <p>When paginating, all filter query parameters (`language_code`,
      * `region_code`, `accent`, `persona`, `context`, `gender`, `pitch`, `type`,
@@ -349,8 +349,8 @@ public class ListVoicesRequest {
 
 
     /**
-     * Optional. A page token received from a previous `ListVoices` call. Provide
-     * this to retrieve the subsequent page.
+     * Optional. A page token received from a previous call to list voices.
+     * Provide this to retrieve the subsequent page.
      * 
      * <p>When paginating, all filter query parameters (`language_code`,
      * `region_code`, `accent`, `persona`, `context`, `gender`, `pitch`, `type`,
@@ -560,8 +560,8 @@ public class ListVoicesRequest {
         }
 
         /**
-         * Optional. A page token received from a previous `ListVoices` call. Provide
-         * this to retrieve the subsequent page.
+         * Optional. A page token received from a previous call to list voices.
+         * Provide this to retrieve the subsequent page.
          * 
          * <p>When paginating, all filter query parameters (`language_code`,
          * `region_code`, `accent`, `persona`, `context`, `gender`, `pitch`, `type`,

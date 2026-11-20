@@ -27,7 +27,7 @@ import java.lang.String;
 /**
  * DeleteVoiceResponse
  * 
- * <p>Response message for `VoicesService.DeleteVoice`.
+ * <p>Response for deleting a voice.
  */
 public class DeleteVoiceResponse {
     @JsonCreator

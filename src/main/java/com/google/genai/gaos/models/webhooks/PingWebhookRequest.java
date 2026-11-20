@@ -27,7 +27,7 @@ import java.lang.String;
 /**
  * PingWebhookRequest
  * 
- * <p>Request message for WebhookService.PingWebhook.
+ * <p>Request for pinging a webhook.
  */
 public class PingWebhookRequest {
     @JsonCreator

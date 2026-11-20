@@ -33,7 +33,7 @@ import java.util.Optional;
 /**
  * WebhookListResponse
  * 
- * <p>Response message for WebhookService.ListWebhooks.
+ * <p>Response for listing webhooks.
  */
 public class WebhookListResponse {
     /**

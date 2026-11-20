@@ -37,7 +37,7 @@ import java.util.Optional;
 /**
  * CreateEnvironmentRequest
  * 
- * <p>Request for `CreateEnvironment`.
+ * <p>Request for creating an environment.
  */
 public class CreateEnvironmentRequest {
     /**

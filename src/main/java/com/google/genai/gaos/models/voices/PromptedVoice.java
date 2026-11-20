@@ -34,8 +34,8 @@ import java.util.Optional;
  * PromptedVoice
  * 
  * <p>Parameters for prompted voice generation.
- * Required in `CreateVoice` when `type` is `"prompted"`. Returned in
- * `CreateVoice`, `GetVoice`, and `ListVoices` responses for prompted voices.
+ * Required when creating a voice with `type` `"prompted"`. Returned when
+ * creating, getting, or listing prompted voices.
  */
 public class PromptedVoice {
     /**

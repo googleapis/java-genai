@@ -121,7 +121,7 @@ public class AsyncVoices {
      * (`VOICE_TYPE_PROMPTED`) or from reference and consent audio recordings
      * (`VOICE_TYPE_REPLICATED`).
      * 
-     * @param body Request message for `VoicesService.CreateVoice`.
+     * @param body Request for creating a voice.
      * @return {@code CompletableFuture<CreateVoiceResponse>} - The async response
      */
     public CompletableFuture<CreateVoiceResponse> create(@Nonnull CreateVoiceRequest body) {
@@ -134,7 +134,7 @@ public class AsyncVoices {
      * (`VOICE_TYPE_REPLICATED`).
      * 
      * @param apiVersion API version for request routing.
-     * @param body Request message for `VoicesService.CreateVoice`.
+     * @param body Request for creating a voice.
      * @param options additional options
      * @return {@code CompletableFuture<CreateVoiceResponse>} - The async response
      */
@@ -198,8 +198,8 @@ public class AsyncVoices {
 
     /**
      * Gets a custom stored voice (`store = true`) by resource name.
-     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) cannot be retrieved via
-     * `GetVoice`; use `ListVoices` instead.
+     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) can't be retrieved this
+     * way; list voices instead.
      * 
      * @return The async call builder
      */
@@ -209,8 +209,8 @@ public class AsyncVoices {
 
     /**
      * Gets a custom stored voice (`store = true`) by resource name.
-     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) cannot be retrieved via
-     * `GetVoice`; use `ListVoices` instead.
+     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) can't be retrieved this
+     * way; list voices instead.
      * 
      * @param id Required. The resource name of the custom stored voice to retrieve
      *         (for example, `voices/voice_abc123def456`).
@@ -222,8 +222,8 @@ public class AsyncVoices {
 
     /**
      * Gets a custom stored voice (`store = true`) by resource name.
-     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) cannot be retrieved via
-     * `GetVoice`; use `ListVoices` instead.
+     * Prebuilt catalog voices (`VOICE_TYPE_PREBUILT`) can't be retrieved this
+     * way; list voices instead.
      * 
      * @param apiVersion API version for request routing.
      * @param id Required. The resource name of the custom stored voice to retrieve

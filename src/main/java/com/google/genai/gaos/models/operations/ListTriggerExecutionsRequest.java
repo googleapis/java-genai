@@ -44,7 +44,7 @@ public class ListTriggerExecutionsRequest {
     private Integer pageSize;
 
     /**
-     * A page token from a previous ListTriggerExecutions call.
+     * A page token from a previous call to list trigger executions.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_token")
     private String pageToken;
@@ -89,7 +89,7 @@ public class ListTriggerExecutionsRequest {
     }
 
     /**
-     * A page token from a previous ListTriggerExecutions call.
+     * A page token from a previous call to list trigger executions.
      */
     public Optional<String> pageToken() {
         return Optional.ofNullable(this.pageToken);
@@ -126,7 +126,7 @@ public class ListTriggerExecutionsRequest {
 
 
     /**
-     * A page token from a previous ListTriggerExecutions call.
+     * A page token from a previous call to list trigger executions.
      */
     public ListTriggerExecutionsRequest withPageToken(@Nullable String pageToken) {
         this.pageToken = pageToken;
@@ -207,7 +207,7 @@ public class ListTriggerExecutionsRequest {
         }
 
         /**
-         * A page token from a previous ListTriggerExecutions call.
+         * A page token from a previous call to list trigger executions.
          */
         public Builder pageToken(@Nullable String pageToken) {
             this.pageToken = pageToken;

@@ -27,7 +27,7 @@ import java.lang.String;
 /**
  * WebhookPingResponse
  * 
- * <p>Response message for WebhookService.PingWebhook.
+ * <p>Response for pinging a webhook.
  */
 public class WebhookPingResponse {
     @JsonCreator

@@ -33,7 +33,7 @@ import java.util.Optional;
 /**
  * ListVoicesResponse
  * 
- * <p>Response message for `VoicesService.ListVoices`.
+ * <p>Response for listing voices.
  */
 public class ListVoicesResponse {
     /**

@@ -153,7 +153,7 @@ public class Environments {
     /**
      * Creates an environment.
      * 
-     * @param body Request for `CreateEnvironment`.
+     * @param body Request for creating an environment.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -165,7 +165,7 @@ public class Environments {
      * Creates an environment.
      * 
      * @param apiVersion API version for request routing.
-     * @param body Request for `CreateEnvironment`.
+     * @param body Request for creating an environment.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails

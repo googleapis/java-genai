@@ -33,7 +33,7 @@ import java.util.Optional;
 /**
  * ListEnvironmentsResponse
  * 
- * <p>Response for `ListEnvironments`.
+ * <p>Response for listing environments.
  */
 public class ListEnvironmentsResponse {
     /**

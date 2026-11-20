@@ -33,8 +33,8 @@ import java.util.Optional;
 /**
  * VoiceInput
  * 
- * <p>A voice resource representing either a custom voice (created via
- * `CreateVoice`) or a prebuilt system voice (returned by `ListVoices`).
+ * <p>A voice resource representing either a custom voice that you create or a
+ * prebuilt system voice (returned when listing voices).
  */
 public class VoiceInput {
     /**
@@ -84,9 +84,9 @@ public class VoiceInput {
 
     /**
      * Optional. The model used to design or replicate the voice.
-     * If omitted in `CreateVoice`, defaults to the latest supported voice design
-     * model. Returned in `CreateVoice`, `GetVoice`, and `ListVoices` responses
-     * for custom voices (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
+     * If omitted when creating a voice, defaults to the latest supported voice
+     * design model. Returned when creating, getting, or listing custom voices
+     * (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
      * voices. Created voices can be synthesized across any supported TTS
      * synthesis model.
      */
@@ -109,8 +109,8 @@ public class VoiceInput {
 
     /**
      * Parameters for prompted voice generation.
-     * Required in `CreateVoice` when `type` is `"prompted"`. Returned in
-     * `CreateVoice`, `GetVoice`, and `ListVoices` responses for prompted voices.
+     * Required when creating a voice with `type` `"prompted"`. Returned when
+     * creating, getting, or listing prompted voices.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("prompted")
@@ -233,9 +233,9 @@ public class VoiceInput {
 
     /**
      * Optional. The model used to design or replicate the voice.
-     * If omitted in `CreateVoice`, defaults to the latest supported voice design
-     * model. Returned in `CreateVoice`, `GetVoice`, and `ListVoices` responses
-     * for custom voices (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
+     * If omitted when creating a voice, defaults to the latest supported voice
+     * design model. Returned when creating, getting, or listing custom voices
+     * (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
      * voices. Created voices can be synthesized across any supported TTS
      * synthesis model.
      */
@@ -257,8 +257,8 @@ public class VoiceInput {
 
     /**
      * Parameters for prompted voice generation.
-     * Required in `CreateVoice` when `type` is `"prompted"`. Returned in
-     * `CreateVoice`, `GetVoice`, and `ListVoices` responses for prompted voices.
+     * Required when creating a voice with `type` `"prompted"`. Returned when
+     * creating, getting, or listing prompted voices.
      */
     public Optional<PromptedVoice> prompted() {
         return Optional.ofNullable(this.prompted);
@@ -356,9 +356,9 @@ public class VoiceInput {
 
     /**
      * Optional. The model used to design or replicate the voice.
-     * If omitted in `CreateVoice`, defaults to the latest supported voice design
-     * model. Returned in `CreateVoice`, `GetVoice`, and `ListVoices` responses
-     * for custom voices (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
+     * If omitted when creating a voice, defaults to the latest supported voice
+     * design model. Returned when creating, getting, or listing custom voices
+     * (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
      * voices. Created voices can be synthesized across any supported TTS
      * synthesis model.
      */
@@ -386,8 +386,8 @@ public class VoiceInput {
 
     /**
      * Parameters for prompted voice generation.
-     * Required in `CreateVoice` when `type` is `"prompted"`. Returned in
-     * `CreateVoice`, `GetVoice`, and `ListVoices` responses for prompted voices.
+     * Required when creating a voice with `type` `"prompted"`. Returned when
+     * creating, getting, or listing prompted voices.
      */
     public VoiceInput withPrompted(@Nullable PromptedVoice prompted) {
         this.prompted = prompted;
@@ -574,9 +574,9 @@ public class VoiceInput {
 
         /**
          * Optional. The model used to design or replicate the voice.
-         * If omitted in `CreateVoice`, defaults to the latest supported voice design
-         * model. Returned in `CreateVoice`, `GetVoice`, and `ListVoices` responses
-         * for custom voices (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
+         * If omitted when creating a voice, defaults to the latest supported voice
+         * design model. Returned when creating, getting, or listing custom voices
+         * (`"prompted"` and `"replicated"`); unset for `"prebuilt"`
          * voices. Created voices can be synthesized across any supported TTS
          * synthesis model.
          */
@@ -601,8 +601,8 @@ public class VoiceInput {
 
         /**
          * Parameters for prompted voice generation.
-         * Required in `CreateVoice` when `type` is `"prompted"`. Returned in
-         * `CreateVoice`, `GetVoice`, and `ListVoices` responses for prompted voices.
+         * Required when creating a voice with `type` `"prompted"`. Returned when
+         * creating, getting, or listing prompted voices.
          */
         public Builder prompted(@Nullable PromptedVoice prompted) {
             this.prompted = prompted;

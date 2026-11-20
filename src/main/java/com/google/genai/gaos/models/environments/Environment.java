@@ -61,9 +61,8 @@ public class Environment {
     /**
      * Output only. Secret token generated upon environment creation for self_hosted
      * environments. Used by the self-hosted sandbox daemon to authenticate
-     * polling and streaming requests. Only returned in the CreateEnvironment
-     * response; omitted from subsequent GetEnvironment and ListEnvironments
-     * calls.
+     * polling and streaming requests. Only returned when the environment is
+     * created; omitted when getting or listing environments later.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("environment_key")
@@ -190,9 +189,8 @@ public class Environment {
     /**
      * Output only. Secret token generated upon environment creation for self_hosted
      * environments. Used by the self-hosted sandbox daemon to authenticate
-     * polling and streaming requests. Only returned in the CreateEnvironment
-     * response; omitted from subsequent GetEnvironment and ListEnvironments
-     * calls.
+     * polling and streaming requests. Only returned when the environment is
+     * created; omitted when getting or listing environments later.
      */
     public Optional<String> environmentKey() {
         return Optional.ofNullable(this.environmentKey);
@@ -292,9 +290,8 @@ public class Environment {
     /**
      * Output only. Secret token generated upon environment creation for self_hosted
      * environments. Used by the self-hosted sandbox daemon to authenticate
-     * polling and streaming requests. Only returned in the CreateEnvironment
-     * response; omitted from subsequent GetEnvironment and ListEnvironments
-     * calls.
+     * polling and streaming requests. Only returned when the environment is
+     * created; omitted when getting or listing environments later.
      */
     public Environment withEnvironmentKey(@Nullable String environmentKey) {
         this.environmentKey = environmentKey;
@@ -488,9 +485,8 @@ public class Environment {
         /**
          * Output only. Secret token generated upon environment creation for self_hosted
          * environments. Used by the self-hosted sandbox daemon to authenticate
-         * polling and streaming requests. Only returned in the CreateEnvironment
-         * response; omitted from subsequent GetEnvironment and ListEnvironments
-         * calls.
+         * polling and streaming requests. Only returned when the environment is
+         * created; omitted when getting or listing environments later.
          */
         public Builder environmentKey(@Nullable String environmentKey) {
             this.environmentKey = environmentKey;
