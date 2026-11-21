@@ -228,8 +228,8 @@ public class OAuth2UpdateConfig implements CredentialUpdate {
     public String toString() {
         return Utils.toString(OAuth2UpdateConfig.class,
                 "clientId", clientId,
-                "clientSecret", clientSecret,
-                "refreshToken", refreshToken,
+                "clientSecret", clientSecret == null ? null : "[REDACTED]",
+                "refreshToken", refreshToken == null ? null : "[REDACTED]",
                 "scopes", scopes,
                 "tokenUrl", tokenUrl,
                 "type", type);
