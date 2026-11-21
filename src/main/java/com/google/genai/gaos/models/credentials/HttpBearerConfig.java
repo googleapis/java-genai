@@ -204,7 +204,7 @@ public class HttpBearerConfig implements CredentialCreateParams {
                 "headerName", headerName,
                 "id", id,
                 "prefix", prefix,
-                "token", token,
+                "token", token == null ? null : "[REDACTED]",
                 "type", type);
     }
 

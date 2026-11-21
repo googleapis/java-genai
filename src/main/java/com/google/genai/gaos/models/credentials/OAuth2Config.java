@@ -253,9 +253,9 @@ public class OAuth2Config implements CredentialCreateParams {
     public String toString() {
         return Utils.toString(OAuth2Config.class,
                 "clientId", clientId,
-                "clientSecret", clientSecret,
+                "clientSecret", clientSecret == null ? null : "[REDACTED]",
                 "id", id,
-                "refreshToken", refreshToken,
+                "refreshToken", refreshToken == null ? null : "[REDACTED]",
                 "scopes", scopes,
                 "tokenUrl", tokenUrl,
                 "type", type);
