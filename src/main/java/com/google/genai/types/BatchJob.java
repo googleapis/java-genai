@@ -72,7 +72,10 @@ public abstract class BatchJob extends JsonSerializable {
   @JsonProperty("model")
   public abstract Optional<String> model();
 
-  /** Configuration for the input data. This field is for Gemini Enterprise Agent Platform only. */
+  /**
+   * Configuration for the input data. In Gemini Developer API responses, only `file_name` is
+   * populated.
+   */
   @JsonProperty("src")
   public abstract Optional<BatchJobSource> src();
 
@@ -308,8 +311,8 @@ public abstract class BatchJob extends JsonSerializable {
     /**
      * Setter for src.
      *
-     * <p>src: Configuration for the input data. This field is for Gemini Enterprise Agent Platform
-     * only.
+     * <p>src: Configuration for the input data. In Gemini Developer API responses, only `file_name`
+     * is populated.
      */
     @JsonProperty("src")
     public abstract Builder src(BatchJobSource src);
@@ -317,8 +320,8 @@ public abstract class BatchJob extends JsonSerializable {
     /**
      * Setter for src builder.
      *
-     * <p>src: Configuration for the input data. This field is for Gemini Enterprise Agent Platform
-     * only.
+     * <p>src: Configuration for the input data. In Gemini Developer API responses, only `file_name`
+     * is populated.
      */
     @CanIgnoreReturnValue
     public Builder src(BatchJobSource.Builder srcBuilder) {
