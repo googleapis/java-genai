@@ -174,7 +174,7 @@ public final class Client implements AutoCloseable {
           asyncRetryScheduler);
     }
 
-    /** Sets the API key for Gemini API. */
+    /** Sets the API key for the Gemini Developer API or the Gemini Enterprise API. */
     @CanIgnoreReturnValue
     public Builder apiKey(String apiKey) {
       checkNotNull(apiKey, "apiKey cannot be null");
@@ -182,7 +182,7 @@ public final class Client implements AutoCloseable {
       return this;
     }
 
-    /** Sets the project ID for Vertex AI APIs. */
+    /** Sets the project ID for the Gemini Enterprise API. */
     @CanIgnoreReturnValue
     public Builder project(String project) {
       checkNotNull(project, "project cannot be null");
@@ -190,7 +190,7 @@ public final class Client implements AutoCloseable {
       return this;
     }
 
-    /** Sets the location for Vertex AI APIs. */
+    /** Sets the location for the Gemini Enterprise API. */
     @CanIgnoreReturnValue
     public Builder location(String location) {
       checkNotNull(location, "location cannot be null");
@@ -198,7 +198,7 @@ public final class Client implements AutoCloseable {
       return this;
     }
 
-    /** Sets the {@link GoogleCredentials} for Vertex AI APIs. */
+    /** Sets the {@link GoogleCredentials} for the Gemini Enterprise API. */
     @CanIgnoreReturnValue
     public Builder credentials(GoogleCredentials credentials) {
       checkNotNull(credentials, "credentials cannot be null");
@@ -222,8 +222,9 @@ public final class Client implements AutoCloseable {
       return this;
     }
 
-    /** Sets whether to use Gemini Enterprise Agent Platform.
-     * When both enterprise and vertexAI are set, and they have different values, an IllegalArgumentException will be thrown.
+    /**
+     * Sets whether to use the Gemini Enterprise API. When both enterprise and vertexAI are set, and
+     * they have different values, an IllegalArgumentException will be thrown.
      */
     @CanIgnoreReturnValue
     public Builder enterprise(boolean enterprise) {
@@ -231,7 +232,7 @@ public final class Client implements AutoCloseable {
       return this;
     }
 
-    /** Sets whether to use Vertex AI APIs. */
+    /** Sets whether to use the Gemini Enterprise API. Prefer {@link #enterprise(boolean)}. */
     @CanIgnoreReturnValue
     public Builder vertexAI(boolean vertexAI) {
       this.vertexAI = Optional.of(vertexAI);
@@ -605,29 +606,41 @@ public final class Client implements AutoCloseable {
               });
     }
   }
+
   // android:strip_end
 
-  /** Returns whether the client is using Vertex AI APIs. */
+  /**
+   * Returns whether the client is using the Gemini Enterprise API. Prefer {@link #enterprise()}.
+   */
   public boolean vertexAI() {
     return apiClient.vertexAI();
   }
 
-  /** Returns whether the client is using Gemini Enterprise Agent Platform. */
+  /** Returns whether the client is using the Gemini Enterprise API. */
   public boolean enterprise() {
     return apiClient.vertexAI();
   }
 
-  /** Returns the project ID for Vertex AI APIs. */
+  /**
+   * Returns {@code true} if no API version was configured via {@link HttpOptions#apiVersion()} or
+   * the {@code GOOGLE_GENAI_API_VERSION} environment variable, so the client is using the SDK's
+   * default API version for its backend.
+   */
+  public boolean isDefaultApiVersion() {
+    return apiClient.isDefaultApiVersion();
+  }
+
+  /** Returns the project ID for the Gemini Enterprise API. */
   public String project() {
     return apiClient.project();
   }
 
-  /** Returns the location for Vertex AI APIs. */
+  /** Returns the location for the Gemini Enterprise API. */
   public String location() {
     return apiClient.location();
   }
 
-  /** Returns the API key for Gemini API. */
+  /** Returns the API key for the Gemini Developer API or the Gemini Enterprise API. */
   public String apiKey() {
     return apiClient.apiKey();
   }
@@ -673,7 +686,7 @@ public final class Client implements AutoCloseable {
   }
 
   /**
-   * Overrides the base URLs for the Gemini API and/or Vertex AI API.
+   * Overrides the base URLs for the Gemini Developer API and/or the Gemini Enterprise API.
    *
    * <p>Note: This function should be called before initializing the SDK. If the base URLs are set
    * after initializing the SDK, the base URLs will not be updated.

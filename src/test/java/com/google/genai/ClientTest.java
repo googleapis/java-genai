@@ -550,6 +550,162 @@ public class ClientTest {
     }
   }
 
+  @Test
+  void isDefaultApiVersion_trueWhenUnconfigured() {
+    try (MockedStatic<ApiClient> mocked =
+        Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS)) {
+      mocked.when(ApiClient::defaultEnvironmentVariables).thenReturn(ImmutableMap.of());
+
+      Client mldevClient = Client.builder().apiKey(API_KEY).enterprise(false).build();
+      assertTrue(mldevClient.isDefaultApiVersion());
+
+      Client enterpriseClient =
+          Client.builder()
+              .project(PROJECT)
+              .location(LOCATION)
+              .credentials(CREDENTIALS)
+              .enterprise(true)
+              .build();
+      assertTrue(enterpriseClient.isDefaultApiVersion());
+
+      HttpOptions nonVersionOptions =
+          HttpOptions.builder()
+              .baseUrl("https://custom.example.com")
+              .headers(ImmutableMap.of("X-Test", "1"))
+              .timeout(5000)
+              .build();
+      Client mldevWithNonVersionOptions =
+          Client.builder().apiKey(API_KEY).enterprise(false).httpOptions(nonVersionOptions).build();
+      assertTrue(mldevWithNonVersionOptions.isDefaultApiVersion());
+
+      Client enterpriseWithNonVersionOptions =
+          Client.builder()
+              .project(PROJECT)
+              .location(LOCATION)
+              .credentials(CREDENTIALS)
+              .enterprise(true)
+              .httpOptions(nonVersionOptions)
+              .build();
+      assertTrue(enterpriseWithNonVersionOptions.isDefaultApiVersion());
+    }
+  }
+
+  @Test
+  void isDefaultApiVersion_falseWhenHttpOptionsApiVersionSet() {
+    try (MockedStatic<ApiClient> mocked =
+        Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS)) {
+      mocked.when(ApiClient::defaultEnvironmentVariables).thenReturn(ImmutableMap.of());
+
+      for (String version :
+          new String[] {ApiClient.GOOGLE_AI_API_DEFAULT_VERSION, "v1", "v1beta", "v1alpha", ""}) {
+        Client mldevClient =
+            Client.builder()
+                .apiKey(API_KEY)
+                .enterprise(false)
+                .httpOptions(HttpOptions.builder().apiVersion(version).build())
+                .build();
+        assertFalse(mldevClient.isDefaultApiVersion(), "version=" + version);
+      }
+
+      for (String version : new String[] {"v1beta1", "v1", ""}) {
+        Client enterpriseClient =
+            Client.builder()
+                .project(PROJECT)
+                .location(LOCATION)
+                .credentials(CREDENTIALS)
+                .enterprise(true)
+                .httpOptions(HttpOptions.builder().apiVersion(version).build())
+                .build();
+        assertFalse(enterpriseClient.isDefaultApiVersion(), "version=" + version);
+      }
+    }
+  }
+
+  @Test
+  void isDefaultApiVersion_envVarHandling() {
+    try (MockedStatic<ApiClient> mocked =
+        Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS)) {
+      HttpOptions nonVersionOptions =
+          HttpOptions.builder()
+              .baseUrl("https://custom.example.com")
+              .headers(ImmutableMap.of("X-Test", "1"))
+              .timeout(5000)
+              .build();
+      for (String envVersion : new String[] {"v1", "v1alpha", "beta"}) {
+        mocked
+            .when(ApiClient::defaultEnvironmentVariables)
+            .thenReturn(ImmutableMap.of("apiVersion", envVersion));
+
+        Client mldevClient = Client.builder().apiKey(API_KEY).enterprise(false).build();
+        assertFalse(mldevClient.isDefaultApiVersion(), "envVersion=" + envVersion);
+
+        Client enterpriseClient =
+            Client.builder()
+                .project(PROJECT)
+                .location(LOCATION)
+                .credentials(CREDENTIALS)
+                .enterprise(true)
+                .build();
+        assertFalse(enterpriseClient.isDefaultApiVersion(), "envVersion=" + envVersion);
+
+        Client mldevWithNonVersionOptions =
+            Client.builder()
+                .apiKey(API_KEY)
+                .enterprise(false)
+                .httpOptions(nonVersionOptions)
+                .build();
+        assertFalse(mldevWithNonVersionOptions.isDefaultApiVersion(), "envVersion=" + envVersion);
+
+        Client enterpriseWithNonVersionOptions =
+            Client.builder()
+                .project(PROJECT)
+                .location(LOCATION)
+                .credentials(CREDENTIALS)
+                .enterprise(true)
+                .httpOptions(nonVersionOptions)
+                .build();
+        assertFalse(
+            enterpriseWithNonVersionOptions.isDefaultApiVersion(), "envVersion=" + envVersion);
+      }
+
+      mocked
+          .when(ApiClient::defaultEnvironmentVariables)
+          .thenReturn(ImmutableMap.of("googleApiKey", API_KEY, "apiVersion", ""));
+      Client emptyEnvClient = new Client();
+      assertTrue(emptyEnvClient.isDefaultApiVersion());
+
+      Client emptyEnvEnterpriseClient =
+          Client.builder()
+              .project(PROJECT)
+              .location(LOCATION)
+              .credentials(CREDENTIALS)
+              .enterprise(true)
+              .build();
+      assertTrue(emptyEnvEnterpriseClient.isDefaultApiVersion());
+    }
+  }
+
+  @Test
+  void isDefaultApiVersion_replayClient() {
+    try (MockedStatic<ApiClient> mocked =
+        Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS)) {
+      mocked.when(ApiClient::defaultEnvironmentVariables).thenReturn(ImmutableMap.of());
+
+      Client defaultReplay =
+          Client.builder().apiKey(API_KEY).enterprise(false).debugConfig(DEBUG_CONFIG).build();
+      assertTrue(defaultReplay.isDefaultApiVersion());
+
+      Client configuredReplay =
+          Client.builder()
+              .apiKey(API_KEY)
+              .enterprise(false)
+              .debugConfig(DEBUG_CONFIG)
+              .httpOptions(HttpOptions.builder().apiVersion("v1alpha").build())
+              .build();
+      assertFalse(configuredReplay.isDefaultApiVersion());
+    }
+  }
+
   static class TestApiClient extends ApiClient {
     TestApiClient(HttpOptions httpOptions) {
       super(Optional.of("dummy-api-key"), Optional.of(httpOptions), Optional.empty());

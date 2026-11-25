@@ -82,6 +82,7 @@ public abstract class ApiClient implements AutoCloseable {
   final OkHttpClient httpClient;
   HttpOptions httpOptions;
   final boolean vertexAI;
+  private final boolean defaultApiVersion;
   final Optional<ClientOptions> clientOptions;
 
   final Optional<String> customBaseUrl;
@@ -114,6 +115,9 @@ public abstract class ApiClient implements AutoCloseable {
     this.location = Optional.empty();
     this.credentials = Optional.empty();
     this.vertexAI = false;
+    this.defaultApiVersion =
+        computeIsDefaultApiVersion(
+            customHttpOptions, defaultEnvironmentVariables().get("apiVersion"));
     this.clientOptions = clientOptions;
     this.customBaseUrl =
         customHttpOptions.flatMap(HttpOptions::baseUrl).map(url -> url.replaceAll("/$", ""));
@@ -273,6 +277,8 @@ public abstract class ApiClient implements AutoCloseable {
       this.httpOptions = mergeHttpOptions(customHttpOptions.get());
     }
     this.vertexAI = true;
+    this.defaultApiVersion =
+        computeIsDefaultApiVersion(customHttpOptions, environmentVariables.get("apiVersion"));
     this.httpClient = createHttpClient(httpOptions, clientOptions);
 
   }
@@ -651,9 +657,20 @@ public abstract class ApiClient implements AutoCloseable {
     return libraryLabel + " " + languageLabel;
   }
 
+  private static boolean computeIsDefaultApiVersion(
+      Optional<HttpOptions> customHttpOptions, @Nullable String envApiVersion) {
+    return !customHttpOptions.flatMap(HttpOptions::apiVersion).isPresent()
+        && (envApiVersion == null || envApiVersion.isEmpty());
+  }
+
   /** Returns whether the client is using Vertex AI APIs. */
   public boolean vertexAI() {
     return vertexAI;
+  }
+
+  /** Returns whether no API version was configured for the client. */
+  public boolean isDefaultApiVersion() {
+    return defaultApiVersion;
   }
 
   /** Returns the project ID for Vertex AI APIs. */
