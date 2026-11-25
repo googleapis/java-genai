@@ -38,7 +38,6 @@ import java.util.List;
  * <p>Note: this class is NOT thread-safe.
  */
 public class Chat extends ChatBase {
-  private final ApiClient apiClient;
   private final Models models;
   private final String model;
   private final GenerateContentConfig config;
@@ -50,7 +49,6 @@ public class Chat extends ChatBase {
   Chat(ApiClient apiClient, String model, GenerateContentConfig config, List<Content> history) {
     super(new ArrayList<>(history), new ArrayList<>());
     curatedHistory.addAll(extractCuratedHistory(history));
-    this.apiClient = apiClient;
     this.models = new Models(apiClient);
     this.model = model;
     this.config = config;

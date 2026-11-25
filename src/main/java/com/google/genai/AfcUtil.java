@@ -195,7 +195,7 @@ final class AfcUtil {
     if (maximumRemoteCalls.isPresent() && maximumRemoteCalls.get() <= 0) {
       logger.warning(
           String.format(
-              "maxRemoteCalls in AfautomaticFunctionCallingConfig %s is less than or equal to 0."
+              "maxRemoteCalls in AutomaticFunctionCallingConfig %s is less than or equal to 0."
                   + " Disabling automatic function calling. Please set maximumRemoteCalls to a"
                   + " positive integer.",
               maximumRemoteCalls.get()));

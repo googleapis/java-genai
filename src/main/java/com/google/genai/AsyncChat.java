@@ -40,7 +40,6 @@ import java.util.logging.Logger;
  * automaticContinuation(false)} in the {@link GenerateContentConfig} to turn this off.
  */
 public class AsyncChat extends ChatBase {
-  private final ApiClient apiClient;
   private final AsyncModels models;
   private final String model;
   private final GenerateContentConfig config;
@@ -55,7 +54,6 @@ public class AsyncChat extends ChatBase {
       ApiClient apiClient, String model, GenerateContentConfig config, List<Content> history) {
     super(new ArrayList<>(history), new ArrayList<>());
     curatedHistory.addAll(extractCuratedHistory(history));
-    this.apiClient = apiClient;
     this.models = new AsyncModels(apiClient);
     this.model = model;
     this.config = config;
@@ -98,7 +96,7 @@ public class AsyncChat extends ChatBase {
    *
    * <p>This appends the message and the model's response to the chat history, which is sent back to
    * the model in subsequent calls to sendMessage. Be sure to initialize a chat session using
-   * cilent.async.chats.create() before calling sendMessage.
+   * client.async.chats.create() before calling sendMessage.
    *
    * @param content a {@link com.google.genai.types.Content} to send to the generative model
    * @param config a {@link com.google.genai.types.GenerateContentConfig} instance that specifies
