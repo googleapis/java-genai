@@ -314,6 +314,12 @@ public final class Batches {
               toObject));
     }
 
+    Object fromSrcFileName =
+        Common.getValueByPath(fromObject, new String[] {"metadata", "inputConfig", "fileName"});
+    if (fromSrcFileName != null) {
+      Common.setValueByPath(toObject, new String[] {"src", "fileName"}, fromSrcFileName);
+    }
+
     return toObject;
   }
 
