@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.7.0](https://github.com/googleapis/java-genai/compare/v2.6.0...v2.7.0) (2026-11-25)
+
+
+### Features
+
+* Add `text_normalization` to `SpeechConfig` (Gemini API). ([cd17328](https://github.com/googleapis/java-genai/commit/cd173282e8cd4f18253bfafdad56a2c73e324602))
+* add Client.isDefaultApiVersion() to detect unconfigured API version ([5edd2eb](https://github.com/googleapis/java-genai/commit/5edd2eb6c70993201c259f03fd330140552dd5b6))
+* **environments:** expose CreateEnvironmentRequest.env on the gemini platform ([f512a02](https://github.com/googleapis/java-genai/commit/f512a02a414162fc143a416184aa347d04617b9b))
+
+
+### Documentation
+
+* describe Interactions API operations in plain words instead of RPC names ([8c6859d](https://github.com/googleapis/java-genai/commit/8c6859d6afe2741549659100aae5f144b9a927ce))
+
 ## [2.6.0](https://github.com/googleapis/java-genai/compare/v2.5.0...v2.6.0) (2026-11-18)
 
 
