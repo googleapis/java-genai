@@ -18,10 +18,12 @@ package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.genai.types.Blob;
+import com.google.genai.types.HistoryConfig;
 import com.google.genai.types.LiveClientMessage;
 import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.LiveSendRealtimeInputParameters;
@@ -188,5 +190,33 @@ public class LiveConvertersTest {
                 JsonSerializable.objectMapper
                     .createObjectNode()) // Code that should throw the exception
         );
+  }
+
+  @Test
+  public void testLiveConnectConfig_historyConfig_mldev() {
+    LiveConnectConfig config =
+        LiveConnectConfig.builder()
+            .historyConfig(HistoryConfig.builder().initialHistoryInClientContent(true))
+            .build();
+    ObjectNode parent = JsonSerializable.objectMapper.createObjectNode();
+
+    new LiveConverters(GEMINI_API_CLIENT)
+        .liveConnectConfigToMldev(JsonSerializable.toJsonNode(config), parent);
+
+    assertTrue(parent.at("/setup/historyConfig/initialHistoryInClientContent").asBoolean());
+  }
+
+  @Test
+  public void testLiveConnectConfig_historyConfig_vertex() {
+    LiveConnectConfig config =
+        LiveConnectConfig.builder()
+            .historyConfig(HistoryConfig.builder().initialHistoryInClientContent(true))
+            .build();
+    ObjectNode parent = JsonSerializable.objectMapper.createObjectNode();
+
+    new LiveConverters(VERTEX_AI_CLIENT)
+        .liveConnectConfigToVertex(JsonSerializable.toJsonNode(config), parent);
+
+    assertTrue(parent.at("/setup/historyConfig/initialHistoryInClientContent").asBoolean());
   }
 }
