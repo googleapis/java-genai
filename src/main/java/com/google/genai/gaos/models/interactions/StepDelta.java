@@ -51,7 +51,9 @@ public class StepDelta implements InteractionSSEEvent {
     @JsonProperty("event_type")
     private String eventType;
 
-
+    /**
+     * Required. The 0-based index of the step to which this delta applies.
+     */
     @JsonProperty("index")
     private int index;
 
@@ -100,6 +102,9 @@ public class StepDelta implements InteractionSSEEvent {
         return Utils.discriminatorToString(eventType);
     }
 
+    /**
+     * Required. The 0-based index of the step to which this delta applies.
+     */
     public Optional<Integer> index() {
         return Optional.ofNullable(this.index);
     }
@@ -132,6 +137,9 @@ public class StepDelta implements InteractionSSEEvent {
     }
 
 
+    /**
+     * Required. The 0-based index of the step to which this delta applies.
+     */
     public StepDelta withIndex(int index) {
         this.index = index;
         return this;
@@ -210,6 +218,9 @@ public class StepDelta implements InteractionSSEEvent {
             return this;
         }
 
+        /**
+         * Required. The 0-based index of the step to which this delta applies.
+         */
         public Builder index(int index) {
             this.index = index;
             return this;

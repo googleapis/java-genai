@@ -47,7 +47,9 @@ public class StepStart implements InteractionSSEEvent {
     @JsonProperty("event_type")
     private String eventType;
 
-
+    /**
+     * Required. The 0-based index of the step.
+     */
     @JsonProperty("index")
     private int index;
 
@@ -88,6 +90,9 @@ public class StepStart implements InteractionSSEEvent {
         return Utils.discriminatorToString(eventType);
     }
 
+    /**
+     * Required. The 0-based index of the step.
+     */
     public Optional<Integer> index() {
         return Optional.ofNullable(this.index);
     }
@@ -114,6 +119,9 @@ public class StepStart implements InteractionSSEEvent {
     }
 
 
+    /**
+     * Required. The 0-based index of the step.
+     */
     public StepStart withIndex(int index) {
         this.index = index;
         return this;
@@ -183,6 +191,9 @@ public class StepStart implements InteractionSSEEvent {
             return this;
         }
 
+        /**
+         * Required. The 0-based index of the step.
+         */
         public Builder index(int index) {
             this.index = index;
             return this;
