@@ -181,7 +181,7 @@ public class HttpBearerUpdateConfig implements CredentialUpdate {
         return Utils.toString(HttpBearerUpdateConfig.class,
                 "headerName", headerName,
                 "prefix", prefix,
-                "token", token,
+                "token", token == null ? null : "[REDACTED]",
                 "type", type);
     }
 

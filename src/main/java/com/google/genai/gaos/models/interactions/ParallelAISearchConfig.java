@@ -123,7 +123,7 @@ public class ParallelAISearchConfig {
     @Override
     public String toString() {
         return Utils.toString(ParallelAISearchConfig.class,
-                "apiKey", apiKey,
+                "apiKey", apiKey == null ? null : "[REDACTED]",
                 "customConfig", customConfig);
     }
 

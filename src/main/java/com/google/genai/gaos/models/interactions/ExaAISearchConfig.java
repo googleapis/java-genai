@@ -125,7 +125,7 @@ public class ExaAISearchConfig {
     @Override
     public String toString() {
         return Utils.toString(ExaAISearchConfig.class,
-                "apiKey", apiKey,
+                "apiKey", apiKey == null ? null : "[REDACTED]",
                 "customConfig", customConfig);
     }
 
